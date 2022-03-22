@@ -1,7 +1,8 @@
 # PAP22L-Z03
+Authors:
 Emilia Wojtiuk - commit
 Jakub Sadowski
-
+Jakub Cimochowski
 
 ## Getting started
 
