@@ -1,5 +1,6 @@
 # PAP22L-Z03
 Emilia Wojtiuk - commit
+Jakub Sadowski
 
 
 ## Getting started
