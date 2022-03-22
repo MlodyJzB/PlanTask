@@ -3,6 +3,7 @@ Authors:
 Emilia Wojtiuk - commit
 Jakub Sadowski
 Jakub Cimochowski
+Jakub Nitkiewicz
 
 ## Getting started
 
