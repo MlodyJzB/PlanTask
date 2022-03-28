@@ -34,8 +34,8 @@ Wymagania niefunkcjonalne:
 
 Biblioteka graficzna: javafx    
 Biblioteka do połączenia z bazą danych: JDBC    
-Rodzaj bazy danych: 
-Baza danych:    
+Rodzaj bazy danych: relacyjna   
+Baza danych: Microsoft Azure SQL Database   
 
 
 
