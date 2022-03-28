@@ -5,9 +5,9 @@ Jakub Sadowski
 Jakub Cimochowski
 Jakub Nitkiewicz
 
-Rodzaj aplikacji: desktop
-nazwa aplikacji: planTask
-tematyka aplikacji: planer zadań
+Rodzaj aplikacji: desktop    
+Nazwa aplikacji: planTask   
+Tematyka aplikacji: planer zadań    
 
 Wymagania funkconalne:
 
@@ -31,9 +31,11 @@ Extra:
 - ścieżki do folderów
 
 Wymagania niefunkcjonalne:
-biblioteka graficzna: javafx
-biblioteka do połączenia z bazą danych: JDBC
-baza danych:
+
+Biblioteka graficzna: javafx    
+Biblioteka do połączenia z bazą danych: JDBC    
+Rodzaj bazy danych: 
+Baza danych:    
 
 
 
