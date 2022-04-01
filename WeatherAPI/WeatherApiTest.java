@@ -4,6 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.*;
 
+import org.json.JSONException;
+import java.io.IOException;
+
 public class WeatherApiTest{
 
     @Test
@@ -45,5 +48,6 @@ public class WeatherApiTest{
         boolean answer = WeatherApi.IsCodeFormatCorrect(zipCode);
         assertEquals(false, answer, "Incorrect code: dash in wrong place");
 }
+
 
 }
