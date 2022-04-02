@@ -17,12 +17,34 @@ import org.apache.commons.io.IOUtils;
 
 public class WeatherInfo {
 
-    public static class NonexistentZipCodeException 
+    private String zipCode = "00-001";
+    private Coords coordinates = new Coords(0, 0);
+
+    public static class ZipCodeException 
   extends Exception {
+    public ZipCodeException(String errorMessage) {
+        super(errorMessage);
+    }
+}
+
+    public static class NonexistentZipCodeException 
+  extends ZipCodeException {
     public NonexistentZipCodeException(String errorMessage) {
         super(errorMessage);
     }
 }
+
+    public static class IncorectZipCodeFormatException 
+  extends ZipCodeException {
+    public IncorectZipCodeFormatException(String errorMessage) {
+        super(errorMessage);
+    }
+}
+
+    public void setZipCode(String zipCode) throws WeatherInfo.IncorectZipCodeFormatException{
+        if (!IsCodeFormatCorrect(zipCode)) throw new IncorectZipCodeFormatException("Incorect zipCode format; expected XX-XXX, but was: " + zipCode);
+        this.zipCode = zipCode;
+    }
 
     public static class Coords{
 
@@ -33,6 +55,11 @@ public class WeatherInfo {
         }
         private double lat;
         private double lon;
+
+        public void set(double lat, double lon){
+            this.lat = lat;
+            this.lon = lon;
+        }
 
         public double getLat(){
             return this.lat;
@@ -99,5 +126,6 @@ public class WeatherInfo {
         Coords coordinates = new Coords(lat, lon);
         return coordinates;
     }
+
 
 }
