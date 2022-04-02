@@ -19,8 +19,13 @@
                   <Font name="Roboto" size="20.0" />
                </font>
             </Text>
+            <Text fx:id="loginStatusText" fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER">
+               <font>
+                  <Font name="Roboto" size="14.0" />
+               </font>
+            </Text>
             <TextField fx:id="usernameTextField" alignment="CENTER" promptText="username" />
-            <PasswordField fx:id="passwordTextField" alignment="CENTER" promptText="password" />
+            <PasswordField fx:id="passwordField" alignment="CENTER" promptText="password" />
             <Button fx:id="loginButton" mnemonicParsing="false" onAction="#onClickLogin" text="Log in" />
          </children>
          <padding>

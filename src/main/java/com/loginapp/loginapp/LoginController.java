@@ -5,23 +5,33 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 
 import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
-@FXML
+    @FXML
+    Text loginStatusText;
+    @FXML
     private TextField usernameTextField;
-@FXML
+    @FXML
     private PasswordField passwordField;
-@FXML
+    @FXML
     private Button loginButton;
-@FXML
+    @FXML
     private void onClickLogin() throws SQLException {
         //addLoginInfoToDatabase(usernameTextField.getText(), passwordTextField.getText());
         boolean loginInDatabase = checkIfLoginInfoInDatabase(usernameTextField.getText(), passwordField.getText());
-        System.out.println(loginInDatabase);
+        if (loginInDatabase) {
+            loginStatusText.setStyle("-fx-fill: green");
+            loginStatusText.setText("Logged successfully");
+        }
+        else  {
+            loginStatusText.setStyle("-fx-fill: red");
+            loginStatusText.setText("Incorrect username/password");
+        }
     }
 
     private static void addLoginInfoToDatabase(String newUsername, String newPassword) throws SQLException{
@@ -31,8 +41,8 @@ public class LoginController implements Initializable {
             Statement statement = con.createStatement();
             statement.executeUpdate("INSERT INTO loginInfo(username, password) VALUES ('"+newUsername+"', '"+newPassword+"')");
         } catch (SQLException e) {
-            //e.printStackTrace();
-            System.out.println(e);
+            e.printStackTrace();
+            //System.out.println(e);
         }
     }
 
