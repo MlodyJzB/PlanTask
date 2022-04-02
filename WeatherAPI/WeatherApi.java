@@ -4,13 +4,36 @@ import org.json.JSONException;
 import java.io.IOException;
 
 import java.io.InputStream;
+import java.io.FileNotFoundException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Scanner;
 import org.json.JSONObject;
 import org.json.JSONArray;
 
+import java.io.File;
+import java.io.FileInputStream;
+import org.apache.commons.io.IOUtils;
+
 public class WeatherApi {
+
+    public static class Coords{
+        
+        public Coords(double lat, double lon){
+            this.lat = lat;
+            this.lon = lon;
+        }
+        private double lat;
+        private double lon;
+
+        public double getLat(){
+            return this.lat;
+        }
+
+        public double getLon(){
+            return this.lon;
+        }
+    }
 
     public static boolean IsCodeFormatCorrect(String zipCode){
 
@@ -38,16 +61,31 @@ public class WeatherApi {
         connection.setRequestProperty("charset", "utf-8");
         connection.connect();
         InputStream inStream = connection.getInputStream();
-        jsonStr = new Scanner(inStream, "UTF-8").useDelimiter("\\Z").next();
+        Scanner scanner = new Scanner(inStream, "UTF-8");
+        jsonStr = scanner.useDelimiter("\\Z").next();
+        scanner.close();
         JSONObject json = new JSONObject(jsonStr);
         return json;
     }
 
-    public static String getCoords(JSONObject json, String zipcode) throws JSONException{
+    public static JSONObject fromJsonFile(String path) throws FileNotFoundException, IOException, JSONException{
+        File f = new File(path);
+        JSONObject emptyJson = new JSONObject();
+        if (!f.exists()) return emptyJson;
+        InputStream is = new FileInputStream(path);
+        String jsonTxt = IOUtils.toString(is, "UTF-8"); 
+        JSONObject json = new JSONObject(jsonTxt); 
+        return json;
+    }
+
+
+    public static WeatherApi.Coords getCoords(JSONObject json, String zipcode) throws JSONException{
         JSONObject results = json.getJSONObject("results");
         JSONArray arr = results.getJSONArray(zipcode);
-        String lat = arr.getJSONObject(0).get("latitude").toString();
-        return lat;
+        Double lat = Double.valueOf(arr.getJSONObject(0).get("latitude").toString());
+        Double lon = Double.valueOf(arr.getJSONObject(0).get("longitude").toString());
+        Coords coordinates = new Coords(lat, lon);
+        return coordinates;
     }
 
 }
