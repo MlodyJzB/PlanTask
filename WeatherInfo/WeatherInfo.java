@@ -46,6 +46,10 @@ public class WeatherInfo {
         this.zipCode = zipCode;
     }
 
+    public String getZipCode() {
+        return this.zipCode;
+    }
+
     public static class Coords{
 
         
