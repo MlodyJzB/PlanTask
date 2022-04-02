@@ -1,4 +1,4 @@
-package WeatherAPI;
+package WatherInfo;
 
 import org.json.JSONException;
 import java.io.IOException;
@@ -15,7 +15,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import org.apache.commons.io.IOUtils;
 
-public class WeatherApi {
+public class WatherInfo {
 
     public static class NonexistentZipCodeException 
   extends Exception {
@@ -58,9 +58,9 @@ public class WeatherApi {
         return true;
     }
 
-    public static JSONObject getCoordsJson(String zipCode) throws IOException, JSONException{
+    public static JSONObject getJson(String url) throws IOException, JSONException{
         String jsonStr = null;
-        URL jsonUrl = new URL("https://app.zipcodebase.com/api/v1/search?apikey=f6178de0-b1e6-11ec-ad2d-a971b4172138&codes=" + zipCode);
+        URL jsonUrl = new URL(url);
         HttpURLConnection connection = (HttpURLConnection) jsonUrl.openConnection();
         connection.setDoOutput(true);
         connection.setInstanceFollowRedirects(false);
@@ -87,7 +87,7 @@ public class WeatherApi {
     }
 
 
-    public static WeatherApi.Coords getCoords(JSONObject json, String zipcode) throws JSONException, NonexistentZipCodeException{
+    public static WatherInfo.Coords getCoords(JSONObject json, String zipcode) throws JSONException, NonexistentZipCodeException{
         JSONObject results = new JSONObject();
         try{
         results = json.getJSONObject("results");
