@@ -1,4 +1,4 @@
-package WatherInfo;
+package WeatherInfo;
 
 import org.json.JSONException;
 import java.io.IOException;
@@ -15,7 +15,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import org.apache.commons.io.IOUtils;
 
-public class WatherInfo {
+public class WeatherInfo {
 
     public static class NonexistentZipCodeException 
   extends Exception {
@@ -87,7 +87,7 @@ public class WatherInfo {
     }
 
 
-    public static WatherInfo.Coords getCoords(JSONObject json, String zipcode) throws JSONException, NonexistentZipCodeException{
+    public static WeatherInfo.Coords getCoords(JSONObject json, String zipcode) throws JSONException, NonexistentZipCodeException{
         JSONObject results = new JSONObject();
         try{
         results = json.getJSONObject("results");
