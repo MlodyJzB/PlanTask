@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="connections">
+    <connection type="Azure.SqlServer:Jetbrains.IJModule" envPrefix="AZURE_SQLSERVER">
+      <resource type="Azure.SqlServer">87610283557ddc8a1cab434d51530895</resource>
+      <consumer type="Jetbrains.IJModule">login app</consumer>
+    </connection>
+  </component>
+</project>
