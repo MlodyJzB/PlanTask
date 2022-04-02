@@ -92,5 +92,14 @@ public class WeatherInfoTest{
         assertEquals("00-631", wi.getZipCode());
 }
 
+    public void testSetCoords()  {
+        WeatherInfo.Coords coordinates = new WeatherInfo.Coords(0, 0);
+        assertEquals(0, coordinates.getLat());
+        assertEquals(0, coordinates.getLon());
+
+        coordinates.set(1, 1);
+        assertEquals(1, coordinates.getLat());
+        assertEquals(1, coordinates.getLon());
+    }
 
 }
