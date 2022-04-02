@@ -14,6 +14,7 @@ import java.io.IOException;
 
 public class WeatherApiTest{
 
+
     @Test
     public void testIsCodeFormatCorrect1(){
         
@@ -55,7 +56,7 @@ public class WeatherApiTest{
 }
 
     @Test
-    public void testGetCoords1() throws IOException, JSONException{
+    public void testGetCoords1() throws IOException, JSONException, WeatherApi.NonexistentZipCodeException{
         Path path = Paths.get(".");
         String pathStr = path.toAbsolutePath().toString() + "/bin/WeatherApi/zipCode.json";
         JSONObject json = WeatherApi.fromJsonFile(pathStr);
@@ -66,5 +67,27 @@ public class WeatherApiTest{
         assertEquals(52.21550000, lat);
         assertEquals(21.01650000, lon);
 }
+
+    @Test
+    public void testGetCoords2() throws IOException, JSONException, WeatherApi.NonexistentZipCodeException{
+        Path path = Paths.get(".");
+        String pathStr = path.toAbsolutePath().toString() + "/bin/WeatherApi/nonexistentZipCode.json";
+        JSONObject json = WeatherApi.fromJsonFile(pathStr);
+        WeatherApi.Coords coordinates = WeatherApi.getCoords(json, "16-197");
+        Double lat = coordinates.getLat();
+        Double lon = coordinates.getLon();
+
+        assertEquals(null, lat);
+        assertEquals(null, lon);
+    }
+
+    @Test(expected = WeatherApi.NonexistentZipCodeException.class)
+    public void whenExceptionThrown_thenExpectationSatisfied() throws IOException, JSONException, WeatherApi.NonexistentZipCodeException {
+        Path path = Paths.get(".");
+        String pathStr = path.toAbsolutePath().toString() + "/bin/WeatherApi/nonexistentZipCode.json";
+        JSONObject json = WeatherApi.fromJsonFile(pathStr);
+        WeatherApi.Coords coordinates = WeatherApi.getCoords(json, "16-197");
+}
+
 
 }

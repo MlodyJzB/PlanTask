@@ -17,7 +17,15 @@ import org.apache.commons.io.IOUtils;
 
 public class WeatherApi {
 
+    public static class NonexistentZipCodeException 
+  extends Exception {
+    public NonexistentZipCodeException(String errorMessage) {
+        super(errorMessage);
+    }
+}
+
     public static class Coords{
+
         
         public Coords(double lat, double lon){
             this.lat = lat;
@@ -79,8 +87,12 @@ public class WeatherApi {
     }
 
 
-    public static WeatherApi.Coords getCoords(JSONObject json, String zipcode) throws JSONException{
-        JSONObject results = json.getJSONObject("results");
+    public static WeatherApi.Coords getCoords(JSONObject json, String zipcode) throws JSONException, NonexistentZipCodeException{
+        JSONObject results = new JSONObject();
+        try{
+        results = json.getJSONObject("results");
+        }
+        catch (JSONException a){ throw new NonexistentZipCodeException("");}
         JSONArray arr = results.getJSONArray(zipcode);
         Double lat = Double.valueOf(arr.getJSONObject(0).get("latitude").toString());
         Double lon = Double.valueOf(arr.getJSONObject(0).get("longitude").toString());
