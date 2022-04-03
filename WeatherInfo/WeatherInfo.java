@@ -92,5 +92,12 @@ public class WeatherInfo {
         return coordinates;
     }
 
+    public static Double getTemp(JSONObject json) throws JSONException{
+        Object tempJson = json.getJSONObject("main").get("temp");
+
+        Double temp = Double.valueOf(tempJson.toString());
+        return temp;
+    }
+
 
 }

@@ -91,7 +91,7 @@ public class WeatherInfoTest{
         wi.setZipCode("00-631");
         assertEquals("00-631", wi.getZipCode());
 }
-
+    @Test
     public void testSetCoords()  {
         WeatherInfo.Coords coordinates = new WeatherInfo.Coords(0, 0);
         assertEquals(0, coordinates.getLat());
@@ -100,6 +100,15 @@ public class WeatherInfoTest{
         coordinates.set(1, 1);
         assertEquals(1, coordinates.getLat());
         assertEquals(1, coordinates.getLon());
+    }
+    
+    @Test
+    public void testGetTemp() throws IOException, JSONException {
+        Path path = Paths.get(".");
+        String pathStr = path.toAbsolutePath().toString() + "/bin/WeatherInfo/exampleInfo.json";
+        JSONObject json =JsonHandling.getFromFile(pathStr);
+        Double temp = WeatherInfo.getTemp(json);
+        assertEquals(0.82, temp);
     }
 
     

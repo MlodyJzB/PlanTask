@@ -39,8 +39,7 @@ public class JsonHandling {
 
     public static JSONObject getFromFile(String path) throws FileNotFoundException, IOException, JSONException{
         File f = new File(path);
-        JSONObject emptyJson = new JSONObject();
-        if (!f.exists()) return emptyJson;
+        if (!f.exists()) throw new FileNotFoundException();
         InputStream is = new FileInputStream(path);
         String jsonTxt = IOUtils.toString(is, "UTF-8"); 
         JSONObject json = new JSONObject(jsonTxt); 
