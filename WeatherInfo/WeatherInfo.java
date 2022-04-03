@@ -84,7 +84,7 @@ public class WeatherInfo {
         try{
         results = json.getJSONObject("results");
         }
-        catch (JSONException a){ throw new NonexistentZipCodeException("");}
+        catch (JSONException a){ throw new NonexistentZipCodeException("Zipcode " + zipcode + " do not exist.");}
         JSONArray arr = results.getJSONArray(zipcode);
         Double lat = Double.valueOf(arr.getJSONObject(0).get("latitude").toString());
         Double lon = Double.valueOf(arr.getJSONObject(0).get("longitude").toString());

@@ -59,7 +59,7 @@ public class WeatherInfoTest{
     public void testGetCoords1() throws IOException, JSONException, WeatherInfo.NonexistentZipCodeException{
         Path path = Paths.get(".");
         String pathStr = path.toAbsolutePath().toString() + "/bin/WeatherInfo/zipCode.json";
-        JSONObject json = JsonHandling.fromJsonFile(pathStr);
+        JSONObject json = JsonHandling.getFromFile(pathStr);
         WeatherInfo.Coords coordinates = WeatherInfo.getCoords(json, "00-631");
         Double lat = coordinates.getLat();
         Double lon = coordinates.getLon();
@@ -72,7 +72,7 @@ public class WeatherInfoTest{
     public void testGetCoordsException() throws IOException, JSONException, WeatherInfo.NonexistentZipCodeException {
         Path path = Paths.get(".");
         String pathStr = path.toAbsolutePath().toString() + "/bin/WeatherInfo/nonexistentZipCode.json";
-        JSONObject json =JsonHandling.fromJsonFile(pathStr);
+        JSONObject json =JsonHandling.getFromFile(pathStr);
         WeatherInfo.Coords coordinates = WeatherInfo.getCoords(json, "16-197");
 }
     @Test(expected =WeatherInfo.IncorectZipCodeFormatException.class)

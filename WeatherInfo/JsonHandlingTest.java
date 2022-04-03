@@ -18,7 +18,7 @@ public class JsonHandlingTest{
     public void testFromJsonFile() throws IOException, JSONException, WeatherInfo.NonexistentZipCodeException{
         Path path = Paths.get(".");
         String pathStr = path.toAbsolutePath().toString() + "/bin/WeatherInfo/zipCode.json";
-        JSONObject json = JsonHandling.fromJsonFile(pathStr);
+        JSONObject json = JsonHandling.getFromFile(pathStr);
         WeatherInfo.Coords coordinates = WeatherInfo.getCoords(json, "00-631");
         Double lat = coordinates.getLat();
         Double lon = coordinates.getLon();
