@@ -15,9 +15,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import org.apache.commons.io.IOUtils;
 
+import java.io.FileWriter;
+
 public class JsonHandling {
 
-    public static JSONObject getJson(String url) throws IOException, JSONException{
+    public static JSONObject getFromUrl(String url) throws IOException, JSONException{
         String jsonStr = null;
         URL jsonUrl = new URL(url);
         HttpURLConnection connection = (HttpURLConnection) jsonUrl.openConnection();
@@ -35,7 +37,7 @@ public class JsonHandling {
         return json;
     }
 
-    public static JSONObject fromJsonFile(String path) throws FileNotFoundException, IOException, JSONException{
+    public static JSONObject getFromFile(String path) throws FileNotFoundException, IOException, JSONException{
         File f = new File(path);
         JSONObject emptyJson = new JSONObject();
         if (!f.exists()) return emptyJson;
@@ -43,5 +45,20 @@ public class JsonHandling {
         String jsonTxt = IOUtils.toString(is, "UTF-8"); 
         JSONObject json = new JSONObject(jsonTxt); 
         return json;
+    }
+
+    public static void writeToFile(JSONObject json, String path) throws IOException{
+        FileWriter file = new FileWriter(path);
+
+        try {
+            file.write(json.toString());
+ 
+        } catch (IOException e) {
+            e.printStackTrace();
+ 
+        } finally {
+            file.flush();
+            file.close();
+        }
     }
 }
