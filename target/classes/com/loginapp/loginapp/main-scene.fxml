@@ -5,6 +5,7 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -26,7 +27,13 @@
             </Text>
             <TextField fx:id="usernameTextField" alignment="CENTER" promptText="username" />
             <PasswordField fx:id="passwordField" alignment="CENTER" promptText="password" />
-            <Button fx:id="loginButton" mnemonicParsing="false" onAction="#onClickLogin" text="Log in" />
+            <Button fx:id="loginButton" mnemonicParsing="false" onAction="#onClickLogin" text="Login" />
+            <HBox alignment="CENTER" prefHeight="43.0" prefWidth="190.0" spacing="15.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Don't have an account?" />
+                  <Button fx:id="registerButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#switchToRegisterScene" prefHeight="15.0" prefWidth="60.0" text="Register" />
+               </children>
+            </HBox>
          </children>
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -34,9 +41,9 @@
       </VBox>
    </center>
    <left>
-      <Region prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <Region prefHeight="150.0" prefWidth="150.0" BorderPane.alignment="CENTER" />
    </left>
    <right>
-      <Region prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <Region prefHeight="150.0" prefWidth="150.0" BorderPane.alignment="CENTER" />
    </right>
 </BorderPane>

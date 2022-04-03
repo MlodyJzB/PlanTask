@@ -1,17 +1,27 @@
 package com.loginapp.loginapp;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.text.Text;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
+    private LoginInfo loginInfo;
+
     @FXML
     Text loginStatusText;
     @FXML
@@ -19,51 +29,49 @@ public class LoginController implements Initializable {
     @FXML
     private PasswordField passwordField;
     @FXML
-    private Button loginButton;
+    private Button loginButton, onClickRegisterScene;
     @FXML
     private void onClickLogin() throws SQLException {
-        //addLoginInfoToDatabase(usernameTextField.getText(), passwordTextField.getText());
-        boolean loginInDatabase = checkIfLoginInfoInDatabase(usernameTextField.getText(), passwordField.getText());
-        if (loginInDatabase) {
+        loginInfo.setUsername(usernameTextField.getText());
+        loginInfo.setPassword(passwordField.getText());
+        if (loginInfo.checkIfUserInDatabase()) {
             loginStatusText.setStyle("-fx-fill: green");
             loginStatusText.setText("Logged successfully");
         }
         else  {
-            loginStatusText.setStyle("-fx-fill: red");
+            loginStatusText.setStyle("-fx-fill: #b71834");
             loginStatusText.setText("Incorrect username/password");
         }
     }
-
-    private static void addLoginInfoToDatabase(String newUsername, String newPassword) throws SQLException{
-        try {
-            String connectionString = "jdbc:sqlserver://plan-task-server.database.windows.net:1433;database=planTask;user=JakubNitkiewicz;password=planTask123;encrypt=true;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
-            Connection con = DriverManager.getConnection(connectionString);
-            Statement statement = con.createStatement();
-            statement.executeUpdate("INSERT INTO loginInfo(username, password) VALUES ('"+newUsername+"', '"+newPassword+"')");
-        } catch (SQLException e) {
-            e.printStackTrace();
-            //System.out.println(e);
-        }
+    @FXML
+    private void switchToRegisterScene(ActionEvent event) throws IOException {
+        Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("register-scene.fxml")));
+        Scene scene = ((Node)event.getSource()).getScene();
+        scene.setRoot(fxmlLoader);
     }
 
-    private static boolean checkIfLoginInfoInDatabase(String giverUsername, String givenPassword) throws SQLException{
-        try {
-            String connectionString = "jdbc:sqlserver://plan-task-server.database.windows.net:1433;database=planTask;user=JakubNitkiewicz;password=planTask123;encrypt=true;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
-            Connection con = DriverManager.getConnection(connectionString);
-            PreparedStatement statement = con.prepareStatement("SELECT username, password FROM loginInfo WHERE username= ? AND password= ? ");
-            statement.setString(1, giverUsername);
-            statement.setString(2, givenPassword);
-            ResultSet resultSet = statement.executeQuery();
-            return resultSet.next();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            //System.out.println(e);
-        }
-        return false;
+    private void limitMaxChar(TextField tf, final int maxLength) {
+        tf.textProperty().addListener((ov, oldValue, newValue) -> {
+            if (newValue.length() > maxLength) {
+                tf.setText(newValue.substring(0, maxLength));
+            }
+        });
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        loginInfo = new LoginInfo();
+
+        limitMaxChar(usernameTextField, 20);
+        limitMaxChar(passwordField, 20);
+        usernameTextField.setTextFormatter(new TextFormatter<>(change -> {
+            if (change.getText().contains(" ")) {
+                change.setText(change.getText().replace(" ", ""));
+            }
+            return change;
+        }));
 
     }
+
+
 }
