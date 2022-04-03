@@ -50,7 +50,7 @@ public class LoginController implements Initializable {
         scene.setRoot(fxmlLoader);
     }
 
-    private void limitMaxChar(TextField tf, final int maxLength) {
+    public static void limitMaxChar(TextField tf, final int maxLength) {
         tf.textProperty().addListener((ov, oldValue, newValue) -> {
             if (newValue.length() > maxLength) {
                 tf.setText(newValue.substring(0, maxLength));
@@ -58,19 +58,22 @@ public class LoginController implements Initializable {
         });
     }
 
+    public static void configureTextFields(TextField[] textFields) {
+        for (TextField tf : textFields) {
+            limitMaxChar(tf, 20);
+            tf.setTextFormatter(new TextFormatter<>(change -> {
+                if (change.getText().contains(" ")) {
+                    change.setText(change.getText().replace(" ", ""));
+                }
+                return change;
+            }));
+        }
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loginInfo = new LoginInfo();
-
-        limitMaxChar(usernameTextField, 20);
-        limitMaxChar(passwordField, 20);
-        usernameTextField.setTextFormatter(new TextFormatter<>(change -> {
-            if (change.getText().contains(" ")) {
-                change.setText(change.getText().replace(" ", ""));
-            }
-            return change;
-        }));
-
+        configureTextFields(new TextField[]{usernameTextField, passwordField});
     }
 
 

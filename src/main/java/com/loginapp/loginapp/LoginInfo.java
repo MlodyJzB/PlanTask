@@ -1,14 +1,56 @@
 package com.loginapp.loginapp;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+
 import java.sql.*;
 import java.util.Arrays;
 import java.util.List;
 
 public class LoginInfo {
     private String username, password;
+    private final BooleanProperty usernameAvailable = new SimpleBooleanProperty();
+    private final BooleanProperty passwordMeetsConditions = new SimpleBooleanProperty();
+    private final BooleanProperty passwordsMatch = new SimpleBooleanProperty();
 
     public LoginInfo() {
         username = ""; password = "";
+    }
+
+    public boolean isUsernameAvailable() {
+        return usernameAvailable.get();
+    }
+
+    public BooleanProperty usernameAvailableProperty() {
+        return usernameAvailable;
+    }
+
+    public void setUsernameAvailable(boolean usernameAvailable) {
+        this.usernameAvailable.set(usernameAvailable);
+    }
+
+    public boolean isPasswordMeetsConditions() {
+        return passwordMeetsConditions.get();
+    }
+
+    public BooleanProperty passwordMeetsConditionsProperty() {
+        return passwordMeetsConditions;
+    }
+
+    public void setPasswordMeetsConditions(boolean passwordMeetsConditions) {
+        this.passwordMeetsConditions.set(passwordMeetsConditions);
+    }
+
+    public boolean isPasswordsMatch() {
+        return passwordsMatch.get();
+    }
+
+    public BooleanProperty passwordsMatchProperty() {
+        return passwordsMatch;
+    }
+
+    public void setPasswordsMatch(boolean passwordsMatch) {
+        this.passwordsMatch.set(passwordsMatch);
     }
 
     public String getUsername() {
