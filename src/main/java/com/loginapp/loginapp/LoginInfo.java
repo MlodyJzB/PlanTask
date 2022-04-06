@@ -14,7 +14,8 @@ public class LoginInfo {
     private final BooleanProperty passwordsMatch = new SimpleBooleanProperty();
 
     public LoginInfo() {
-        username = ""; password = "";
+        username = "";
+        password = "";
     }
 
     public boolean isUsernameAvailable() {
@@ -102,12 +103,12 @@ public class LoginInfo {
         return false;
     }
 
-    public void addLoginInfoToDatabase() throws SQLException{
+    public void addLoginInfoToDatabase() throws SQLException {
         try {
             String connectionString = "jdbc:sqlserver://plan-task-server.database.windows.net:1433;database=planTask;user=JakubNitkiewicz;password=planTask123;encrypt=true;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
             Connection con = DriverManager.getConnection(connectionString);
             Statement statement = con.createStatement();
-            statement.executeUpdate("INSERT INTO loginInfo(username, password) VALUES ('"+this.username+"', '"+this.password+"')");
+            statement.executeUpdate("INSERT INTO loginInfo(username, password) VALUES ('" + this.username + "', '" + this.password + "')");
         } catch (SQLException e) {
             e.printStackTrace();
             //System.out.println(e);
@@ -119,9 +120,9 @@ public class LoginInfo {
         boolean minCharFlag = str.length() >= minChar;
         boolean capitalFlag = false;
         boolean numberFlag = false;
-        for(int i=0;i < str.length();i++) {
+        for (int i = 0; i < str.length(); i++) {
             ch = str.charAt(i);
-            if ( Character.isUpperCase(ch) )
+            if (Character.isUpperCase(ch))
                 capitalFlag = true;
             else if (Character.isDigit(ch))
                 numberFlag = true;

@@ -1,9 +1,9 @@
 package com.loginapp.loginapp;
 
+import com.loginapp.loginapp.LoginInfo;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -12,6 +12,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -19,7 +20,8 @@ import java.sql.*;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class LoginController implements Initializable {
+public class LoginController //implements Initializable
+{
     private LoginInfo loginInfo;
 
     @FXML
@@ -32,6 +34,7 @@ public class LoginController implements Initializable {
     private Button loginButton, onClickRegisterScene;
     @FXML
     private void onClickLogin() throws SQLException {
+        loginInfo = new LoginInfo();
         loginInfo.setUsername(usernameTextField.getText());
         loginInfo.setPassword(passwordField.getText());
         if (loginInfo.checkIfUserInDatabase()) {
@@ -42,6 +45,14 @@ public class LoginController implements Initializable {
             loginStatusText.setStyle("-fx-fill: #b71834");
             loginStatusText.setText("Incorrect username/password");
         }
+    }
+    @FXML
+    public void goToLogin() throws IOException {
+        FXMLLoader pane = new FXMLLoader(getClass().getResource("register-scene.fxml"));
+        Parent root = (Parent) pane.load();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.show();
     }
     @FXML
     private void switchToRegisterScene(ActionEvent event) throws IOException {
@@ -69,8 +80,6 @@ public class LoginController implements Initializable {
             }));
         }
     }
-
-    @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loginInfo = new LoginInfo();
         configureTextFields(new TextField[]{usernameTextField, passwordField});
