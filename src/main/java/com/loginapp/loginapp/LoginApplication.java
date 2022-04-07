@@ -4,6 +4,9 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import ICSFiles.*;
+import net.fortuna.ical4j.data.ParserException;
+import org.json.JSONException;
 
 import java.io.IOException;
 
@@ -18,7 +21,9 @@ public class LoginApplication extends Application {
 
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParserException, JSONException, IOException {
         launch();
+        //ICSFilesReader ics = new ICSFilesReader();
+        //ics.icsToJSON("wasza ścieżka do pliku ics", "test");
     }
 }
