@@ -8,14 +8,20 @@ import java.util.Arrays;
 import java.util.List;
 
 public class LoginInfo {
+    static LoginInfo  loginInfo = new LoginInfo();
+
     private String username, password;
     private final BooleanProperty usernameAvailable = new SimpleBooleanProperty();
     private final BooleanProperty passwordMeetsConditions = new SimpleBooleanProperty();
     private final BooleanProperty passwordsMatch = new SimpleBooleanProperty();
 
-    public LoginInfo() {
+    private LoginInfo() {
         username = "";
         password = "";
+    }
+
+    public static LoginInfo getInstance() {
+        return loginInfo;
     }
 
     public boolean isUsernameAvailable() {
@@ -83,7 +89,6 @@ public class LoginInfo {
             return resultSet.next();
         } catch (SQLException e) {
             e.printStackTrace();
-            //System.out.println(e);
         }
         return false;
     }
@@ -98,7 +103,6 @@ public class LoginInfo {
             return resultSet.next();
         } catch (SQLException e) {
             e.printStackTrace();
-            //System.out.println(e);
         }
         return false;
     }
@@ -107,14 +111,16 @@ public class LoginInfo {
         try {
             String connectionString = "jdbc:sqlserver://plan-task-server.database.windows.net:1433;database=planTask;user=JakubNitkiewicz;password=planTask123;encrypt=true;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
             Connection con = DriverManager.getConnection(connectionString);
-            Statement statement = con.createStatement();
-            statement.executeUpdate("INSERT INTO loginInfo(username, password) VALUES ('" + this.username + "', '" + this.password + "')");
+            PreparedStatement statement = con.prepareStatement("INSERT INTO loginInfo(username, password) VALUES (?, ?)");
+            statement.setString(1, getUsername());
+            statement.setString(2, getPassword());
+            statement.executeQuery();
         } catch (SQLException e) {
             e.printStackTrace();
-            //System.out.println(e);
         }
     }
 
+    //Password should contain at least 8 characters, one capital letter and one number
     public static List<Boolean> checkPassword(String str, int minChar) {
         char ch;
         boolean minCharFlag = str.length() >= minChar;

@@ -52,7 +52,7 @@ public class RegisterController implements Initializable {
     @FXML //Function called on click of the loginButton
     private void switchToLoginScene(ActionEvent event) throws IOException {
         //Loading new scene from fxml file on click
-        Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("main-scene.fxml")));
+        Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("login-scene.fxml")));
         Scene scene = ((Node)event.getSource()).getScene();
         scene.setRoot(fxmlLoader);
     }
@@ -70,7 +70,7 @@ public class RegisterController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        loginInfo = new LoginInfo();
+        loginInfo = LoginInfo.getInstance();
 
         //Creating listener to check whether user has clicked out of usernameTextField and then
         //whether user is in database and setting appropriate text on usernameErrolLabel
