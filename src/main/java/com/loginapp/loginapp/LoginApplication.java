@@ -6,9 +6,11 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import ICSFiles.*;
 import net.fortuna.ical4j.data.ParserException;
+import net.fortuna.ical4j.model.ValidationException;
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.text.ParseException;
 
 public class LoginApplication extends Application {
     @Override
@@ -22,9 +24,11 @@ public class LoginApplication extends Application {
 
     }
 
-    public static void main(String[] args) throws ParserException, JSONException, IOException {
+    public static void main(String[] args) throws ParserException, JSONException, IOException, ValidationException, ParseException {
         launch();
         //ICSFilesReader ics = new ICSFilesReader();
-        //ics.icsToJSON("wasza ścieżka do pliku ics", "test");
+        //ToICSFileWritter  toics = new ToICSFileWritter();
+        //ics.icsToJSON("wasza ścieżka z ics", "test.json");
+        //toics.JSONToICS("test.json", "myics.ics");
     }
 }

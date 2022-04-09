@@ -16,7 +16,7 @@ import net.fortuna.ical4j.model.Calendar;
 
 public class ICSFilesReader {
     private Calendar icsCalendar;
-    List<JSONObject> listOfEvents = new ArrayList<JSONObject>();
+    private List<JSONObject> listOfEvents = new ArrayList<JSONObject>();
 
 
     public void icsReader(String icsFilePath) throws IOException, ParserException {
@@ -56,6 +56,7 @@ public class ICSFilesReader {
             {
                 JSONObject json = iter.next();
                 file.write(json.toString());
+                file.write("\n");
             }
 
 
