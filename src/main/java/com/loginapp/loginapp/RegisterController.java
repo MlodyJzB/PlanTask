@@ -15,6 +15,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 import java.io.IOException;
 import java.net.URL;
@@ -34,7 +36,7 @@ public class RegisterController implements Initializable {
     @FXML
     private TextField usernameTextField, passwordField, repeatedPasswordField;
     @FXML //Function called on click of the registerButton
-    private void onClickRegister() throws SQLException {
+    private void onClickRegister() {
         loginInfo.setUsername(usernameTextField.getText());
         loginInfo.setPassword(passwordField.getText());
         try {
@@ -46,9 +48,14 @@ public class RegisterController implements Initializable {
             registerStatusLabel.setStyle("-fx-text-fill: red");
             registerStatusLabel.setText("Failed to register!");
         }
-
-
     }
+
+    @FXML //Function called on click of the registerButton
+    private void onEnterRegister(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER && !registerButton.disableProperty().getValue())
+            onClickRegister();
+    }
+
     @FXML //Function called on click of the loginButton
     private void switchToLoginScene(ActionEvent event) throws IOException {
         //Loading new scene from fxml file on click
@@ -76,25 +83,33 @@ public class RegisterController implements Initializable {
         //whether user is in database and setting appropriate text on usernameErrolLabel
         usernameTextField.focusedProperty().addListener((ov, oldVal, newVal) -> {
             //If user has left field and field isn't empty
-            if (!newVal && !Objects.equals(usernameTextField.getText(), "")) {
-                loginInfo.setUsername(usernameTextField.getText());
-                boolean usernameAvailable = false;
-                try {
-                    //Checking if user in database
-                    usernameAvailable = !loginInfo.checkIfUsernameInDatabase();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-                loginInfo.setUsernameAvailable(usernameAvailable);
-                //Setting appropriate text on usernameErrorLabel
-                if (loginInfo.isUsernameAvailable()) {
-                    usernameErrorLabel.setStyle("-fx-text-fill: green");
-                    usernameErrorLabel.setText("Username available");
-                }
-                else  {
+            if (!newVal) {
+                if (usernameTextField.getText().length() < 3) {
+                    loginInfo.setUsernameLongEnough(false);
                     usernameErrorLabel.setStyle("-fx-text-fill: red");
-                    usernameErrorLabel.setText("Username Already Taken!");
+                    usernameErrorLabel.setText("Username too short!");
+                } else {
+                    boolean usernameAvailable = false;
+                    loginInfo.setUsername(usernameTextField.getText());
+                    loginInfo.setUsernameLongEnough(true);
+                    try {
+                        //Checking if user in database
+                        usernameAvailable = !loginInfo.checkIfUsernameInDatabase();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    loginInfo.setUsernameAvailable(usernameAvailable);
+                    //Setting appropriate text on usernameErrorLabel
+                    if (loginInfo.isUsernameAvailable()) {
+                        usernameErrorLabel.setStyle("-fx-text-fill: green");
+                        usernameErrorLabel.setText("Username available");
+                    }
+                    else  {
+                        usernameErrorLabel.setStyle("-fx-text-fill: red");
+                        usernameErrorLabel.setText("Username Already Taken!");
+                    }
                 }
+
             }
         });
 
@@ -123,8 +138,8 @@ public class RegisterController implements Initializable {
 
         //Binding registerButton.disableProperty() to conditions required for user to register
         registerButton.disableProperty().bind(Bindings.createBooleanBinding(
-                () -> !(loginInfo.isUsernameAvailable() && loginInfo.isPasswordMeetsConditions() && loginInfo.isPasswordsMatch()),
-                loginInfo.usernameAvailableProperty(), loginInfo.passwordMeetsConditionsProperty(), loginInfo.passwordsMatchProperty()
+                () -> !(loginInfo.isUsernameAvailable() && loginInfo.isPasswordMeetsConditions() && loginInfo.isPasswordsMatch() && loginInfo.isUsernameLongEnough()),
+                loginInfo.usernameAvailableProperty(), loginInfo.passwordMeetsConditionsProperty(), loginInfo.passwordsMatchProperty(), loginInfo.usernameLongEnoughProperty()
         ));
 
         //Configuring usernameTextField, passwordField so user can't put too much text

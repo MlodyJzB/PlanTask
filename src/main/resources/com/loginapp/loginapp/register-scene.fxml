@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="303.0" prefWidth="380.0" style="-fx-background-color: #0f2021;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.loginapp.loginapp.RegisterController">
+<AnchorPane onKeyPressed="#onEnterRegister" prefHeight="303.0" prefWidth="380.0" style="-fx-background-color: #0f2021;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.loginapp.loginapp.RegisterController">
     <children>
         <Button fx:id="loginButton" contentDisplay="CENTER" layoutX="100.0" layoutY="258.0" mnemonicParsing="false" onAction="#switchToLoginScene" prefHeight="15.0" prefWidth="60.0" style="-fx-background-color: #916734;" text="Login">
             <font>

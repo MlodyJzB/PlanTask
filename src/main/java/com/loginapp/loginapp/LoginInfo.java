@@ -7,13 +7,16 @@ import java.sql.*;
 import java.util.Arrays;
 import java.util.List;
 
+
 public class LoginInfo {
     static LoginInfo  loginInfo = new LoginInfo();
 
     private String username, password;
-    private final BooleanProperty usernameAvailable = new SimpleBooleanProperty();
-    private final BooleanProperty passwordMeetsConditions = new SimpleBooleanProperty();
-    private final BooleanProperty passwordsMatch = new SimpleBooleanProperty();
+    private final BooleanProperty usernameAvailable = new SimpleBooleanProperty(false);
+    private final BooleanProperty usernameLongEnough = new SimpleBooleanProperty(false);
+    private final BooleanProperty passwordMeetsConditions = new SimpleBooleanProperty(false);
+    private final BooleanProperty passwordsMatch = new SimpleBooleanProperty(false);
+
 
     private LoginInfo() {
         username = "";
@@ -23,6 +26,13 @@ public class LoginInfo {
     public static LoginInfo getInstance() {
         return loginInfo;
     }
+
+
+    public boolean isUsernameLongEnough() { return usernameLongEnough.get(); }
+
+    public BooleanProperty usernameLongEnoughProperty() { return usernameLongEnough; }
+
+    public void setUsernameLongEnough(boolean usernameLongEnough) { this.usernameLongEnough.set(usernameLongEnough); }
 
     public boolean isUsernameAvailable() {
         return usernameAvailable.get();
@@ -44,9 +54,7 @@ public class LoginInfo {
         return passwordMeetsConditions;
     }
 
-    public void setPasswordMeetsConditions(boolean passwordMeetsConditions) {
-        this.passwordMeetsConditions.set(passwordMeetsConditions);
-    }
+    public void setPasswordMeetsConditions(boolean passwordMeetsConditions) { this.passwordMeetsConditions.set(passwordMeetsConditions); }
 
     public boolean isPasswordsMatch() {
         return passwordsMatch.get();
@@ -64,7 +72,6 @@ public class LoginInfo {
         return this.username;
     }
 
-
     public void setUsername(String username) {
         this.username = username;
     }
@@ -73,10 +80,10 @@ public class LoginInfo {
         return this.password;
     }
 
-
     public void setPassword(String password) {
         this.password = password;
     }
+
 
     public boolean checkIfUserInDatabase() throws SQLException {
         try {
@@ -114,7 +121,7 @@ public class LoginInfo {
             PreparedStatement statement = con.prepareStatement("INSERT INTO loginInfo(username, password) VALUES (?, ?)");
             statement.setString(1, getUsername());
             statement.setString(2, getPassword());
-            statement.executeQuery();
+            statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
