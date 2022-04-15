@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="303.0" prefWidth="380.0" style="-fx-background-color: #0f2021;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.loginapp.loginapp.RegisterController">
+<AnchorPane prefHeight="303.0" prefWidth="380.0" style="-fx-background-color: #0f2021; -fx-background-radius: 15;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.loginapp.loginapp.RegisterController">
     <children>
         <Button fx:id="loginButton" contentDisplay="CENTER" layoutX="100.0" layoutY="258.0" mnemonicParsing="false" onAction="#switchToLoginScene" prefHeight="15.0" prefWidth="60.0" style="-fx-background-color: #916734;" text="Login">
             <font>
@@ -18,7 +18,7 @@
             </font>
         </Button>
         <Text fill="#dba563" layoutX="24.0" layoutY="247.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Already have an account?" />
-        <AnchorPane layoutX="174.0" layoutY="12.0" prefHeight="282.0" prefWidth="197.0" style="-fx-background-color: #dba563;">
+        <AnchorPane layoutX="174.0" layoutY="12.0" prefHeight="282.0" prefWidth="197.0" style="-fx-background-color: #dba563; -fx-background-radius: 15;">
             <children>
                 <Text layoutX="66.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Register">
                     <font>

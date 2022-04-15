@@ -11,8 +11,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.net.URL;
@@ -50,8 +52,12 @@ public class LoginController //implements Initializable
     public void goToLogin() throws IOException {
         FXMLLoader pane = new FXMLLoader(getClass().getResource("register-scene.fxml"));
         Parent root = (Parent) pane.load();
+        Scene scene = new Scene(root);
+        scene.setFill(Color.TRANSPARENT);
         Stage stage = new Stage();
-        stage.setScene(new Scene(root));
+        stage.initStyle(StageStyle.TRANSPARENT);
+        stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
     @FXML

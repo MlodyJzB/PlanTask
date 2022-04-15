@@ -22,7 +22,8 @@ import java.sql.SQLException;
 import java.util.*;
 
 
-public class RegisterController implements Initializable {
+public class RegisterController //implements Initializable
+{
     private LoginInfo loginInfo;
     private BooleanProperty canRegister = new SimpleBooleanProperty();
 
@@ -70,7 +71,7 @@ public class RegisterController implements Initializable {
     }
 
 
-    @Override
+    //@Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loginInfo = new LoginInfo();
 
