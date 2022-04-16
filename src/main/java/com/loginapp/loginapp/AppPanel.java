@@ -1,7 +1,5 @@
 package com.loginapp.loginapp;
 
-import javafx.animation.FadeTransition;
-import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,8 +8,6 @@ import javafx.scene.Parent;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.util.Duration;
-import org.w3c.dom.events.MouseEvent;
 
 import java.io.IOException;
 import java.net.URL;
@@ -54,10 +50,7 @@ public class AppPanel implements Initializable {
         });*/
 
     }
-    @FXML
-    public void home(MouseEvent e){
-        ourWindow.setCenter(pane3);
-    }
+
 
     private void LoadSite(String site){
         Parent root = null;
@@ -68,11 +61,23 @@ public class AppPanel implements Initializable {
         }
         ourWindow.setCenter(root);
     }
-
     public void planner(ActionEvent event) {
         LoadSite("planner");
     }
+    public void calendar(ActionEvent event) {
+        LoadSite("calendar");
+    }
+    public void statics(ActionEvent event) {
+        LoadSite("statistics");
+    }
+    public void settings(ActionEvent event) {
+        LoadSite("settings");
+    }
     public void Exit() {
         System.exit(0);
+    }
+
+    public void homepanel(ActionEvent event) {
+        ourWindow.setCenter(pane3);
     }
 }
