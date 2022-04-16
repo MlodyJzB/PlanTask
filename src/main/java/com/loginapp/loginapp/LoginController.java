@@ -4,6 +4,7 @@ import com.loginapp.loginapp.LoginInfo;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -11,10 +12,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.net.URL;
@@ -22,7 +21,7 @@ import java.sql.*;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class LoginController //implements Initializable
+public class LoginController implements Initializable
 {
     private LoginInfo loginInfo;
 
@@ -36,7 +35,6 @@ public class LoginController //implements Initializable
     private Button loginButton, onClickRegisterScene;
     @FXML
     private void onClickLogin() throws SQLException {
-        loginInfo = new LoginInfo();
         loginInfo.setUsername(usernameTextField.getText());
         loginInfo.setPassword(passwordField.getText());
         if (loginInfo.checkIfUserInDatabase()) {
@@ -48,18 +46,7 @@ public class LoginController //implements Initializable
             loginStatusText.setText("Incorrect username/password");
         }
     }
-    @FXML
-    public void goToLogin() throws IOException {
-        FXMLLoader pane = new FXMLLoader(getClass().getResource("register-scene.fxml"));
-        Parent root = (Parent) pane.load();
-        Scene scene = new Scene(root);
-        scene.setFill(Color.TRANSPARENT);
-        Stage stage = new Stage();
-        stage.initStyle(StageStyle.TRANSPARENT);
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.show();
-    }
+
     @FXML
     private void switchToRegisterScene(ActionEvent event) throws IOException {
         Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("register-scene.fxml")));
@@ -68,6 +55,8 @@ public class LoginController //implements Initializable
     }
 
     public static void limitMaxChar(TextField tf, final int maxLength) {
+        //Listener made to check if new value of text-field isn't too long
+        //and if it is substring from first char to max length
         tf.textProperty().addListener((ov, oldValue, newValue) -> {
             if (newValue.length() > maxLength) {
                 tf.setText(newValue.substring(0, maxLength));
@@ -78,6 +67,8 @@ public class LoginController //implements Initializable
     public static void configureTextFields(TextField[] textFields) {
         for (TextField tf : textFields) {
             limitMaxChar(tf, 20);
+            //Checking if change contains spaces and replacing them with ""
+            //change can be pasted text or clicked space
             tf.setTextFormatter(new TextFormatter<>(change -> {
                 if (change.getText().contains(" ")) {
                     change.setText(change.getText().replace(" ", ""));
@@ -87,7 +78,7 @@ public class LoginController //implements Initializable
         }
     }
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        loginInfo = new LoginInfo();
+        loginInfo = LoginInfo.getInstance();
         configureTextFields(new TextField[]{usernameTextField, passwordField});
     }
 

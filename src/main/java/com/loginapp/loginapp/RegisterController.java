@@ -15,6 +15,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 import java.io.IOException;
 import java.net.URL;
@@ -22,21 +24,19 @@ import java.sql.SQLException;
 import java.util.*;
 
 
-public class RegisterController //implements Initializable
-{
+public class RegisterController implements Initializable {
     private LoginInfo loginInfo;
-    private BooleanProperty canRegister = new SimpleBooleanProperty();
 
     @FXML
-    private Button registerButton, loginButton;
+    private Button registerButton;
     @FXML
     private ImageView minCharImageView, minCapLettersImageView, minDigitsImageView;
     @FXML
     private Label minCharLabel, minCapLettersLabel, minDigitsLabel, usernameErrorLabel, repeatedPasswordErrorLabel, registerStatusLabel;
     @FXML
     private TextField usernameTextField, passwordField, repeatedPasswordField;
-    @FXML
-    private void onClickRegister() throws SQLException {
+    @FXML //Function called on click of the registerButton
+    private void onClickRegister() {
         loginInfo.setUsername(usernameTextField.getText());
         loginInfo.setPassword(passwordField.getText());
         try {
@@ -48,20 +48,25 @@ public class RegisterController //implements Initializable
             registerStatusLabel.setStyle("-fx-text-fill: red");
             registerStatusLabel.setText("Failed to register!");
         }
-
-
     }
-    @FXML
+
+    @FXML //Function called on click of the registerButton
+    private void onEnterRegister(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER && !registerButton.disableProperty().getValue())
+            onClickRegister();
+    }
+
+    @FXML //Function called on click of the loginButton
     private void switchToLoginScene(ActionEvent event) throws IOException {
-        Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("main-scene.fxml")));
+        //Loading new scene from fxml file on click
+        Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("login-scene.fxml")));
         Scene scene = ((Node)event.getSource()).getScene();
         scene.setRoot(fxmlLoader);
     }
 
-
-
-    private void setConditionStyle(ImageView imageView, Label label, boolean condition) {
-        if (condition) {
+    private void setConditionStyle(ImageView imageView, Label label, boolean conditionTrue) {
+        //Set different styles of password condition dependent on conditionTrue
+        if (conditionTrue) {
             imageView.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Images/tickSymbol.png"))));
             label.setStyle("-fx-text-fill: green");
         } else {
@@ -70,42 +75,55 @@ public class RegisterController //implements Initializable
         }
     }
 
-
-    //@Override
+    @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        loginInfo = new LoginInfo();
+        loginInfo = LoginInfo.getInstance();
 
+        //Creating listener to check whether user has clicked out of usernameTextField and then
+        //whether user is in database and setting appropriate text on usernameErrolLabel
         usernameTextField.focusedProperty().addListener((ov, oldVal, newVal) -> {
-            loginInfo.setUsername(usernameTextField.getText());
-            if (!newVal && !Objects.equals(usernameTextField.getText(), "")) {
-                boolean usernameAvailable = false;
-                try {
-                    usernameAvailable = !loginInfo.checkIfUsernameInDatabase();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-                loginInfo.setUsernameAvailable(usernameAvailable);
-                if (loginInfo.isUsernameAvailable()) {
-                    usernameErrorLabel.setStyle("-fx-text-fill: green");
-                    usernameErrorLabel.setText("Username available");
-                }
-                else  {
+            //If user has left field and field isn't empty
+            if (!newVal) {
+                if (usernameTextField.getText().length() < 3) {
+                    loginInfo.setUsernameLongEnough(false);
                     usernameErrorLabel.setStyle("-fx-text-fill: red");
-                    usernameErrorLabel.setText("Username Already Taken!");
+                    usernameErrorLabel.setText("Username too short!");
+                } else {
+                    boolean usernameAvailable = false;
+                    loginInfo.setUsername(usernameTextField.getText());
+                    loginInfo.setUsernameLongEnough(true);
+                    try {
+                        //Checking if user in database
+                        usernameAvailable = !loginInfo.checkIfUsernameInDatabase();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    loginInfo.setUsernameAvailable(usernameAvailable);
+                    //Setting appropriate text on usernameErrorLabel
+                    if (loginInfo.isUsernameAvailable()) {
+                        usernameErrorLabel.setStyle("-fx-text-fill: green");
+                        usernameErrorLabel.setText("Username available");
+                    }
+                    else  {
+                        usernameErrorLabel.setStyle("-fx-text-fill: red");
+                        usernameErrorLabel.setText("Username Already Taken!");
+                    }
                 }
+
             }
         });
 
+        //Creating listener to check whether password meets conditions and setting appropriate styles based on it
         passwordField.textProperty().addListener((ov, oldVal, newVal) -> {
             List<Boolean> conditionsList = LoginInfo.checkPassword(newVal, 8);
             setConditionStyle(minCharImageView, minCharLabel, conditionsList.get(0));
             setConditionStyle(minCapLettersImageView, minCapLettersLabel, conditionsList.get(1));
             setConditionStyle(minDigitsImageView, minDigitsLabel, conditionsList.get(2));
-
+            //Setting if password meets all conditions
             loginInfo.setPasswordMeetsConditions(!conditionsList.contains(false));
-            canRegister.setValue(!conditionsList.contains(false));
         });
 
+        //Creating listener to check whether password and repeated passwords match
         repeatedPasswordField.textProperty().addListener((ov, oldVal, newVal) -> {
             boolean passwordsMatch = newVal.equals(passwordField.getText());
             loginInfo.setPasswordsMatch(passwordsMatch);
@@ -118,11 +136,14 @@ public class RegisterController //implements Initializable
             }
         });
 
+        //Binding registerButton.disableProperty() to conditions required for user to register
         registerButton.disableProperty().bind(Bindings.createBooleanBinding(
-                () -> !(loginInfo.isUsernameAvailable() && loginInfo.isPasswordMeetsConditions() && loginInfo.isPasswordsMatch()),
-                loginInfo.usernameAvailableProperty(), loginInfo.passwordMeetsConditionsProperty(), loginInfo.passwordsMatchProperty()
+                () -> !(loginInfo.isUsernameAvailable() && loginInfo.isPasswordMeetsConditions() && loginInfo.isPasswordsMatch() && loginInfo.isUsernameLongEnough()),
+                loginInfo.usernameAvailableProperty(), loginInfo.passwordMeetsConditionsProperty(), loginInfo.passwordsMatchProperty(), loginInfo.usernameLongEnoughProperty()
         ));
 
+        //Configuring usernameTextField, passwordField so user can't put too much text
+        // and can't have spaces in username of password
         LoginController.configureTextFields(new TextField[]{usernameTextField, passwordField});
 
     }
