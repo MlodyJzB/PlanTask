@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="pane3" prefHeight="417.0" prefWidth="710.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.loginapp.loginapp.AppPanel">
+<AnchorPane fx:id="pane3" prefHeight="417.0" prefWidth="710.0" style="-fx-background-color: #e8e8e8; -fx-background-radius: 0 15 15 0;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.loginapp.loginapp.Statistics">
    <children>
-      <Button layoutX="289.0" layoutY="145.0" mnemonicParsing="false" text="3" />
+      <ImageView fx:id="exit" fitHeight="31.0" fitWidth="32.0" layoutX="10.0" layoutY="10.0" onMousePressed="#Exit" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+         <image>
+            <Image url="@../../../Images/manu9.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="minimalize_button" fitHeight="24.0" fitWidth="24.0" layoutX="223.0" layoutY="15.0" onMouseReleased="#Minimize_clicked" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="5.0">
+         <image>
+            <Image url="@../../../Images/max_min.jpg" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

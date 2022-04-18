@@ -4,6 +4,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -235,6 +237,20 @@ public class Calendar {
     void drawMonth(){
         drawNewCall();
         refreschLabel();
+    }
+    public void Exit() {
+        System.exit(0);
+    }
+    @FXML
+    private ImageView minimalize_button;
+
+    @FXML
+    private void Minimize_clicked() {
+        Stage stage = (Stage) minimalize_button.getScene().getWindow();
+        //stage.setIconified(true);
+        stage.setMaximized(!stage.isMaximized());
+        //Restore down
+        stage.setMaximized(stage.isMaximized());
     }
 
 }
