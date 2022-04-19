@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import org.jetbrains.annotations.NotNull;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -15,6 +16,7 @@ import java.util.List;
 
 public class Calendar {
 
+    /* adding buttons and labels */
     @FXML
     private Button mon1;
     @FXML
@@ -157,9 +159,9 @@ public class Calendar {
             if (weekDays >= first && days <= monthLenght) {
                 day.setText(String.valueOf(days));
                 days++;
-                changeTextColour(day, "#000000", " #FFFFFF");
-                if(isSpecialDay(getButtonDate(day))) changeTextColour(day, "#d66813", " #FFFFFF");
-                if (isToday(getButtonDate(day))) changeTextColour(day, "#3516ff", " #FFFFFF");
+                changeTextColour(day, "#000000", "  #e8e8e8");
+                if(isSpecialDay(getButtonDate(day))) changeTextColour(day, "#d66813", "  #e8e8e8");
+                if (isToday(getButtonDate(day))) changeTextColour(day, "#3516ff", "  #e8e8e8");
 
             } else {
                 day.setText("");
@@ -170,6 +172,7 @@ public class Calendar {
     }
 
     public void previousMonth(ActionEvent actionEvent) {
+        /* changing month to previous, updating buttons and labels */
         currentdate = currentdate.minusMonths(1);
         drawMonth();
 
@@ -177,6 +180,7 @@ public class Calendar {
 
 
     public void nextMonth(ActionEvent actionEvent) {
+        /* changing month to previous and updating buttons */
         currentdate = currentdate.plusMonths(1);
         drawMonth();
 
@@ -190,6 +194,7 @@ public class Calendar {
     }
 
     public boolean isSpecialDay(LocalDate date){
+        /* checking if day is special */
         if(date.getDayOfWeek().getValue() == 7) return true;
         if(date.getDayOfWeek().getValue() == 6) return true;
         if(date.getMonthValue() == 1 && date.getDayOfMonth()==1) return true;
@@ -220,21 +225,23 @@ public class Calendar {
         monthLabel.setText(String.valueOf(currentMonth) + "  " + String.valueOf(currentdate.getYear()));
     }
 
-    boolean isToday(LocalDate localDate){
+    boolean isToday(@NotNull LocalDate localDate){
 
         if (localDate.equals(LocalDate.now())) return true;
         return false;
     }
 
-    void changeTextColour(Button button, String colour, String backColour){
+    void changeTextColour(@NotNull Button button, String colour, String backColour){
         button.setStyle("-fx-text-fill: "+colour+";"+" -fx-background-color: "+backColour+";");
     }
-    LocalDate getButtonDate(Button button){
+
+    LocalDate getButtonDate(@NotNull Button button){
         LocalDate dayDate = LocalDate.of(currentdate.getYear(), currentdate.getMonth(), Integer.parseInt(button.getText()));
         return dayDate;
     }
 
     void drawMonth(){
+        /*  updating buttons and labels */
         drawNewCall();
         refreschLabel();
     }
