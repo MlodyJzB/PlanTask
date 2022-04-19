@@ -6,6 +6,9 @@ module com.loginapp.loginapp {
     requires json;
 
 
-    opens com.loginapp.loginapp to javafx.fxml;
-    exports com.loginapp.loginapp;
+    opens com.app.loginapp to javafx.fxml;
+    exports com.app.loginapp;
+
+    opens com.app.app to javafx.fxml;
+    exports com.app.app;
 }

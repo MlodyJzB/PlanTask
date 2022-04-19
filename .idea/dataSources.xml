@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="planTask@plan-task-server.database.windows.net" uuid="eb4709e7-d7b9-43d7-ad63-1fd1772c824e">
+    <data-source source="LOCAL" name="planTask@plan-task-server.database.windows.net" uuid="67b3d199-1fcd-48fc-a486-9e6920f9c2c7">
       <driver-ref>azure.ms</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</jdbc-driver>
