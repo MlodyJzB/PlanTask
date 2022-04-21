@@ -1,4 +1,4 @@
-package WeatherInfo;
+package com.app.WeatherInfo;
 
 import org.json.JSONException;
 
@@ -13,15 +13,15 @@ public class WeatherInfo {
       }
   }
   
-      public static class IncorectZipCodeFormatException 
+      public static class IncorrectZipCodeFormatException
     extends ZipCodeException {
-      public IncorectZipCodeFormatException(String errorMessage) {
+      public IncorrectZipCodeFormatException(String errorMessage) {
           super(errorMessage);
       }
   }
 
     private String zipCode = "00-001";
-    private Coords coordinates = new Coords(0, 0);
+    private final Coords coordinates = new Coords(0, 0);
 
     public static class ZipCodeException 
   extends Exception {
@@ -30,8 +30,8 @@ public class WeatherInfo {
     }
 }
 
-    public void setZipCode(String zipCode) throws WeatherInfo.IncorectZipCodeFormatException{
-        if (!IsCodeFormatCorrect(zipCode)) throw new IncorectZipCodeFormatException("Incorect zipCode format; expected XX-XXX, but was: " + zipCode);
+    public void setZipCode(String zipCode) throws WeatherInfo.IncorrectZipCodeFormatException{
+        if (!IsCodeFormatCorrect(zipCode)) throw new IncorrectZipCodeFormatException("Incorect zipCode format; expected XX-XXX, but was: " + zipCode);
         this.zipCode = zipCode;
     }
 
@@ -80,14 +80,14 @@ public class WeatherInfo {
 
 
     public static WeatherInfo.Coords getCoords(JSONObject json, String zipcode) throws JSONException, NonexistentZipCodeException{
-        JSONObject results = new JSONObject();
+        JSONObject results;
         try{
         results = json.getJSONObject("results");
         }
         catch (JSONException a){ throw new NonexistentZipCodeException("Zipcode " + zipcode + " do not exist.");}
         JSONArray arr = results.getJSONArray(zipcode);
-        Double lat = Double.valueOf(arr.getJSONObject(0).get("latitude").toString());
-        Double lon = Double.valueOf(arr.getJSONObject(0).get("longitude").toString());
+        double lat = Double.valueOf(arr.getJSONObject(0).get("latitude").toString());
+        double lon = Double.valueOf(arr.getJSONObject(0).get("longitude").toString());
         Coords coordinates = new Coords(lat, lon);
         return coordinates;
     }

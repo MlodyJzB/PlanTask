@@ -5,6 +5,7 @@ module com.loginapp.loginapp {
     requires ical4j;
     requires json;
     requires org.jetbrains.annotations;
+    requires org.apache.commons.io;
 
 
     opens com.app.loginapp to javafx.fxml;

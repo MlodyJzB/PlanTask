@@ -1,4 +1,4 @@
-package WeatherInfo;
+package com.app.WeatherInfo;
 
 import java.io.IOException;
 import org.json.JSONException;
@@ -20,7 +20,6 @@ import java.io.FileWriter;
 public class JsonHandling {
 
     public static JSONObject getFromUrl(String url) throws IOException, JSONException{
-        String jsonStr = null;
         URL jsonUrl = new URL(url);
         HttpURLConnection connection = (HttpURLConnection) jsonUrl.openConnection();
         connection.setDoOutput(true);
@@ -31,7 +30,7 @@ public class JsonHandling {
         connection.connect();
         InputStream inStream = connection.getInputStream();
         Scanner scanner = new Scanner(inStream, "UTF-8");
-        jsonStr = scanner.useDelimiter("\\Z").next();
+        String jsonStr = scanner.useDelimiter("\\Z").next();
         scanner.close();
         JSONObject json = new JSONObject(jsonStr);
         return json;

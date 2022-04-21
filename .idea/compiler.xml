@@ -10,6 +10,8 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="login app" target="17" />
+      <module name="loginApp" target="1.5" />
       <module name="planTask" target="17" />
     </bytecodeTargetLevel>
   </component>
