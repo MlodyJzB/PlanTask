@@ -1,6 +1,7 @@
 package com.app.WeatherInfo;
 
 import org.json.JSONException;
+import java.io.File;
 
 import org.json.JSONObject;
 import org.json.JSONArray;
@@ -98,6 +99,15 @@ public class WeatherInfo {
         Double temp = Double.valueOf(tempJson.toString());
         return temp;
     }
+    public void updateZipCode(String zipCode) throws IncorrectZipCodeFormatException, java.io.IOException, JSONException{
+        this.zipCode = zipCode;
+        JsonHandling handle = new JsonHandling();
+        JSONObject zipInfo = handle.getFromUrl("https://app.zipcodebase.com/api/v1/search?apikey=f6178de0-b1e6-11ec-ad2d-a971b4172138&codes=" + zipCode);
+        File file = new File("");
+        String path = file.getAbsolutePath() + "\\src\\main\\java\\com\\app\\WeatherInfo\\zipCode.json";
+        handle.writeToFile(zipInfo, path);
+    }
+
 
 
 }
