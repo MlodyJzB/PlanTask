@@ -1,16 +1,13 @@
 package com.app.WeatherInfo;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import org.junit.*;
-
-import java.io.File;
-
-
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.junit.Test;
 
+import java.io.File;
 import java.io.IOException;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class WeatherInfoTest {
     @Test

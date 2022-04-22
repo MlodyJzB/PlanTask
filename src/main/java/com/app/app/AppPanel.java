@@ -5,10 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
-import javafx.geometry.VPos;
-import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -20,12 +17,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -39,7 +34,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.concurrent.TimeUnit;
 
 public class AppPanel implements Initializable {
     @FXML
@@ -50,10 +44,19 @@ public class AppPanel implements Initializable {
     private AnchorPane pane3;
     @FXML
     private VBox Incoming_events_Vbox;
+    @FXML
+    private Label Temperature, Weather_1, Weather_2, Weather_3;
 
     private volatile boolean stop = false;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        int[] a = {5, 23, 12, 40};
+        Temperature.setText(a[0]+" °C");
+        Weather_1.setText(a[1]+" km/h");
+        Weather_2.setText(a[2]+" %");
+        Weather_3.setText(a[3]+" %");
+
         JSONObject jsonCalendar = new JSONObject();
         JSONObject jsonCalendar1 = new JSONObject();
         List<JSONObject> listOfEvents = new ArrayList();

@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="pane3" prefHeight="417.0" prefWidth="710.0" style="-fx-background-color: #e8e8e8; -fx-background-radius: 0 15 15 0;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.app.Calendar">
+   <children>
+      <Button fx:id="mon1" alignment="CENTER" layoutX="18.0" layoutY="98.0" mnemonicParsing="false" onAction="#getDay" prefHeight="45.0" prefWidth="60.0" style="-fx-background-color: #e8e8e8;" text="1">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+      <Button fx:id="mon2" alignment="CENTER" layoutX="18.0" layoutY="149.0" mnemonicParsing="false" onAction="#getDay" prefHeight="45.0" prefWidth="60.0" style="-fx-background-color: #e8e8e8;" text="Button">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+      <Button fx:id="mon3" alignment="CENTER" layoutX="18.0" layoutY="200.0" mnemonicParsing="false" onAction="#getDay" prefHeight="45.0" prefWidth="60.0" style="-fx-background-color: #e8e8e8;" text="Button">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+      <Label fx:id="monthLabel" alignment="CENTER" layoutX="153.0" layoutY="23.0" prefHeight="33.0" prefWidth="196.0" text="Label">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Button fx:id="previousb" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="1.0" layoutX="47.0" layoutY="17.0" mnemonicParsing="false" onAction="#previousMonth" prefHeight="33.0" prefWidth="37.0" style="-fx-background-color: #e8e8e8;" text="&lt;">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="nextb" alignment="CENTER" layoutX="419.0" layoutY="17.0" mnemonicParsing="false" onAction="#nextMonth" prefHeight="33.0" prefWidth="37.0" style="-fx-background-color: #e8e8e8;" text="&gt;" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="tue1" alignment="CENTER" layoutX="85.0" layoutY="98.0" mnemonicParsing="false" onAction="#getDay" prefHeight="45.0" prefWidth="60.0" style="-fx-background-color: #e8e8e8;" text="Button">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+      <Button fx:id="tue2" alignment="CENTER" layoutX="85.0" layoutY="149.0" mnemonicParsing="false" onAction="#getDay" prefHeight="45.0" prefWidth="60.0" style="-fx-background-color: #e8e8e8;" text="Button">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+      <Button fx:id="tue3" alignment="CENTER" layoutX="85.0" layoutY="200.0" mnemonicParsing="false" onAction="#getDay" prefHeight="45.0" prefWidth="60.0" style="-fx-background-color: #e8e8e8;" text="Button">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+      <Button fx:id="wed1" alignment="CENTER" layoutX="153.0" layoutY="98.0" mnemonicParsing="false" onAction="#getDay" prefHeight="45.0" prefWidth="60.0" style="-fx-background-color: #e8e8e8;" text="Button">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+      <Button fx:id="wed2" alignment="CENTER" layoutX="153.0" layoutY="149.0" mnemonicParsing="false" onAction="#getDay" prefHeight="45.0" prefWidth="60.0" style="-fx-background-color: #e8e8e8;" text="Button">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+      <Button fx:id="wed3" alignment="CENTER" layoutX="153.0" layoutY="200.0" mnemonicParsing="false" onAction="#getDay" prefHeight="45.0" prefWidth="60.0" style="-fx-background-color: #e8e8e8;" text="Button">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+      <Button fx:id="thu1" alignment="CENTER" layoutX="220.0" layoutY="98.0" mnemonicParsing="false" onAction="#getDay" prefHeight="45.0" prefWidth="60.0" style="-fx-background-color: #e8e8e8;" text="Button">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+      <Button fx:id="thu2" alignment="CENTER" layoutX="220.0" layoutY="149.0" mnemonicParsing="false" onAction="#getDay" prefHeight="45.0" prefWidth="60.0" style="-fx-background-color: #e8e8e8;" text="Button">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+      <Button fx:id="thu3" alignment="CENTER" layoutX="220.0" layoutY="200.0" mnemonicParsing="false" onAction="#getDay" prefHeight="45.0" prefWidth="60.0" style="-fx-background-color: #e8e8e8;" text="Button">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+      <Button fx:id="fri1" alignment="CENTER" layoutX="286.0" layoutY="98.0" mnemonicParsing="false" onAction="#getDay" prefHeight="45.0" prefWidth="60.0" style="-fx-background-color: #e8e8e8;" text="Button">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+      <Button fx:id="fri2" alignment="CENTER" layoutX="286.0" layoutY="149.0" mnemonicParsing="false" onAction="#getDay" prefHeight="45.0" prefWidth="60.0" style="-fx-background-color: #e8e8e8;" text="Button">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+      <Button fx:id="fri3" alignment="CENTER" layoutX="286.0" layoutY="200.0" mnemonicParsing="false" onAction="#getDay" prefHeight="45.0" prefWidth="60.0" style="-fx-background-color: #e8e8e8;" text="Button">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+      <Button fx:id="sat1" alignment="CENTER" layoutX="353.0" layoutY="98.0" mnemonicParsing="false" onAction="#getDay" prefHeight="45.0" prefWidth="60.0" style="-fx-background-color: #e8e8e8;" text="Button">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+      <Button fx:id="sat2" alignment="CENTER" layoutX="353.0" layoutY="149.0" mnemonicParsing="false" onAction="#getDay" prefHeight="45.0" prefWidth="60.0" style="-fx-background-color: #e8e8e8;" text="Button">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+      <Button fx:id="sat3" alignment="CENTER" layoutX="353.0" layoutY="200.0" mnemonicParsing="false" onAction="#getDay" prefHeight="45.0" prefWidth="60.0" style="-fx-background-color: #e8e8e8;" text="Button">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+      <Button fx:id="sun1" alignment="CENTER" layoutX="421.0" layoutY="98.0" mnemonicParsing="false" onAction="#getDay" prefHeight="45.0" prefWidth="60.0" style="-fx-background-color: #e8e8e8;" text="Button">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+      <Button fx:id="sun2" alignment="CENTER" layoutX="421.0" layoutY="149.0" mnemonicParsing="false" onAction="#getDay" prefHeight="45.0" prefWidth="60.0" style="-fx-background-color: #e8e8e8;" text="Button">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+      <Button fx:id="sun3" alignment="CENTER" layoutX="421.0" layoutY="200.0" mnemonicParsing="false" onAction="#getDay" prefHeight="45.0" prefWidth="60.0" style="-fx-background-color: #e8e8e8;" text="Button">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+      <Button fx:id="mon4" alignment="CENTER" layoutX="18.0" layoutY="252.0" mnemonicParsing="false" onAction="#getDay" prefHeight="45.0" prefWidth="60.0" style="-fx-background-color: #e8e8e8;" text="Button">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+      <Button fx:id="tue4" alignment="CENTER" layoutX="85.0" layoutY="252.0" mnemonicParsing="false" onAction="#getDay" prefHeight="45.0" prefWidth="60.0" style="-fx-background-color: #e8e8e8;" text="Button">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+      <Button fx:id="wed4" alignment="CENTER" layoutX="153.0" layoutY="252.0" mnemonicParsing="false" onAction="#getDay" prefHeight="45.0" prefWidth="60.0" style="-fx-background-color: #e8e8e8;" text="Button">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+      <Button fx:id="thu4" alignment="CENTER" layoutX="220.0" layoutY="252.0" mnemonicParsing="false" onAction="#getDay" prefHeight="45.0" prefWidth="60.0" style="-fx-background-color: #e8e8e8;" text="Button">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+      <Button fx:id="fri4" alignment="CENTER" layoutX="286.0" layoutY="252.0" mnemonicParsing="false" onAction="#getDay" prefHeight="45.0" prefWidth="60.0" style="-fx-background-color: #e8e8e8;" text="Button">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+      <Button fx:id="sat4" alignment="CENTER" layoutX="353.0" layoutY="252.0" mnemonicParsing="false" onAction="#getDay" prefHeight="45.0" prefWidth="60.0" style="-fx-background-color: #e8e8e8;" text="Button">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+      <Button fx:id="sun4" alignment="CENTER" layoutX="421.0" layoutY="252.0" mnemonicParsing="false" onAction="#getDay" prefHeight="45.0" prefWidth="60.0" style="-fx-background-color: #e8e8e8;" text="Button">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+      <Button fx:id="mon5" alignment="CENTER" layoutX="18.0" layoutY="303.0" mnemonicParsing="false" onAction="#getDay" prefHeight="45.0" prefWidth="60.0" style="-fx-background-color: #e8e8e8;" text="Button">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+      <Button fx:id="tue5" alignment="CENTER" layoutX="85.0" layoutY="303.0" mnemonicParsing="false" onAction="#getDay" prefHeight="45.0" prefWidth="60.0" style="-fx-background-color: #e8e8e8;" text="Button">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+      <Button fx:id="wed5" alignment="CENTER" layoutX="153.0" layoutY="303.0" mnemonicParsing="false" onAction="#getDay" prefHeight="45.0" prefWidth="60.0" style="-fx-background-color: #e8e8e8;" text="Button">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+      <Button fx:id="thu5" alignment="CENTER" layoutX="221.0" layoutY="303.0" mnemonicParsing="false" onAction="#getDay" prefHeight="45.0" prefWidth="60.0" style="-fx-background-color: #e8e8e8;" text="Button">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+      <Button fx:id="fri5" alignment="CENTER" layoutX="286.0" layoutY="303.0" mnemonicParsing="false" onAction="#getDay" prefHeight="45.0" prefWidth="60.0" style="-fx-background-color: #e8e8e8;" text="Button">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+      <Button fx:id="sat5" alignment="CENTER" layoutX="353.0" layoutY="303.0" mnemonicParsing="false" onAction="#getDay" prefHeight="45.0" prefWidth="60.0" style="-fx-background-color: #e8e8e8;" text="Button">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+      <Button fx:id="sun5" alignment="CENTER" layoutX="421.0" layoutY="303.0" mnemonicParsing="false" onAction="#getDay" prefHeight="45.0" prefWidth="60.0" style="-fx-background-color: #e8e8e8;" text="Button">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+      <Button fx:id="mon6" alignment="CENTER" layoutX="18.0" layoutY="355.0" mnemonicParsing="false" onAction="#getDay" prefHeight="45.0" prefWidth="60.0" style="-fx-background-color: #e8e8e8;" text="Button">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+      <Button fx:id="tue6" alignment="CENTER" layoutX="85.0" layoutY="355.0" mnemonicParsing="false" onAction="#getDay" prefHeight="45.0" prefWidth="60.0" style="-fx-background-color: #e8e8e8;" text="Button">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
+      <Label alignment="CENTER" layoutX="34.0" layoutY="73.0" text="MON">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="101.0" layoutY="73.0" text="TUE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="169.0" layoutY="73.0" text="WED">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="237.0" layoutY="73.0" text="THU">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="302.0" layoutY="73.0" text="FRI">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="369.0" layoutY="73.0" text="SAT">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="437.0" layoutY="73.0" text="SUN">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="exit" fitHeight="31.0" fitWidth="32.0" layoutX="10.0" layoutY="10.0" onMousePressed="#Exit" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+         <image>
+            <Image url="@../../../Images/manu9.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="minimalize_button" fitHeight="24.0" fitWidth="24.0" layoutX="223.0" layoutY="15.0" onMouseReleased="#Minimize_clicked" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="5.0">
+         <image>
+            <Image url="@../../../Images/max_min.jpg" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
