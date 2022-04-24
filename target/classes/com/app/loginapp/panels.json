@@ -1,0 +1,6 @@
+{
+  "info1": {"number": 1,"image": "img.png","taken": false,"name": ""},
+  "info2": {"number": 2,"image": "img.png","taken": false,"name": ""},
+  "info3": {"number": 3,"image": "img.png","taken": false,"name": ""},
+  "info4": {"number": 4,"image": "img.png","taken": false,"name": ""}
+}

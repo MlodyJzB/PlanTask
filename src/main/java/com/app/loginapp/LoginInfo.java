@@ -99,7 +99,9 @@ public class LoginInfo {
         }
         return false;
     }
-
+    public void Exit() {
+        System.exit(0);
+    }
     public boolean checkIfUsernameInDatabase() throws SQLException {
         try {
             String connectionString = "jdbc:sqlserver://plan-task-server.database.windows.net:1433;database=planTask;user=JakubNitkiewicz;password=planTask123;encrypt=true;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";

@@ -10,61 +10,74 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane onKeyPressed="#onEnterRegister" prefHeight="303.0" prefWidth="380.0" style="-fx-background-color: #0f2021;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.loginapp.RegisterController">
-    <children>
-        <Button fx:id="loginButton" contentDisplay="CENTER" layoutX="100.0" layoutY="258.0" mnemonicParsing="false" onAction="#switchToLoginScene" prefHeight="15.0" prefWidth="60.0" style="-fx-background-color: #916734;" text="Login">
-            <font>
-                <Font name="System Bold" size="12.0" />
-            </font>
-        </Button>
-        <Text fill="#dba563" layoutX="24.0" layoutY="247.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Already have an account?" />
-        <AnchorPane layoutX="174.0" layoutY="12.0" prefHeight="282.0" prefWidth="197.0" style="-fx-background-color: #dba563;">
-            <children>
-                <Text layoutX="66.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Register">
-                    <font>
-                        <Font name="System Bold" size="20.0" />
-                    </font>
-                </Text>
-                <PasswordField fx:id="passwordField" alignment="CENTER" layoutX="11.0" layoutY="84.0" prefWidth="175.0" promptText="password" style="-fx-background-color: #916734;" />
-                <TextField fx:id="usernameTextField" alignment="CENTER" layoutX="11.0" layoutY="52.0" prefWidth="175.0" promptText="username" style="-fx-background-color: #916734;" />
-                <PasswordField fx:id="repeatedPasswordField" alignment="CENTER" layoutX="12.0" layoutY="115.0" prefWidth="175.0" promptText="repeat password" style="-fx-background-color: #916734;" />
-                <Button fx:id="registerButton" layoutX="122.0" layoutY="246.0" mnemonicParsing="false" onAction="#onClickRegister" prefHeight="25.0" prefWidth="68.0" style="-fx-background-color: #916734;" text="Register">
-                    <font>
-                        <Font name="System Bold" size="12.0" />
-                    </font>
-                </Button>
-                <Label fx:id="minCapLettersLabel" layoutX="38.0" layoutY="191.0" prefHeight="17.0" prefWidth="142.0" style="-fx-text-fill: red;" text="At least one capital letter" />
-                <Label fx:id="minCharLabel" layoutX="38.0" layoutY="166.0" prefHeight="17.0" prefWidth="111.0" style="-fx-text-fill: red;" text="At least 8 characters" />
-                <Label fx:id="minDigitsLabel" layoutX="38.0" layoutY="218.0" prefHeight="17.0" prefWidth="142.0" style="-fx-text-fill: red;" text="At least one digit" />
-                <ImageView fx:id="minCharImageView" fitHeight="16.0" fitWidth="16.0" layoutX="14.0" layoutY="167.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../../../Images/xSymbol.png" />
-                    </image>
-                </ImageView>
-                <ImageView fx:id="minCapLettersImageView" fitHeight="16.0" fitWidth="16.0" layoutX="14.0" layoutY="192.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../../../Images/xSymbol.png" />
-                    </image>
-                </ImageView>
-                <ImageView fx:id="minDigitsImageView" fitHeight="16.0" fitWidth="16.0" layoutX="14.0" layoutY="219.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../../../Images/xSymbol.png" />
-                    </image>
-                </ImageView>
-                <Label fx:id="repeatedPasswordErrorLabel" layoutX="15.0" layoutY="146.0" prefHeight="17.0" prefWidth="168.0" />
-                <Label fx:id="usernameErrorLabel" layoutX="11.0" layoutY="29.0" prefHeight="17.0" prefWidth="175.0" />
-                <Label fx:id="registerStatusLabel" layoutX="20.0" layoutY="251.0" prefHeight="17.0" prefWidth="98.0" />
-            </children>
-        </AnchorPane>
-        <ImageView fitHeight="127.0" fitWidth="127.0" layoutX="18.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@../../../Images/b.png" />
-            </image>
-        </ImageView>
-        <Text fill="#dba563" layoutX="32.0" layoutY="149.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PlanTask" wrappingWidth="98.00000000000006">
-            <font>
-                <Font name="System Bold" size="23.0" />
-            </font>
-        </Text>
-    </children>
+<AnchorPane style="-fx-background-color: #dba563; -fx-background-radius: 15;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.loginapp.RegisterController">
+   <children>
+      <AnchorPane onKeyPressed="#onEnterRegister" prefHeight="303.0" prefWidth="380.0" style="-fx-background-color: #0f2021; -fx-background-radius: 15;" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+          <children>
+              <Button fx:id="loginButton" contentDisplay="CENTER" layoutX="100.0" layoutY="258.0" mnemonicParsing="false" onAction="#switchToLoginScene" prefHeight="15.0" prefWidth="60.0" style="-fx-background-color: #916734;" text="Login">
+                  <font>
+                      <Font name="System Bold" size="12.0" />
+                  </font>
+              </Button>
+              <Text fill="#dba563" layoutX="24.0" layoutY="247.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Already have an account?" />
+              <AnchorPane layoutX="174.0" layoutY="12.0" prefHeight="282.0" prefWidth="197.0" style="-fx-background-color: #dba563; -fx-background-radius: 15;">
+                  <children>
+                      <Text layoutX="66.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Register">
+                          <font>
+                              <Font name="System Bold" size="20.0" />
+                          </font>
+                      </Text>
+                      <PasswordField fx:id="passwordField" alignment="CENTER" layoutX="11.0" layoutY="84.0" prefWidth="175.0" promptText="password" style="-fx-background-color: #916734;" />
+                      <TextField fx:id="usernameTextField" alignment="CENTER" layoutX="11.0" layoutY="52.0" prefWidth="175.0" promptText="username" style="-fx-background-color: #916734;" />
+                      <PasswordField fx:id="repeatedPasswordField" alignment="CENTER" layoutX="12.0" layoutY="115.0" prefWidth="175.0" promptText="repeat password" style="-fx-background-color: #916734;" />
+                      <Button fx:id="registerButton" layoutX="122.0" layoutY="246.0" mnemonicParsing="false" onAction="#onClickRegister" prefHeight="25.0" prefWidth="68.0" style="-fx-background-color: #916734;" text="Register">
+                          <font>
+                              <Font name="System Bold" size="12.0" />
+                          </font>
+                      </Button>
+                      <Label fx:id="minCapLettersLabel" layoutX="38.0" layoutY="191.0" prefHeight="17.0" prefWidth="142.0" style="-fx-text-fill: red;" text="At least one capital letter" />
+                      <Label fx:id="minCharLabel" layoutX="38.0" layoutY="166.0" prefHeight="17.0" prefWidth="111.0" style="-fx-text-fill: red;" text="At least 8 characters" />
+                      <Label fx:id="minDigitsLabel" layoutX="38.0" layoutY="218.0" prefHeight="17.0" prefWidth="142.0" style="-fx-text-fill: red;" text="At least one digit" />
+                      <ImageView fx:id="minCharImageView" fitHeight="16.0" fitWidth="16.0" layoutX="14.0" layoutY="167.0" pickOnBounds="true" preserveRatio="true">
+                          <image>
+                              <Image url="@../../../Images/xSymbol.png" />
+                          </image>
+                      </ImageView>
+                      <ImageView fx:id="minCapLettersImageView" fitHeight="16.0" fitWidth="16.0" layoutX="14.0" layoutY="192.0" pickOnBounds="true" preserveRatio="true">
+                          <image>
+                              <Image url="@../../../Images/xSymbol.png" />
+                          </image>
+                      </ImageView>
+                      <ImageView fx:id="minDigitsImageView" fitHeight="16.0" fitWidth="16.0" layoutX="14.0" layoutY="219.0" pickOnBounds="true" preserveRatio="true">
+                          <image>
+                              <Image url="@../../../Images/xSymbol.png" />
+                          </image>
+                      </ImageView>
+                      <Label fx:id="repeatedPasswordErrorLabel" layoutX="15.0" layoutY="146.0" prefHeight="17.0" prefWidth="168.0" />
+                      <Label fx:id="usernameErrorLabel" layoutX="11.0" layoutY="29.0" prefHeight="17.0" prefWidth="175.0" />
+                      <Label fx:id="registerStatusLabel" layoutX="7.0" layoutY="241.0" prefHeight="38.0" prefWidth="111.0" />
+                  </children>
+              </AnchorPane>
+              <ImageView fitHeight="127.0" fitWidth="127.0" layoutX="21.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                      <Image url="@../../../Images/b.png" />
+                  </image>
+              </ImageView>
+              <Text fill="#dba563" layoutX="48.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PlanTask" wrappingWidth="111.33333333333326">
+                  <font>
+                      <Font name="System Bold" size="23.0" />
+                  </font>
+              </Text>
+            <AnchorPane style="-fx-background-color: #dba563; -fx-background-radius: 5;" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0">
+               <children>
+                  <ImageView fx:id="unregistering" fitHeight="31.0" fitWidth="32.0" onMouseReleased="#Exit1" pickOnBounds="true" preserveRatio="true" AnchorPane.topAnchor="0.0">
+                     <image>
+                        <Image url="@../../../Images/manu9.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+          </children>
+      </AnchorPane>
+   </children>
 </AnchorPane>

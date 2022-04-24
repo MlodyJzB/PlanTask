@@ -11,7 +11,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -79,6 +82,9 @@ public class LoginController implements Initializable
         loginInfo = LoginInfo.getInstance();
         configureTextFields(new TextField[]{usernameTextField, passwordField});
     }
-
-
+    @FXML
+    public ImageView exitonlogin;
+    public void Exit1(MouseEvent mouseEvent) {
+        ((Stage) exitonlogin.getScene().getWindow()).close();
+    }
 }

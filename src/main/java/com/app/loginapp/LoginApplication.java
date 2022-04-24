@@ -1,26 +1,29 @@
 package com.app.loginapp;
 
-import com.app.app.App;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import net.fortuna.ical4j.data.ParserException;
 import net.fortuna.ical4j.model.ValidationException;
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.net.URL;
 import java.text.ParseException;
 
 public class LoginApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         //Load start scene
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("LoginPanel.fxml"));
+        URL ur = new LoginApplication().getClass().getResource("LoginPanel.fxml");
+        FXMLLoader fxmlLoader = new FXMLLoader(ur);
         Scene scene = new Scene(fxmlLoader.load());
         stage.setScene(scene);
-        //stage.initStyle(StageStyle.TRANSPARENT);
-        //scene.setFill(Color.TRANSPARENT);
+        stage.initStyle(StageStyle.TRANSPARENT);
+        scene.setFill(Color.TRANSPARENT);
         stage.show();
     }
 

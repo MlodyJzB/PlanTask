@@ -9,44 +9,57 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="303.0" prefWidth="380.0" style="-fx-background-color: #0f2021; -fx-background-radius: 15;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.loginapp.LoginController">
+<AnchorPane style="-fx-background-color: #dba563; -fx-background-radius: 15;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.loginapp.LoginController">
    <children>
-      <Text fill="#dba563" layoutX="36.0" layoutY="242.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Don't have an account?" />
-      <Button fx:id="registerButton" contentDisplay="CENTER" layoutX="76.0" layoutY="255.0" mnemonicParsing="false" onAction="#switchToRegisterScene" prefHeight="25.0" prefWidth="83.0" style="-fx-background-color: #916734;" text="Register">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Button>
-      <AnchorPane layoutX="174.0" layoutY="11.0" prefHeight="283.0" prefWidth="194.0" style="-fx-background-color: #dba563; -fx-background-radius: 15;">
+      <AnchorPane prefHeight="303.0" prefWidth="380.0" style="-fx-background-color: #0f2021; -fx-background-radius: 15;" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
-            <TextField fx:id="usernameTextField" alignment="CENTER" layoutX="14.0" layoutY="101.0" prefHeight="25.0" prefWidth="173.0" promptText="username" style="-fx-background-color: #916734;" />
-            <PasswordField fx:id="passwordField" alignment="CENTER" layoutX="14.0" layoutY="141.0" prefHeight="25.0" prefWidth="173.0" promptText="password" style="-fx-background-color: #916734;" />
-            <Text layoutX="71.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login">
-               <font>
-                  <Font name="System Bold" size="20.0" />
-               </font>
-            </Text>
-            <Text fx:id="loginStatusText" fontSmoothingType="LCD" layoutX="14.0" layoutY="199.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="173.33333333333326">
-               <font>
-                  <Font name="Roboto" size="14.0" />
-               </font>
-            </Text>
-            <Button fx:id="loginButton" layoutX="125.0" layoutY="243.0" mnemonicParsing="false" onAction="#onClickLogin" prefHeight="25.0" prefWidth="53.0" style="-fx-background-color: #916734;" text="Login">
+            <Text fill="#dba563" layoutX="36.0" layoutY="242.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Don't have an account?" />
+            <Button fx:id="registerButton" contentDisplay="CENTER" layoutX="76.0" layoutY="255.0" mnemonicParsing="false" onAction="#switchToRegisterScene" prefHeight="25.0" prefWidth="83.0" style="-fx-background-color: #916734;" text="Register">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
+            <AnchorPane layoutX="174.0" layoutY="11.0" prefHeight="283.0" prefWidth="194.0" style="-fx-background-color: #dba563; -fx-background-radius: 15;" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+               <children>
+                  <TextField fx:id="usernameTextField" alignment="CENTER" layoutX="14.0" layoutY="101.0" prefHeight="25.0" prefWidth="173.0" promptText="username" style="-fx-background-color: #916734;" />
+                  <PasswordField fx:id="passwordField" alignment="CENTER" layoutX="14.0" layoutY="141.0" prefHeight="25.0" prefWidth="173.0" promptText="password" style="-fx-background-color: #916734;" />
+                  <Text layoutX="71.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="loginStatusText" fontSmoothingType="LCD" layoutX="14.0" layoutY="199.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="173.33333333333326">
+                     <font>
+                        <Font name="Roboto" size="14.0" />
+                     </font>
+                  </Text>
+                  <Button fx:id="loginButton" layoutX="125.0" layoutY="243.0" mnemonicParsing="false" onAction="#onClickLogin" prefHeight="25.0" prefWidth="53.0" style="-fx-background-color: #916734;" text="Login">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
+            <Text fill="#dba563" layoutX="51.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PlanTask" wrappingWidth="109.0" AnchorPane.leftAnchor="51.0">
+               <font>
+                  <Font name="System Bold" size="23.0" />
+               </font>
+            </Text>
+            <AnchorPane layoutX="2.0" layoutY="3.0" prefHeight="31.0" prefWidth="13.0" style="-fx-background-color: #dba563; -fx-background-radius: 5;" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0">
+               <children>
+                  <ImageView fx:id="exitonlogin" fitHeight="31.0" fitWidth="32.0" layoutX="-1.0" onMousePressed="#Exit1" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="-0.0" AnchorPane.topAnchor="0.0">
+                     <image>
+                        <Image url="@../../../Images/manu9.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+            <ImageView fitHeight="146.0" fitWidth="144.0" layoutX="20.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../Images/b.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
-      <ImageView fitHeight="127.0" fitWidth="127.0" layoutX="17.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../Images/b.png" />
-         </image>
-      </ImageView>
-      <Text fill="#dba563" layoutX="31.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PlanTask" wrappingWidth="98.00000000000006">
-         <font>
-            <Font name="System Bold" size="23.0" />
-         </font>
-      </Text>
    </children>
 </AnchorPane>

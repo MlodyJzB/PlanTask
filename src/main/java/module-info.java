@@ -6,6 +6,7 @@ module com.loginapp.loginapp {
     requires json;
     requires org.jetbrains.annotations;
     requires org.apache.commons.io;
+    requires json.simple;
 
 
     opens com.app.loginapp to javafx.fxml;

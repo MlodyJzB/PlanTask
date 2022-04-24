@@ -15,6 +15,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -24,7 +26,11 @@ import java.util.*;
 
 public class RegisterController implements Initializable {
     private LoginInfo loginInfo;
-
+    @FXML
+    public ImageView unregistering;
+    public void Exit1(MouseEvent mouseEvent) {
+        ((Stage) unregistering.getScene().getWindow()).close();
+    }
     @FXML
     private Button registerButton;
     @FXML
@@ -47,7 +53,6 @@ public class RegisterController implements Initializable {
             registerStatusLabel.setText("Failed to register!");
         }
     }
-
     @FXML //Function called on click of the registerButton
     private void onEnterRegister(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER && !registerButton.disableProperty().getValue())
