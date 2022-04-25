@@ -24,7 +24,7 @@ import java.nio.file.Paths;
 import java.util.ResourceBundle;
 
 public class LoginPanelController implements Initializable {
-    private LoginInfo loginInfo;
+    private User user;
     public ImageView User1, User2, User3, User4;
     public Image image;
     @FXML
@@ -118,7 +118,7 @@ public class LoginPanelController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        loginInfo = LoginInfo.getInstance();
+        user = User.getInstance();
     }
     public JSONArray getInfo(int which_one) throws IOException, JSONException {
         String contents = new String((Files.readAllBytes(Paths.get("panels.json"))));

@@ -8,8 +8,8 @@ import java.util.Arrays;
 import java.util.List;
 
 
-public class LoginInfo {
-    static LoginInfo  loginInfo = new LoginInfo();
+public class User {
+    static User user = new User();
 
     private String username, password;
     private final BooleanProperty usernameAvailable = new SimpleBooleanProperty(false);
@@ -18,13 +18,13 @@ public class LoginInfo {
     private final BooleanProperty passwordsMatch = new SimpleBooleanProperty(false);
 
 
-    private LoginInfo() {
+    private User() {
         username = "";
         password = "";
     }
 
-    public static LoginInfo getInstance() {
-        return loginInfo;
+    public static User getInstance() {
+        return user;
     }
 
 
@@ -84,49 +84,8 @@ public class LoginInfo {
         this.password = password;
     }
 
-
-    public boolean checkIfUserInDatabase() throws SQLException {
-        try {
-            String connectionString = "jdbc:sqlserver://plan-task-server.database.windows.net:1433;database=planTask;user=JakubNitkiewicz;password=planTask123;encrypt=true;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
-            Connection con = DriverManager.getConnection(connectionString);
-            PreparedStatement statement = con.prepareStatement("SELECT username, password FROM loginInfo WHERE username= ? AND password= ? ");
-            statement.setString(1, getUsername());
-            statement.setString(2, getPassword());
-            ResultSet resultSet = statement.executeQuery();
-            return resultSet.next();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
     public void Exit() {
         System.exit(0);
-    }
-    public boolean checkIfUsernameInDatabase() throws SQLException {
-        try {
-            String connectionString = "jdbc:sqlserver://plan-task-server.database.windows.net:1433;database=planTask;user=JakubNitkiewicz;password=planTask123;encrypt=true;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
-            Connection con = DriverManager.getConnection(connectionString);
-            PreparedStatement statement = con.prepareStatement("SELECT username FROM loginInfo WHERE username= ?");
-            statement.setString(1, getUsername());
-            ResultSet resultSet = statement.executeQuery();
-            return resultSet.next();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    public void addLoginInfoToDatabase() throws SQLException {
-        try {
-            String connectionString = "jdbc:sqlserver://plan-task-server.database.windows.net:1433;database=planTask;user=JakubNitkiewicz;password=planTask123;encrypt=true;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
-            Connection con = DriverManager.getConnection(connectionString);
-            PreparedStatement statement = con.prepareStatement("INSERT INTO loginInfo(username, password) VALUES (?, ?)");
-            statement.setString(1, getUsername());
-            statement.setString(2, getPassword());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     //Password should contain at least 8 characters, one capital letter and one number

@@ -24,7 +24,7 @@ import java.util.ResourceBundle;
 
 public class LoginController implements Initializable
 {
-    private LoginInfo loginInfo;
+    private User user;
 
     @FXML
     Text loginStatusText;
@@ -36,9 +36,9 @@ public class LoginController implements Initializable
     private Button loginButton, onClickRegisterScene;
     @FXML
     private void onClickLogin() throws SQLException {
-        loginInfo.setUsername(usernameTextField.getText());
-        loginInfo.setPassword(passwordField.getText());
-        if (loginInfo.checkIfUserInDatabase()) {
+        user.setUsername(usernameTextField.getText());
+        user.setPassword(passwordField.getText());
+        if (Database.checkIfUserExists(user.getUsername(), user.getPassword())) {
             loginStatusText.setStyle("-fx-fill: green");
             loginStatusText.setText("Logged successfully");
         }
@@ -79,7 +79,7 @@ public class LoginController implements Initializable
         }
     }
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        loginInfo = LoginInfo.getInstance();
+        user = User.getInstance();
         configureTextFields(new TextField[]{usernameTextField, passwordField});
     }
     @FXML

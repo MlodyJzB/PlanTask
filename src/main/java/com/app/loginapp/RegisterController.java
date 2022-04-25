@@ -25,7 +25,7 @@ import java.util.*;
 
 
 public class RegisterController implements Initializable {
-    private LoginInfo loginInfo;
+    private User user;
     @FXML
     public ImageView unregistering;
     public void Exit1(MouseEvent mouseEvent) {
@@ -41,10 +41,10 @@ public class RegisterController implements Initializable {
     private TextField usernameTextField, passwordField, repeatedPasswordField;
     @FXML //Function called on click of the registerButton
     private void onClickRegister() {
-        loginInfo.setUsername(usernameTextField.getText());
-        loginInfo.setPassword(passwordField.getText());
+        user.setUsername(usernameTextField.getText());
+        user.setPassword(passwordField.getText());
         try {
-            loginInfo.addLoginInfoToDatabase();
+            Database.addUser(user.getUsername(), user.getPassword());
             registerStatusLabel.setStyle("-fx-text-fill: green");
             registerStatusLabel.setText("Registered successfully!");
         } catch (SQLException e) {
@@ -80,7 +80,7 @@ public class RegisterController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        loginInfo = LoginInfo.getInstance();
+        user = User.getInstance();
 
         //Creating listener to check whether user has clicked out of usernameTextField and then
         //whether user is in database and setting appropriate text on usernameErrolLabel
@@ -88,22 +88,17 @@ public class RegisterController implements Initializable {
             //If user has left field and field isn't empty
             if (!newVal) {
                 if (usernameTextField.getText().length() < 3) {
-                    loginInfo.setUsernameLongEnough(false);
+                    user.setUsernameLongEnough(false);
                     usernameErrorLabel.setStyle("-fx-text-fill: red");
                     usernameErrorLabel.setText("Username too short!");
                 } else {
-                    boolean usernameAvailable = false;
-                    loginInfo.setUsername(usernameTextField.getText());
-                    loginInfo.setUsernameLongEnough(true);
-                    try {
-                        //Checking if user in database
-                        usernameAvailable = !loginInfo.checkIfUsernameInDatabase();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                    loginInfo.setUsernameAvailable(usernameAvailable);
+                    user.setUsername(usernameTextField.getText());
+                    user.setUsernameLongEnough(true);
+
+                    //Checking if username exists and setting appropriate variable in User class
+                    user.setUsernameAvailable(!Database.checkIfUsernameExists(user.getUsername()));
                     //Setting appropriate text on usernameErrorLabel
-                    if (loginInfo.isUsernameAvailable()) {
+                    if (user.isUsernameAvailable()) {
                         usernameErrorLabel.setStyle("-fx-text-fill: green");
                         usernameErrorLabel.setText("Username available");
                     }
@@ -118,18 +113,18 @@ public class RegisterController implements Initializable {
 
         //Creating listener to check whether password meets conditions and setting appropriate styles based on it
         passwordField.textProperty().addListener((ov, oldVal, newVal) -> {
-            List<Boolean> conditionsList = LoginInfo.checkPassword(newVal, 8);
+            List<Boolean> conditionsList = User.checkPassword(newVal, 8);
             setConditionStyle(minCharImageView, minCharLabel, conditionsList.get(0));
             setConditionStyle(minCapLettersImageView, minCapLettersLabel, conditionsList.get(1));
             setConditionStyle(minDigitsImageView, minDigitsLabel, conditionsList.get(2));
             //Setting if password meets all conditions
-            loginInfo.setPasswordMeetsConditions(!conditionsList.contains(false));
+            user.setPasswordMeetsConditions(!conditionsList.contains(false));
         });
 
         //Creating listener to check whether password and repeated passwords match
         repeatedPasswordField.textProperty().addListener((ov, oldVal, newVal) -> {
             boolean passwordsMatch = newVal.equals(passwordField.getText());
-            loginInfo.setPasswordsMatch(passwordsMatch);
+            user.setPasswordsMatch(passwordsMatch);
             if (passwordsMatch) {
                 repeatedPasswordErrorLabel.setStyle("-fx-text-fill: green");
                 repeatedPasswordErrorLabel.setText("Passwords match");
@@ -141,13 +136,13 @@ public class RegisterController implements Initializable {
 
         //Binding registerButton.disableProperty() to conditions required for user to register
         registerButton.disableProperty().bind(Bindings.createBooleanBinding(
-                () -> !(loginInfo.isUsernameAvailable() && loginInfo.isPasswordMeetsConditions() && loginInfo.isPasswordsMatch() && loginInfo.isUsernameLongEnough()),
-                loginInfo.usernameAvailableProperty(), loginInfo.passwordMeetsConditionsProperty(), loginInfo.passwordsMatchProperty(), loginInfo.usernameLongEnoughProperty()
+                () -> !(user.isUsernameAvailable() && user.isPasswordMeetsConditions() && user.isPasswordsMatch() && user.isUsernameLongEnough()),
+                user.usernameAvailableProperty(), user.passwordMeetsConditionsProperty(), user.passwordsMatchProperty(), user.usernameLongEnoughProperty()
         ));
 
         //Configuring usernameTextField, passwordField so user can't put too much text
         // and can't have spaces in username of password
-        LoginController.configureTextFields(new TextField[]{usernameTextField, passwordField});
+        LoginController.configureTextFields(new TextField[]{usernameTextField, passwordField, repeatedPasswordField});
 
     }
 }

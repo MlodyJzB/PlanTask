@@ -1,4 +1,4 @@
-module com.loginapp.loginapp {
+module com.app {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;

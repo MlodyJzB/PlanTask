@@ -18,7 +18,7 @@ public class LoginApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         //Load start scene
-        URL ur = new LoginApplication().getClass().getResource("LoginPanel.fxml");
+        URL ur = LoginApplication.class.getResource("LoginPanel.fxml");
         FXMLLoader fxmlLoader = new FXMLLoader(ur);
         Scene scene = new Scene(fxmlLoader.load());
         stage.setScene(scene);
