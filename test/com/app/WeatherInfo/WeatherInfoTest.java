@@ -51,11 +51,13 @@ public class WeatherInfoTest {
     }
 
     @Test
-    public void testGetCoords1() throws IOException, JSONException, WeatherInfo.NonexistentZipCodeException{
+    public void testGetCoordsFromJson1() throws IOException, JSONException, NonexistentZipCodeException, IncorrectZipCodeFormatException {
+        WeatherInfo wi = new WeatherInfo();
+        wi.setZipCode("00-631");
         File file = new File("");
         String path = file.getAbsolutePath() + "\\test\\com\\app\\WeatherInfo\\exampleZipCode.json";
         JSONObject json = JsonHandling.getFromFile(path);
-        WeatherInfo.Coords coordinates = WeatherInfo.getCoords(json, "00-631");
+        WeatherInfo.Coords coordinates = wi.getCoordsFromJson(json);
         Double lat = coordinates.getLat();
         Double lon = coordinates.getLon();
 
@@ -63,15 +65,16 @@ public class WeatherInfoTest {
         assertEquals(21.01650000, lon);
     }
 
-    @Test(expected = WeatherInfo.NonexistentZipCodeException.class)
-    public void testGetCoordsException() throws IOException, JSONException, WeatherInfo.NonexistentZipCodeException {
+    @Test(expected = NonexistentZipCodeException.class)
+    public void testGetCoordsFromJsonException() throws IOException, JSONException, NonexistentZipCodeException {
+        WeatherInfo wi = new WeatherInfo();
         File file = new File("");
         String path = file.getAbsolutePath() + "\\test\\com\\app\\WeatherInfo\\exampleNonexistentZipCode.json";
         JSONObject json =JsonHandling.getFromFile(path);
-        WeatherInfo.Coords coordinates = WeatherInfo.getCoords(json, "16-197");
+        WeatherInfo.Coords coordinates = wi.getCoordsFromJson(json);
     }
-    @Test(expected =WeatherInfo.IncorrectZipCodeFormatException.class)
-    public void  testSetZipCodeIncorrectZipCodeFormatException() throws WeatherInfo.IncorrectZipCodeFormatException {
+    @Test(expected = com.app.WeatherInfo.IncorrectZipCodeFormatException.class)
+    public void  testSetZipCodeIncorrectZipCodeFormatException() throws IncorrectZipCodeFormatException {
         WeatherInfo wi = new WeatherInfo();
         assertEquals("00-001", wi.getZipCode());
 
@@ -79,7 +82,7 @@ public class WeatherInfoTest {
     }
 
     @Test
-    public void testSetZipCode() throws WeatherInfo.IncorrectZipCodeFormatException {
+    public void testSetZipCode() throws IncorrectZipCodeFormatException {
         WeatherInfo wi = new WeatherInfo();
         assertEquals("00-001", wi.getZipCode());
 
@@ -98,11 +101,17 @@ public class WeatherInfoTest {
     }
 
     @Test
-    public void testGetTemp() throws IOException, JSONException {
-        File file = new File("");
-        String path = file.getAbsolutePath() + "\\test\\com\\app\\WeatherInfo\\exampleInfo.json";
-        JSONObject json =JsonHandling.getFromFile(path);
-        Double temp = WeatherInfo.getTemp(json);
-        assertEquals(0.82, temp);
+    public void testUpdateFromJson() throws IOException, JSONException {
+        WeatherInfo wi = new WeatherInfo();
+        assertEquals(0, wi.getTemp());
+        assertEquals(0, wi.getMinTemp());
+        assertEquals(0, wi.getMaxTemp());
+
+        wi.updateFromJson("\\test\\com\\app\\WeatherInfo\\exampleInfo.json");
+
+        assertEquals(0.82, wi.getTemp());
+        assertEquals(-0.58, wi.getMinTemp());
+        assertEquals(1.59, wi.getMaxTemp());
     }
 }
+
