@@ -43,7 +43,7 @@ Autorzy: Emilia Wojtiuk, Jakub Sadowski, Jakub Cimochowski, Jakub Nitkiewicz
 **Prezentacja projektu na etap I**
 
 Diagram z głównymi warstwami aplikacji
-![alt text](https://gitlab-stud.elka.pw.edu.pl/jnitkiew/pap22l-z03/-/blob/main/diagram.png)
+![](diagram.png)
 
 Projekt na chwilę obecną
 Na moment obecny nasz projekt składa się z czterech pakietów app, ICSFiles, loginapp, WeatherInfo. Pakiet app zawiera klasy: App, AppPanel, Calendar, Planner, Settings, Statistics. Wykorzystywane są przy tworzeniu aplikacji, która ma ukazać się użytkownikowi po zalogowaniu. Pakiet ICSFiles zawiera klasy ICSFilesReader oraz ToICSFileWritter. Klasy te służą do czytania oraz zapisywania plików z rozszerzeniem ics. Pakiet loginapp posiada klasy: Database, LoginApplication, LoginController, LoginPanelControler, RegisterController, User. Używane są do tworzenia panelu logowania oraz rejestracji, który to łączy się z bazą danych. Pakiet WeatherInfo posiada klasy JsonHandling oraz WeatherInfo. Korzystamy z nich w celu uzyskania aktualnych danych meteorologicznych poprzez api korzystające z kodu pocztowego. 
@@ -53,7 +53,7 @@ Wymagania środowiskowe i instrukcja zbudowania i uruchomienia aplikacji z kodu 
 
 Nasz zespół korzysta ze zintegrowanego środowiska programistycznego InteliJ IDEA dlatego też najwygodniej przy uruchomieniu aplikacji z kodu źródłowego jest go użyć. Wszystkie zewnętrzne biblioteki dodane są do Mavena. Program do działania potrzebuje SDK Oracle Openjdk version 17.0.2. W samej aplikacji znajdują się dwie klasy z funkcjami main App oraz LogginApplication. Pierwsza wyświetla to co ma zobaczyć użytkownik po zalogowaniu natomiast druga uruchamia logownie
 Diagram z Mavena:
- ![alt text](https://gitlab-stud.elka.pw.edu.pl/jnitkiew/pap22l-z03/-/blob/main/mavenDiagram.png)
+ ![](mavenDiagram.png)
 
 
 
