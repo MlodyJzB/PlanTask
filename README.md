@@ -43,6 +43,7 @@ Autorzy: Emilia Wojtiuk, Jakub Sadowski, Jakub Cimochowski, Jakub Nitkiewicz
 **Prezentacja projektu na etap I**
 
 Diagram z głównymi warstwami aplikacji
+
 ![](diagram.png)
 
 Projekt na chwilę obecną
@@ -53,9 +54,5 @@ Wymagania środowiskowe i instrukcja zbudowania i uruchomienia aplikacji z kodu 
 
 Nasz zespół korzysta ze zintegrowanego środowiska programistycznego InteliJ IDEA dlatego też najwygodniej przy uruchomieniu aplikacji z kodu źródłowego jest go użyć. Wszystkie zewnętrzne biblioteki dodane są do Mavena. Program do działania potrzebuje SDK Oracle Openjdk version 17.0.2. W samej aplikacji znajdują się dwie klasy z funkcjami main App oraz LogginApplication. Pierwsza wyświetla to co ma zobaczyć użytkownik po zalogowaniu natomiast druga uruchamia logownie
 Diagram z Mavena:
+
  ![](mavenDiagram.png)
-
-
-
-
-
