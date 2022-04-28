@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
@@ -17,7 +16,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane fx:id="ourWindow" prefHeight="444.0" prefWidth="617.0" style="-fx-background-radius: 15;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.app.AppPanel">
+<BorderPane fx:id="ourWindow" prefHeight="444.0" prefWidth="617.0" style="-fx-background-radius: 15;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.app.AppPanel">
    <center>
         <AnchorPane fx:id="pane3" prefHeight="414.0" prefWidth="700.0" style="-fx-background-color: #e8e8e8; -fx-background-radius: 0 15 15 0;">
          <children>
@@ -76,61 +75,63 @@
                                              <children>
                                                 <VBox layoutX="-5.0" layoutY="37.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                    <children>
-                                                      <Label alignment="BASELINE_CENTER" prefHeight="36.0" prefWidth="200.0" text="Weather">
-                                                         <font>
-                                                            <Font size="24.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <HBox prefHeight="100.0" prefWidth="300.0">
+                                                      <HBox prefHeight="51.0" prefWidth="155.0">
                                                          <children>
-                                                            <ImageView fitHeight="100.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true">
+                                                            <Label alignment="BASELINE_CENTER" prefHeight="35.0" prefWidth="178.0" text="Weather">
+                                                               <font>
+                                                                  <Font size="24.0" />
+                                                               </font>
+                                                            </Label>
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox alignment="TOP_CENTER" prefHeight="78.0" prefWidth="155.0">
+                                                         <children>
+                                                            <ImageView fitHeight="70.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true">
                                                                <image>
                                                                   <Image url="@../../../Images/mostly_sunny.png" />
                                                                </image>
                                                             </ImageView>
-                                                            <Label fx:id="Temperature" alignment="BASELINE_CENTER" prefHeight="85.0" prefWidth="300.0" text="5°C">
+                                                            <VBox prefHeight="78.0" prefWidth="75.0">
+                                                               <children>
+                                                                  <Label fx:id="Temp" alignment="BASELINE_CENTER" prefHeight="35.0" prefWidth="85.0" text="5°C">
+                                                                     <font>
+                                                                        <Font size="36.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                                  <HBox alignment="CENTER" prefHeight="22.0" prefWidth="85.0">
+                                                                     <children>
+                                                                        <Label fx:id="MaxTemp" alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="44.0" text="10" />
+                                                                        <Label text="|" />
+                                                                        <Label fx:id="MinTemp" alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="43.0" text="-1" />
+                                                                     </children>
+                                                                  </HBox>
+                                                               </children>
+                                                            </VBox>
+                                                         </children>
+                                                      </HBox>
+                                                      <Label fx:id="WeatherDescription" alignment="TOP_CENTER" prefHeight="41.0" prefWidth="155.0" text="Mostly sunny" />
+                                                      <HBox prefHeight="31.0" prefWidth="155.0">
+                                                         <children>
+                                                            <Label fx:id="Wind" alignment="BASELINE_CENTER" prefHeight="36.0" prefWidth="300.0" text="Wind">
                                                                <font>
-                                                                  <Font size="36.0" />
+                                                                  <Font size="14.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Label fx:id="WindValue" alignment="BASELINE_CENTER" prefHeight="36.0" prefWidth="300.0" text="72 %">
+                                                               <font>
+                                                                  <Font size="14.0" />
                                                                </font>
                                                             </Label>
                                                          </children>
                                                       </HBox>
-                                                      <HBox prefHeight="100.0" prefWidth="300.0">
+                                                      <HBox prefHeight="45.0" prefWidth="155.0">
                                                          <children>
-                                                            <Label alignment="BASELINE_CENTER" prefHeight="36.0" prefWidth="300.0" text="Wind">
+                                                            <Label fx:id="Clouds" alignment="BASELINE_CENTER" prefHeight="36.0" prefWidth="300.0" text="Clouds">
                                                                <font>
                                                                   <Font size="14.0" />
                                                                </font>
                                                             </Label>
-                                                            <Label fx:id="Weather_1" alignment="BASELINE_CENTER" prefHeight="36.0" prefWidth="300.0" text="11.5 km/h">
-                                                               <font>
-                                                                  <Font size="14.0" />
-                                                               </font>
-                                                            </Label>
-                                                         </children>
-                                                      </HBox>
-                                                      <HBox prefHeight="100.0" prefWidth="300.0">
-                                                         <children>
-                                                            <Label alignment="BASELINE_CENTER" prefHeight="36.0" prefWidth="300.0" text="Humidity">
-                                                               <font>
-                                                                  <Font size="14.0" />
-                                                               </font>
-                                                            </Label>
-                                                            <Label fx:id="Weather_2" alignment="BASELINE_CENTER" prefHeight="36.0" prefWidth="300.0" text="72 %">
-                                                               <font>
-                                                                  <Font size="14.0" />
-                                                               </font>
-                                                            </Label>
-                                                         </children>
-                                                      </HBox>
-                                                      <HBox prefHeight="100.0" prefWidth="300.0">
-                                                         <children>
-                                                            <Label alignment="BASELINE_CENTER" prefHeight="36.0" prefWidth="300.0" text="Clouds">
-                                                               <font>
-                                                                  <Font size="14.0" />
-                                                               </font>
-                                                            </Label>
-                                                            <Label fx:id="Weather_3" alignment="BASELINE_CENTER" prefHeight="36.0" prefWidth="300.0" text="12 %">
+                                                            <Label fx:id="CloudsValue" alignment="BASELINE_CENTER" prefHeight="36.0" prefWidth="300.0" text="12 %">
                                                                <font>
                                                                   <Font size="14.0" />
                                                                </font>

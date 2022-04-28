@@ -45,7 +45,7 @@ public class AppPanel implements Initializable {
     @FXML
     private VBox Incoming_events_Vbox;
     @FXML
-    private Label Temperature, Weather_1, Weather_2, Weather_3;
+    private Label Tempe, MinTemp, MaxTemp, WeatherDescription, CloudsValue, WindValue;
 
     private volatile boolean stop = false;
     @Override
