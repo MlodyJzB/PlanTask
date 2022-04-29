@@ -253,6 +253,18 @@ public class Calendar {
         button.setLayoutY((stage.getHeight()-OldStagey)/2+button.getLayoutY());
     }
 
+    private void resizeCallendar(Stage stage){
+        for (var day : buttonList){
+            settingButtonLayouts(stage, day);
+        }
+
+        settingButtonLayouts(stage, previousb);
+        settingButtonLayouts(stage, nextb);
+        monthLabel.setLayoutX((stage.getWidth()-OldStagex)/2+monthLabel.getLayoutX());
+        monthLabel.setLayoutY((stage.getHeight()-OldStagey)/2+monthLabel.getLayoutY());
+
+    }
+
     public void Exit() {
         System.exit(0);
     }
@@ -262,10 +274,13 @@ public class Calendar {
     @FXML
     private void Minimize_clicked() {
         Stage stage = (Stage) minimalize_button.getScene().getWindow();
+        OldStagex = stage.getWidth();
+        OldStagey = stage.getHeight();
         //stage.setIconified(true);
         stage.setMaximized(!stage.isMaximized());
         //Restore down
         stage.setMaximized(stage.isMaximized());
+        resizeCallendar(stage);
     }
 
 }
