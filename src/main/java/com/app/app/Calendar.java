@@ -96,6 +96,8 @@ public class Calendar {
     @FXML
     private Button previousb;
 
+    private double OldStagex;
+    private double OldStagey;
 
     private List<Button> buttonList = new ArrayList<>();
 
@@ -245,6 +247,12 @@ public class Calendar {
         drawNewCall();
         refreschLabel();
     }
+
+    private void settingButtonLayouts(Stage stage, Button button){
+        button.setLayoutX((stage.getWidth()-OldStagex)/2+button.getLayoutX());
+        button.setLayoutY((stage.getHeight()-OldStagey)/2+button.getLayoutY());
+    }
+
     public void Exit() {
         System.exit(0);
     }
