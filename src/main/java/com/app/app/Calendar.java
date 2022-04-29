@@ -103,6 +103,20 @@ public class Calendar {
 
     @FXML
     private Label monthLabel;
+    @FXML
+    private Label monLabel;
+    @FXML
+    private Label tueLabel;
+    @FXML
+    private Label wedLabel;
+    @FXML
+    private Label thuLabel;
+    @FXML
+    private Label friLabel;
+    @FXML
+    private Label satLabel;
+    @FXML
+    private Label sunLabel;
     private LocalDate currentdate;
 
     @FXML
@@ -253,6 +267,11 @@ public class Calendar {
         button.setLayoutY((stage.getHeight()-OldStagey)/2+button.getLayoutY());
     }
 
+    private void settingLabelsLayouts(Stage stage, Label label){
+        label.setLayoutX((stage.getWidth()-OldStagex)/2+label.getLayoutX());
+        label.setLayoutY((stage.getHeight()-OldStagey)/2+label.getLayoutY());
+    }
+
     private void resizeCallendar(Stage stage){
         for (var day : buttonList){
             settingButtonLayouts(stage, day);
@@ -260,8 +279,14 @@ public class Calendar {
 
         settingButtonLayouts(stage, previousb);
         settingButtonLayouts(stage, nextb);
-        monthLabel.setLayoutX((stage.getWidth()-OldStagex)/2+monthLabel.getLayoutX());
-        monthLabel.setLayoutY((stage.getHeight()-OldStagey)/2+monthLabel.getLayoutY());
+        settingLabelsLayouts(stage, monLabel);
+        settingLabelsLayouts(stage, tueLabel);
+        settingLabelsLayouts(stage, wedLabel);
+        settingLabelsLayouts(stage, thuLabel);
+        settingLabelsLayouts(stage, friLabel);
+        settingLabelsLayouts(stage,satLabel);
+        settingLabelsLayouts(stage,sunLabel);
+        settingLabelsLayouts(stage,monthLabel);
 
     }
 
