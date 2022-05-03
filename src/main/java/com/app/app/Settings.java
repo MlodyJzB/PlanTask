@@ -3,7 +3,6 @@ package com.app.app;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
@@ -49,7 +48,7 @@ public class Settings implements Initializable {
     private Pane getPane(String paneName){
         Parent root = null;
         try {
-            root = FXMLLoader.load(getClass().getResource("settings-panes/"+paneName+".fxml"));
+            root = FXMLLoader.load(getClass().getResource(paneName+".fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
