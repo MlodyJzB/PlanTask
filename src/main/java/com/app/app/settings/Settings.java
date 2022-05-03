@@ -3,6 +3,7 @@ package com.app.app.settings;
 import com.app.loginapp.User;
 import javafx.beans.binding.ObjectBinding;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -12,6 +13,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import org.w3c.dom.events.MouseEvent;
 
 import java.io.IOException;
 import java.net.URL;
@@ -28,7 +30,8 @@ public class Settings implements Initializable {
     private StackPane stackPane;
 
     public void Exit() {
-        System.exit(0);
+        Stage stage = (Stage) stackPane.getScene().getWindow();
+        stage.close();
     }
 
     @FXML
