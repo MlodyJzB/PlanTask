@@ -51,11 +51,11 @@ public class AppPanel implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        int[] a = {5, 23, 12, 40};
-        Temperature.setText(a[0]+" °C");
-        Weather_1.setText(a[1]+" km/h");
-        Weather_2.setText(a[2]+" %");
-        Weather_3.setText(a[3]+" %");
+//        int[] a = {5, 23, 12, 40};
+//        Temperature.setText(a[0]+" °C");
+//        Weather_1.setText(a[1]+" km/h");
+//        Weather_2.setText(a[2]+" %");
+//        Weather_3.setText(a[3]+" %");
 
         JSONObject jsonCalendar = new JSONObject();
         JSONObject jsonCalendar1 = new JSONObject();
@@ -174,12 +174,8 @@ public class AppPanel implements Initializable {
     public void calendar(ActionEvent event) {
         LoadSite("calendar");
     }
-    public void statics(ActionEvent event) {
-        LoadSite("statistics");
-    }
-    public void settings(ActionEvent event) {
-        LoadSite("settings");
-    }
+    public void statics(ActionEvent event) { LoadSite("statistics"); }
+    public void settings(ActionEvent event) { LoadSite("settings/settings"); }
     public void Exit() {
         stop = true;
         System.exit(0);
