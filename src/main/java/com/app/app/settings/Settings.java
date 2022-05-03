@@ -1,12 +1,13 @@
-package com.app.app;
+package com.app.app.settings;
 
+import com.app.loginapp.User;
+import javafx.beans.binding.ObjectBinding;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -14,14 +15,17 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class Settings implements Initializable {
 
     @FXML
-    TreeView<String> settingsTree;
+    private TreeView<String> settingsTree;
     @FXML
-    StackPane stackPane;
+    private StackPane stackPane;
 
     public void Exit() {
         System.exit(0);
@@ -47,40 +51,44 @@ public class Settings implements Initializable {
     }
 
     private Pane getPane(String paneName){
-        Parent root = null;
+        Pane pane = null;
         try {
-            root = FXMLLoader.load(getClass().getResource("settings-panes/"+paneName+".fxml"));
+            FXMLLoader loader = new FXMLLoader();
+            pane = loader.load(
+                    getClass().getResourceAsStream(
+                            paneName+".fxml"
+                    )
+            );
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return (Pane) root;
+        return pane;
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        TreeItem<String> root, general, visual;
+        TreeItem<String> root, general;
         root = new TreeItem<>();
         root.setExpanded(true);
-
-        //Bucky
         general = makeBranch("General", root);
         general.setExpanded(true);
-        makeBranch("something", general);
-        makeBranch("else", general);
-        makeBranch("elseElse", general);
 
-        visual = makeBranch("Visual", root);
-        makeBranch("visual1", visual);
-        makeBranch("visual2", visual);
+        List<String> treeItemNamesList = List.of("account", "appearance");
+        for (String treeItemName : treeItemNamesList) {
+            makeBranch(treeItemName, general);
+        }
+
         settingsTree.setRoot(root);
         settingsTree.setShowRoot(false);
         settingsTree.getSelectionModel()
                 .selectedItemProperty().addListener((v, oldValue, newValue) -> {
-                    if (newValue != null){
+                    if (newValue != null) {
                         if (!stackPane.getChildren().isEmpty())
                             stackPane.getChildren().remove(0);
-                        stackPane.getChildren().add(getPane(newValue.getValue()));
+                        if (!newValue.getValue().equals("General"))
+                            stackPane.getChildren().add(getPane(newValue.getValue()));
                     }
                 });
     }
+
 }

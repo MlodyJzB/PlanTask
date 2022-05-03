@@ -14,4 +14,6 @@ module com.app {
 
     opens com.app.app to javafx.fxml;
     exports com.app.app;
+    exports com.app.app.settings;
+    opens com.app.app.settings to javafx.fxml;
 }
