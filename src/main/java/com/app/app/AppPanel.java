@@ -1,11 +1,13 @@
 package com.app.app;
 
+import com.app.app.settings.Settings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -15,9 +17,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -175,7 +179,23 @@ public class AppPanel implements Initializable {
         LoadSite("calendar");
     }
     public void statics(ActionEvent event) { LoadSite("statistics"); }
-    public void settings(ActionEvent event) { LoadSite("settings/settings"); }
+    public void settings(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(
+                getClass().getResource(
+                        "settings/settings.fxml"
+                )
+        );
+
+        Stage stage = new Stage(StageStyle.DECORATED);
+        stage.initStyle(StageStyle.TRANSPARENT);
+
+        Scene scene = new Scene(loader.load());
+        scene.setFill(Color.TRANSPARENT);
+
+        stage.setScene(scene);
+        //Settings controller = loader.getController();
+        stage.show();
+    }
     public void Exit() {
         stop = true;
         System.exit(0);
