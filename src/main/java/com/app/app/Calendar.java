@@ -5,6 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
 
@@ -96,11 +98,31 @@ public class Calendar {
     @FXML
     private Button previousb;
 
+    private double OldStagex;
+    private double OldStagey;
+    private double offsetx = 67;
+    private double offsety = 51;
+    private double oldOffsetx;
+    private double oldOffsety;
 
     private List<Button> buttonList = new ArrayList<>();
 
     @FXML
     private Label monthLabel;
+    @FXML
+    private Label monLabel;
+    @FXML
+    private Label tueLabel;
+    @FXML
+    private Label wedLabel;
+    @FXML
+    private Label thuLabel;
+    @FXML
+    private Label friLabel;
+    @FXML
+    private Label satLabel;
+    @FXML
+    private Label sunLabel;
     private LocalDate currentdate;
 
     @FXML
@@ -245,6 +267,73 @@ public class Calendar {
         drawNewCall();
         refreschLabel();
     }
+
+    private void settingButtonLayouts(Stage stage, Button button, double spacex, double spacey){
+        button.setLayoutX((stage.getWidth()-OldStagex)/2+button.getLayoutX()+2*oldOffsetx+2*(-offsetx+67)+spacex);
+        button.setLayoutY((stage.getHeight()-OldStagey)/2+button.getLayoutY()+oldOffsety-offsety+51+spacey);
+    }
+
+    private void settingLabelsLayouts(Stage stage, Label label, double spacex, double spacey){
+        label.setLayoutX((stage.getWidth()-OldStagex)/2+label.getLayoutX()+2*oldOffsetx+2*(-offsetx+67)+spacex);
+        label.setLayoutY((stage.getHeight()-OldStagey)/2+label.getLayoutY()+oldOffsety-offsety+51+spacey);
+    }
+
+    private void resizeCallendar(Stage stage){
+        int i = 0;
+        int j = 0;
+        for (var day : buttonList){
+            if (stage.getHeight()>OldStagey) {
+                settingButtonLayouts(stage, day,70*i, 30*j);
+                day.setFont(new Font(21));
+            }
+            else {
+                settingButtonLayouts(stage, day,-70*i, -30*j);
+                day.setFont(new Font(15));
+            }
+            i++;
+            if (i >=7){
+                i = 0;
+                j++;
+            }
+
+        }
+
+        if (stage.getHeight()>OldStagey) {
+            settingButtonLayouts(stage, previousb, 0, 0);
+            previousb.setFont(Font.font("System", FontWeight.BOLD, 23));
+            settingButtonLayouts(stage, nextb, 5*70+50, 0);
+            nextb.setFont(Font.font("System", FontWeight.BOLD, 23));
+            //monthLabel.setLayoutX((stage.getWidth() - OldStagex) / 2 + monthLabel.getLayoutX());
+            //monthLabel.setLayoutY((stage.getHeight() - OldStagey) / 2 + monthLabel.getLayoutY());
+            settingLabelsLayouts(stage, monthLabel, 3*70, 0);
+            monthLabel.setFont(new Font(20));
+            settingLabelsLayouts(stage, monLabel, 0, 0);
+            settingLabelsLayouts(stage, tueLabel, 70, 0);
+            settingLabelsLayouts(stage, wedLabel, 2*70, 0);
+            settingLabelsLayouts(stage, thuLabel, 3*70, 0);
+            settingLabelsLayouts(stage, friLabel, 4*70, 0);
+            settingLabelsLayouts(stage,satLabel, 5*70, 0);
+            settingLabelsLayouts(stage,sunLabel, 6*70, 0);
+
+        }
+        else {
+            settingButtonLayouts(stage, previousb, 0, 0);
+            previousb.setFont(Font.font("System", FontWeight.BOLD, 18));
+            settingButtonLayouts(stage, nextb, -5*70-50, 0);
+            nextb.setFont(Font.font("System", FontWeight.BOLD, 18));
+            settingLabelsLayouts(stage, monthLabel, -3*70, 0);
+            monthLabel.setFont(new Font(14));
+            settingLabelsLayouts(stage, monLabel, 0, 0);
+            settingLabelsLayouts(stage, tueLabel, -70, 0);
+            settingLabelsLayouts(stage, wedLabel, -2*70, 0);
+            settingLabelsLayouts(stage, thuLabel, -3*70, 0);
+            settingLabelsLayouts(stage, friLabel, -4*70, 0);
+            settingLabelsLayouts(stage,satLabel, -5*70, 0);
+            settingLabelsLayouts(stage,sunLabel, -6*70, 0);
+        }
+
+    }
+
     public void Exit() {
         System.exit(0);
     }
@@ -254,10 +343,18 @@ public class Calendar {
     @FXML
     private void Minimize_clicked() {
         Stage stage = (Stage) minimalize_button.getScene().getWindow();
+        OldStagex = stage.getWidth();
+        OldStagey = stage.getHeight();
         //stage.setIconified(true);
         stage.setMaximized(!stage.isMaximized());
         //Restore down
         stage.setMaximized(stage.isMaximized());
+
+        oldOffsetx = offsetx-67 ;
+        oldOffsety = offsety - 51;
+        offsetx = offsetx/OldStagex*(stage.getWidth()) ;
+        offsety = offsety/OldStagey*stage.getHeight();
+        resizeCallendar(stage);
     }
 
 }

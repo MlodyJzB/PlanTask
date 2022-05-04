@@ -172,37 +172,37 @@
          <font>
             <Font size="15.0" />
          </font></Button>
-      <Label alignment="CENTER" layoutX="34.0" layoutY="73.0" text="MON">
+      <Label fx:id="monLabel" alignment="CENTER" layoutX="34.0" layoutY="73.0" text="MON">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="101.0" layoutY="73.0" text="TUE">
+      <Label fx:id="tueLabel" alignment="CENTER" layoutX="101.0" layoutY="73.0" text="TUE">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="169.0" layoutY="73.0" text="WED">
+      <Label fx:id="wedLabel" alignment="CENTER" layoutX="169.0" layoutY="73.0" text="WED">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="237.0" layoutY="73.0" text="THU">
+      <Label fx:id="thuLabel" alignment="CENTER" layoutX="237.0" layoutY="73.0" text="THU">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="302.0" layoutY="73.0" text="FRI">
+      <Label fx:id="friLabel" alignment="CENTER" layoutX="302.0" layoutY="73.0" text="FRI">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="369.0" layoutY="73.0" text="SAT">
+      <Label fx:id="satLabel" alignment="CENTER" layoutX="369.0" layoutY="73.0" text="SAT">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="437.0" layoutY="73.0" text="SUN">
+      <Label fx:id="sunLabel" alignment="CENTER" layoutX="437.0" layoutY="73.0" text="SUN">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
