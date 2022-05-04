@@ -16,7 +16,7 @@ public class App extends Application {
         //Load start scene
         URL url = App.class.getResource("App.fxml");
         FXMLLoader fxmlLoader = new FXMLLoader(url);
-        Scene scene = new Scene(fxmlLoader.load());
+        Scene scene = new Scene(fxmlLoader.load(), 970, 650);
         stage.setScene(scene);
         stage.initStyle(StageStyle.TRANSPARENT);
         scene.setFill(Color.TRANSPARENT);

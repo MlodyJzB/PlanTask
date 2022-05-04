@@ -1,11 +1,13 @@
 package com.app.app;
 
+import com.app.app.settings.Settings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -15,9 +17,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -45,17 +49,17 @@ public class AppPanel implements Initializable {
     @FXML
     private VBox Incoming_events_Vbox;
     @FXML
-    private Label Temperature, Weather_1, Weather_2, Weather_3;
+    private Label Tempe, MinTemp, MaxTemp, WeatherDescription, CloudsValue, WindValue;
 
     private volatile boolean stop = false;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        int[] a = {5, 23, 12, 40};
-        Temperature.setText(a[0]+" °C");
-        Weather_1.setText(a[1]+" km/h");
-        Weather_2.setText(a[2]+" %");
-        Weather_3.setText(a[3]+" %");
+//        int[] a = {5, 23, 12, 40};
+//        Temperature.setText(a[0]+" °C");
+//        Weather_1.setText(a[1]+" km/h");
+//        Weather_2.setText(a[2]+" %");
+//        Weather_3.setText(a[3]+" %");
 
         JSONObject jsonCalendar = new JSONObject();
         JSONObject jsonCalendar1 = new JSONObject();
@@ -174,15 +178,28 @@ public class AppPanel implements Initializable {
     public void calendar(ActionEvent event) {
         LoadSite("calendar");
     }
-    public void statics(ActionEvent event) {
-        LoadSite("statistics");
-    }
-    public void settings(ActionEvent event) {
-        LoadSite("settings");
+    public void statics(ActionEvent event) { LoadSite("statistics"); }
+    public void settings(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(
+                getClass().getResource(
+                        "settings/settings.fxml"
+                )
+        );
+
+        Stage stage = new Stage(StageStyle.DECORATED);
+        stage.initStyle(StageStyle.TRANSPARENT);
+
+        Scene scene = new Scene(loader.load());
+        scene.setFill(Color.TRANSPARENT);
+
+        stage.setScene(scene);
+        //Settings controller = loader.getController();
+        stage.show();
     }
     public void Exit() {
         stop = true;
-        System.exit(0);
+        Stage stage = (Stage) ourWindow.getScene().getWindow();
+        stage.close();
     }
 
     public void homepanel(ActionEvent event) {
