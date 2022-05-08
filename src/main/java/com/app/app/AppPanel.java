@@ -29,6 +29,7 @@ import javafx.stage.StageStyle;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -42,6 +43,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class AppPanel implements Initializable {
     @FXML
@@ -57,6 +59,8 @@ public class AppPanel implements Initializable {
 
     @FXML
     private Button refreshButton;
+
+    @FXML ImageView weatherImage;
 
     private volatile boolean stop = false;
     @Override
@@ -141,9 +145,33 @@ public class AppPanel implements Initializable {
                 DateInfo.setText(dateFormatted);
                 int minutes = Integer.valueOf(hourFormatted.substring(3,5));
                 int seconds = Integer.valueOf(hourFormatted.substring(6,8));
-                //System.out.println(dtf1.format(date));
-                System.out.println(hourFormatted);
-                if((minutes == 0)&&(seconds == 0)) {
+//                if((minutes == 0)&&(seconds == 0)) {
+//                    Platform.runLater(() -> {
+//                        try {
+//                            setWeather(wi);
+//                        } catch (NonexistentZipCodeException e) {
+//                            e.printStackTrace();
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        } catch (IncorrectZipCodeFormatException e) {
+//                            e.printStackTrace();
+//                        }
+//                    });
+//                }
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        tr.start();
+        AtomicInteger seconds = new AtomicInteger();
+        Thread tr1 = new Thread(()-> {
+            while(!stop){
+                if(seconds.get() == 0) {
                     Platform.runLater(() -> {
                         try {
                             setWeather(wi);
@@ -157,6 +185,8 @@ public class AppPanel implements Initializable {
                             e.printStackTrace();
                         }
                     });
+                    seconds.getAndIncrement();
+                    if (seconds.get() == 1800) seconds.set(0);
                 }
                 try {
                     Thread.sleep(1000);
@@ -165,7 +195,7 @@ public class AppPanel implements Initializable {
                 }
             }
         });
-        tr.start();
+        tr1.start();
     };
 
 
@@ -294,7 +324,7 @@ public class AppPanel implements Initializable {
 
     public void setWeather(WeatherInfo wi) throws NonexistentZipCodeException, JSONException, IOException, IncorrectZipCodeFormatException {
 
-        wi.update();
+        wi.update("15-199");
         String temp = String.valueOf(Math.round(wi.getTemp()));
         String feelsLike = String.valueOf(Math.round(wi.getFeelsLike()));
         String windSpeed = String.valueOf(Math.round(wi.getWindSpeed()));
@@ -305,7 +335,18 @@ public class AppPanel implements Initializable {
         FeelsLike.setText("Feels like: " + feelsLike + "°C");
         WindValue.setText(windSpeed + " km/h");
         CloudsValue.setText(cloudsValue + " %");
-        WeatherDescription.setText(weatherDescription);
+
+        File file = new File("");
+        String imagesPath = file.getAbsolutePath() + "\\src\\main\\resources\\Images";
+        if (weatherDescription.contains("overcast")) {
+            weatherImage.setImage(new Image(imagesPath + "\\clouds.png"));
+        }
+        else if (weatherDescription.contains("cloud")) {
+            weatherImage.setImage(new Image(imagesPath + "\\mostly_sunny.png"));
+        }
+        else{
+            weatherImage.setImage(new Image(imagesPath + "\\sunny.png"));
+        }
     }
 
     public void refreshWeather(ActionEvent event) throws NonexistentZipCodeException, JSONException, IOException, IncorrectZipCodeFormatException {

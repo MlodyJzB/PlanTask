@@ -72,7 +72,7 @@
                                                                   <Font size="22.0" />
                                                                </font>
                                                             </Label>
-                                                            <Button fx:id="refreshButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#refreshWeather" onMouseEntered="#onMouseEnteredRefreshWeather" onMouseExited="#onMouseExited" prefHeight="23.0" prefWidth="19.0" style="-fx-background-color: #fff7e0;">
+                                                            <Button fx:id="refreshButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#refreshWeather" onMouseEntered="#onMouseEnteredRefreshWeather" onMouseExited="#onMouseExited" prefHeight="29.0" prefWidth="28.0" style="-fx-background-color: #fff7e0;">
                                                                <graphic>
                                                                   <ImageView fitHeight="14.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
                                                                      <image>
@@ -85,7 +85,7 @@
                                                       </HBox>
                                                       <HBox alignment="TOP_CENTER" prefHeight="150.0" prefWidth="150.0">
                                                          <children>
-                                                            <ImageView fitHeight="70.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true">
+                                                            <ImageView fx:id="weatherImage" fitHeight="70.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true">
                                                                <image>
                                                                   <Image url="@../../../Images/mostly_sunny.png" />
                                                                </image>

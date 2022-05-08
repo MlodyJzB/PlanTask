@@ -7,6 +7,7 @@ module com.app {
     requires org.jetbrains.annotations;
     requires org.apache.commons.io;
     requires json.simple;
+    requires commons.lang3;
 
 
     opens com.app.loginapp to javafx.fxml;
