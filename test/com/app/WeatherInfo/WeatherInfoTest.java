@@ -104,14 +104,18 @@ public class WeatherInfoTest {
     public void testUpdateFromJson() throws IOException, JSONException {
         WeatherInfo wi = new WeatherInfo();
         assertEquals(0, wi.getTemp());
-        assertEquals(0, wi.getMinTemp());
-        assertEquals(0, wi.getMaxTemp());
+        assertEquals(0, wi.getFeelsLike());
+        assertEquals(0, wi.getWindSpeed());
+        assertEquals(0, wi.getCloudsValue());
+        assertEquals("", wi.getWeatherDescription());
 
         wi.updateFromJson("\\test\\com\\app\\WeatherInfo\\exampleInfo.json");
 
         assertEquals(0.82, wi.getTemp());
-        assertEquals(-0.58, wi.getMinTemp());
-        assertEquals(1.59, wi.getMaxTemp());
+        assertEquals(-3.36, wi.getFeelsLike());
+        assertEquals(15, wi.getWindSpeed());
+        assertEquals(0, wi.getCloudsValue());
+        assertEquals("clear sky", wi.getWeatherDescription());
     }
 }
 

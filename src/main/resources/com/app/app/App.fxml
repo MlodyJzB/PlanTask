@@ -21,7 +21,7 @@
                <children>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="444.0" prefWidth="626.0">
                      <children>
-                        <VBox layoutX="-53.0" prefHeight="444.0" prefWidth="298.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <VBox layoutX="-9.0" layoutY="9.0" prefHeight="444.0" prefWidth="298.0" AnchorPane.bottomAnchor="-9.0" AnchorPane.leftAnchor="-9.0" AnchorPane.rightAnchor="9.0" AnchorPane.topAnchor="9.0">
                            <children>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="400.0">
                                  <children>
@@ -65,13 +65,22 @@
                                              <children>
                                                 <VBox alignment="CENTER" layoutX="-5.0" layoutY="37.0" prefWidth="150.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                    <children>
-                                                      <HBox prefHeight="150.0" prefWidth="150.0">
+                                                      <HBox alignment="CENTER" prefHeight="150.0" prefWidth="150.0">
                                                          <children>
-                                                            <Label alignment="BASELINE_CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="178.0" text="Weather">
+                                                            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="76.0" text="Weather">
                                                                <font>
-                                                                  <Font size="24.0" />
+                                                                  <Font size="22.0" />
                                                                </font>
                                                             </Label>
+                                                            <Button fx:id="refreshButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#refreshWeather" onMouseEntered="#onMouseEnteredRefreshWeather" onMouseExited="#onMouseExited" prefHeight="23.0" prefWidth="19.0" style="-fx-background-color: #fff7e0;">
+                                                               <graphic>
+                                                                  <ImageView fitHeight="14.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                                                                     <image>
+                                                                        <Image url="@../../../Images/refresh.png" />
+                                                                     </image>
+                                                                  </ImageView>
+                                                               </graphic>
+                                                            </Button>
                                                          </children>
                                                       </HBox>
                                                       <HBox alignment="TOP_CENTER" prefHeight="150.0" prefWidth="150.0">
