@@ -1,6 +1,10 @@
 package com.app.app;
 
+import com.app.WeatherInfo.IncorrectZipCodeFormatException;
+import com.app.WeatherInfo.NonexistentZipCodeException;
+import com.app.WeatherInfo.WeatherInfo;
 import com.app.app.settings.Settings;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -49,7 +53,7 @@ public class AppPanel implements Initializable {
     @FXML
     private VBox Incoming_events_Vbox;
     @FXML
-    private Label Tempe, MinTemp, MaxTemp, WeatherDescription, CloudsValue, WindValue;
+    private Label Temp, MinTemp, MaxTemp, WeatherDescription, CloudsValue, WindValue;
 
     private volatile boolean stop = false;
     @Override
@@ -118,15 +122,38 @@ public class AppPanel implements Initializable {
             translateT1.play();
             translateT2.play();
         });*/
+        final int[] i = {0};
+        final int[] a = {0};
         Thread tr = new Thread(()-> {
             while(!stop){
                 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yy/MM/dd");
                 LocalDateTime date = LocalDateTime.now();
                 DateTimeFormatter dtf1 = DateTimeFormatter.ofPattern("HH:mm:ss");
                 LocalDateTime time = LocalDateTime.now();
-                HourInfo.setText(dtf.format(time));
-                DateInfo.setText(dtf1.format(date));
+                String hourFormatted = dtf1.format(date);
+                String dateFormatted = dtf.format(time);
+                HourInfo.setText(hourFormatted);
+                DateInfo.setText(dateFormatted);
+                int minutes = Integer.valueOf(hourFormatted.substring(3,5));
+                int seconds = Integer.valueOf(hourFormatted.substring(6,8));
                 //System.out.println(dtf1.format(date));
+                i[0]++;
+                System.out.println(hourFormatted);
+                if((minutes == 0)&&(seconds == 0)) {
+                    Platform.runLater(() -> {
+                        try {
+                            setWeather();
+                        } catch (NonexistentZipCodeException e) {
+                            e.printStackTrace();
+                        } catch (JSONException e) {
+                            System.out.println(2);
+                        } catch (IOException e) {
+                            System.out.println(3);
+                        } catch (IncorrectZipCodeFormatException e) {
+                            System.out.println(4);
+                        }
+                    });
+                }
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
@@ -136,6 +163,8 @@ public class AppPanel implements Initializable {
         });
         tr.start();
     };
+
+
     @FXML
     private ImageView minimalize_button;
 
@@ -249,5 +278,18 @@ public class AppPanel implements Initializable {
         hbox.setPrefSize(200, 46);
         hbox.setSpacing(10);
         return hbox;
+    }
+
+    public void setWeather() throws NonexistentZipCodeException, JSONException, IOException, IncorrectZipCodeFormatException {
+        WeatherInfo wi = new WeatherInfo();
+
+        wi.update("00-631");
+        String temp = String.valueOf(Math.round(wi.getTemp()));
+        String minTemp = String.valueOf(Math.round(wi.getMinTemp()));
+        String maxTemp = String.valueOf(Math.round(wi.getMaxTemp()));
+        Temp.setText(temp);
+        MinTemp.setText(minTemp);
+        MaxTemp.setText(maxTemp);
+
     }
 }

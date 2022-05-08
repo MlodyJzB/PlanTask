@@ -111,7 +111,8 @@ public class WeatherInfo {
         this.maxTemp = maxTemp;
     }
 
-    public void updateZipCode() throws IncorrectZipCodeFormatException, java.io.IOException, JSONException, NonexistentZipCodeException {
+    public void updateZipCode(String zipCode) throws IncorrectZipCodeFormatException, java.io.IOException, JSONException, NonexistentZipCodeException {
+        this.zipCode = zipCode;
         JsonHandling handle = new JsonHandling();
         JSONObject zipInfo = handle.getFromUrl("https://app.zipcodebase.com/api/v1/search?apikey=f6178de0-b1e6-11ec-ad2d-a971b4172138&codes=" + zipCode);
         File file = new File("");
@@ -135,34 +136,21 @@ public class WeatherInfo {
         this.updateMinTemp(json);
         this.updateMaxTemp(json);
     }
-    public void updateFromJson(String pathFromRoot) throws JSONException, IOException {
-        File file = new File("");
-        String path = file.getAbsolutePath() + pathFromRoot;
-        JSONObject json = JsonHandling.getFromFile(path);
-        this.updateTemp(json);
-        this.updateMinTemp(json);
-        this.updateMaxTemp(json);
+    public void update() throws JSONException, IOException {
+        this.updateInfoJson();
+        this.updateFromJson();
+    }
+
+    public void update(String zipCode) throws JSONException, IOException, NonexistentZipCodeException, IncorrectZipCodeFormatException {
+        this.updateZipCode(zipCode);
+        this.updateInfoJson();
+        this.updateFromJson();
     }
 
 }
 class ZipCodeException
         extends Exception {
     public ZipCodeException(String errorMessage) {
-        super(errorMessage);
-    }
-}
-
-class NonexistentZipCodeException
-        extends ZipCodeException {
-    public NonexistentZipCodeException(String errorMessage) {
-        super(errorMessage);
-    }
-
-}
-
-class IncorrectZipCodeFormatException
-        extends ZipCodeException {
-    public IncorrectZipCodeFormatException(String errorMessage) {
         super(errorMessage);
     }
 }
