@@ -1,8 +1,5 @@
 package com.app.app.settings;
 
-import com.app.loginapp.User;
-import javafx.beans.binding.ObjectBinding;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,17 +10,16 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import org.w3c.dom.events.MouseEvent;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class Settings implements Initializable {
 
+    private static final Map<String, TreeItem<String>> treeItemsMap = new HashMap<>();
+    @FXML
+    Button okButton, cancelButton, applyButton;
     @FXML
     private TreeView<String> settingsTree;
     @FXML
@@ -46,6 +42,11 @@ public class Settings implements Initializable {
         stage.setMaximized(stage.isMaximized());
     }
 
+    public StackPane getStackPane() {
+        return stackPane;
+    }
+
+
     private TreeItem<String> makeBranch(String name, TreeItem<String> parent) {
         TreeItem<String> item = new TreeItem<>(name);
         item.setExpanded(false);
@@ -53,15 +54,47 @@ public class Settings implements Initializable {
         return item;
     }
 
-    private Pane getPane(String paneName){
+    static TreeItem<String> getTreeItem(String treeItemName) {
+        return treeItemsMap.get(treeItemName);
+    }
+
+    public void selectTreeItem(String treeItemName) {
+        TreeItem<String> selectedItem = treeItemsMap.get(treeItemName);
+        for(TreeItem<String> treeItem = selectedItem; treeItem.getParent() != null; treeItem = treeItem.getParent() )
+            treeItem.getParent().setExpanded( true );
+        settingsTree.getSelectionModel().select(selectedItem);
+    }
+
+    @FXML
+    void okClicked(ActionEvent event) {
+
+    }
+    @FXML
+    void applyClicked(ActionEvent event) {
+        //Database.ChangeUsername()
+    }
+    @FXML
+    void cancelClicked(ActionEvent event) {
+        Node node = (Node) event.getSource();
+        Stage stage = (Stage) node.getScene().getWindow();
+        stage.close();
+    }
+
+    private Pane getPane(String treeItemName){
         Pane pane = null;
         try {
+            System.out.println(treeItemName+".fxml");
             FXMLLoader loader = new FXMLLoader();
             pane = loader.load(
                     getClass().getResourceAsStream(
-                            paneName+".fxml"
+                            treeItemName+".fxml"
                     )
             );
+            if (getTreeItem(treeItemName).getChildren().size() > 0) {
+                HyperLinkNavigator controller = loader.getController();
+                controller.setHyperlinkList(getTreeItem(treeItemName));
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -76,10 +109,20 @@ public class Settings implements Initializable {
         general = makeBranch("General", root);
         general.setExpanded(true);
 
-        List<String> treeItemNamesList = List.of("account", "appearance");
-        for (String treeItemName : treeItemNamesList) {
-            makeBranch(treeItemName, general);
+        System.out.println(root.getChildren().get(0).getValue());
+
+        List<String> treeItemsFromGeneral = List.of("account", "appearance");
+        for (String treeItemName : treeItemsFromGeneral) {
+            treeItemsMap.put(treeItemName, makeBranch(treeItemName, general));
         }
+
+        List<String> treeItemsFromAccount = List.of("username", "password");
+        TreeItem<String> account = treeItemsMap.get("account");
+        for (String treeItemName : treeItemsFromAccount) {
+            treeItemsMap.put(treeItemName, makeBranch(treeItemName, account));
+        }
+
+
 
         settingsTree.setRoot(root);
         settingsTree.setShowRoot(false);
@@ -92,6 +135,10 @@ public class Settings implements Initializable {
                             stackPane.getChildren().add(getPane(newValue.getValue()));
                     }
                 });
+
+//        applyButton.disableProperty().bind(Bindings.createBooleanBinding(
+//                usernameChanged::get, usernameChanged
+//        ));
     }
 
 }
