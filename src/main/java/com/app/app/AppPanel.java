@@ -1,10 +1,14 @@
 package com.app.app;
 
-import com.app.app.settings.Settings;
+import com.app.WeatherInfo.IncorrectZipCodeFormatException;
+import com.app.WeatherInfo.NonexistentZipCodeException;
+import com.app.WeatherInfo.WeatherInfo;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -25,6 +29,7 @@ import javafx.stage.StageStyle;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -38,6 +43,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class AppPanel implements Initializable {
     @FXML
@@ -49,11 +55,17 @@ public class AppPanel implements Initializable {
     @FXML
     private VBox Incoming_events_Vbox;
     @FXML
-    private Label Tempe, MinTemp, MaxTemp, WeatherDescription, CloudsValue, WindValue;
+    private Label Temp, FeelsLike, WeatherDescription, CloudsValue, WindValue;
+
+    @FXML
+    private Button refreshButton;
+
+    @FXML ImageView weatherImage;
 
     private volatile boolean stop = false;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        refreshButton.setPadding(new Insets(0, 0, 0, 0));
 
 //        int[] a = {5, 23, 12, 40};
 //        Temperature.setText(a[0]+" °C");
@@ -118,15 +130,36 @@ public class AppPanel implements Initializable {
             translateT1.play();
             translateT2.play();
         });*/
+        final int[] i = {0};
+        final int[] a = {0};
+        WeatherInfo wi = new WeatherInfo();
         Thread tr = new Thread(()-> {
             while(!stop){
                 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yy/MM/dd");
                 LocalDateTime date = LocalDateTime.now();
                 DateTimeFormatter dtf1 = DateTimeFormatter.ofPattern("HH:mm:ss");
                 LocalDateTime time = LocalDateTime.now();
-                HourInfo.setText(dtf.format(time));
-                DateInfo.setText(dtf1.format(date));
-                //System.out.println(dtf1.format(date));
+                String hourFormatted = dtf1.format(date);
+                String dateFormatted = dtf.format(time);
+                HourInfo.setText(hourFormatted);
+                DateInfo.setText(dateFormatted);
+                int minutes = Integer.valueOf(hourFormatted.substring(3,5));
+                int seconds = Integer.valueOf(hourFormatted.substring(6,8));
+//                if((minutes == 0)&&(seconds == 0)) {
+//                    Platform.runLater(() -> {
+//                        try {
+//                            setWeather(wi);
+//                        } catch (NonexistentZipCodeException e) {
+//                            e.printStackTrace();
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        } catch (IncorrectZipCodeFormatException e) {
+//                            e.printStackTrace();
+//                        }
+//                    });
+//                }
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
@@ -135,7 +168,37 @@ public class AppPanel implements Initializable {
             }
         });
         tr.start();
+        AtomicInteger seconds = new AtomicInteger();
+        Thread tr1 = new Thread(()-> {
+            while(!stop){
+                if(seconds.get() == 0) {
+                    Platform.runLater(() -> {
+                        try {
+                            setWeather(wi);
+                        } catch (NonexistentZipCodeException e) {
+                            e.printStackTrace();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (IncorrectZipCodeFormatException e) {
+                            e.printStackTrace();
+                        }
+                    });
+                    seconds.getAndIncrement();
+                    if (seconds.get() == 1800) seconds.set(0);
+                }
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        tr1.start();
     };
+
+
     @FXML
     private ImageView minimalize_button;
 
@@ -147,6 +210,14 @@ public class AppPanel implements Initializable {
         enteredButtonStyle = enteredButton.getStyle();
         enteredButton.setStyle("-fx-background-color: rgb(255,132,31)");
     }
+
+    @FXML
+    private void onMouseEnteredRefreshWeather(MouseEvent event) {
+        Button enteredButton = (Button) event.getSource();
+        enteredButtonStyle = enteredButton.getStyle();
+        enteredButton.setStyle("-fx-background-color: rgb(169,164,148)");
+    }
+
     @FXML
     private void onMouseExited(MouseEvent event) {
         Button enteredButton = (Button) event.getSource();
@@ -249,5 +320,37 @@ public class AppPanel implements Initializable {
         hbox.setPrefSize(200, 46);
         hbox.setSpacing(10);
         return hbox;
+    }
+
+    public void setWeather(WeatherInfo wi) throws NonexistentZipCodeException, JSONException, IOException, IncorrectZipCodeFormatException {
+
+        wi.update("15-199");
+        String temp = String.valueOf(Math.round(wi.getTemp()));
+        String feelsLike = String.valueOf(Math.round(wi.getFeelsLike()));
+        String windSpeed = String.valueOf(Math.round(wi.getWindSpeed()));
+        String cloudsValue = String.valueOf(Math.round(wi.getCloudsValue()));
+        String weatherDescription = wi.getWeatherDescription();
+
+        Temp.setText(temp + "°C");
+        FeelsLike.setText("Feels like: " + feelsLike + "°C");
+        WindValue.setText(windSpeed + " km/h");
+        CloudsValue.setText(cloudsValue + " %");
+
+        File file = new File("");
+        String imagesPath = file.getAbsolutePath() + "\\src\\main\\resources\\Images";
+        if (weatherDescription.contains("overcast")) {
+            weatherImage.setImage(new Image(imagesPath + "\\clouds.png"));
+        }
+        else if (weatherDescription.contains("cloud")) {
+            weatherImage.setImage(new Image(imagesPath + "\\mostly_sunny.png"));
+        }
+        else{
+            weatherImage.setImage(new Image(imagesPath + "\\sunny.png"));
+        }
+    }
+
+    public void refreshWeather(ActionEvent event) throws NonexistentZipCodeException, JSONException, IOException, IncorrectZipCodeFormatException {
+        WeatherInfo wi = new WeatherInfo();
+        setWeather(wi);
     }
 }

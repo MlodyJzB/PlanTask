@@ -9,10 +9,16 @@ import org.json.JSONArray;
 
 public class WeatherInfo {
 
-    private String zipCode = "00-001";
+    private String zipCode;
     private double temp = 0;
-    private double maxTemp = 0;
-    private double minTemp = 0;
+    private double feelsLike = 0;
+
+    private int windSpeed = 0;
+
+    private double cloudsValue = 0;
+
+    private String weatherDescription = "";
+
     private Coords coordinates = new Coords(0, 0);
 
 
@@ -28,13 +34,22 @@ public class WeatherInfo {
         return this.temp;
     }
 
-    public double getMinTemp() {
-        return this.minTemp;
+    public double getFeelsLike() {
+        return this.feelsLike;
     }
 
-    public double getMaxTemp() {
-        return this.maxTemp;
+    public double getCloudsValue() {
+        return this.cloudsValue;
     }
+
+    public double getWindSpeed() {
+        return this.windSpeed;
+    }
+
+    public String getWeatherDescription() {
+        return this.weatherDescription;
+    }
+
 
 
     public static class Coords{
@@ -97,21 +112,36 @@ public class WeatherInfo {
         this.temp = temp;
     }
 
-    public void updateMinTemp(JSONObject json) throws JSONException{
-        Object tempJson = json.getJSONObject("main").get("temp_min");
+    public void updateFeelsLike(JSONObject json) throws JSONException{
+        Object tempJson = json.getJSONObject("main").get("feels_like");
 
-        Double minTemp = Double.valueOf(tempJson.toString());
-        this.minTemp = minTemp;
+        Double feelsLike = Double.valueOf(tempJson.toString());
+        this.feelsLike = feelsLike;
     }
 
-    public void updateMaxTemp(JSONObject json) throws JSONException{
-        Object tempJson = json.getJSONObject("main").get("temp_max");
+    public void updateWindSpeed(JSONObject json) throws JSONException{
+        Object tempJson = json.getJSONObject("wind").get("speed");
 
-        Double maxTemp = Double.valueOf(tempJson.toString());
-        this.maxTemp = maxTemp;
+        int windSpeed = (int) Math.round(Double.valueOf(tempJson.toString())*3.6);
+        this.windSpeed = windSpeed;
     }
 
-    public void updateZipCode() throws IncorrectZipCodeFormatException, java.io.IOException, JSONException, NonexistentZipCodeException {
+    public void updateCloudsValue(JSONObject json) throws JSONException{
+        Object tempJson = json.getJSONObject("clouds").get("all");
+
+        Double cloudsValue = Double.valueOf(tempJson.toString());
+        this.cloudsValue = cloudsValue;
+    }
+
+    public void updateWeatherDescription(JSONObject json) throws JSONException{
+        Object tempJson = json.getJSONArray("weather").getJSONObject(0).get("description");
+
+        String weatherDescription = tempJson.toString();
+        this.weatherDescription = weatherDescription;
+    }
+
+    public void updateZipCode(String zipCode) throws IncorrectZipCodeFormatException, java.io.IOException, JSONException, NonexistentZipCodeException {
+        this.zipCode = zipCode;
         JsonHandling handle = new JsonHandling();
         JSONObject zipInfo = handle.getFromUrl("https://app.zipcodebase.com/api/v1/search?apikey=f6178de0-b1e6-11ec-ad2d-a971b4172138&codes=" + zipCode);
         File file = new File("");
@@ -132,37 +162,37 @@ public class WeatherInfo {
         String path = file.getAbsolutePath() + "\\src\\main\\java\\com\\app\\WeatherInfo\\info.json";
         JSONObject json = JsonHandling.getFromFile(path);
         this.updateTemp(json);
-        this.updateMinTemp(json);
-        this.updateMaxTemp(json);
+        this.updateFeelsLike(json);
+        this.updateWindSpeed(json);
+        this.updateCloudsValue(json);
+        this.updateWeatherDescription(json);
     }
-    public void updateFromJson(String pathFromRoot) throws JSONException, IOException {
+
+    public void updateFromJson(String otherPath) throws JSONException, IOException {
         File file = new File("");
-        String path = file.getAbsolutePath() + pathFromRoot;
+        String path = file.getAbsolutePath() + otherPath;
         JSONObject json = JsonHandling.getFromFile(path);
         this.updateTemp(json);
-        this.updateMinTemp(json);
-        this.updateMaxTemp(json);
+        this.updateFeelsLike(json);
+        this.updateWindSpeed(json);
+        this.updateCloudsValue(json);
+        this.updateWeatherDescription(json);
+    }
+
+    public void update() throws JSONException, IOException {
+        this.updateInfoJson();
+        this.updateFromJson();
+    }
+
+    public void update(String zipCode) throws JSONException, IOException, NonexistentZipCodeException, IncorrectZipCodeFormatException {
+        this.updateZipCode(zipCode);
+        this.update();
     }
 
 }
 class ZipCodeException
         extends Exception {
     public ZipCodeException(String errorMessage) {
-        super(errorMessage);
-    }
-}
-
-class NonexistentZipCodeException
-        extends ZipCodeException {
-    public NonexistentZipCodeException(String errorMessage) {
-        super(errorMessage);
-    }
-
-}
-
-class IncorrectZipCodeFormatException
-        extends ZipCodeException {
-    public IncorrectZipCodeFormatException(String errorMessage) {
         super(errorMessage);
     }
 }
