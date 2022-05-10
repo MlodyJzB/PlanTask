@@ -42,16 +42,13 @@ public class Settings implements Initializable {
         stage.setMaximized(stage.isMaximized());
     }
 
-    public StackPane getStackPane() {
-        return stackPane;
-    }
-
 
     private TreeItem<String> makeBranch(String name, TreeItem<String> parent) {
-        TreeItem<String> item = new TreeItem<>(name);
-        item.setExpanded(false);
-        parent.getChildren().add(item);
-        return item;
+        TreeItem<String> treeItem = new TreeItem<>(name);
+        treeItem.setExpanded(false);
+        treeItemsMap.put(treeItem.getValue(), treeItem);
+        parent.getChildren().add(treeItem);
+        return treeItem;
     }
 
     static TreeItem<String> getTreeItem(String treeItemName) {
@@ -83,18 +80,23 @@ public class Settings implements Initializable {
     private Pane getPane(String treeItemName){
         Pane pane = null;
         try {
-            System.out.println(treeItemName+".fxml");
             FXMLLoader loader = new FXMLLoader();
-            pane = loader.load(
-                    getClass().getResourceAsStream(
-                            treeItemName+".fxml"
-                    )
-            );
             if (getTreeItem(treeItemName).getChildren().size() > 0) {
+                pane = loader.load(
+                        getClass().getResourceAsStream(
+                                "hyperLinkNavigator.fxml"
+                        )
+                );
                 HyperLinkNavigator controller = loader.getController();
                 controller.setHyperlinkList(getTreeItem(treeItemName));
+                controller.setvBox(treeItemName);
+            } else {
+                pane = loader.load(
+                        getClass().getResourceAsStream(
+                                treeItemName+".fxml"
+                        )
+                );
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -106,23 +108,18 @@ public class Settings implements Initializable {
         TreeItem<String> root, general;
         root = new TreeItem<>();
         root.setExpanded(true);
+
         general = makeBranch("General", root);
         general.setExpanded(true);
 
-        System.out.println(root.getChildren().get(0).getValue());
-
         List<String> treeItemsFromGeneral = List.of("account", "appearance");
-        for (String treeItemName : treeItemsFromGeneral) {
-            treeItemsMap.put(treeItemName, makeBranch(treeItemName, general));
-        }
+        for (String treeItemName : treeItemsFromGeneral)
+            makeBranch(treeItemName, general);
 
         List<String> treeItemsFromAccount = List.of("username", "password");
         TreeItem<String> account = treeItemsMap.get("account");
-        for (String treeItemName : treeItemsFromAccount) {
-            treeItemsMap.put(treeItemName, makeBranch(treeItemName, account));
-        }
-
-
+        for (String treeItemName : treeItemsFromAccount)
+            makeBranch(treeItemName, account);
 
         settingsTree.setRoot(root);
         settingsTree.setShowRoot(false);
@@ -131,14 +128,10 @@ public class Settings implements Initializable {
                     if (newValue != null) {
                         if (!stackPane.getChildren().isEmpty())
                             stackPane.getChildren().remove(0);
-                        if (!newValue.getValue().equals("General"))
-                            stackPane.getChildren().add(getPane(newValue.getValue()));
+                        stackPane.getChildren().add(getPane(newValue.getValue()));
                     }
                 });
 
-//        applyButton.disableProperty().bind(Bindings.createBooleanBinding(
-//                usernameChanged::get, usernameChanged
-//        ));
     }
 
 }

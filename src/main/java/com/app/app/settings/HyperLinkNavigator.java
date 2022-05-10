@@ -7,6 +7,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.TreeItem;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -19,6 +21,8 @@ public class HyperLinkNavigator implements Initializable {
     private List<Hyperlink> hyperlinkList = new ArrayList<>();
 
     @FXML
+    VBox vBox;
+
     private void selectTreeItemOnClick(ActionEvent actionEvent) throws IOException {
         Hyperlink hyperlink = (Hyperlink) actionEvent.getSource();
         System.out.println(hyperlink.getText());
@@ -44,14 +48,25 @@ public class HyperLinkNavigator implements Initializable {
         return hyperlinkList;
     }
 
-    public void setHyperlinkList(List<Hyperlink> hyperlinkList) {
-        this.hyperlinkList = hyperlinkList;
-    }
-
     public void setHyperlinkList(TreeItem<String> parent) {
         hyperlinkList.clear();
         for (TreeItem<String> treeItem : parent.getChildren())
             hyperlinkList.add(new Hyperlink(treeItem.getValue()));
+    }
+
+    public void setvBox(String treeItemName) {
+        vBox.getChildren().add(new Text(treeItemName+":"));
+        for (Hyperlink hyperlink : hyperlinkList) {
+            hyperlink.setOnAction((actionEvent) -> {
+                try {
+                    selectTreeItemOnClick(actionEvent);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+            vBox.getChildren().add(hyperlink);
+        }
+
     }
 
     @Override
