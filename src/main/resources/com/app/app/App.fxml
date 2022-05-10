@@ -58,46 +58,38 @@
                                                 </AnchorPane>
                                              </children>
                                           </VBox>
-                                          <AnchorPane prefHeight="300.0" prefWidth="400.0" style="-fx-background-color: #fff7e0; -fx-background-radius: 15;">
+                                          <AnchorPane prefHeight="300.0" prefWidth="400.0" style="-fx-background-color: #F6C99CFF; -fx-background-radius: 15;">
                                              <opaqueInsets>
                                                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                              </opaqueInsets>
                                              <children>
                                                 <VBox alignment="CENTER" layoutX="-5.0" layoutY="37.0" prefWidth="150.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                    <children>
-                                                      <HBox alignment="CENTER" prefHeight="150.0" prefWidth="150.0">
+                                                      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="32.0" prefWidth="121.0" text="Weather">
+                                                         <font>
+                                                            <Font size="24.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <ImageView fx:id="weatherImage" fitHeight="89.0" fitWidth="92.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@../../../Images/weatherIcons/02d%20.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                      <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0">
                                                          <children>
-                                                            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="76.0" text="Weather">
+                                                            <Label fx:id="City" alignment="CENTER" contentDisplay="CENTER" prefHeight="36.0" prefWidth="300.0" text="Warsaw">
                                                                <font>
-                                                                  <Font size="22.0" />
+                                                                  <Font name="System Bold" size="16.0" />
                                                                </font>
                                                             </Label>
-                                                            <Button fx:id="refreshButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#refreshWeather" onMouseEntered="#onMouseEnteredRefreshWeather" onMouseExited="#onMouseExited" prefHeight="29.0" prefWidth="28.0" style="-fx-background-color: #fff7e0;">
-                                                               <graphic>
-                                                                  <ImageView fitHeight="14.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
-                                                                     <image>
-                                                                        <Image url="@../../../Images/refresh.png" />
-                                                                     </image>
-                                                                  </ImageView>
-                                                               </graphic>
-                                                            </Button>
-                                                         </children>
-                                                      </HBox>
-                                                      <HBox alignment="TOP_CENTER" prefHeight="150.0" prefWidth="150.0">
-                                                         <children>
-                                                            <ImageView fx:id="weatherImage" fitHeight="70.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true">
-                                                               <image>
-                                                                  <Image url="@../../../Images/mostly_sunny.png" />
-                                                               </image>
-                                                            </ImageView>
-                                                            <VBox prefHeight="78.0" prefWidth="75.0">
+                                                            <VBox alignment="CENTER" prefHeight="36.0" prefWidth="300.0">
                                                                <children>
-                                                                  <Label fx:id="Temp" alignment="BASELINE_CENTER" prefHeight="35.0" prefWidth="85.0" text="5°C">
+                                                                  <Label fx:id="Temp" alignment="CENTER" contentDisplay="CENTER" prefHeight="34.0" prefWidth="65.0" text="5°C">
                                                                      <font>
-                                                                        <Font size="36.0" />
+                                                                        <Font size="25.0" />
                                                                      </font>
                                                                   </Label>
-                                                                  <Label fx:id="FeelsLike" text="Feels like: 25°C">
+                                                                  <Label fx:id="FeelsLike" alignment="CENTER" contentDisplay="CENTER" text="Feels like: 25°C">
                                                                      <font>
                                                                         <Font size="11.0" />
                                                                      </font>
@@ -106,36 +98,64 @@
                                                             </VBox>
                                                          </children>
                                                       </HBox>
-                                                      <Label fx:id="WeatherDescription" alignment="CENTER" prefHeight="150.0" prefWidth="150.0" text="Mostly sunny">
-                                                         <font>
-                                                            <Font name="System Bold" size="16.0" />
-                                                         </font></Label>
-                                                      <HBox alignment="BOTTOM_CENTER" prefHeight="150.0" prefWidth="150.0">
+                                                      <HBox alignment="CENTER" prefHeight="150.0" prefWidth="150.0">
                                                          <children>
-                                                            <Label fx:id="Wind" alignment="BOTTOM_CENTER" prefHeight="36.0" prefWidth="300.0" text="Wind">
+                                                            <Label alignment="CENTER" prefHeight="36.0" prefWidth="300.0" text="Rain">
                                                                <font>
                                                                   <Font size="14.0" />
                                                                </font>
                                                             </Label>
-                                                            <Label fx:id="WindValue" alignment="BOTTOM_CENTER" prefHeight="36.0" prefWidth="300.0" text="72 %">
+                                                            <Label fx:id="rainValue" alignment="CENTER" prefHeight="36.0" prefWidth="300.0" text="100 mm/h">
                                                                <font>
                                                                   <Font size="14.0" />
                                                                </font>
                                                             </Label>
                                                          </children>
                                                       </HBox>
-                                                      <HBox prefHeight="150.0" prefWidth="150.0">
+                                                      <HBox alignment="CENTER" prefHeight="150.0" prefWidth="150.0">
                                                          <children>
-                                                            <Label fx:id="Clouds" alignment="BOTTOM_CENTER" prefHeight="36.0" prefWidth="300.0" text="Clouds">
+                                                            <Label fx:id="Wind" alignment="CENTER" prefHeight="36.0" prefWidth="300.0" text="Wind">
                                                                <font>
                                                                   <Font size="14.0" />
                                                                </font>
                                                             </Label>
-                                                            <Label fx:id="CloudsValue" alignment="BOTTOM_CENTER" prefHeight="36.0" prefWidth="300.0" text="12 %">
+                                                            <Label fx:id="WindValue" alignment="CENTER" prefHeight="36.0" prefWidth="300.0" text="72 %">
                                                                <font>
                                                                   <Font size="14.0" />
                                                                </font>
                                                             </Label>
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox alignment="CENTER" prefHeight="150.0" prefWidth="150.0">
+                                                         <children>
+                                                            <Label fx:id="Clouds" alignment="CENTER" prefHeight="36.0" prefWidth="300.0" text="Clouds">
+                                                               <font>
+                                                                  <Font size="14.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Label fx:id="CloudsValue" alignment="CENTER" prefHeight="36.0" prefWidth="300.0" text="12 %">
+                                                               <font>
+                                                                  <Font size="14.0" />
+                                                               </font>
+                                                            </Label>
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                                         <children>
+                                                            <Label alignment="BOTTOM_CENTER" text="Last sync: 20:14 24/12">
+                                                               <font>
+                                                                  <Font size="10.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Button fx:id="refreshButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#refreshWeather" onMouseEntered="#onMouseEnteredRefreshWeather" onMouseExited="#onMouseExited" prefHeight="17.0" prefWidth="35.0" style="-fx-background-color: #F6C99CFF;">
+                                                               <graphic>
+                                                                  <ImageView fitHeight="20.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true">
+                                                                     <image>
+                                                                        <Image url="@../../../Images/refresh.png" />
+                                                                     </image>
+                                                                  </ImageView>
+                                                               </graphic>
+                                                            </Button>
                                                          </children>
                                                       </HBox>
                                                    </children>
