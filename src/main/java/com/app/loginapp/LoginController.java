@@ -1,5 +1,6 @@
 package com.app.loginapp;
 
+import com.app.app.App;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,8 +14,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.net.URL;
@@ -35,12 +38,24 @@ public class LoginController implements Initializable
     @FXML
     private Button loginButton, onClickRegisterScene;
     @FXML
-    private void onClickLogin() throws SQLException {
+    private void onClickLogin(ActionEvent event) throws SQLException, IOException {
         user.setUsername(usernameTextField.getText());
         user.setPassword(passwordField.getText());
         if (Database.checkIfUserExists(user.getUsername(), user.getPassword())) {
             loginStatusText.setStyle("-fx-fill: green");
             loginStatusText.setText("Logged successfully");
+            URL url = App.class.getResource("App.fxml");
+            FXMLLoader fxmlLoader = new FXMLLoader(url);
+            Scene scene = new Scene(fxmlLoader.load(), 970, 650);
+            Stage appStage = new Stage();
+            appStage.setScene(scene);
+            appStage.initStyle(StageStyle.TRANSPARENT);
+            scene.setFill(Color.TRANSPARENT);
+            appStage.show();
+
+            Node node = (Node) event.getSource();
+            Stage thisStage = (Stage) node.getScene().getWindow();
+            thisStage.close();
         }
         else  {
             loginStatusText.setStyle("-fx-fill: #b71834");

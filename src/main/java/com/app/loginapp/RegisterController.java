@@ -67,13 +67,13 @@ public class RegisterController implements Initializable {
         scene.setRoot(fxmlLoader);
     }
 
-    private void setConditionStyle(ImageView imageView, Label label, boolean conditionTrue) {
+    public static void setConditionStyle(ImageView imageView, Label label, boolean conditionTrue) {
         //Set different styles of password condition dependent on conditionTrue
         if (conditionTrue) {
-            imageView.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Images/tickSymbol.png"))));
+            imageView.setImage(new Image(Objects.requireNonNull(RegisterController.class.getResourceAsStream("/Images/tickSymbol.png"))));
             label.setStyle("-fx-text-fill: green");
         } else {
-            imageView.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Images/xSymbol.png"))));
+            imageView.setImage(new Image(Objects.requireNonNull(RegisterController.class.getResourceAsStream("/Images/xSymbol.png"))));
             label.setStyle("-fx-text-fill: red");
         }
     }

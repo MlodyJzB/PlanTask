@@ -19,7 +19,7 @@ public class Database {
         return false;
     }
 
-    static boolean checkIfUsernameExists(String username) {
+    public static boolean checkIfUsernameExists(String username) {
         try {
             String connectionString = "jdbc:sqlserver://plan-task-server.database.windows.net:1433;database=planTask;user=JakubNitkiewicz;password=planTask123;encrypt=true;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
             Connection con = DriverManager.getConnection(connectionString);
@@ -46,31 +46,30 @@ public class Database {
         }
     }
 
-    static void ChangePassword(String username, String oldPassword, String newPassword) throws SQLException {
+    public static void changePassword(String username, String oldPassword, String newPassword) throws SQLException {
         try {
             String connectionString = "jdbc:sqlserver://plan-task-server.database.windows.net:1433;database=planTask;user=JakubNitkiewicz;password=planTask123;encrypt=true;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
             Connection con = DriverManager.getConnection(connectionString);
             PreparedStatement statement = con.prepareStatement("EXEC ChangePassword @username = ?, @oldPassword = ?, @newPassword = ?");
             statement.setString(1, username);
             statement.setString(2, oldPassword);
-            statement.setString(2, newPassword);
-            statement.executeUpdate();
+            statement.setString(3, newPassword);
+            final int status = statement.executeUpdate();
+            System.out.println(status);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
     }
 
-    static void ChangeUsername(String username, String password, String newUsername) throws SQLException {
-        try {
-            String connectionString = "jdbc:sqlserver://plan-task-server.database.windows.net:1433;database=planTask;user=JakubNitkiewicz;password=planTask123;encrypt=true;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
-            Connection con = DriverManager.getConnection(connectionString);
-            PreparedStatement statement = con.prepareStatement("EXEC ChangeUsername @username = ?, @password = ?, @newUsername = ?");
-            statement.setString(1, username);
-            statement.setString(2, password);
-            statement.setString(2, newUsername);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public static void changeUsername(String username, String newUsername) throws SQLException {
+        String connectionString = "jdbc:sqlserver://plan-task-server.database.windows.net:1433;database=planTask;user=JakubNitkiewicz;password=planTask123;encrypt=true;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
+        Connection con = DriverManager.getConnection(connectionString);
+        PreparedStatement statement = con.prepareStatement("EXEC ChangeUsername @username = ?, @newUsername = ?");
+        statement.setString(1, username);
+        statement.setString(2, newUsername);
+        statement.executeUpdate();
+//        if (statement.executeUpdate() == -1)
+//            throw new SQLException("Failed to change Username!");
     }
 }

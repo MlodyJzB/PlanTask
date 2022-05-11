@@ -71,8 +71,7 @@ public class AppPanel implements Initializable {
 //        Temperature.setText(a[0]+" °C");
 //        Weather_1.setText(a[1]+" km/h");
 //        Weather_2.setText(a[2]+" %");
-//        Weather_3.setText(a[3]+" %");
-
+//        Weather_3.setText(a[3]+" %")
         JSONObject jsonCalendar = new JSONObject();
         JSONObject jsonCalendar1 = new JSONObject();
         List<JSONObject> listOfEvents = new ArrayList();

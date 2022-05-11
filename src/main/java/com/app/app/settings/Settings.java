@@ -1,8 +1,7 @@
 package com.app.app.settings;
 
 import com.app.loginapp.User;
-import javafx.beans.binding.ObjectBinding;
-import javafx.collections.ObservableList;
+import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,17 +12,15 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import org.w3c.dom.events.MouseEvent;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class Settings implements Initializable {
+    User user;
 
+    private static final Map<String, TreeItem<String>> treeItemsMap = new HashMap<>();
     @FXML
     private TreeView<String> settingsTree;
     @FXML
@@ -46,22 +43,48 @@ public class Settings implements Initializable {
         stage.setMaximized(stage.isMaximized());
     }
 
+
     private TreeItem<String> makeBranch(String name, TreeItem<String> parent) {
-        TreeItem<String> item = new TreeItem<>(name);
-        item.setExpanded(false);
-        parent.getChildren().add(item);
-        return item;
+        TreeItem<String> treeItem = new TreeItem<>(name);
+        treeItem.setExpanded(false);
+        treeItemsMap.put(treeItem.getValue(), treeItem);
+        parent.getChildren().add(treeItem);
+        return treeItem;
     }
 
-    private Pane getPane(String paneName){
+    static TreeItem<String> getTreeItem(String treeItemName) {
+        return treeItemsMap.get(treeItemName);
+    }
+
+    public void selectTreeItem(String treeItemName) {
+        TreeItem<String> selectedItem = treeItemsMap.get(treeItemName);
+        for(TreeItem<String> treeItem = selectedItem; treeItem.getParent() != null; treeItem = treeItem.getParent() )
+            treeItem.getParent().setExpanded( true );
+        settingsTree.getSelectionModel().select(selectedItem);
+    }
+
+
+
+    private Pane getPane(String treeItemName){
         Pane pane = null;
         try {
             FXMLLoader loader = new FXMLLoader();
-            pane = loader.load(
-                    getClass().getResourceAsStream(
-                            paneName+".fxml"
-                    )
-            );
+            if (getTreeItem(treeItemName).getChildren().size() > 0) {
+                pane = loader.load(
+                        getClass().getResourceAsStream(
+                                "hyperLinkNavigator.fxml"
+                        )
+                );
+                HyperLinkNavigator controller = loader.getController();
+                controller.setHyperlinkList(getTreeItem(treeItemName));
+                controller.setvBox(treeItemName);
+            } else {
+                pane = loader.load(
+                        getClass().getResourceAsStream(
+                                treeItemName+".fxml"
+                        )
+                );
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -70,28 +93,41 @@ public class Settings implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        user = User.getInstance();
+
         TreeItem<String> root, general;
         root = new TreeItem<>();
         root.setExpanded(true);
+
         general = makeBranch("General", root);
         general.setExpanded(true);
 
-        List<String> treeItemNamesList = List.of("account", "appearance");
-        for (String treeItemName : treeItemNamesList) {
+        List<String> treeItemsFromGeneral = List.of("account", "appearance");
+        for (String treeItemName : treeItemsFromGeneral)
             makeBranch(treeItemName, general);
-        }
+
+        List<String> treeItemsFromAccount = List.of("username", "password");
+        TreeItem<String> account = treeItemsMap.get("account");
+        for (String treeItemName : treeItemsFromAccount)
+            makeBranch(treeItemName, account);
+
+        List<String> treeItemsFromAppearance = List.of("first", "second");
+        TreeItem<String> appearance = treeItemsMap.get("appearance");
+        for (String treeItemName : treeItemsFromAppearance)
+            makeBranch(treeItemName, appearance);
 
         settingsTree.setRoot(root);
         settingsTree.setShowRoot(false);
         settingsTree.getSelectionModel()
-                .selectedItemProperty().addListener((v, oldValue, newValue) -> {
-                    if (newValue != null) {
+                .selectedItemProperty().addListener((v, oldSelectedTreeItem, newSelectedTreeItem) -> {
+                    if (newSelectedTreeItem != null) {
                         if (!stackPane.getChildren().isEmpty())
                             stackPane.getChildren().remove(0);
-                        if (!newValue.getValue().equals("General"))
-                            stackPane.getChildren().add(getPane(newValue.getValue()));
+                        stackPane.getChildren().add(getPane(newSelectedTreeItem.getValue()));
                     }
                 });
+
+
     }
 
 }

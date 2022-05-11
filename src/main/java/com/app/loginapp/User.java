@@ -2,6 +2,7 @@ package com.app.loginapp;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.StringProperty;
 
 import java.sql.*;
 import java.util.Arrays;
@@ -12,10 +13,56 @@ public class User {
     static User user = new User();
 
     private String username, password;
+
+    public String getChangedUsername() {
+        return changedUsername;
+    }
+
+    public void setChangedUsername(String changedUsername) {
+        this.changedUsername = changedUsername;
+    }
+
+    public String getChangedPassword() {
+        return changedPassword;
+    }
+
+    public void setChangedPassword(String changedPassword) {
+        this.changedPassword = changedPassword;
+    }
+
+    private String changedUsername, changedPassword;
     private final BooleanProperty usernameAvailable = new SimpleBooleanProperty(false);
     private final BooleanProperty usernameLongEnough = new SimpleBooleanProperty(false);
     private final BooleanProperty passwordMeetsConditions = new SimpleBooleanProperty(false);
     private final BooleanProperty passwordsMatch = new SimpleBooleanProperty(false);
+
+    public boolean isPasswordChanged() {
+        return passwordChanged.get();
+    }
+
+    public BooleanProperty passwordChangedProperty() {
+        return passwordChanged;
+    }
+
+    public void setPasswordChanged(boolean passwordChanged) {
+        this.passwordChanged.set(passwordChanged);
+    }
+
+    public boolean isUsernameChanged() {
+        return usernameChanged.get();
+    }
+
+    public BooleanProperty usernameChangedProperty() {
+        return usernameChanged;
+    }
+
+    public void setUsernameChanged(boolean usernameChanged) {
+        this.usernameChanged.set(usernameChanged);
+    }
+
+    private final BooleanProperty passwordChanged = new SimpleBooleanProperty(false);
+
+    private final BooleanProperty usernameChanged = new SimpleBooleanProperty(false);
 
 
     private User() {
