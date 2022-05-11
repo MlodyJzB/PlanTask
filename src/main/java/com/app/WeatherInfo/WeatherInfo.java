@@ -17,7 +17,7 @@ public class WeatherInfo {
 
     private double cloudsValue = 0;
 
-    private String weatherDescription = "";
+    private String icon = "";
 
     private Coords coordinates = new Coords(0, 0);
 
@@ -46,8 +46,8 @@ public class WeatherInfo {
         return this.windSpeed;
     }
 
-    public String getWeatherDescription() {
-        return this.weatherDescription;
+    public String getIcon() {
+        return this.icon;
     }
 
 
@@ -133,11 +133,11 @@ public class WeatherInfo {
         this.cloudsValue = cloudsValue;
     }
 
-    public void updateWeatherDescription(JSONObject json) throws JSONException{
-        Object tempJson = json.getJSONArray("weather").getJSONObject(0).get("description");
+    public void updateIcon(JSONObject json) throws JSONException{
+        Object tempJson = json.getJSONArray("weather").getJSONObject(0).get("icon");
 
-        String weatherDescription = tempJson.toString();
-        this.weatherDescription = weatherDescription;
+        String icon = tempJson.toString();
+        this.icon = icon;
     }
 
     public void updateZipCode(String zipCode) throws IncorrectZipCodeFormatException, java.io.IOException, JSONException, NonexistentZipCodeException {
@@ -165,7 +165,7 @@ public class WeatherInfo {
         this.updateFeelsLike(json);
         this.updateWindSpeed(json);
         this.updateCloudsValue(json);
-        this.updateWeatherDescription(json);
+        this.updateIcon(json);
     }
 
     public void updateFromJson(String otherPath) throws JSONException, IOException {
@@ -176,7 +176,7 @@ public class WeatherInfo {
         this.updateFeelsLike(json);
         this.updateWindSpeed(json);
         this.updateCloudsValue(json);
-        this.updateWeatherDescription(json);
+        this.updateIcon(json);
     }
 
     public void update() throws JSONException, IOException {

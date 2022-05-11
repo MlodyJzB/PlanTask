@@ -215,7 +215,7 @@ public class AppPanel implements Initializable {
     private void onMouseEnteredRefreshWeather(MouseEvent event) {
         Button enteredButton = (Button) event.getSource();
         enteredButtonStyle = enteredButton.getStyle();
-        enteredButton.setStyle("-fx-background-color: rgb(169,164,148)");
+        enteredButton.setStyle("-fx-background-color: rgb(178,148,113)");
     }
 
     @FXML
@@ -329,7 +329,7 @@ public class AppPanel implements Initializable {
         String feelsLike = String.valueOf(Math.round(wi.getFeelsLike()));
         String windSpeed = String.valueOf(Math.round(wi.getWindSpeed()));
         String cloudsValue = String.valueOf(Math.round(wi.getCloudsValue()));
-        String weatherDescription = wi.getWeatherDescription();
+        String icon = wi.getIcon();
 
         Temp.setText(temp + "°C");
         FeelsLike.setText("Feels like: " + feelsLike + "°C");
@@ -337,16 +337,8 @@ public class AppPanel implements Initializable {
         CloudsValue.setText(cloudsValue + " %");
 
         File file = new File("");
-        String imagesPath = file.getAbsolutePath() + "\\src\\main\\resources\\Images";
-        if (weatherDescription.contains("overcast")) {
-            weatherImage.setImage(new Image(imagesPath + "\\clouds.png"));
-        }
-        else if (weatherDescription.contains("cloud")) {
-            weatherImage.setImage(new Image(imagesPath + "\\mostly_sunny.png"));
-        }
-        else{
-            weatherImage.setImage(new Image(imagesPath + "\\sunny.png"));
-        }
+        String imagesPath = file.getAbsolutePath() + "\\src\\main\\resources\\Images\\weatherIcons\\";
+        weatherImage.setImage(new Image(imagesPath + icon + ".png"));
     }
 
     public void refreshWeather(ActionEvent event) throws NonexistentZipCodeException, JSONException, IOException, IncorrectZipCodeFormatException {
