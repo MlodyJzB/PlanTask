@@ -20,6 +20,7 @@
             <artifactId>view</artifactId>
             <version>11.10.6</version>
         </dependency>
+
         <dependency>
             <groupId>com.googlecode.json-simple</groupId>
             <artifactId>json-simple</artifactId>
@@ -54,12 +55,6 @@
             <groupId>com.microsoft.sqlserver</groupId>
             <artifactId>mssql-jdbc</artifactId>
             <version>10.2.0.jre8</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.mnode.ical4j</groupId>
-            <artifactId>ical4j</artifactId>
-            <version>1.0.2</version>
         </dependency>
 
         <dependency>

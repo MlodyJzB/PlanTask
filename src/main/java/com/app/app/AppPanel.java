@@ -1,5 +1,9 @@
 package com.app.app;
 
+import com.calendarfx.model.Calendar;
+import com.calendarfx.model.CalendarSource;
+import com.calendarfx.model.Entry;
+import com.calendarfx.view.DetailedDayView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,7 +32,9 @@ import java.net.URL;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
@@ -46,11 +52,28 @@ public class AppPanel implements Initializable {
     private VBox Incoming_events_Vbox;
     @FXML
     private Label Tempe, MinTemp, MaxTemp, WeatherDescription, CloudsValue, WindValue;
+    @FXML
+    private DetailedDayView aaa;
+    private CalendarSource AddNewEntries(String addedEvent, LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime){
+        Calendar calendar = new Calendar("Test");
+        CalendarSource calendarSource = new CalendarSource("source");
 
+        Entry<String> entry = new Entry<>(addedEvent);
+        entry.setInterval(startDate);
+        entry.changeStartDate(startDate);
+        entry.changeEndDate(endDate);
+        entry.changeStartTime(startTime);
+        entry.changeEndTime(endTime);
+        calendar.addEntry(entry);
+
+        calendarSource.getCalendars().addAll(calendar);
+        return calendarSource;
+    };
     private volatile boolean stop = false;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        CalendarSource newEvent = AddNewEntries("Przykład", LocalDate.now(), LocalDate.now(), LocalTime.of(14,30), LocalTime.of(23,30));
+        aaa.getCalendarSources().setAll(newEvent);
         int[] a = {5, 23, 12, 40};
 
         JSONObject jsonCalendar = new JSONObject();

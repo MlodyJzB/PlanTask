@@ -2,11 +2,11 @@ module com.app {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;
-    requires ical4j;
     requires json;
     requires org.jetbrains.annotations;
     requires org.apache.commons.io;
-    requires json.simple;
+    requires org.mnode.ical4j.core;
+    requires com.calendarfx.view;
 
 
     opens com.app.loginapp to javafx.fxml;
