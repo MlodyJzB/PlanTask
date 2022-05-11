@@ -1,5 +1,7 @@
 package com.app.app.settings;
 
+import com.app.loginapp.User;
+import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,10 +18,9 @@ import java.net.URL;
 import java.util.*;
 
 public class Settings implements Initializable {
+    User user;
 
     private static final Map<String, TreeItem<String>> treeItemsMap = new HashMap<>();
-    @FXML
-    Button okButton, cancelButton, applyButton;
     @FXML
     private TreeView<String> settingsTree;
     @FXML
@@ -62,20 +63,7 @@ public class Settings implements Initializable {
         settingsTree.getSelectionModel().select(selectedItem);
     }
 
-    @FXML
-    void okClicked(ActionEvent event) {
 
-    }
-    @FXML
-    void applyClicked(ActionEvent event) {
-        //Database.ChangeUsername()
-    }
-    @FXML
-    void cancelClicked(ActionEvent event) {
-        Node node = (Node) event.getSource();
-        Stage stage = (Stage) node.getScene().getWindow();
-        stage.close();
-    }
 
     private Pane getPane(String treeItemName){
         Pane pane = null;
@@ -105,6 +93,8 @@ public class Settings implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        user = User.getInstance();
+
         TreeItem<String> root, general;
         root = new TreeItem<>();
         root.setExpanded(true);
@@ -121,16 +111,22 @@ public class Settings implements Initializable {
         for (String treeItemName : treeItemsFromAccount)
             makeBranch(treeItemName, account);
 
+        List<String> treeItemsFromAppearance = List.of("first", "second");
+        TreeItem<String> appearance = treeItemsMap.get("appearance");
+        for (String treeItemName : treeItemsFromAppearance)
+            makeBranch(treeItemName, appearance);
+
         settingsTree.setRoot(root);
         settingsTree.setShowRoot(false);
         settingsTree.getSelectionModel()
-                .selectedItemProperty().addListener((v, oldValue, newValue) -> {
-                    if (newValue != null) {
+                .selectedItemProperty().addListener((v, oldSelectedTreeItem, newSelectedTreeItem) -> {
+                    if (newSelectedTreeItem != null) {
                         if (!stackPane.getChildren().isEmpty())
                             stackPane.getChildren().remove(0);
-                        stackPane.getChildren().add(getPane(newValue.getValue()));
+                        stackPane.getChildren().add(getPane(newSelectedTreeItem.getValue()));
                     }
                 });
+
 
     }
 

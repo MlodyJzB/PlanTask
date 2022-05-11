@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class HyperLinkNavigator implements Initializable {
@@ -25,7 +26,6 @@ public class HyperLinkNavigator implements Initializable {
 
     private void selectTreeItemOnClick(ActionEvent actionEvent) throws IOException {
         Hyperlink hyperlink = (Hyperlink) actionEvent.getSource();
-        System.out.println(hyperlink.getText());
 
         FXMLLoader loader = new FXMLLoader(
                 getClass().getResource(
@@ -55,7 +55,11 @@ public class HyperLinkNavigator implements Initializable {
     }
 
     public void setvBox(String treeItemName) {
-        vBox.getChildren().add(new Text(treeItemName+":"));
+        vBox.getChildren().add(
+                new Text(treeItemName.substring(0, 1).toUpperCase() +
+                                treeItemName.substring(1) +":"
+                )
+        );
         for (Hyperlink hyperlink : hyperlinkList) {
             hyperlink.setOnAction((actionEvent) -> {
                 try {
