@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.image.ImageView;
@@ -16,7 +17,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Settings implements Initializable {
-
+    public boolean daynight=false;
     @FXML
     TreeView<String> settingsTree;
     @FXML
@@ -54,6 +55,8 @@ public class Settings implements Initializable {
         }
         return (Pane) root;
     }
+    @FXML
+    private CheckBox DayNight;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -79,6 +82,7 @@ public class Settings implements Initializable {
                         if (!stackPane.getChildren().isEmpty())
                             stackPane.getChildren().remove(0);
                         stackPane.getChildren().add(getPane(newValue.getValue()));
+                        daynight = DayNight.isSelected();
                     }
                 });
     }
