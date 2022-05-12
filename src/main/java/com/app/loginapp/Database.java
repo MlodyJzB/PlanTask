@@ -1,6 +1,11 @@
 package com.app.loginapp;
 
+import com.calendarfx.model.Entry;
+
 import java.sql.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Database {
 
@@ -71,5 +76,40 @@ public class Database {
         statement.executeUpdate();
 //        if (statement.executeUpdate() == -1)
 //            throw new SQLException("Failed to change Username!");
+    }
+
+    public static void addEvent(String title, String username, LocalDateTime startTime, LocalDateTime endTime) throws SQLException {
+        String connectionString = "jdbc:sqlserver://plan-task-server.database.windows.net:1433;database=planTask;user=JakubNitkiewicz;password=planTask123;encrypt=true;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
+        Connection con = DriverManager.getConnection(connectionString);
+        PreparedStatement statement = con.prepareStatement("EXEC AddEvent @title = ?, @user = ?, @startDateTime = ?, @endDateTime = ?");
+        statement.setString(1, title);
+        statement.setString(2, username);
+        statement.setString(3, startTime.toString());
+        statement.setString(4, endTime.toString());
+        statement.executeUpdate();
+    }
+
+    public static List<List<String>> getUserEventsAsString(String username) {
+        try {
+            String connectionString = "jdbc:sqlserver://plan-task-server.database.windows.net:1433;database=planTask;user=JakubNitkiewicz;password=planTask123;encrypt=true;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
+            Connection con = DriverManager.getConnection(connectionString);
+            PreparedStatement statement = con.prepareStatement("EXEC GetUserEventsAsString @user = ?");
+            statement.setString(1, username);
+            ResultSet resultSet = statement.executeQuery();
+
+            List<List<String>> userEventsList = new ArrayList<>();
+            while (resultSet.next()) {
+                userEventsList.add(List.of(
+                        resultSet.getString("title"),
+                        resultSet.getString("startDateTime"),
+                        resultSet.getString("endDateTime")
+                        )
+                );
+            }
+            return userEventsList;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
     }
 }

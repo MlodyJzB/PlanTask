@@ -265,7 +265,7 @@
                            <children>
                               <AnchorPane fx:id="normColor4" style="-fx-background-color: white; -fx-background-radius: 5;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
-                                    <DetailedDayView fx:id="aaa" disable="true" layoutX="73.0" layoutY="127.0" showScrollBar="false" visibleHours="12" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                    <DetailedDayView fx:id="detailedDayView" disable="true" layoutX="73.0" layoutY="127.0" showScrollBar="false" visibleHours="12" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                  </children>
                               </AnchorPane>
                            </children>

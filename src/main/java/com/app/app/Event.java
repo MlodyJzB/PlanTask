@@ -1,13 +1,23 @@
 package com.app.app;
 
+import com.app.loginapp.Database;
+import com.calendarfx.model.Entry;
+import com.calendarfx.model.Interval;
+
+import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Event {
-    static Event event = new Event();
-
-    private String description;
+    public static class UserEventsEmptyException extends Exception {
+        public UserEventsEmptyException(String errorMessage) {
+            super(errorMessage);
+        }
+    }
+    private String title;
     private EventType eventType;
-    private LocalDateTime startTime, endTime;
+    private LocalDateTime startDateTime, endDateTime;
 
     public enum EventType {
         SPORT,
@@ -17,12 +27,12 @@ public class Event {
         OTHER
     }
 
-    public String getDescription() {
-        return description;
+    public String getTitle() {
+        return title;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public EventType getEventType() {
@@ -33,39 +43,65 @@ public class Event {
         this.eventType = eventType;
     }
 
-    public LocalDateTime getStartTime() {
-        return startTime;
+    public LocalDateTime getStartDateTime() {
+        return startDateTime;
     }
 
-    public void setStartTime(LocalDateTime startTime) {
-        this.startTime = startTime;
+    public void setStartDateTime(LocalDateTime startDateTime) {
+        this.startDateTime = startDateTime;
     }
 
-    public LocalDateTime getEndTime() {
-        return endTime;
+    public LocalDateTime getEndDateTime() {
+        return endDateTime;
     }
 
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
+    public void setEndDateTime(LocalDateTime endDateTime) {
+        this.endDateTime = endDateTime;
     }
 
 
-    private Event() {}
-
-    public static Event getInstance() {
-        return event;
+    public Event(String title, LocalDateTime startTime, LocalDateTime endTime) {
+        this.title=title; this.startDateTime=startTime; this.endDateTime=endTime;
     }
 
-    private void sendToDatabase() {
-
+    public void addEventToDatabase(String username) {
+        try {
+            Database.addEvent(title, username, startDateTime, endDateTime);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    private void setEvent(EventType eventType, LocalDateTime startTime, LocalDateTime endTime, String description) {
-
+    public Entry<String> getEntry() {
+        return new Entry<>(title, new Interval(startDateTime, endDateTime));
     }
 
-    private void getFromDatabase() {
+    public List<Event> getUserEventsFromDatabase(String username) throws UserEventsEmptyException {
+        List<Event> userEvents = new ArrayList<>();
+        List<List<String>> userEventsAsString = Database.getUserEventsAsString(username);
+        if (userEventsAsString.isEmpty())
+            throw new UserEventsEmptyException("User doesn't have events in database");
+        for (List<String> eventAsString: userEventsAsString) {
+            String title = eventAsString.get(0);
+            LocalDateTime startDateTime = LocalDateTime.parse(eventAsString.get(1));
+            LocalDateTime endDateTime = LocalDateTime.parse(eventAsString.get(2));
+            userEvents.add(new Event(title, startDateTime, endDateTime));
+        }
+        return userEvents;
+    }
 
+    public List<Entry<String>> getUserEntriesFromDatabase(String username) throws UserEventsEmptyException {
+        List<Entry<String>> userEntries = new ArrayList<>();
+        List<List<String>> userEventsAsString = Database.getUserEventsAsString(username);
+        if (userEventsAsString.isEmpty())
+            throw new UserEventsEmptyException("User doesn't have events in database");
+        for (List<String> eventAsString : userEventsAsString) {
+            String title = eventAsString.get(0);
+            LocalDateTime startDateTime = LocalDateTime.parse(eventAsString.get(1));
+            LocalDateTime endDateTime = LocalDateTime.parse(eventAsString.get(2));
+            userEntries.add(new Entry<>(title, new Interval(startDateTime, endDateTime)));
+        }
+        return userEntries;
     }
 
 }

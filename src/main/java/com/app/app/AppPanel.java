@@ -13,7 +13,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -43,9 +42,7 @@ import java.net.URL;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
@@ -79,7 +76,8 @@ public class AppPanel implements Initializable {
     private MonthView monthView;
     @FXML
     public Label Label1, Label2, Label3;
-
+    @FXML
+    private DetailedDayView detailedDayView;
 
     private void DayMode(boolean YesNo){
         AnchorPane[] normalColors = new AnchorPane[]{normColor4, normColor3, normColor2, normColor1};
@@ -109,8 +107,7 @@ public class AppPanel implements Initializable {
             }
         }
     }
-    @FXML
-    private DetailedDayView aaa;
+
     private CalendarSource AddNewEntries(String addedEvent, LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime){
         Calendar calendar = new Calendar("Test");
         CalendarSource calendarSource = new CalendarSource("source");
@@ -130,8 +127,15 @@ public class AppPanel implements Initializable {
     private boolean InfoDayNight = false;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        CalendarSource newEvent = AddNewEntries("Przykład", LocalDate.now(), LocalDate.now(), LocalTime.of(14,30), LocalTime.of(23,30));
-        aaa.getCalendarSources().setAll(newEvent);
+//        CalendarSource newEvent = AddNewEntries("Przykład", LocalDate.now(), LocalDate.now(), LocalTime.of(14,30), LocalTime.of(23,30));
+//        detailedDayView.getCalendarSources().setAll(newEvent);
+        Event event = new Event("Event1", LocalDateTime.now(),
+                LocalDateTime.of(LocalDate.now(),
+                        LocalTime.of(23, 59)
+                )
+        );
+        detailedDayView.getCalendarSources().get(0).getCalendars().get(0).addEntry(event.getEntry());
+
         int[] a = {5, 23, 12, 40};
         DayMode(InfoDayNight);
 
