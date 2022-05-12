@@ -1,10 +1,14 @@
 package com.app.app;
 
+import com.app.WeatherInfo.IncorrectZipCodeFormatException;
+import com.app.WeatherInfo.NonexistentZipCodeException;
+import com.app.WeatherInfo.WeatherInfo;
 import com.calendarfx.model.Calendar;
 import com.calendarfx.model.CalendarSource;
 import com.calendarfx.model.Entry;
 import com.calendarfx.view.DetailedDayView;
 import com.calendarfx.view.MonthView;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -65,7 +69,6 @@ public class AppPanel implements Initializable {
     private Button refreshButton;
 
     @FXML ImageView weatherImage;
-    private Label Tempe, MinTemp, MaxTemp, WeatherDescription, CloudsValue, WindValue;
     @FXML
     private AnchorPane backgroundColor, diffColor2, normColor4, normColor3, normColor2, normColor1;
     @FXML
@@ -229,17 +232,17 @@ public class AppPanel implements Initializable {
             while(!stop){
                 if(seconds.get() == 0) {
                     Platform.runLater(() -> {
-                        try {
-                            setWeather(wi);
-                        } catch (NonexistentZipCodeException e) {
-                            e.printStackTrace();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        } catch (IncorrectZipCodeFormatException e) {
-                            e.printStackTrace();
-                        }
+//                        try {
+//                            setWeather(wi);
+//                        } catch (NonexistentZipCodeException e) {
+//                            e.printStackTrace();
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        } catch (IncorrectZipCodeFormatException e) {
+//                            e.printStackTrace();
+//                        }
                     });
                     seconds.getAndIncrement();
                     if (seconds.get() == 1800) seconds.set(0);
