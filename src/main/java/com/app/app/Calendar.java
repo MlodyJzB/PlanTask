@@ -162,7 +162,7 @@ public class Calendar {
         buttonList.add(mon6);
         buttonList.add(tue6);
         currentdate = LocalDate.now();
-        resizeCallendar(650.0,1045.0,-110, 20,120,80);
+        resizeCalendar(650.0,1045.0,-110, 20,120,80,18);
         drawMonth();
 
     }
@@ -276,14 +276,13 @@ public class Calendar {
         label.setLayoutY((Height-417)/2+offy+spacey);
     }
 
-    private void resizeCallendar(double Height, double Width, int offx, int offy, int spacesx, int spacesy ){
+    private void resizeCalendar(double Height, double Width, int offx, int offy, int spacesx, int spacesy, int font ){
         int i = 0;
         int j = 0;
 
         for (var day : buttonList){
-            day.setLayoutX((Width-710)/2+offx+spacesx*i);
-            day.setLayoutY((Height-417)/2+offy+spacesy*j);
-            day.setFont(new Font(18));
+            settingButtonLayouts(day,spacesx*i,spacesy*j, Width,Height, offx, offy);
+            day.setFont(new Font(font));
 
             i++;
             if (i >=7){
@@ -294,15 +293,15 @@ public class Calendar {
         }
 
 
-        settingButtonLayouts(previousb, spacesx*1, spacesy*0,Width,Height,offx,offy-90);
-        settingButtonLayouts(nextb, spacesx*5, spacesy*0,Width,Height,offx,offy-90);
+        settingButtonLayouts(previousb, spacesx*1, spacesy*0,Width,Height,offx+10,offy-90);
+        settingButtonLayouts(nextb, spacesx*5, spacesy*0,Width,Height,offx+10,offy-90);
 
-        //previousb.setFont(Font.font("System", FontWeight.BOLD, 23));
+        previousb.setFont(Font.font("System", FontWeight.BOLD, font));
 
-        //nextb.setFont(Font.font("System", FontWeight.BOLD, 23));
+        nextb.setFont(Font.font("System", FontWeight.BOLD, font));
 
         settingLabelsLayouts(monthLabel, spacesx*3, spacesy*0,Width,Height,offx-60,offy-90);
-        //monthLabel.setFont(new Font(20));
+        monthLabel.setFont(new Font(font-2));
         settingLabelsLayouts(monLabel, spacesx*0, spacesy*0,Width,Height,offx+20,offy-20);
         settingLabelsLayouts(tueLabel, spacesx*1, spacesy*0,Width,Height,offx+20,offy-20);
         settingLabelsLayouts(wedLabel, spacesx*2, spacesy*0,Width,Height,offx+20,offy-20);
@@ -328,11 +327,11 @@ public class Calendar {
 
         if(stage.isMaximized()) {
 
-            resizeCallendar(pane3.getHeight(),pane3.getWidth(),-210,20,180,90);
+            resizeCalendar(pane3.getHeight(),pane3.getWidth(),-210,20,180,90,21);
         }
         else
         {
-            resizeCallendar(650.0,1045.0,-110, 20,120,80);
+            resizeCalendar(650.0,1045.0,-110, 20,120,80,18);
         }
     }
 
