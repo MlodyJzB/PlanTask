@@ -6,9 +6,6 @@ import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import net.fortuna.ical4j.data.ParserException;
-import net.fortuna.ical4j.model.ValidationException;
-import org.json.JSONException;
 
 import java.io.IOException;
 import java.net.URL;
@@ -27,7 +24,7 @@ public class LoginApplication extends Application {
         stage.show();
     }
 
-    public static void main(String[] args) throws ParserException, JSONException, IOException, ValidationException, ParseException {
+    public static void main(String[] args) throws ParseException {
         launch();
         //ICSFilesReader ics = new ICSFilesReader();
         //ToICSFileWritter  toics = new ToICSFileWritter();

@@ -1,19 +1,6 @@
 package com.app.ICSFiles;
 
-import java.io.*;
-
-import net.fortuna.ical4j.data.CalendarOutputter;
-import net.fortuna.ical4j.model.*;
-import net.fortuna.ical4j.model.Calendar;
-import net.fortuna.ical4j.model.property.*;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.text.ParseException;
-import java.util.*;
-
-import net.fortuna.ical4j.model.component.VEvent;
-
+/*
 public class ToICSFileWritter {
     private List<JSONObject> listOfEvents = new ArrayList<JSONObject>();
 
@@ -62,3 +49,4 @@ public class ToICSFileWritter {
         outputter.output(calendar, fout);
     }
 }
+*/

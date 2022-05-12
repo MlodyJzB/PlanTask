@@ -1,9 +1,9 @@
 package com.app.app;
 
-import com.app.WeatherInfo.IncorrectZipCodeFormatException;
-import com.app.WeatherInfo.NonexistentZipCodeException;
-import com.app.WeatherInfo.WeatherInfo;
-import javafx.application.Platform;
+import com.calendarfx.model.Calendar;
+import com.calendarfx.model.CalendarSource;
+import com.calendarfx.model.Entry;
+import com.calendarfx.view.DetailedDayView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -37,7 +37,9 @@ import java.net.URL;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
@@ -61,17 +63,31 @@ public class AppPanel implements Initializable {
     private Button refreshButton;
 
     @FXML ImageView weatherImage;
+    private Label Tempe, MinTemp, MaxTemp, WeatherDescription, CloudsValue, WindValue;
+    @FXML
+    private DetailedDayView aaa;
+    private CalendarSource AddNewEntries(String addedEvent, LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime){
+        Calendar calendar = new Calendar("Test");
+        CalendarSource calendarSource = new CalendarSource("source");
 
+        Entry<String> entry = new Entry<>(addedEvent);
+        entry.setInterval(startDate);
+        entry.changeStartDate(startDate);
+        entry.changeEndDate(endDate);
+        entry.changeStartTime(startTime);
+        entry.changeEndTime(endTime);
+        calendar.addEntry(entry);
+
+        calendarSource.getCalendars().addAll(calendar);
+        return calendarSource;
+    };
     private volatile boolean stop = false;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        refreshButton.setPadding(new Insets(0, 0, 0, 0));
+        CalendarSource newEvent = AddNewEntries("Przykład", LocalDate.now(), LocalDate.now(), LocalTime.of(14,30), LocalTime.of(23,30));
+        aaa.getCalendarSources().setAll(newEvent);
+        int[] a = {5, 23, 12, 40};
 
-//        int[] a = {5, 23, 12, 40};
-//        Temperature.setText(a[0]+" °C");
-//        Weather_1.setText(a[1]+" km/h");
-//        Weather_2.setText(a[2]+" %");
-//        Weather_3.setText(a[3]+" %")
         JSONObject jsonCalendar = new JSONObject();
         JSONObject jsonCalendar1 = new JSONObject();
         List<JSONObject> listOfEvents = new ArrayList();
@@ -129,9 +145,6 @@ public class AppPanel implements Initializable {
             translateT1.play();
             translateT2.play();
         });*/
-        final int[] i = {0};
-        final int[] a = {0};
-        WeatherInfo wi = new WeatherInfo();
         Thread tr = new Thread(()-> {
             while(!stop){
                 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yy/MM/dd");
@@ -196,8 +209,6 @@ public class AppPanel implements Initializable {
         });
         tr1.start();
     };
-
-
     @FXML
     private ImageView minimalize_button;
 
