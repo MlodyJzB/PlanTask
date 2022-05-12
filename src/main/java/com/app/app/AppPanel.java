@@ -4,6 +4,7 @@ import com.calendarfx.model.Calendar;
 import com.calendarfx.model.CalendarSource;
 import com.calendarfx.model.Entry;
 import com.calendarfx.view.DetailedDayView;
+import com.calendarfx.view.MonthView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,6 +23,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -65,6 +67,46 @@ public class AppPanel implements Initializable {
     @FXML ImageView weatherImage;
     private Label Tempe, MinTemp, MaxTemp, WeatherDescription, CloudsValue, WindValue;
     @FXML
+    private AnchorPane backgroundColor, diffColor2, normColor4, normColor3, normColor2, normColor1;
+    @FXML
+    private HBox diffColor1;
+    @FXML
+    private VBox SideBarcolor;
+    @FXML
+    private MonthView monthView;
+    @FXML
+    public Label Label1, Label2, Label3;
+
+
+    private void DayMode(boolean YesNo){
+        AnchorPane[] normalColors = new AnchorPane[]{normColor4, normColor3, normColor2, normColor1};
+        Label[] labelColors = new Label[]{Label1, Label2, Label3};
+        if(YesNo) {
+            for (AnchorPane a : normalColors) {
+                a.setStyle("-fx-background-color: white; -fx-background-radius: 10;");
+            };
+            backgroundColor.setStyle("-fx-background-color: #e8e8e8; -fx-background-radius: 10;");
+            SideBarcolor.setStyle("-fx-background-color: #d66813; -fx-background-radius: 10;");
+            diffColor2.setStyle("-fx-background-color: #ffbf70; -fx-background-radius: 10;");
+            diffColor1.setStyle("-fx-background-color: #ffbf70; -fx-background-radius: 10;");
+        }
+        else{
+            {
+                for (AnchorPane a : normalColors) {
+                    a.setStyle("-fx-background-color: #424242; -fx-background-radius: 10;");
+                };
+                backgroundColor.setStyle("-fx-background-color: #1c1c1c; -fx-background-radius:  0 15 15 0;");
+                SideBarcolor.setStyle("-fx-background-color: #263d25; -fx-background-radius:  15 0 0 15;");
+                diffColor2.setStyle("-fx-background-color: #4d754c; -fx-background-radius: 10;");
+                Incoming_events_Vbox.setStyle("-fx-background-color: #2b2b2b;");
+                diffColor1.setStyle("-fx-background-color: #4d754c; -fx-background-radius: 10;");
+                for (Label a : labelColors) {
+                    a.setTextFill(Paint.valueOf("#ffffff"));
+                };
+            }
+        }
+    }
+    @FXML
     private DetailedDayView aaa;
     private CalendarSource AddNewEntries(String addedEvent, LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime){
         Calendar calendar = new Calendar("Test");
@@ -82,11 +124,13 @@ public class AppPanel implements Initializable {
         return calendarSource;
     };
     private volatile boolean stop = false;
+    private boolean InfoDayNight = false;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         CalendarSource newEvent = AddNewEntries("Przykład", LocalDate.now(), LocalDate.now(), LocalTime.of(14,30), LocalTime.of(23,30));
         aaa.getCalendarSources().setAll(newEvent);
         int[] a = {5, 23, 12, 40};
+        DayMode(InfoDayNight);
 
         JSONObject jsonCalendar = new JSONObject();
         JSONObject jsonCalendar1 = new JSONObject();
@@ -115,7 +159,7 @@ public class AppPanel implements Initializable {
 
 
         try {
-            Incoming_events_Vbox.getChildren().setAll(add_event(jsonCalendar), add_event(jsonCalendar1));
+            Incoming_events_Vbox.getChildren().setAll(add_event(InfoDayNight, jsonCalendar), add_event(InfoDayNight, jsonCalendar1));
         } catch (JSONException | FileNotFoundException | ParseException e) {
             e.printStackTrace();
         }
@@ -284,10 +328,10 @@ public class AppPanel implements Initializable {
     }
 
     public void homepanel(ActionEvent event) {
-        ourWindow.setCenter(pane3);
+        ourWindow.setCenter(backgroundColor);
     }
 
-    public HBox add_event(JSONObject j) throws JSONException, FileNotFoundException, ParseException {
+    public HBox add_event(boolean YesNo, JSONObject j) throws JSONException, FileNotFoundException, ParseException {
         String img = j.getString("event_name");
         Image image1 = new Image(new FileInputStream("src/main/resources/Images/"+img+".png"));
         ImageView image = new ImageView(image1);
@@ -326,7 +370,13 @@ public class AppPanel implements Initializable {
         duration.setPrefSize(200, 46);
 
         HBox hbox = new HBox(pane1, to, from, duration);
-        hbox.setStyle("-fx-background-color: #ffbf70; -fx-background-radius: 5;");
+        if(YesNo) {
+            hbox.setStyle("-fx-background-color: #ffbf70; -fx-background-radius: 10;");
+        }
+        else{
+            //diff-color4
+            hbox.setStyle("-fx-background-color: #4d754c; -fx-background-radius: 10;");
+        }
         hbox.setPrefSize(200, 46);
         hbox.setSpacing(10);
         return hbox;
