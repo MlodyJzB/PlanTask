@@ -2,12 +2,15 @@ package com.app.app;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
 
@@ -206,9 +209,34 @@ public class Calendar {
     }
 
     public void getDay(ActionEvent actionEvent) {
+        Stage stage = (Stage) minimalize_button.getScene().getWindow();
         if (!((Button) actionEvent.getSource()).getText().equals("")) {
             LocalDate dayDate = LocalDate.of(currentdate.getYear(), currentdate.getMonth(), Integer.parseInt(((Button) actionEvent.getSource()).getText()) );
             System.out.println(dayDate);
+            Popup popup = new Popup();
+
+
+            Label noEvents = new Label("no events");
+            noEvents.setStyle("-fx-text-fill: grey;");
+            Label dateLabel = new Label(String.valueOf(dayDate));
+            Label background = new Label();
+            background.setMinSize(500,350);
+            background.setLayoutX(background.getLayoutX()+50);
+            background.setLayoutY(background.getLayoutY()+55);
+            noEvents.setLayoutX(noEvents.getLayoutX()+230+50);
+            noEvents.setLayoutY(noEvents.getLayoutY()+160+55);
+            dateLabel.setFont(Font.font("System", FontWeight.BOLD, 25));
+            dateLabel.setLayoutX(dateLabel.getLayoutX()+185+50);
+            dateLabel.setLayoutY(dateLabel.getLayoutY()+55);
+            background.setStyle(" -fx-background-color: white; -fx-background-radius: 10;");
+            popup.getContent().add(background);
+            popup.getContent().add(dateLabel);
+            popup.getContent().add(noEvents);
+            popup.setAutoHide(true);
+            if (! popup.isShowing()) {
+                popup.show(stage);
+
+            }
         }
     }
 
@@ -325,7 +353,7 @@ public class Calendar {
         //Restore down
         stage.setMaximized(stage.isMaximized());
 
-        if(stage.isMaximized()) {
+        if(pane3.getHeight()>700) {
 
             resizeCalendar(pane3.getHeight(),pane3.getWidth(),-210,20,180,90,21);
         }
