@@ -1,6 +1,6 @@
 package com.app.loginapp;
 
-import com.app.app.App;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,14 +14,17 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -38,13 +41,19 @@ public class LoginController implements Initializable
     @FXML
     private Button loginButton, onClickRegisterScene;
     @FXML
-    private void onClickLogin(ActionEvent event) throws SQLException, IOException {
+    private void onClickLogin(ActionEvent event) throws IOException, JSONException {
         user.setUsername(usernameTextField.getText());
         user.setPassword(passwordField.getText());
         if (Database.checkIfUserExists(user.getUsername(), user.getPassword())) {
             loginStatusText.setStyle("-fx-fill: green");
             loginStatusText.setText("Logged successfully");
-            URL url = App.class.getResource("App.fxml");
+
+            String contents = new String((Files.readAllBytes(Paths.get("panels.json"))));
+            JSONObject o = new JSONObject(contents);
+            int a = (int) o.get(("which"));
+            PutJsonInfo(a, user.getUsername(), true);
+
+            /*URL url = App.class.getResource("App.fxml");
             FXMLLoader fxmlLoader = new FXMLLoader(url);
             Scene scene = new Scene(fxmlLoader.load(), 970, 650);
             Stage appStage = new Stage();
@@ -52,17 +61,38 @@ public class LoginController implements Initializable
             appStage.initStyle(StageStyle.TRANSPARENT);
             scene.setFill(Color.TRANSPARENT);
             appStage.show();
-
+            */
             Node node = (Node) event.getSource();
             Stage thisStage = (Stage) node.getScene().getWindow();
             thisStage.close();
+            Platform.runLater( () -> {
+                try {
+                    new LoginApplication().start( new Stage() );
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
         }
         else  {
             loginStatusText.setStyle("-fx-fill: #b71834");
             loginStatusText.setText("Incorrect username/password");
         }
     }
-
+    public void PutJsonInfo(int number, String name, boolean mode) throws JSONException, IOException {
+        JSONArray info = new JSONArray();
+        info.put(number);
+        info.put("user.png");
+        info.put("P");
+        info.put(name);
+        info.put(mode);
+        String contents = new String((Files.readAllBytes(Paths.get("panels.json"))));
+        JSONObject o = new JSONObject(contents);
+        o.remove("info"+number);
+        o.put("info"+number, info);
+        FileWriter writter = new FileWriter("panels.json");
+        writter.write(String.valueOf(o));
+        writter.close();
+    }
     @FXML
     private void switchToRegisterScene(ActionEvent event) throws IOException {
         Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("register-scene.fxml")));

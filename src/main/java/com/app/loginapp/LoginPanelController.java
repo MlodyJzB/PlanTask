@@ -16,7 +16,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
@@ -29,9 +29,8 @@ public class LoginPanelController implements Initializable {
     public Image image;
     @FXML
     public void goToLoginOrApp1() throws JSONException, IOException {
-        //String source = event.getPickResult().getIntersectedNode().getId();
+        whichUserClickedEdit(1);
         if(getInfo(1).get(3).equals(getInfo(5).get(3))){
-            System.out.println("ti login");
             goToLogin();
         }
         else{
@@ -40,6 +39,7 @@ public class LoginPanelController implements Initializable {
     }
     @FXML
     public void goToLoginOrApp2() throws JSONException, IOException {
+        whichUserClickedEdit(2);
         if(getInfo(2).get(3).equals(getInfo(5).get(3))){
             goToLogin();
         }
@@ -49,7 +49,7 @@ public class LoginPanelController implements Initializable {
     }
     @FXML
     public void goToLoginOrApp3() throws JSONException, IOException {
-        System.out.println("c");
+        whichUserClickedEdit(3);
         if(getInfo(3).get(3).equals(getInfo(5).get(3))){
             goToLogin();
         }
@@ -59,7 +59,7 @@ public class LoginPanelController implements Initializable {
     }
     @FXML
     public void goToLoginOrApp4() throws JSONException, IOException {
-        System.out.println("d");
+        whichUserClickedEdit(4);
         if(getInfo(4).get(3).equals(getInfo(5).get(3))){
             goToLogin();
         }
@@ -97,28 +97,38 @@ public class LoginPanelController implements Initializable {
     }
     @FXML
     public TextField UserName1, UserName2, UserName3, UserName4;
+    @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
-            Image image1 = new Image(new FileInputStream("src/main/resources/Images/"+getInfo(1).get(1)));
-            User1.setImage(image1);
-            UserName1.setText((String) getInfo(1).get(3));
-            image1 = new Image(new FileInputStream("src/main/resources/Images/"+getInfo(2).get(1)));
-            User2.setImage(image1);
-            UserName2.setText((String) getInfo(2).get(3));
-            image1 = new Image(new FileInputStream("src/main/resources/Images/"+getInfo(3).get(1)));
-            User3.setImage(image1);
-            UserName3.setText((String) getInfo(3).get(3));
-            image1 = new Image(new FileInputStream("src/main/resources/Images/"+getInfo(4).get(1)));
-            User4.setImage(image1);
-            UserName4.setText((String) getInfo(4).get(3));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            this.update();
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        user = User.getInstance();
+    }
+    public void update() throws JSONException, IOException {
+        Image image1 = new Image(new FileInputStream("src/main/resources/Images/"+getInfo(1).get(1)));
+        User1.setImage(image1);
+        UserName1.setText((String) getInfo(1).get(3));
+        image1 = new Image(new FileInputStream("src/main/resources/Images/"+getInfo(2).get(1)));
+        User2.setImage(image1);
+        UserName2.setText((String) getInfo(2).get(3));
+        image1 = new Image(new FileInputStream("src/main/resources/Images/"+getInfo(3).get(1)));
+        User3.setImage(image1);
+        UserName3.setText((String) getInfo(3).get(3));
+        image1 = new Image(new FileInputStream("src/main/resources/Images/"+getInfo(4).get(1)));
+        User4.setImage(image1);
+        UserName4.setText((String) getInfo(4).get(3));
+    }
+    public void whichUserClickedEdit(int number) throws IOException, JSONException {
+        String contents = new String((Files.readAllBytes(Paths.get("panels.json"))));
+        JSONObject o = new JSONObject(contents);
+        o.remove("which");
+        o.put("which", number);
+        FileWriter writter = new FileWriter("panels.json");
+        writter.write(String.valueOf(o));
+        writter.close();
     }
     public JSONArray getInfo(int which_one) throws IOException, JSONException {
         String contents = new String((Files.readAllBytes(Paths.get("panels.json"))));

@@ -12,6 +12,7 @@ import java.net.URL;
 import java.text.ParseException;
 
 public class LoginApplication extends Application {
+    long lastRefreshTime = 0;
     @Override
     public void start(Stage stage) throws IOException {
         //Load start scene
@@ -21,6 +22,10 @@ public class LoginApplication extends Application {
         stage.setScene(scene);
         stage.initStyle(StageStyle.TRANSPARENT);
         scene.setFill(Color.TRANSPARENT);
+        scene.addPreLayoutPulseListener(() -> {
+            long refreshTime = System.nanoTime();
+            lastRefreshTime = refreshTime;
+        });
         stage.show();
     }
 

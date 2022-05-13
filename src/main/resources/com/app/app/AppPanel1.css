@@ -1,0 +1,20 @@
+.month-view .container .saturday{
+  -fx-background-color: #4d754c;
+  -fx-background-radius: 5;
+}
+.month-view .container .sunday{
+  -fx-background-color: #4d754c;
+  -fx-background-radius: 5;
+}
+.month-view .container .day-of-month-label{
+  -fx-text-fill: #000;
+}
+.detailed-day-view .container .time-label{
+  -fx-text-fill: #000;
+}
+.detailed-day-view .container .full-hour-line{
+  -fx-stroke: #000;
+}
+.detailed-day-view .container .half-hour-line{
+  -fx-stroke: #000;
+}

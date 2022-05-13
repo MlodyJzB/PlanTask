@@ -1,7 +1,1 @@
-{
-  "info1": [ 1,"user.png", "P", "Ala", "LightMode"],
-  "info2": [ 2,"img.png", "F", "", "LightMode"],
-  "info3": [ 3,"img.png", "F", "", "LightMode"],
-  "info4": [ 4,"img.png", "F", "", "LightMode"],
-  "info5": [ 5,"img.png", "F", "", "LightMode"]
-}
+{"which":3,"info1":[1,"user.png","P","Ala",true],"info5":[5,"img.png","F","",true],"info4":[4,"img.png","F","",true],"info3":[3,"img.png","F","",true],"info2":[2,"user.png","P","anna",true]}
