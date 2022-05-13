@@ -13,8 +13,8 @@
    <children>
       <AnchorPane prefHeight="303.0" prefWidth="380.0" style="-fx-background-color: #0f2021; -fx-background-radius: 15;" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
-            <Text fill="#dba563" layoutX="36.0" layoutY="242.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Don't have an account?" />
-            <Button fx:id="registerButton" contentDisplay="CENTER" layoutX="76.0" layoutY="255.0" mnemonicParsing="false" onAction="#switchToRegisterScene" prefHeight="25.0" prefWidth="83.0" style="-fx-background-color: #916734;" text="Register">
+            <Text fill="#dba563" layoutX="36.0" layoutY="247.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Don't have an account?" />
+            <Button fx:id="registerButton" contentDisplay="CENTER" layoutX="76.0" layoutY="258.0" mnemonicParsing="false" onAction="#switchToRegisterScene" prefHeight="25.0" prefWidth="83.0" style="-fx-background-color: #916734;" text="Register">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -23,7 +23,7 @@
                <children>
                   <TextField fx:id="usernameTextField" alignment="CENTER" layoutX="14.0" layoutY="101.0" prefHeight="25.0" prefWidth="173.0" promptText="username" style="-fx-background-color: #916734;" />
                   <PasswordField fx:id="passwordField" alignment="CENTER" layoutX="14.0" layoutY="141.0" prefHeight="25.0" prefWidth="173.0" promptText="password" style="-fx-background-color: #916734;" />
-                  <Text layoutX="71.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login">
+                  <Text layoutX="71.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
@@ -33,14 +33,14 @@
                         <Font name="Roboto" size="14.0" />
                      </font>
                   </Text>
-                  <Button fx:id="loginButton" layoutX="125.0" layoutY="243.0" mnemonicParsing="false" onAction="#onClickLogin" prefHeight="25.0" prefWidth="53.0" style="-fx-background-color: #916734;" text="Login">
+                  <Button fx:id="loginButton" layoutX="120.0" layoutY="248.0" mnemonicParsing="false" onAction="#onClickLogin" prefHeight="25.0" prefWidth="68.0" style="-fx-background-color: #916734;" text="Login">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
                </children>
             </AnchorPane>
-            <Text fill="#dba563" layoutX="51.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PlanTask" wrappingWidth="109.0" AnchorPane.leftAnchor="51.0">
+            <Text fill="#dba563" layoutX="48.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PlanTask" wrappingWidth="109.0" AnchorPane.leftAnchor="48.0">
                <font>
                   <Font name="System Bold" size="23.0" />
                </font>
@@ -54,12 +54,12 @@
                   </ImageView>
                </children>
             </AnchorPane>
-            <ImageView fitHeight="146.0" fitWidth="144.0" layoutX="20.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../Images/b.png" />
-               </image>
-            </ImageView>
          </children>
       </AnchorPane>
+      <ImageView fitHeight="127.0" fitWidth="127.0" layoutX="26.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../Images/b.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

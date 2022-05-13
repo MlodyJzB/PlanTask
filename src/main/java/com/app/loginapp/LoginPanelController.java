@@ -1,13 +1,17 @@
 package com.app.loginapp;
 
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -136,5 +140,48 @@ public class LoginPanelController implements Initializable {
         JSONArray array = o.getJSONArray("info"+which_one);
         return array;
     }
-
+    public void PutJsonDefault(int number) throws JSONException, IOException {
+        JSONArray info = new JSONArray();
+        info.put(number);
+        info.put("img.png");
+        info.put("F");
+        info.put("");
+        info.put(true);
+        String contents = new String((Files.readAllBytes(Paths.get("panels.json"))));
+        JSONObject o = new JSONObject(contents);
+        o.remove("info"+number);
+        o.put("info"+number, info);
+        FileWriter writter = new FileWriter("panels.json");
+        writter.write(String.valueOf(o));
+        writter.close();
+        Platform.runLater( () -> {
+            try {
+                new LoginApplication().start( new Stage() );
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+    public void remove1(ActionEvent event) throws JSONException, IOException {
+        PutJsonDefault(1);
+    }
+    public void remove2(ActionEvent event) throws JSONException, IOException {
+        PutJsonDefault(2);
+    }
+    public void remove3(ActionEvent event) throws JSONException, IOException {
+        PutJsonDefault(3);
+    }
+    public void remove4(ActionEvent event) throws JSONException, IOException {
+        PutJsonDefault(4);
+    }
+    @FXML
+    private void onMouseEntered(MouseEvent event) {
+        Button enteredButton = (Button) event.getSource();
+        enteredButton.setStyle("-fx-background-color: #b58251");
+    }
+    @FXML
+    private void onMouseExited(MouseEvent event) {
+        Button enteredButton = (Button) event.getSource();
+        enteredButton.setStyle("-fx-background-color: #dba563");
+    }
 }
