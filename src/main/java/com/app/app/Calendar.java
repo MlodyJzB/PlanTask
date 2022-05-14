@@ -103,7 +103,7 @@ public class Calendar {
     private Button previousb;
     @FXML
     private AnchorPane pane3;
-
+    private boolean darkmode=true;
 
     private List<Button> buttonList = new ArrayList<>();
 
@@ -181,12 +181,24 @@ public class Calendar {
             if (weekDays >= first && days <= monthLenght) {
                 day.setText(String.valueOf(days));
                 days++;
-                changeTextColour(day, "#000000", "  #e8e8e8");
-                if(isSpecialDay(getButtonDate(day))) changeTextColour(day, "#d66813", "  #e8e8e8");
-                if (isToday(getButtonDate(day))) changeTextColour(day, "#3516ff", "  #e8e8e8");
-
+                if(darkmode){
+                    changeTextColour(day, "#1c1c1c", "  #424242");
+                    if (isSpecialDay(getButtonDate(day))) changeTextColour(day, "#d66813", "  #424242");
+                    if (isToday(getButtonDate(day))) changeTextColour(day, "#3516ff", "  #424242");
+                }
+                else {
+                    changeTextColour(day, "#000000", "  #e8e8e8");
+                    if (isSpecialDay(getButtonDate(day))) changeTextColour(day, "#d66813", "  #e8e8e8");
+                    if (isToday(getButtonDate(day))) changeTextColour(day, "#3516ff", "  #e8e8e8");
+                }
             } else {
                 day.setText("");
+                if(darkmode){
+                    changeTextColour(day, "#1c1c1c", "  #424242");
+                }
+                else {
+                    changeTextColour(day, "#000000", "  #e8e8e8");
+                }
             }
             weekDays++;
 
@@ -282,6 +294,10 @@ public class Calendar {
         button.setStyle("-fx-text-fill: "+colour+";"+" -fx-background-color: "+backColour+";");
     }
 
+    void changeLabelTextColour(@NotNull Label label, String colour){
+        label.setStyle("-fx-text-fill: "+colour+";");
+    }
+
     LocalDate getButtonDate(@NotNull Button button){
         LocalDate dayDate = LocalDate.of(currentdate.getYear(), currentdate.getMonth(), Integer.parseInt(button.getText()));
         return dayDate;
@@ -291,6 +307,34 @@ public class Calendar {
         /*  updating buttons and labels */
         drawNewCall();
         refreschLabel();
+        if (darkmode) {
+            pane3.setStyle(" -fx-background-color: #424242;");
+            changeTextColour(nextb," #1c1c1c"," #424242");
+            changeTextColour(previousb," #1c1c1c"," #424242");
+            changeLabelTextColour(monLabel," #1c1c1c");
+            changeLabelTextColour(thuLabel," #1c1c1c");
+            changeLabelTextColour(tueLabel," #1c1c1c");
+            changeLabelTextColour(wedLabel," #1c1c1c");
+            changeLabelTextColour(friLabel," #1c1c1c");
+            changeLabelTextColour(satLabel," #1c1c1c");
+            changeLabelTextColour(sunLabel," #1c1c1c");
+            changeLabelTextColour(monthLabel," #1c1c1c");
+
+        }
+        else
+        {
+            pane3.setStyle(" -fx-background-color: #e8e8e8;");
+            changeTextColour(nextb," #000000"," #e8e8e8");
+            changeTextColour(previousb," #000000"," #e8e8e8");
+            changeLabelTextColour(monLabel," #000000");
+            changeLabelTextColour(thuLabel," #000000");
+            changeLabelTextColour(tueLabel," #000000");
+            changeLabelTextColour(wedLabel," #000000");
+            changeLabelTextColour(friLabel," #000000");
+            changeLabelTextColour(satLabel," #000000");
+            changeLabelTextColour(sunLabel," #000000");
+            changeLabelTextColour(monthLabel," #000000");
+        }
     }
 
     private void settingButtonLayouts(Button button, double spacex, double spacey, double Width, double Height, int offx, int offy){
