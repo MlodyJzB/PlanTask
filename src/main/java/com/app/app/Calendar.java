@@ -10,6 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
@@ -110,7 +111,7 @@ public class Calendar implements Initializable {
     private Button previousb;
     @FXML
     private AnchorPane pane3;
-
+    private boolean darkmode=true;
 
     private List<Button> buttonList = new ArrayList<>();
 
@@ -196,12 +197,24 @@ public class Calendar implements Initializable {
             if (weekDays >= first && days <= monthLenght) {
                 day.setText(String.valueOf(days));
                 days++;
-                changeTextColour(day, "#000000", "  #e8e8e8");
-                if(isSpecialDay(getButtonDate(day))) changeTextColour(day, "#d66813", "  #e8e8e8");
-                if (isToday(getButtonDate(day))) changeTextColour(day, "#3516ff", "  #e8e8e8");
-
+                if(darkmode){
+                    changeTextColour(day, "#1c1c1c", "  #424242");
+                    if (!isSpecialDay(getButtonDate(day)).equals("")) changeTextColour(day, "#d66813", "  #424242");
+                    if (isToday(getButtonDate(day))) changeTextColour(day, "#3516ff", "  #424242");
+                }
+                else {
+                    changeTextColour(day, "#000000", "  #e8e8e8");
+                    if (!isSpecialDay(getButtonDate(day)).equals("")) changeTextColour(day, "#d66813", "  #e8e8e8");
+                    if (isToday(getButtonDate(day))) changeTextColour(day, "#3516ff", "  #e8e8e8");
+                }
             } else {
                 day.setText("");
+                if(darkmode){
+                    changeTextColour(day, "#1c1c1c", "  #424242");
+                }
+                else {
+                    changeTextColour(day, "#000000", "  #e8e8e8");
+                }
             }
             weekDays++;
 
@@ -226,15 +239,18 @@ public class Calendar implements Initializable {
     public void getDay(ActionEvent actionEvent) {
         Stage stage = (Stage) minimalize_button.getScene().getWindow();
         if (!((Button) actionEvent.getSource()).getText().equals("")) {
-            LocalDate dayDate = LocalDate.of(currentdate.getYear(), currentdate.getMonth(), Integer.parseInt(((Button) actionEvent.getSource()).getText()) );
+            LocalDate dayDate =getButtonDate((Button) actionEvent.getSource());
             System.out.println(dayDate);
             Popup popup = new Popup();
-
-
+            String nameOfday = isSpecialDay(dayDate);
+            if  (nameOfday.equals("") || nameOfday.equals("1") ) {
+                nameOfday = "";
+            }
             Label noEvents = new Label("no events");
             noEvents.setStyle("-fx-text-fill: grey;");
             Label dateLabel = new Label(String.valueOf(dayDate));
             Label background = new Label();
+            Label specialDay = new Label(nameOfday);
             background.setMinSize(500,350);
             background.setLayoutX(background.getLayoutX()+50);
             background.setLayoutY(background.getLayoutY()+55);
@@ -244,9 +260,13 @@ public class Calendar implements Initializable {
             dateLabel.setLayoutX(dateLabel.getLayoutX()+185+50);
             dateLabel.setLayoutY(dateLabel.getLayoutY()+55);
             background.setStyle(" -fx-background-color: white; -fx-background-radius: 10;");
+            specialDay.setTextAlignment(TextAlignment.CENTER);
+            specialDay.setLayoutX(specialDay.getLayoutX()+260+50- nameOfday.length()*3);
+            specialDay.setLayoutY(specialDay.getLayoutY()+90);
             popup.getContent().add(background);
             popup.getContent().add(dateLabel);
             popup.getContent().add(noEvents);
+            popup.getContent().add(specialDay);
             popup.setAutoHide(true);
             if (! popup.isShowing()) {
                 popup.show(stage);
@@ -255,18 +275,16 @@ public class Calendar implements Initializable {
         }
     }
 
-    public boolean isSpecialDay(LocalDate date){
+    public String isSpecialDay(LocalDate date){
         /* checking if day is special */
-        if(date.getDayOfWeek().getValue() == 7) return true;
-        if(date.getDayOfWeek().getValue() == 6) return true;
-        if(date.getMonthValue() == 1 && date.getDayOfMonth()==1) return true;
-        if(date.getMonthValue() == 5 && date.getDayOfMonth()==1) return true;
-        if(date.getMonthValue() == 5 && date.getDayOfMonth()==3) return true;
-        if(date.getMonthValue() == 8 && date.getDayOfMonth()==15) return true;
-        if(date.getMonthValue() == 11 && date.getDayOfMonth()==1) return true;
-        if(date.getMonthValue() == 11 && date.getDayOfMonth()==11) return true;
-        if(date.getMonthValue() == 12 && date.getDayOfMonth()==25) return true;
-        if(date.getMonthValue() == 12 && date.getDayOfMonth()==26) return true;
+        if(date.getMonthValue() == 1 && date.getDayOfMonth()==1) return "New Year";
+        if(date.getMonthValue() == 5 && date.getDayOfMonth()==1) return "Święto Pracy";
+        if(date.getMonthValue() == 5 && date.getDayOfMonth()==3) return "Święto Konstytucji";
+        if(date.getMonthValue() == 8 && date.getDayOfMonth()==15) return "Wniebowzięcie Najświętszej Marii Panny";
+        if(date.getMonthValue() == 11 && date.getDayOfMonth()==1) return "Dzień Wszystkich Świętych";
+        if(date.getMonthValue() == 11 && date.getDayOfMonth()==11) return "Dzień Niepodległości";
+        if(date.getMonthValue() == 12 && date.getDayOfMonth()==25) return "Christmas";
+        if(date.getMonthValue() == 12 && date.getDayOfMonth()==26) return "Christmas";
         int variable1 = date.getYear() % 19;
         int variable2 = date.getYear() % 4;
         int variable3 = date.getYear() % 7;
@@ -276,9 +294,11 @@ public class Calendar implements Initializable {
         if(variable4 == 28 && variable5 == 6 && variable1 > 10) variable4 -= 7;
         LocalDate easter = LocalDate.of(date.getYear(), 3, 22).plusDays(variable4 + variable5);
 
-        if (date.minusDays(1).equals(easter)) return true;
-        if (date.minusDays(60).equals(easter)) return true;
-        return false;
+        if (date.minusDays(1).equals(easter)) return "Easter";
+        if (date.minusDays(60).equals(easter)) return "Boże Ciało";
+        if(date.getDayOfWeek().getValue() == 7) return "1";
+        if(date.getDayOfWeek().getValue() == 6) return "1";
+        return "";
 
     }
 
@@ -297,6 +317,10 @@ public class Calendar implements Initializable {
         button.setStyle("-fx-text-fill: "+colour+";"+" -fx-background-color: "+backColour+";");
     }
 
+    void changeLabelTextColour(@NotNull Label label, String colour){
+        label.setStyle("-fx-text-fill: "+colour+";");
+    }
+
     LocalDate getButtonDate(@NotNull Button button){
         LocalDate dayDate = LocalDate.of(currentdate.getYear(), currentdate.getMonth(), Integer.parseInt(button.getText()));
         return dayDate;
@@ -306,6 +330,34 @@ public class Calendar implements Initializable {
         /*  updating buttons and labels */
         drawNewCall();
         refreschLabel();
+        if (darkmode) {
+            pane3.setStyle(" -fx-background-color: #424242;");
+            changeTextColour(nextb," #1c1c1c"," #424242");
+            changeTextColour(previousb," #1c1c1c"," #424242");
+            changeLabelTextColour(monLabel," #1c1c1c");
+            changeLabelTextColour(thuLabel," #1c1c1c");
+            changeLabelTextColour(tueLabel," #1c1c1c");
+            changeLabelTextColour(wedLabel," #1c1c1c");
+            changeLabelTextColour(friLabel," #1c1c1c");
+            changeLabelTextColour(satLabel," #1c1c1c");
+            changeLabelTextColour(sunLabel," #1c1c1c");
+            changeLabelTextColour(monthLabel," #1c1c1c");
+
+        }
+        else
+        {
+            pane3.setStyle(" -fx-background-color: #e8e8e8;");
+            changeTextColour(nextb," #000000"," #e8e8e8");
+            changeTextColour(previousb," #000000"," #e8e8e8");
+            changeLabelTextColour(monLabel," #000000");
+            changeLabelTextColour(thuLabel," #000000");
+            changeLabelTextColour(tueLabel," #000000");
+            changeLabelTextColour(wedLabel," #000000");
+            changeLabelTextColour(friLabel," #000000");
+            changeLabelTextColour(satLabel," #000000");
+            changeLabelTextColour(sunLabel," #000000");
+            changeLabelTextColour(monthLabel," #000000");
+        }
     }
 
     private void settingButtonLayouts(Button button, double spacex, double spacey, double Width, double Height, int offx, int offy){
