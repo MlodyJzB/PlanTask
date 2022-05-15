@@ -1,26 +1,33 @@
 package com.app.app;
 
+import com.app.loginapp.LoginPanelController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.IOException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
-public class Calendar {
+public class Calendar implements Initializable {
 
     /* adding buttons and labels */
     @FXML
@@ -125,8 +132,8 @@ public class Calendar {
     private Label sunLabel;
     private LocalDate currentdate;
 
-    @FXML
-    private void initialize() {
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
         buttonList.add(mon1);
         buttonList.add(tue1);
         buttonList.add(wed1);
@@ -167,6 +174,14 @@ public class Calendar {
         currentdate = LocalDate.now();
         resizeCalendar(650.0,1045.0,-110, 20,120,80,18);
         drawMonth();
+        try {
+            boolean a = (boolean) new LoginPanelController().getInfo(new AppPanel().whichUserClicked()).get(4);
+            this.DayMode(a);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -362,5 +377,30 @@ public class Calendar {
             resizeCalendar(650.0,1045.0,-110, 20,120,80,18);
         }
     }
+    @FXML
+    private AnchorPane diffColor1, normalColor;
 
+    private String NormCol, DiffCol, BackCol;
+
+    public void ColourFromDataJson(boolean DayMode) throws IOException, JSONException {
+        String contents = new String((Files.readAllBytes(Paths.get("colors.json"))));
+        JSONObject o = new JSONObject(contents);
+        if(DayMode) {
+            NormCol = (String) o.get(("BrightColorNormal"));
+            DiffCol = (String) o.get(("BrightColorDifferent"));
+            BackCol = (String) o.get(("BrightColorBackground"));
+        }
+        else{
+            NormCol = (String) o.get(("DarkColorNormal"));
+            DiffCol = (String) o.get(("DarkColorDifferent"));
+            BackCol = (String) o.get(("DarkColorBackground"));
+        }
+    };
+
+    private void DayMode(boolean DayMode) throws JSONException, IOException {
+        this.ColourFromDataJson(DayMode);
+        pane3.setStyle("-fx-background-color: " + BackCol + "; -fx-background-radius: 0 15 15 0;");
+        diffColor1.setStyle("-fx-background-color: " + DiffCol + "; -fx-background-radius: 10;");
+        normalColor.setStyle("-fx-background-color: " + NormCol + "; -fx-background-radius: 10;");
+    }
 }

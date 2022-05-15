@@ -1,0 +1,10 @@
+{
+  "BrightColorNormal": "white",
+  "BrightColorDifferent": "#ffbf70",
+  "BrightColorBackground": "#e8e8e8",
+  "BrightSideBarColor": "#d66813",
+  "DarkColorNormal": "#424242",
+  "DarkColorDifferent": "#4d754c",
+  "DarkColorBackground": "#1c1c1c",
+  "DarkSideBarColor": "#263d25"
+}

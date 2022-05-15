@@ -58,7 +58,7 @@
                                                       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                                    </padding>
                                                    <children>
-                                                      <MonthView fx:id="monthView" layoutX="-153.0" layoutY="-93.0" selectionMode="SINGLE" showCurrentWeek="false" showFullDayEntries="false" showTimedEntries="false" showWeekNumbers="false" showWeekdays="false" showWeekends="false" stylesheets="@AppPanel1.css" suspendUpdates="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                      <MonthView fx:id="monthView" layoutX="-153.0" layoutY="-93.0" selectionMode="SINGLE" showCurrentWeek="false" showFullDayEntries="false" showTimedEntries="false" showWeekNumbers="false" showWeekdays="false" showWeekends="false" suspendUpdates="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                    </children>
                                                 </AnchorPane>
                                              </children>
@@ -251,7 +251,7 @@
                                     <Insets top="5.0" />
                                  </HBox.margin>
                               </ImageView>
-                              <ImageView fx:id="exit" fitHeight="33.0" fitWidth="33.0" onMousePressed="#Exit" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="exit" fitHeight="33.0" fitWidth="33.0" onMouseReleased="#Exit" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../../../Images/manu9.png" />
                                  </image>
