@@ -190,23 +190,6 @@ public class AppPanel implements Initializable {
                 String dateFormatted = dtf.format(time);
                 HourInfo.setText(hourFormatted);
                 DateInfo.setText(dateFormatted);
-                int minutes = Integer.valueOf(hourFormatted.substring(3,5));
-                int seconds = Integer.valueOf(hourFormatted.substring(6,8));
-//                if((minutes == 0)&&(seconds == 0)) {
-//                    Platform.runLater(() -> {
-//                        try {
-//                            setWeather(wi);
-//                        } catch (NonexistentZipCodeException e) {
-//                            e.printStackTrace();
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        } catch (IncorrectZipCodeFormatException e) {
-//                            e.printStackTrace();
-//                        }
-//                    });
-//                }
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
@@ -216,21 +199,22 @@ public class AppPanel implements Initializable {
         });
         tr.start();
         AtomicInteger seconds = new AtomicInteger();
+        WeatherInfo wi = new WeatherInfo();
         Thread tr1 = new Thread(()-> {
             while(!stop){
                 if(seconds.get() == 0) {
                     Platform.runLater(() -> {
-//                        try {
-//                            setWeather(wi);
-//                        } catch (NonexistentZipCodeException e) {
-//                            e.printStackTrace();
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        } catch (IncorrectZipCodeFormatException e) {
-//                            e.printStackTrace();
-//                        }
+                        try {
+                            setWeather(wi);
+                        } catch (NonexistentZipCodeException e) {
+                            e.printStackTrace();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (IncorrectZipCodeFormatException e) {
+                            e.printStackTrace();
+                        }
                     });
                     seconds.getAndIncrement();
                     if (seconds.get() == 1800) seconds.set(0);
@@ -375,7 +359,7 @@ public class AppPanel implements Initializable {
 
     public void setWeather(WeatherInfo wi) throws NonexistentZipCodeException, JSONException, IOException, IncorrectZipCodeFormatException {
 
-        wi.update("15-199");
+        wi.update();
         String temp = String.valueOf(Math.round(wi.getTemp()));
         String feelsLike = String.valueOf(Math.round(wi.getFeelsLike()));
         String windSpeed = String.valueOf(Math.round(wi.getWindSpeed()));

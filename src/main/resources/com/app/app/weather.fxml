@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane fx:id="pane3" prefHeight="417.0" prefWidth="710.0" style="-fx-background-color: #e8e8e8; -fx-background-radius: 0 15 15 0;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.app.Calendar">
+   <children>
+      <VBox layoutX="18.0" layoutY="5.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <AnchorPane fx:id="diffColor1">
+               <children>
+                  <ImageView fx:id="exit" fitHeight="31.0" fitWidth="32.0" layoutX="27.66668701171875" onMousePressed="#Exit" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <image>
+                        <Image url="@../../../Images/manu9.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="minimalize_button" fitHeight="24.0" fitWidth="24.0" onMouseReleased="#Minimize_clicked" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="4.0">
+                     <image>
+                        <Image url="@../../../Images/max_min.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="394.0" prefWidth="700.0">
+               <children>
+                  <VBox layoutX="23.0" layoutY="186.0" prefHeight="170.0" prefWidth="156.0" style="-fx-background-color: #B29471FF;">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="13.0" prefWidth="188.0" text="Today" />
+                     </children>
+                  </VBox>
+                  <VBox layoutX="23.0" layoutY="8.0" prefHeight="170.0" prefWidth="491.0" style="-fx-background-color: #B29471FF;">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="25.0" prefWidth="155.0" text="Today" />
+                     </children>
+                  </VBox>
+                  <VBox layoutX="190.0" layoutY="186.0" prefHeight="170.0" prefWidth="156.0" style="-fx-background-color: #B29471FF;">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="13.0" prefWidth="188.0" text="Today" />
+                     </children>
+                  </VBox>
+                  <VBox layoutX="357.0" layoutY="186.0" prefHeight="170.0" prefWidth="156.0" style="-fx-background-color: #B29471FF;">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="13.0" prefWidth="188.0" text="Today" />
+                     </children>
+                  </VBox>
+                  <VBox layoutX="523.0" layoutY="186.0" prefHeight="170.0" prefWidth="156.0" style="-fx-background-color: #B29471FF;">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="13.0" prefWidth="188.0" text="Today" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" layoutX="523.0" layoutY="8.0" prefHeight="170.0" prefWidth="156.0" style="-fx-background-color: #B29471FF;">
+                     <children>
+                        <HBox prefHeight="15.0" prefWidth="156.0">
+                           <children>
+                              <Label alignment="CENTER" prefHeight="37.0" prefWidth="88.0" text="Zipcode:" />
+                              <TextField alignment="CENTER" prefHeight="37.0" prefWidth="88.0" promptText="00-631" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="15.0" prefWidth="156.0">
+                           <children>
+                              <Label alignment="CENTER" prefHeight="37.0" prefWidth="88.0" text="City:" />
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="88.0" text="Warsaw" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>
+   </children>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</AnchorPane>
