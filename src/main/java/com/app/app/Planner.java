@@ -28,11 +28,7 @@ public class Planner implements Initializable {
         try {
             a = (boolean) new LoginPanelController().getInfo(new AppPanel().whichUserClicked()).get(4);
             this.DayMode(a);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (JSONException e) {} catch (IOException e) {}
     }
     @FXML
     private ImageView minimalize_button;

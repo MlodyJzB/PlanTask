@@ -111,7 +111,6 @@ public class AppPanel implements Initializable {
                 )
         );
         detailedDayView.getCalendarSources().get(0).getCalendars().get(0).addEntry(event.getEntry());
-
         try {
             JSONArray a = new LoginPanelController().getInfo(whichUserClicked());
             InfoDayNight = (Boolean) a.get(4);
