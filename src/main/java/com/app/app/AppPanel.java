@@ -277,7 +277,7 @@ public class AppPanel implements Initializable {
     public void calendar(ActionEvent event) {
         LoadSite("calendar");
     }
-    public void statics(ActionEvent event) { LoadSite("statistics"); }
+    public void statics(ActionEvent event) { LoadSite("weather"); }
     public void settings(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(
                 getClass().getResource(
@@ -366,7 +366,7 @@ public class AppPanel implements Initializable {
         String icon = wi.getIcon();
 
         Temp.setText(temp + "°C");
-        FeelsLike.setText("Feels like: " + feelsLike + "°C");
+        //FeelsLike.setText("Feels like: " + feelsLike + "°C");
         WindValue.setText(windSpeed + " km/h");
         CloudsValue.setText(cloudsValue + " %");
 

@@ -1,41 +1,72 @@
 package com.app.app;
 
-import com.app.app.AppPanel;
-import com.app.loginapp.LoginPanelController;
+import com.app.WeatherInfo.IncorrectZipCodeFormatException;
+import com.app.WeatherInfo.NonexistentZipCodeException;
+import com.app.WeatherInfo.WeatherInfo;
+import com.app.WeatherInfo.ZipCodeException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.TextAlignment;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
-import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.Month;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class Weather implements Initializable {
+    public void Exit() {
+        System.exit(0);
+    }
+    @FXML
+    private ChoiceBox Mode;
 
+    @FXML
+    private Label City;
 
+    @FXML
+    private TextField ZipCodeField;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        WeatherInfo wi = new WeatherInfo();
+        try {
+            wi.updateFromJson();
+        } catch (JSONException e) {
+            ZipCodeField.setPromptText("1");
+        } catch (IOException e) {
+            ZipCodeField.setPromptText("2");
+        } catch (NonexistentZipCodeException e) {
+            throw new RuntimeException(e);
+        }
+        ZipCodeField.setPromptText(wi.getZipCode());
+        City.setText(wi.getCity());
     }
+    @FXML
+    private ImageView minimalize_button;
 
+    @FXML
+    private void Minimize_clicked() {
+        Stage stage = (Stage) minimalize_button.getScene().getWindow();
+        //stage.setIconified(true);
+        stage.setMaximized(!stage.isMaximized());
+        //Restore down
+        stage.setMaximized(stage.isMaximized());
+    }
+    @FXML
+    private void onClickRefresh(ActionEvent event) throws JSONException, IOException, IncorrectZipCodeFormatException {
+        String zipCode = ZipCodeField.getText();
+        String zipCodeNoWhite = zipCode.replaceAll("\\s+","");
+        WeatherInfo wi = new WeatherInfo();
+        try{
+            wi.update(zipCodeNoWhite);
+            ZipCodeField.setPromptText(zipCodeNoWhite);
+        }
+        catch (IncorrectZipCodeFormatException | NonexistentZipCodeException e) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Incorrect zip code. Try again!", ButtonType.OK);
+            alert.showAndWait();
+        }
+    }
 }

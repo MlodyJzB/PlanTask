@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -9,18 +9,18 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane fx:id="pane3" prefHeight="417.0" prefWidth="710.0" style="-fx-background-color: #e8e8e8; -fx-background-radius: 0 15 15 0;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.app.Calendar">
+<AnchorPane fx:id="pane3" prefHeight="417.0" prefWidth="710.0" style="-fx-background-color: #e8e8e8; -fx-background-radius: 0 15 15 0;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.app.Weather">
    <children>
-      <VBox layoutX="18.0" layoutY="5.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox layoutX="28.0" layoutY="15.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <AnchorPane fx:id="diffColor1">
                <children>
-                  <ImageView fx:id="exit" fitHeight="31.0" fitWidth="32.0" layoutX="27.66668701171875" onMousePressed="#Exit" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <ImageView fx:id="exit1" fitHeight="31.0" fitWidth="32.0" layoutX="27.66668701171875" onMousePressed="#Exit" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <image>
                         <Image url="@../../../Images/manu9.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="minimalize_button" fitHeight="24.0" fitWidth="24.0" onMouseReleased="#Minimize_clicked" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="4.0">
+                  <ImageView fx:id="minimalize_button1" fitHeight="24.0" fitWidth="24.0" onMouseReleased="#Minimize_clicked" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="4.0">
                      <image>
                         <Image url="@../../../Images/max_min.jpg" />
                      </image>
@@ -59,15 +59,16 @@
                         <HBox prefHeight="15.0" prefWidth="156.0">
                            <children>
                               <Label alignment="CENTER" prefHeight="37.0" prefWidth="88.0" text="Zipcode:" />
-                              <TextField alignment="CENTER" prefHeight="37.0" prefWidth="88.0" promptText="00-631" />
+                              <TextField fx:id="ZipCodeField" alignment="CENTER" prefHeight="37.0" prefWidth="88.0" promptText="00-631" />
                            </children>
                         </HBox>
                         <HBox prefHeight="15.0" prefWidth="156.0">
                            <children>
                               <Label alignment="CENTER" prefHeight="37.0" prefWidth="88.0" text="City:" />
-                              <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="88.0" text="Warsaw" />
+                              <Label fx:id="City" alignment="CENTER" contentDisplay="CENTER" prefWidth="88.0" text="Warsaw" />
                            </children>
                         </HBox>
+                        <Button mnemonicParsing="false" onAction="#onClickRefresh" text="Button" />
                      </children>
                   </VBox>
                </children>
@@ -75,7 +76,4 @@
          </children>
       </VBox>
    </children>
-   <padding>
-      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-   </padding>
 </AnchorPane>

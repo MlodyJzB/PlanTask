@@ -10,6 +10,7 @@ import org.json.JSONArray;
 public class WeatherInfo {
 
     private String zipCode;
+    private String city;
     private double temp = 0;
     private double feelsLike = 0;
 
@@ -50,6 +51,9 @@ public class WeatherInfo {
         return this.icon;
     }
 
+    public String getCity() {
+        return this.city;
+    }
 
 
     public static class Coords{
@@ -140,8 +144,22 @@ public class WeatherInfo {
         this.icon = icon;
     }
 
+    public void updateCity(JSONObject json) throws JSONException, NonexistentZipCodeException {
+        JSONObject results;
+        try{
+            results = json.getJSONObject("results");
+        }
+        catch (JSONException a){
+            this.city = "";
+            throw new NonexistentZipCodeException("Zipcode " + this.getZipCode() + " do not exist.");
+        }
+        JSONArray arr = results.getJSONArray(this.getZipCode());
+        String city = arr.getJSONObject(0).get("city").toString();
+        this.city = city;
+    }
+
     public void updateZipCode(String zipCode) throws IncorrectZipCodeFormatException, java.io.IOException, JSONException, NonexistentZipCodeException {
-        this.zipCode = zipCode;
+        this.setZipCode(zipCode);
         JsonHandling handle = new JsonHandling();
         JSONObject zipInfo = handle.getFromUrl("https://app.zipcodebase.com/api/v1/search?apikey=f6178de0-b1e6-11ec-ad2d-a971b4172138&codes=" + zipCode);
         File file = new File("");
@@ -157,7 +175,7 @@ public class WeatherInfo {
         handle.writeToFile(zipInfo, path);
     }
 
-    public void updateFromJson() throws JSONException, IOException {
+    public void updateFromJson() throws JSONException, IOException, NonexistentZipCodeException {
         File file = new File("");
         String path = file.getAbsolutePath() + "\\src\\main\\java\\com\\app\\WeatherInfo\\info.json";
         JSONObject json = JsonHandling.getFromFile(path);
@@ -166,9 +184,25 @@ public class WeatherInfo {
         this.updateWindSpeed(json);
         this.updateCloudsValue(json);
         this.updateIcon(json);
+
+        path = file.getAbsolutePath() + "\\src\\main\\java\\com\\app\\WeatherInfo\\zipCode.json";
+        json = JsonHandling.getFromFile(path);
+        this.readZipCode(json);
+        this.updateCity(json);
     }
 
-    public void updateFromJson(String otherPath) throws JSONException, IOException {
+    public void readZipCode(JSONObject json) throws NonexistentZipCodeException {
+        JSONObject results;
+        try{
+            results = json.getJSONObject("results");
+        }
+        catch (JSONException e){
+            this.zipCode = " ";
+            throw new NonexistentZipCodeException("Zipcode " + this.getZipCode() + " do not exist.");
+        }
+        this.zipCode = results.keys().next().toString();
+    }
+    public void updateFromJson(String otherPath) throws JSONException, IOException, NonexistentZipCodeException {
         File file = new File("");
         String path = file.getAbsolutePath() + otherPath;
         JSONObject json = JsonHandling.getFromFile(path);
@@ -177,9 +211,15 @@ public class WeatherInfo {
         this.updateWindSpeed(json);
         this.updateCloudsValue(json);
         this.updateIcon(json);
+        this.readZipCode(json);
+
+        path = file.getAbsolutePath() + "\\src\\main\\java\\com\\app\\WeatherInfo\\zipCode.json";
+        json = JsonHandling.getFromFile(path);
+        this.readZipCode(json);
+        this.updateCity(json);
     }
 
-    public void update() throws JSONException, IOException {
+    public void update() throws JSONException, IOException, NonexistentZipCodeException {
         this.updateInfoJson();
         this.updateFromJson();
     }
@@ -189,11 +229,5 @@ public class WeatherInfo {
         this.update();
     }
 
-}
-class ZipCodeException
-        extends Exception {
-    public ZipCodeException(String errorMessage) {
-        super(errorMessage);
-    }
 }
 

@@ -74,7 +74,7 @@ public class WeatherInfoTest {
         WeatherInfo.Coords coordinates = wi.getCoordsFromJson(json);
     }
     @Test(expected = com.app.WeatherInfo.IncorrectZipCodeFormatException.class)
-    public void  testSetZipCodeIncorrectZipCodeFormatException() throws IncorrectZipCodeFormatException {
+    public void  testSetZipCodeIncorrectZipCodeFormatException() throws IncorrectZipCodeFormatException, JSONException, IOException {
         WeatherInfo wi = new WeatherInfo();
         assertEquals("00-001", wi.getZipCode());
 
@@ -82,7 +82,7 @@ public class WeatherInfoTest {
     }
 
     @Test
-    public void testSetZipCode() throws IncorrectZipCodeFormatException {
+    public void testSetZipCode() throws IncorrectZipCodeFormatException, JSONException, IOException {
         WeatherInfo wi = new WeatherInfo();
         assertEquals("00-001", wi.getZipCode());
 
@@ -101,7 +101,7 @@ public class WeatherInfoTest {
     }
 
     @Test
-    public void testUpdateFromJson() throws IOException, JSONException {
+    public void testUpdateFromJson() throws IOException, JSONException, NonexistentZipCodeException {
         WeatherInfo wi = new WeatherInfo();
         assertEquals(0, wi.getTemp());
         assertEquals(0, wi.getFeelsLike());
@@ -115,7 +115,19 @@ public class WeatherInfoTest {
         assertEquals(-3.36, wi.getFeelsLike());
         assertEquals(15, wi.getWindSpeed());
         assertEquals(0, wi.getCloudsValue());
+        assertEquals("Warsaw", wi.getCity());
         //assertEquals("clear sky", wi.getWeatherDescription());
+    }
+
+    @Test
+    public void readZipCode() throws IOException, JSONException, NonexistentZipCodeException {
+        WeatherInfo wi = new WeatherInfo();
+        File file = new File("");
+        String path = file.getAbsolutePath() + "\\src\\main\\java\\com\\app\\WeatherInfo\\zipCode.json";
+        JSONObject json = JsonHandling.getFromFile(path);
+        wi.updateFromJson();
+        System.out.printf(wi.getZipCode());
+        assertEquals(1, 1);
     }
 }
 
