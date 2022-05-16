@@ -321,7 +321,7 @@
                      <graphic>
                         <ImageView fitHeight="48.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../Images/weather.png" />
+                              <Image url="@../../../Images/menu7.png" />
                            </image>
                         </ImageView>
                      </graphic>

@@ -11,15 +11,22 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class Weather implements Initializable {
     public void Exit() {
         System.exit(0);
     }
+
+    private String NormCol, DiffCol, BackCol;
+
     @FXML
     private ChoiceBox Mode;
 
@@ -44,6 +51,22 @@ public class Weather implements Initializable {
         ZipCodeField.setPromptText(wi.getZipCode());
         City.setText(wi.getCity());
     }
+
+    public void ColourFromDataJson(boolean DayMode) throws IOException, JSONException {
+        String contents = new String((Files.readAllBytes(Paths.get("colors.json"))));
+        JSONObject o = new JSONObject(contents);
+        if(DayMode) {
+            NormCol = (String) o.get(("BrightColorNormal"));
+            DiffCol = (String) o.get(("BrightColorDifferent"));
+            BackCol = (String) o.get(("BrightColorBackground"));
+        }
+        else{
+            NormCol = (String) o.get(("DarkColorNormal"));
+            DiffCol = (String) o.get(("DarkColorDifferent"));
+            BackCol = (String) o.get(("DarkColorBackground"));
+            }
+    };
+
     @FXML
     private ImageView minimalize_button;
 
