@@ -9,11 +9,16 @@ import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         //Load start scene
+
+        System.out.println(LocalDateTime.now().format(Event.dateTimeFormatter));
+        System.out.println(LocalDateTime.now().plusWeeks(1));
         URL url = App.class.getResource("App.fxml");
         FXMLLoader fxmlLoader = new FXMLLoader(url);
         Scene scene = new Scene(fxmlLoader.load(), 970, 650);
