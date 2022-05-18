@@ -57,7 +57,6 @@ public class Database {
             statement.setString(2, oldPassword);
             statement.setString(3, newPassword);
             final int status = statement.executeUpdate();
-            System.out.println(status);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -83,7 +82,7 @@ public class Database {
         statement.setString(2, username);
         statement.setString(3, startDateTime);
         statement.setString(4, endDateTime);
-        System.out.println(title + "\n" + username + "\n" + startDateTime + "\n" + endDateTime);
+//        System.out.println(title + "\n" + username + "\n" + startDateTime + "\n" + endDateTime);
         statement.executeUpdate();
     }
 

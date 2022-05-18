@@ -10,6 +10,7 @@ import javafx.beans.InvalidationListener;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.ListChangeListener;
 import javafx.collections.SetChangeListener;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -31,6 +32,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.*;
+import java.util.concurrent.*;
 
 public class Planner implements Initializable {
     User user;
@@ -85,23 +87,43 @@ public class Planner implements Initializable {
             this.DayMode(a);
         } catch (JSONException | IOException e) {e.printStackTrace();}
 
+
         weekPage.getDetailedWeekView().getWeekView().getCalendars().addListener((ListChangeListener<Calendar>) c -> {
             c.next();
             if (c.getAddedSize()>0) {
                 Calendar calendar = weekPage.getDetailedWeekView().getWeekView().getCalendars().get(0);
                 calendar.addEventHandler(calendarEvent -> {
-                    if (calendarEvent.isEntryAdded())
-                        Event.addEntryToDatabase(calendarEvent.getEntry(), user.getUsername());
-                    else if (calendarEvent.isEntryRemoved())
-                        Event.removeEntryFromDatabase(calendarEvent.getEntry(), user.getUsername());
+                    if (calendarEvent.isEntryAdded()) {
+                        ScheduledExecutorService executor = new ScheduledThreadPoolExecutor(1);
+                        Task<Void> task = Event.addEntryToDatabase(
+                                calendarEvent.getEntry(), user.getUsername());
+                        executor.schedule(task, 5, TimeUnit.SECONDS);
+                        executor.shutdown();
+                    }
+
+                    else if (calendarEvent.isEntryRemoved()) {
+                        ScheduledExecutorService executor = new ScheduledThreadPoolExecutor(1);
+                        Task<Void> task = Event.removeEntryFromDatabase(
+                                calendarEvent.getEntry(), user.getUsername());
+                        executor.schedule(task, 5, TimeUnit.SECONDS);
+                        executor.shutdown();
+                    }
+
                     else {
-                        if (calendarEvent.getOldInterval() != null)
-                            System.out.println(calendarEvent.getOldText() + "\t" + calendarEvent.getOldInterval().toString());
-                        else
-                            System.out.println(calendarEvent.getOldText());
-//                        Entry<String> oldEntry = new Entry<>(calendarEvent.getOldText(), calendarEvent.getOldInterval());
-//                        System.out.println(oldEntry.toString());
-//                        Event.changeEntryInDatabase(oldEntry, calendarEvent.getEntry(), user.getUsername());
+                        if (calendarEvent.getOldInterval() != null) {
+                            ScheduledExecutorService  executor = new ScheduledThreadPoolExecutor(1);
+                            Task<Void> task =Event.changeEntryIntervalInDatabase(calendarEvent.getOldInterval(),
+                                    calendarEvent.getEntry(), user.getUsername());
+                            executor.schedule(task, 5, TimeUnit.SECONDS);
+                            executor.shutdown();
+                        }
+                        else if (calendarEvent.getOldText() != null) {
+                            ScheduledExecutorService  executor = new ScheduledThreadPoolExecutor(1);
+                            Task<Void> task = Event.changeEntryTitleInDatabase(calendarEvent.getOldText(),
+                                    calendarEvent.getEntry(), user.getUsername());
+                            executor.schedule(task, 5, TimeUnit.SECONDS);
+                            executor.shutdown();
+                        }
 
                     }
                 });
@@ -130,7 +152,7 @@ public class Planner implements Initializable {
             BackCol = (String) o.get(("DarkColorBackground"));
             weekPage.getStylesheets().add(Objects.requireNonNull(getClass().getResource("Planer.css")).toExternalForm());
         }
-    };
+    }
 
     private void DayMode(boolean DayMode) throws JSONException, IOException {
         this.ColourFromDataJson(DayMode);

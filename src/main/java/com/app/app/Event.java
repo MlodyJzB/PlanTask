@@ -3,12 +3,10 @@ package com.app.app;
 import com.app.loginapp.Database;
 import com.calendarfx.model.Entry;
 import com.calendarfx.model.Interval;
-import javafx.application.Platform;
+import javafx.concurrent.Task;
 
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,16 +20,7 @@ public class Event {
         }
     }
     private String title;
-    private EventType eventType;
     private LocalDateTime startDateTime, endDateTime;
-
-    public enum EventType {
-        SPORT,
-        SHOPPING,
-        LEARNING,
-        FUN,
-        OTHER
-    }
 
     public String getTitle() {
         return title;
@@ -39,14 +28,6 @@ public class Event {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public EventType getEventType() {
-        return eventType;
-    }
-
-    public void setEventType(EventType eventType) {
-        this.eventType = eventType;
     }
 
     public LocalDateTime getStartDateTime() {
@@ -101,69 +82,75 @@ public class Event {
         }
     }
 
-    public static void addEntryToDatabase(Entry<?> entry, String username) {
-        Thread writeToDatabaseThread = new Thread(() -> Platform.runLater(() -> {
-            Event event = Event.toEvent(entry);
-            try {
-                Database.addEvent(event.getTitle(), username,
-                        event.getStartDateTimeString(), event.getEndDateTimeString()
-                );
-            } catch (SQLException e) {
-                e.printStackTrace();
+    public static Task<Void> addEntryToDatabase(Entry<?> entry, String username) {
+        return new Task<>() {
+            @Override
+            public Void call() {
+                Event event = Event.toEvent(entry);
+                try {
+                    Database.addEvent(event.getTitle(), username,
+                            event.getStartDateTimeString(), event.getEndDateTimeString()
+                    );
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                return null;
             }
-        }));
+        };
 
-        writeToDatabaseThread.setPriority(Thread.NORM_PRIORITY);
-        writeToDatabaseThread.start();
     }
 
-    public static void removeEntryFromDatabase(Entry<?> entry, String username) {
-        Thread writeToDatabaseThread = new Thread(() -> Platform.runLater(() -> {
-            Event event = Event.toEvent(entry);
-            try {
-                Database.deleteEvent(event.getTitle(), username,
-                        event.getStartDateTimeString(), event.getEndDateTimeString()
-                );
-            } catch (SQLException e) {
-                e.printStackTrace();
+    public static Task<Void> removeEntryFromDatabase(Entry<?> entry, String username) {
+        return new Task<>() {
+            @Override
+            public Void call() {
+                Event event = Event.toEvent(entry);
+                try {
+                    Database.deleteEvent(event.getTitle(), username,
+                            event.getStartDateTimeString(), event.getEndDateTimeString()
+                    );
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                return null;
             }
-        }));
-
-        writeToDatabaseThread.setPriority(Thread.NORM_PRIORITY);
-        writeToDatabaseThread.start();
+        };
     }
 
-    public static void changeEntryTitleInDatabase(String oldTitle, Entry<?> entry, String username) {
-        Thread writeToDatabaseThread = new Thread(() -> Platform.runLater(() -> {
-            Event event = Event.toEvent(entry);
-            try {
-                Database.changeEventTitle(username, event.getTitle(), oldTitle,
-                        event.getStartDateTimeString(), event.getEndDateTimeString()
-                );
-            } catch (SQLException e) {
-                e.printStackTrace();
+    public static Task<Void> changeEntryTitleInDatabase(String oldTitle, Entry<?> entry, String username) {
+        return new Task<>() {
+            @Override
+            public Void call() {
+                Event event = Event.toEvent(entry);
+                try {
+                    Database.changeEventTitle(username, event.getTitle(), oldTitle,
+                            event.getStartDateTimeString(), event.getEndDateTimeString()
+                    );
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                return null;
             }
-        }));
+        };
 
-        writeToDatabaseThread.setPriority(Thread.NORM_PRIORITY);
-        writeToDatabaseThread.start();
     }
-    public static void changeEntryIntervalInDatabase(Interval oldInterval, Entry<?> entry, String username) {
-        Thread writeToDatabaseThread = new Thread(() -> Platform.runLater(() -> {
-            Event event = Event.toEvent(entry);
-            try {
-                Database.changeEventInterval(username, event.getTitle(),
-                        oldInterval.getStartDateTime().format(dateTimeFormatter),
-                        oldInterval.getEndDateTime().format(dateTimeFormatter),
-                        event.getStartDateTimeString(), event.getEndDateTimeString()
-                );
-            } catch (SQLException e) {
-                e.printStackTrace();
+    public static Task<Void> changeEntryIntervalInDatabase(Interval oldInterval, Entry<?> entry, String username) {
+        return new Task<>() {
+            @Override
+            public Void call() {
+                Event event = Event.toEvent(entry);
+                try {
+                    Database.changeEventInterval(username, event.getTitle(),
+                            oldInterval.getStartDateTime().format(dateTimeFormatter),
+                            oldInterval.getEndDateTime().format(dateTimeFormatter),
+                            event.getStartDateTimeString(), event.getEndDateTimeString()
+                    );
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                return null;
             }
-        }));
-
-        writeToDatabaseThread.setPriority(Thread.NORM_PRIORITY);
-        writeToDatabaseThread.start();
+        };
     }
 
     public Entry<String> toEntry() {
