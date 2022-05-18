@@ -110,7 +110,7 @@ public class AppPanel implements Initializable {
                         LocalTime.of(23, 59)
                 )
         );
-        detailedDayView.getCalendarSources().get(0).getCalendars().get(0).addEntry(event.getEntry());
+        detailedDayView.getCalendarSources().get(0).getCalendars().get(0).addEntry(event.toEntry());
         try {
             JSONArray a = new LoginPanelController().getInfo(whichUserClicked());
             InfoDayNight = (Boolean) a.get(4);
@@ -271,8 +271,16 @@ public class AppPanel implements Initializable {
         }
         ourWindow.setCenter(root);
     }
-    public void planner(ActionEvent event) {
-        LoadSite("planner");
+    public void planner(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(
+                getClass().getResource(
+                        "planner.fxml"
+                )
+        );
+        ourWindow.setCenter(loader.load());
+        Planner controller = loader.getController();
+        //controller.addEventHandler();
+
     }
     public void calendar(ActionEvent event) {
         LoadSite("calendar");
