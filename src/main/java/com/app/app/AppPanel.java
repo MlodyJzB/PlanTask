@@ -358,7 +358,7 @@ public class AppPanel implements Initializable {
 
     public void setWeather(WeatherInfo wi) throws NonexistentZipCodeException, JSONException, IOException, IncorrectZipCodeFormatException {
 
-        wi.update();
+        wi.updateOffline();
         String temp = String.valueOf(Math.round(wi.getTemp()));
         String feelsLike = String.valueOf(Math.round(wi.getFeelsLike()));
         String windSpeed = String.valueOf(Math.round(wi.getWindSpeed()));

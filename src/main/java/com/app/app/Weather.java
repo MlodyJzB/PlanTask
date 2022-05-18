@@ -40,7 +40,7 @@ public class Weather implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         WeatherInfo wi = new WeatherInfo();
         try {
-            wi.updateFromJson();
+            wi.updateOffline();
         } catch (JSONException e) {
             ZipCodeField.setPromptText("1");
         } catch (IOException e) {
@@ -49,7 +49,13 @@ public class Weather implements Initializable {
             throw new RuntimeException(e);
         }
         ZipCodeField.setPromptText(wi.getZipCode());
-        City.setText(wi.getCity());
+        try {
+            City.setText(wi.getCity());
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        } catch (NonexistentZipCodeException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void ColourFromDataJson(boolean DayMode) throws IOException, JSONException {
@@ -84,7 +90,7 @@ public class Weather implements Initializable {
         String zipCodeNoWhite = zipCode.replaceAll("\\s+","");
         WeatherInfo wi = new WeatherInfo();
         try{
-            wi.update(zipCodeNoWhite);
+            wi.updateOnline(zipCodeNoWhite);
             ZipCodeField.setPromptText(zipCodeNoWhite);
         }
         catch (IncorrectZipCodeFormatException | NonexistentZipCodeException e) {
