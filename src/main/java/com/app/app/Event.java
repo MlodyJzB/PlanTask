@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Event {
-    public static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
+    public static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     public static class UserEventsEmptyException extends Exception {
         public UserEventsEmptyException(String errorMessage) {
@@ -133,14 +133,29 @@ public class Event {
         writeToDatabaseThread.start();
     }
 
-    public static void changeEntryInDatabase(Entry<?> oldEntry, Entry<?> newEntry, String username) {
+    public static void changeEntryTitleInDatabase(String oldTitle, Entry<?> entry, String username) {
         Thread writeToDatabaseThread = new Thread(() -> Platform.runLater(() -> {
-            Event oldEvent = Event.toEvent(oldEntry);
-            Event newEvent = Event.toEvent(newEntry);
+            Event event = Event.toEvent(entry);
             try {
-                Database.changeEvent(username, oldEvent.getTitle(), oldEvent.getStartDateTimeString(),
-                        oldEvent.getEndDateTimeString(), newEvent.getTitle(),
-                        newEvent.getStartDateTimeString(), newEvent.getEndDateTimeString()
+                Database.changeEventTitle(username, event.getTitle(), oldTitle,
+                        event.getStartDateTimeString(), event.getEndDateTimeString()
+                );
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }));
+
+        writeToDatabaseThread.setPriority(Thread.NORM_PRIORITY);
+        writeToDatabaseThread.start();
+    }
+    public static void changeEntryIntervalInDatabase(Interval oldInterval, Entry<?> entry, String username) {
+        Thread writeToDatabaseThread = new Thread(() -> Platform.runLater(() -> {
+            Event event = Event.toEvent(entry);
+            try {
+                Database.changeEventInterval(username, event.getTitle(),
+                        oldInterval.getStartDateTime().format(dateTimeFormatter),
+                        oldInterval.getEndDateTime().format(dateTimeFormatter),
+                        event.getStartDateTimeString(), event.getEndDateTimeString()
                 );
             } catch (SQLException e) {
                 e.printStackTrace();

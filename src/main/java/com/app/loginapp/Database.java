@@ -81,8 +81,9 @@ public class Database {
         PreparedStatement statement = con.prepareStatement("EXEC AddEvent @title = ?, @user = ?, @startDateTime = ?, @endDateTime = ?");
         statement.setString(1, title);
         statement.setString(2, username);
-        statement.setString(3, startDateTime.toString());
-        statement.setString(4, endDateTime.toString());
+        statement.setString(3, startDateTime);
+        statement.setString(4, endDateTime);
+        System.out.println(title + "\n" + username + "\n" + startDateTime + "\n" + endDateTime);
         statement.executeUpdate();
     }
 
@@ -116,23 +117,35 @@ public class Database {
             PreparedStatement statement = con.prepareStatement("EXEC DeleteRowFromEvents @title = ?, @user = ?, @startDateTime = ?, @endDateTime = ?");
             statement.setString(1, title);
             statement.setString(2, username);
-            statement.setString(3, startDateTime.toString());
-            statement.setString(4, endDateTime.toString());
+            statement.setString(3, startDateTime);
+            statement.setString(4, endDateTime);
             statement.executeUpdate();
     }
 
-    public static void changeEvent(String username, String oldTitle, String oldStartDateTime, String oldEndDateTime,
-                                   String newTitle, String newStartDateTime, String newEndDateTime) throws SQLException {
+    public static void changeEventTitle(String username, String newTitle, String oldTitle,
+                                        String startDateTime, String endDateTime) throws SQLException {
         String connectionString = "jdbc:sqlserver://plan-task-server.database.windows.net:1433;database=planTask;user=JakubNitkiewicz;password=planTask123;encrypt=true;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
         Connection con = DriverManager.getConnection(connectionString);
-        PreparedStatement statement = con.prepareStatement("EXEC ChangeRowInEvents @user = ?, @oldTitle = ?, @oldStartDateTime = ?, @oldEndDateTime = ?, @newTitle = ?, @newStartDateTime = ?, @newEndDateTime = ?");
+        PreparedStatement statement = con.prepareStatement("EXEC ChangeEventTitle @user = ?, @oldTitle = ?, @newTitle = ?, @startDateTime = ?, @endDateTime = ?");
         statement.setString(1, username);
         statement.setString(2, oldTitle);
-        statement.setString(3, oldStartDateTime.toString());
-        statement.setString(4, oldEndDateTime.toString());
-        statement.setString(2, newTitle);
-        statement.setString(3, newStartDateTime.toString());
-        statement.setString(4, newEndDateTime.toString());
+        statement.setString(3, newTitle);
+        statement.setString(4, startDateTime);
+        statement.setString(5, endDateTime);
+        statement.executeUpdate();
+    }
+
+    public static void changeEventInterval(String username, String title, String oldStartDateTime, String oldEndDateTime,
+                                           String newStartDateTime, String newEndDateTime) throws SQLException {
+        String connectionString = "jdbc:sqlserver://plan-task-server.database.windows.net:1433;database=planTask;user=JakubNitkiewicz;password=planTask123;encrypt=true;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
+        Connection con = DriverManager.getConnection(connectionString);
+        PreparedStatement statement = con.prepareStatement("EXEC ChangeEventInterval @user = ?, @title = ?, @oldStartDateTime = ?, @oldEndDateTime = ?, @newStartDateTime = ?, @newEndDateTime = ?");
+        statement.setString(1, username);
+        statement.setString(2, title);
+        statement.setString(3, oldStartDateTime);
+        statement.setString(4, oldEndDateTime);
+        statement.setString(5, newStartDateTime);
+        statement.setString(6, newEndDateTime);
         statement.executeUpdate();
     }
 }

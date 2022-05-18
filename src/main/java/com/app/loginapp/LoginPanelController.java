@@ -1,5 +1,6 @@
 package com.app.loginapp;
 
+import com.app.app.App;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -31,64 +32,41 @@ public class LoginPanelController implements Initializable {
     private User user;
     public ImageView User1, User2, User3, User4;
     public Image image;
+
     @FXML
-    public void goToLoginOrApp1() throws JSONException, IOException {
-        whichUserClickedEdit(1);
-        if(getInfo(1).get(3).equals(getInfo(5).get(3))){
+    public void goToLoginOrApp(MouseEvent mouseEvent) throws JSONException, IOException {
+        //Getting user number from mouseEvent
+        ImageView imageView = (ImageView) mouseEvent.getSource();
+        String fxId = imageView.getId();
+        int userNum = Integer.parseInt(fxId.substring(fxId.length()-1));
+
+        whichUserClickedEdit(userNum);
+        if(getInfo(userNum).get(3).equals(getInfo(5).get(3))){
             goToLogin();
         }
         else{
-            System.out.println("to app");
-        }
-    }
-    @FXML
-    public void goToLoginOrApp2() throws JSONException, IOException {
-        whichUserClickedEdit(2);
-        if(getInfo(2).get(3).equals(getInfo(5).get(3))){
-            goToLogin();
-        }
-        else{
-            System.out.println("to app");
-        }
-    }
-    @FXML
-    public void goToLoginOrApp3() throws JSONException, IOException {
-        whichUserClickedEdit(3);
-        if(getInfo(3).get(3).equals(getInfo(5).get(3))){
-            goToLogin();
-        }
-        else{
-            System.out.println("to app");
-        }
-    }
-    @FXML
-    public void goToLoginOrApp4() throws JSONException, IOException {
-        whichUserClickedEdit(4);
-        if(getInfo(4).get(3).equals(getInfo(5).get(3))){
-            goToLogin();
-        }
-        else{
-            System.out.println("to app");
+            String username = (String) getInfo(userNum).get(3);
+            goToApp(username);
         }
     }
 
     public void goToLogin() throws IOException, JSONException {
-        FXMLLoader pane = new FXMLLoader(getClass().getResource("register-scene.fxml"));
-        Parent root = (Parent) pane.load();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("register-scene.fxml"));
         Stage stage = new Stage();
-        Scene scene = new Scene(root);
+        Scene scene = new Scene(loader.load());
         stage.setScene(scene);
         stage.initStyle(StageStyle.TRANSPARENT);
         scene.setFill(Color.TRANSPARENT);
         stage.show();
     }
     @FXML
-    public void goToApp() throws IOException {
+    public void goToApp(String username) throws IOException {
+        user.setUsername(username);
 
-        FXMLLoader pane = new FXMLLoader(getClass().getResource("/app/App.fxml"));
-        Parent root = (Parent) pane.load();
+        URL url = App.class.getResource("App.fxml");
+        FXMLLoader loader = new FXMLLoader(url);
         Stage stage = new Stage();
-        Scene scene = new Scene(root);
+        Scene scene = new Scene(loader.load(), 970, 650);
         stage.setScene(scene);
         stage.initStyle(StageStyle.TRANSPARENT);
         scene.setFill(Color.TRANSPARENT);
@@ -103,6 +81,7 @@ public class LoginPanelController implements Initializable {
     public TextField UserName1, UserName2, UserName3, UserName4;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        user = User.getInstance();
         try {
             this.update();
         } catch (JSONException e) {
@@ -162,18 +141,17 @@ public class LoginPanelController implements Initializable {
             }
         });
     }
-    public void remove1(ActionEvent event) throws JSONException, IOException {
-        PutJsonDefault(1);
+
+    @FXML
+    public void remove(ActionEvent event) throws JSONException, IOException {
+        //Getting user number from event
+        Button button = (Button) event.getSource();
+        String fxId = button.getId();
+        int userNum = Integer.parseInt(fxId.substring(fxId.length()-1));
+
+        PutJsonDefault(userNum);
     }
-    public void remove2(ActionEvent event) throws JSONException, IOException {
-        PutJsonDefault(2);
-    }
-    public void remove3(ActionEvent event) throws JSONException, IOException {
-        PutJsonDefault(3);
-    }
-    public void remove4(ActionEvent event) throws JSONException, IOException {
-        PutJsonDefault(4);
-    }
+
     @FXML
     private void onMouseEntered(MouseEvent event) {
         Button enteredButton = (Button) event.getSource();
