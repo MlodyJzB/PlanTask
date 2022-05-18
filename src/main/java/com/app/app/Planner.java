@@ -78,11 +78,13 @@ public class Planner implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         user = User.getInstance();
-        boolean a = false;
+        System.out.println("User name: \"" + user.getUsername() + "\"");
+        boolean a;
         try {
             a = (boolean) new LoginPanelController().getInfo(new AppPanel().whichUserClicked()).get(4);
             this.DayMode(a);
         } catch (JSONException | IOException e) {e.printStackTrace();}
+
         weekPage.getDetailedWeekView().getWeekView().getCalendars().addListener((ListChangeListener<Calendar>) c -> {
             c.next();
             if (c.getAddedSize()>0) {
@@ -93,8 +95,14 @@ public class Planner implements Initializable {
                     else if (calendarEvent.isEntryRemoved())
                         Event.removeEntryFromDatabase(calendarEvent.getEntry(), user.getUsername());
                     else {
-                        Entry<String> oldEntry = new Entry<>(calendarEvent.getOldText(), calendarEvent.getOldInterval());
-                        Event.changeEntryInDatabase(oldEntry, calendarEvent.getEntry(), user.getUsername());
+                        if (calendarEvent.getOldInterval() != null)
+                            System.out.println(calendarEvent.getOldText() + "\t" + calendarEvent.getOldInterval().toString());
+                        else
+                            System.out.println(calendarEvent.getOldText());
+//                        Entry<String> oldEntry = new Entry<>(calendarEvent.getOldText(), calendarEvent.getOldInterval());
+//                        System.out.println(oldEntry.toString());
+//                        Event.changeEntryInDatabase(oldEntry, calendarEvent.getEntry(), user.getUsername());
+
                     }
                 });
             }
