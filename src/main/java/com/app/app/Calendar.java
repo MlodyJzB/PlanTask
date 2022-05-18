@@ -111,7 +111,7 @@ public class Calendar implements Initializable {
     private Button previousb;
     @FXML
     private AnchorPane pane3;
-    private boolean darkmode=true;
+    private boolean darkmode=false;
 
     private List<Button> buttonList = new ArrayList<>();
 
@@ -174,16 +174,17 @@ public class Calendar implements Initializable {
         buttonList.add(tue6);
         currentdate = LocalDate.now();
         resizeCalendar(650.0,1045.0,-110, 20,120,80,18);
-        drawMonth();
+
         try {
             boolean a = (boolean) new LoginPanelController().getInfo(new AppPanel().whichUserClicked()).get(4);
             this.DayMode(a);
+            darkmode = !a;
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        drawMonth();
     }
 
     public void drawNewCall() {
@@ -203,9 +204,9 @@ public class Calendar implements Initializable {
                     if (isToday(getButtonDate(day))) changeTextColour(day, "#3516ff", "  #424242");
                 }
                 else {
-                    changeTextColour(day, "#000000", "  #e8e8e8");
-                    if (!isSpecialDay(getButtonDate(day)).equals("")) changeTextColour(day, "#d66813", "  #e8e8e8");
-                    if (isToday(getButtonDate(day))) changeTextColour(day, "#3516ff", "  #e8e8e8");
+                    changeTextColour(day, "#000000", "  white");
+                    if (!isSpecialDay(getButtonDate(day)).equals("")) changeTextColour(day, "#d66813", "  white");
+                    if (isToday(getButtonDate(day))) changeTextColour(day, "#3516ff", "  white");
                 }
             } else {
                 day.setText("");
@@ -213,7 +214,7 @@ public class Calendar implements Initializable {
                     changeTextColour(day, "#1c1c1c", "  #424242");
                 }
                 else {
-                    changeTextColour(day, "#000000", "  #e8e8e8");
+                    changeTextColour(day, "#000000", "  white");
                 }
             }
             weekDays++;
@@ -259,7 +260,7 @@ public class Calendar implements Initializable {
             dateLabel.setFont(Font.font("System", FontWeight.BOLD, 25));
             dateLabel.setLayoutX(dateLabel.getLayoutX()+185+50);
             dateLabel.setLayoutY(dateLabel.getLayoutY()+55);
-            background.setStyle(" -fx-background-color: white; -fx-background-radius: 10;");
+            background.setStyle(" -fx-background-color: #e8e8e8; -fx-background-radius: 10;");
             specialDay.setTextAlignment(TextAlignment.CENTER);
             specialDay.setLayoutX(specialDay.getLayoutX()+260+50- nameOfday.length()*3);
             specialDay.setLayoutY(specialDay.getLayoutY()+90);
@@ -347,8 +348,8 @@ public class Calendar implements Initializable {
         else
         {
             pane3.setStyle(" -fx-background-color: #e8e8e8;");
-            changeTextColour(nextb," #000000"," #e8e8e8");
-            changeTextColour(previousb," #000000"," #e8e8e8");
+            changeTextColour(nextb," #000000"," white");
+            changeTextColour(previousb," #000000"," white");
             changeLabelTextColour(monLabel," #000000");
             changeLabelTextColour(thuLabel," #000000");
             changeLabelTextColour(tueLabel," #000000");
@@ -420,7 +421,7 @@ public class Calendar implements Initializable {
         //Restore down
         stage.setMaximized(stage.isMaximized());
 
-        if(pane3.getHeight()>700) {
+        if(stage.isMaximized()) {
 
             resizeCalendar(pane3.getHeight(),pane3.getWidth(),-210,20,180,90,21);
         }
