@@ -55,7 +55,7 @@ public class WeatherInfo {
     public int getTemp(int day) throws JSONException{
         String temp = "";
         if (day == 0) temp = this.infoJson.getJSONObject("current").get("temp").toString();
-        else temp = this.infoJson.getJSONArray("daily").getJSONObject(day-1).getJSONObject("temp").get("day").toString();
+        else temp = this.infoJson.getJSONArray("daily").getJSONObject(day).getJSONObject("temp").get("day").toString();
 
         return (int) Math.round(Double.valueOf(temp));
     }
@@ -69,7 +69,7 @@ public class WeatherInfo {
     public int getWindSpeed(int day) throws JSONException{
         String windSpeed = "";
         if (day == 0) windSpeed = this.infoJson.getJSONObject("current").get("wind_speed").toString();
-        else windSpeed = this.infoJson.getJSONArray("daily").getJSONObject(day-1).get("wind_speed").toString();
+        else windSpeed = this.infoJson.getJSONArray("daily").getJSONObject(day).get("wind_speed").toString();
 
 
         return (int) Math.round(Double.valueOf(windSpeed)*3.6);
@@ -78,7 +78,7 @@ public class WeatherInfo {
     public int getCloudsValue(int day) throws JSONException{
         String cloudsValue = "";
         if (day == 0) cloudsValue = this.infoJson.getJSONObject("current").get("clouds").toString();
-        else cloudsValue = this.infoJson.getJSONArray("daily").getJSONObject(day-1).get("clouds").toString();
+        else cloudsValue = this.infoJson.getJSONArray("daily").getJSONObject(day).get("clouds").toString();
 
 
         return (int) Math.round(Double.valueOf(cloudsValue));
@@ -87,7 +87,7 @@ public class WeatherInfo {
     public String getIcon(int day) throws JSONException{
         String icon = "";
         if (day == 0) icon = this.infoJson.getJSONObject("current").getJSONArray("weather").getJSONObject(0).get("icon").toString();
-        else icon = this.infoJson.getJSONArray("daily").getJSONObject(day-1).getJSONArray("weather").getJSONObject(0).get("icon").toString();
+        else icon = this.infoJson.getJSONArray("daily").getJSONObject(day).getJSONArray("weather").getJSONObject(0).get("icon").toString();
 
         return icon;
     }
@@ -99,19 +99,19 @@ public class WeatherInfo {
     }
 
     public int getDate(int day) throws JSONException{
-        String date = this.infoJson.getJSONArray("daily").getJSONObject(day-1).get("dt").toString();
+        String date = this.infoJson.getJSONArray("daily").getJSONObject(day).get("dt").toString();
 
         return Integer.valueOf(date);
     }
 
     public int getMinTemp(int day) throws JSONException{
-        String temp = this.infoJson.getJSONArray("daily").getJSONObject(day-1).getJSONObject("temp").get("min").toString();
+        String temp = this.infoJson.getJSONArray("daily").getJSONObject(day).getJSONObject("temp").get("min").toString();
 
         return (int) Math.round(Double.valueOf(temp));
     }
 
     public int getMaxTemp(int day) throws JSONException{
-        String temp = this.infoJson.getJSONArray("daily").getJSONObject(day-1).getJSONObject("temp").get("max").toString();
+        String temp = this.infoJson.getJSONArray("daily").getJSONObject(day).getJSONObject("temp").get("max").toString();
 
         return (int) Math.round(Double.valueOf(temp));
     }
@@ -119,7 +119,7 @@ public class WeatherInfo {
     public int getSunrise(int day) throws JSONException{
         String temp = "";
         if (day == 0) temp = this.infoJson.getJSONObject("current").get("sunrise").toString();
-        else temp = this.infoJson.getJSONArray("daily").getJSONObject(day-1).get("sunrise").toString();
+        else temp = this.infoJson.getJSONArray("daily").getJSONObject(day).get("sunrise").toString();
 
         return (int) Math.round(Double.valueOf(temp));
     }
@@ -127,7 +127,7 @@ public class WeatherInfo {
     public int getSunset(int day) throws JSONException{
         String temp = "";
         if (day == 0) temp = this.infoJson.getJSONObject("current").get("sunset").toString();
-        else temp = this.infoJson.getJSONArray("daily").getJSONObject(day-1).get("sunset").toString();
+        else temp = this.infoJson.getJSONArray("daily").getJSONObject(day).get("sunset").toString();
 
         return (int) Math.round(Double.valueOf(temp));
     }

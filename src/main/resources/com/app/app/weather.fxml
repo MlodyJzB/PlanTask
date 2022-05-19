@@ -31,126 +31,152 @@
             </AnchorPane>
             <AnchorPane prefHeight="650.0" prefWidth="1200.0">
                <children>
-                  <VBox prefHeight="400.0" prefWidth="911.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <HBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <HBox prefHeight="1200.0" prefWidth="1200.0">
+                        <VBox prefHeight="400.0" prefWidth="800.0">
                            <children>
-                              <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="800.0" style="-fx-background-radius: 10; -fx-background-color: grey;">
+                              <HBox prefHeight="1200.0" prefWidth="1200.0">
                                  <children>
-                                    <Label alignment="CENTER" prefHeight="25.0" prefWidth="155.0" text="Today">
-                                       <font>
-                                          <Font size="24.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                                 <HBox.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </HBox.margin>
-                              </VBox>
-                              <VBox alignment="CENTER" prefHeight="400.0" prefWidth="400.0" style="-fx-background-radius: 10; -fx-background-color: grey;">
-                                 <children>
-                                    <HBox alignment="CENTER" prefHeight="15.0" prefWidth="156.0">
+                                    <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="800.0" style="-fx-background-radius: 10; -fx-background-color: #d66813;">
                                        <children>
-                                          <Label alignment="CENTER" prefHeight="37.0" prefWidth="88.0" text="Zipcode:" />
-                                          <TextField fx:id="ZipCodeField" alignment="CENTER" prefHeight="37.0" prefWidth="88.0" promptText="00-631" />
+                                          <Label fx:id="Day0" alignment="CENTER" prefHeight="25.0" prefWidth="155.0" text="Today">
+                                             <font>
+                                                <Font size="24.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                       <HBox.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </HBox.margin>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="1200.0" prefWidth="1200.0">
+                                 <children>
+                                    <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="400.0" style="-fx-background-radius: 10; -fx-background-color: #ffbf70;">
+                                       <children>
+                                          <Label fx:id="Day1" alignment="CENTER" prefHeight="13.0" prefWidth="188.0" text="Today">
+                                             <font>
+                                                <Font size="24.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                       <HBox.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </HBox.margin>
+                                    </VBox>
+                                    <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="400.0" style="-fx-background-radius: 10; -fx-background-color: #ffbf70;">
+                                       <children>
+                                          <Label fx:id="Day2" alignment="CENTER" prefHeight="13.0" prefWidth="188.0" text="Today">
+                                             <font>
+                                                <Font size="24.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                       <HBox.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </HBox.margin>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="1200.0" prefWidth="1200.0">
+                                 <children>
+                                    <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="400.0" style="-fx-background-radius: 10; -fx-background-color: #ffbf70;">
+                                       <children>
+                                          <Label fx:id="Day4" alignment="CENTER" prefHeight="13.0" prefWidth="188.0" text="Today">
+                                             <font>
+                                                <Font size="24.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                       <HBox.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </HBox.margin>
+                                    </VBox>
+                                    <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="400.0" style="-fx-background-radius: 10; -fx-background-color: #ffbf70;">
+                                       <children>
+                                          <Label fx:id="Day5" alignment="CENTER" prefHeight="13.0" prefWidth="188.0" text="Today">
+                                             <font>
+                                                <Font size="24.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                       <HBox.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </HBox.margin>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <VBox prefWidth="400.0" spacing="10.0">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                           <children>
+                              <VBox alignment="CENTER" prefHeight="400.0" prefWidth="400.0" style="-fx-background-radius: 10; -fx-background-color: #ffbf70;">
+                                 <children>
+                                    <HBox alignment="CENTER" prefHeight="15.0" prefWidth="400.0">
+                                       <children>
+                                          <Label alignment="CENTER" prefHeight="37.0" prefWidth="88.0" text="Zipcode:">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font></Label>
+                                          <TextField fx:id="ZipCodeField" alignment="CENTER" prefHeight="37.0" prefWidth="88.0" promptText="00-631">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font></TextField>
                                        </children>
                                     </HBox>
-                                    <HBox alignment="CENTER" prefHeight="15.0" prefWidth="156.0">
+                                    <HBox alignment="CENTER" prefHeight="15.0" prefWidth="400.0">
                                        <children>
-                                          <Label alignment="CENTER" prefHeight="37.0" prefWidth="88.0" text="City:" />
-                                          <Label fx:id="City" alignment="CENTER" contentDisplay="CENTER" prefWidth="88.0" text="Warsaw" />
+                                          <Label alignment="CENTER" prefHeight="37.0" prefWidth="88.0" text="City:">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font></Label>
+                                          <Label fx:id="City" alignment="CENTER" contentDisplay="CENTER" prefWidth="88.0" text="Warsaw">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font></Label>
                                        </children>
                                     </HBox>
-                                    <Button mnemonicParsing="false" onAction="#onClickRefresh" text="Button" />
+                                    <Button mnemonicParsing="false" onAction="#refreshWeather">
+                                       <graphic>
+                                          <HBox alignment="CENTER" prefHeight="38.0" prefWidth="107.0">
+                                             <children>
+                                                <Label prefHeight="27.0" prefWidth="61.0" text="Refresh">
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </HBox>
+                                       </graphic></Button>
+                                    <ImageView fx:id="weatherImage" fitHeight="62.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true" />
                                  </children>
-                                 <HBox.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </HBox.margin>
+                              </VBox>
+                              <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="400.0" style="-fx-background-radius: 10; -fx-background-color: #ffbf70;">
+                                 <children>
+                                    <Label fx:id="Day3" alignment="CENTER" prefHeight="13.0" prefWidth="188.0" text="Today">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                              <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="400.0" style="-fx-background-radius: 10; -fx-background-color: #ffbf70;">
+                                 <children>
+                                    <Label fx:id="Day6" alignment="CENTER" prefHeight="13.0" prefWidth="188.0" text="Today">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
                               </VBox>
                            </children>
-                        </HBox>
-                        <HBox prefHeight="1200.0" prefWidth="1200.0">
-                           <children>
-                              <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="400.0" style="-fx-background-radius: 10; -fx-background-color: grey;">
-                                 <children>
-                                    <Label alignment="CENTER" prefHeight="13.0" prefWidth="188.0" text="Today">
-                                       <font>
-                                          <Font size="24.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                                 <HBox.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </HBox.margin>
-                              </VBox>
-                              <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="400.0" style="-fx-background-radius: 10; -fx-background-color: grey;">
-                                 <children>
-                                    <Label alignment="CENTER" prefHeight="13.0" prefWidth="188.0" text="Today">
-                                       <font>
-                                          <Font size="24.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                                 <HBox.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </HBox.margin>
-                              </VBox>
-                              <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="400.0" style="-fx-background-radius: 10; -fx-background-color: grey;">
-                                 <children>
-                                    <Label alignment="CENTER" prefHeight="13.0" prefWidth="188.0" text="Today">
-                                       <font>
-                                          <Font size="24.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                                 <HBox.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </HBox.margin>
-                              </VBox>
-                           </children>
-                        </HBox>
-                        <HBox prefHeight="1200.0" prefWidth="1200.0">
-                           <children>
-                              <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="400.0" style="-fx-background-radius: 10; -fx-background-color: grey;">
-                                 <children>
-                                    <Label alignment="CENTER" prefHeight="13.0" prefWidth="188.0" text="Today">
-                                       <font>
-                                          <Font size="24.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                                 <HBox.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </HBox.margin>
-                              </VBox>
-                              <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="400.0" style="-fx-background-radius: 10; -fx-background-color: grey;">
-                                 <children>
-                                    <Label alignment="CENTER" prefHeight="13.0" prefWidth="188.0" text="Today">
-                                       <font>
-                                          <Font size="24.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                                 <HBox.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </HBox.margin>
-                              </VBox>
-                              <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="400.0" style="-fx-background-radius: 10; -fx-background-color: grey;">
-                                 <children>
-                                    <Label alignment="CENTER" prefHeight="13.0" prefWidth="188.0" text="Today">
-                                       <font>
-                                          <Font size="24.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                                 <HBox.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </HBox.margin>
-                              </VBox>
-                           </children>
-                        </HBox>
+                        </VBox>
                      </children>
-                  </VBox>
+                  </HBox>
                </children>
             </AnchorPane>
          </children>

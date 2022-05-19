@@ -1,11 +1,12 @@
 package com.app.WeatherInfo;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.junit.Test;
 
-import java.io.File;
+
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.*;
 

@@ -81,7 +81,7 @@
                                                       </HBox>
                                                       <HBox alignment="TOP_CENTER" prefHeight="150.0" prefWidth="150.0">
                                                          <children>
-                                                            <ImageView fitHeight="70.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true">
+                                                            <ImageView fx:id="weatherImage" fitHeight="70.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true">
                                                                <image>
                                                                   <Image url="@../../../Images/mostly_sunny.png" />
                                                                </image>
@@ -105,6 +105,7 @@
                                                          </children>
                                                       </HBox>
                                                       <Label fx:id="WeatherDescription" alignment="BASELINE_CENTER" prefHeight="150.0" prefWidth="150.0" text="Mostly sunny" />
+                                                      <Button mnemonicParsing="false" onAction="#refreshWeather" text="Button" />
                                                       <HBox prefHeight="150.0" prefWidth="150.0">
                                                          <children>
                                                             <Label fx:id="Wind" alignment="BASELINE_CENTER" prefHeight="36.0" prefWidth="300.0" text="Wind">
