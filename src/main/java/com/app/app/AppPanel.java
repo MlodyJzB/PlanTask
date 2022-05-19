@@ -54,6 +54,7 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class AppPanel implements Initializable {
+    private WeatherInfo wi = new WeatherInfo();
     @FXML
     private Text HourInfo, DateInfo;
     @FXML
@@ -84,6 +85,9 @@ public class AppPanel implements Initializable {
     private String NormCol;
     private String DiffCol;
 
+    public AppPanel() throws NonexistentZipCodeException, JSONException, IOException {
+    }
+
     private CalendarSource AddNewEntries(String addedEvent, LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime){
         Calendar calendar = new Calendar("Test");
         CalendarSource calendarSource = new CalendarSource("source");
@@ -103,6 +107,14 @@ public class AppPanel implements Initializable {
     private boolean InfoDayNight = true;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        Image image1 = null;
+        try {
+            image1 = new Image(new FileInputStream("src/main/resources/Images/refresh.gif"));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        weatherImage.setImage(image1);
+
 //        CalendarSource newEvent = AddNewEntries("Przykład", LocalDate.now(), LocalDate.now(), LocalTime.of(14,30), LocalTime.of(23,30));
 //        detailedDayView.getCalendarSources().setAll(newEvent);
         Event event = new Event("Event1", LocalDateTime.now(),
@@ -198,7 +210,6 @@ public class AppPanel implements Initializable {
         });
         tr.start();
         AtomicInteger seconds = new AtomicInteger();
-        WeatherInfo wi = new WeatherInfo();
         Thread tr1 = new Thread(()-> {
             while(!stop){
                 if(seconds.get() == 0) {
@@ -377,10 +388,6 @@ public class AppPanel implements Initializable {
         //FeelsLike.setText("Feels like: " + feelsLike + "°C");
         //WindValue.setText(windSpeed + " km/h");
         //CloudsValue.setText(cloudsValue + " %");
-
-        File file = new File("");
-        String imagesPath = file.getAbsolutePath() + "\\src\\main\\resources\\Images\\weatherIcons\\";
-        weatherImage.setImage(new Image(imagesPath + "01d.png"));
     }
 
     public void refreshWeather(ActionEvent event) throws NonexistentZipCodeException, JSONException, IOException, IncorrectZipCodeFormatException {

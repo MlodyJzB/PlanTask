@@ -9,11 +9,16 @@ import org.json.JSONArray;
 
 public class WeatherInfo {
 
+    public WeatherInfo() throws NonexistentZipCodeException, JSONException, IOException {
+        this.updateOffline();
+    }
     private Coords coordinates = new Coords(0, 0);
 
     private JSONObject zipJson;
     private JSONObject infoJson;
     private String zipCode;
+
+    private int updateDate;
 
     public String getZipCode(){return this.zipCode;}
 
@@ -93,9 +98,7 @@ public class WeatherInfo {
     }
 
     public int getUpdateDate() throws JSONException{
-        String date = this.infoJson.getJSONObject("current").get("dt").toString();
-
-        return Integer.valueOf(date);
+        return this.updateDate;
     }
 
     public int getDate(int day) throws JSONException{
@@ -143,6 +146,12 @@ public class WeatherInfo {
         JSONArray arr = results.getJSONArray(this.zipCode);
         String city = arr.getJSONObject(0).get("city").toString();
         return city;
+    }
+
+    public void updateUpdateDate() throws JSONException{
+        String date = this.infoJson.getJSONObject("current").get("dt").toString();
+
+        this.updateDate = Integer.valueOf(date);
     }
 
     private void updateCoordsOffline() throws JSONException, NonexistentZipCodeException{
@@ -233,12 +242,14 @@ public class WeatherInfo {
 
     public void updateOnline() throws JSONException, IOException{
         this.updateInfoJsonOnline();
+        this.updateUpdateDate();
     }
 
     public void updateOnline(String zipCode) throws JSONException, IOException, NonexistentZipCodeException, IncorrectZipCodeFormatException {
         if (!this.IsCodeFormatCorrect(zipCode)) throw new IncorrectZipCodeFormatException("Incorect zipCode format; expected XX-XXX, but was: " + zipCode);
         this.updateZipJsonOnline(zipCode);
         this.updateInfoJsonOnline();
+        this.updateUpdateDate();
     }
 
     public void updateOffline() throws JSONException, IOException, NonexistentZipCodeException {
@@ -246,6 +257,7 @@ public class WeatherInfo {
         this.updateZipCodeOffline();
         this.updateCoordsOffline();
         this.updateInfoJsonOffline();
+        this.updateUpdateDate();
     }
 
     public void updateOffline(String otherInfoPath, String otherZipPath) throws JSONException, IOException, NonexistentZipCodeException {
@@ -253,6 +265,7 @@ public class WeatherInfo {
         this.updateZipCodeOffline();
         this.updateCoordsOffline();
         this.updateInfoJsonOffline(otherInfoPath);
+        this.updateUpdateDate();
     }
 
 }

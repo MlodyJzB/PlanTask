@@ -26,6 +26,9 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class Weather implements Initializable {
+    public Weather() throws NonexistentZipCodeException, JSONException, IOException {
+    }
+
     public void Exit() {
         System.exit(0);
     }
@@ -33,10 +36,10 @@ public class Weather implements Initializable {
     private WeatherInfo wi = new WeatherInfo();
 
     private final SimpleDateFormat dayFormater = new SimpleDateFormat("EEEEEEEEE", Locale.US);
-    private SimpleDateFormat dateFormater = new SimpleDateFormat("mm", Locale.US);
+    private SimpleDateFormat dateFormater = new SimpleDateFormat("HH:mm dd/MM");
 
     @FXML
-    private Label City, Day1, Day2, Day3, Day4, Day5, Day6;
+    private Label City, Day1, Day2, Day3, Day4, Day5, Day6, LastUpdate;
 
     @FXML
     private TextField ZipCodeField;
@@ -44,15 +47,17 @@ public class Weather implements Initializable {
     @FXML
     private ImageView weatherImage;
 
+    @FXML
+    private Button refreshButton;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
-            this.wi.updateOffline();
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            this.setLocationLabels();
+            this.setDayLabels();
         } catch (NonexistentZipCodeException e) {
+            throw new RuntimeException(e);
+        } catch (JSONException e) {
             throw new RuntimeException(e);
         }
     }
@@ -66,14 +71,15 @@ public class Weather implements Initializable {
                 this.wi.updateOnline(zipCodeNoWhite);
                 ZipCodeField.setPromptText(zipCodeNoWhite);
             }
-            setDayLabels();
+            this.setDayLabels();
+            this.setLastUpdate();
         } catch (IncorrectZipCodeFormatException | NonexistentZipCodeException e) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Incorrect zip code. Try again!", ButtonType.OK);
             alert.showAndWait();
         }
     }
 
-    public void setDayLabels() throws NonexistentZipCodeException, JSONException, IOException {
+    public void setDayLabels() throws NonexistentZipCodeException, JSONException {
         long timeDay1 = this.wi.getSunrise(1);
         long timeDay2 = this.wi.getSunrise(2);
         long timeDay3 = this.wi.getSunrise(3);
@@ -98,6 +104,19 @@ public class Weather implements Initializable {
 
         day = this.dayFormater.format((timeDay6)*1000);
         Day6.setText(day);
+    }
+
+    public void setLocationLabels() throws NonexistentZipCodeException, JSONException {
+        ZipCodeField.setPromptText(wi.getZipCode());
+        City.setText(wi.getCity());
+        this.setLastUpdate();
+    }
+
+    public void setLastUpdate() throws NonexistentZipCodeException, JSONException{
+        long lastUpdateTime = this.wi.getUpdateDate();
+
+        String lastUpdate = this.dateFormater.format((lastUpdateTime)*1000);
+        LastUpdate.setText(lastUpdate);
     }
 
     @FXML

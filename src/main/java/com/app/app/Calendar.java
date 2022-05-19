@@ -183,6 +183,8 @@ public class Calendar implements Initializable {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (com.app.WeatherInfo.NonexistentZipCodeException e) {
+            e.printStackTrace();
         }
         drawMonth();
     }

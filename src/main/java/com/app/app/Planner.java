@@ -85,7 +85,7 @@ public class Planner implements Initializable {
         try {
             a = (boolean) new LoginPanelController().getInfo(new AppPanel().whichUserClicked()).get(4);
             this.DayMode(a);
-        } catch (JSONException | IOException e) {e.printStackTrace();}
+        } catch (JSONException | IOException |com.app.WeatherInfo.NonexistentZipCodeException e) {e.printStackTrace();}
 
 
         weekPage.getDetailedWeekView().getWeekView().getCalendars().addListener((ListChangeListener<Calendar>) c -> {
