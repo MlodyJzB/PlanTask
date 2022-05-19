@@ -65,7 +65,7 @@ public class AppPanel implements Initializable {
     @FXML
     private Label Temp, FeelsLike, CloudsValue, WindValue;
     @FXML
-    ImageView weatherImage;
+    private ImageView weatherImage;
     @FXML
     private AnchorPane backgroundColor, diffColor2, normColor4, normColor3, normColor2, normColor1;
     @FXML
@@ -371,14 +371,14 @@ public class AppPanel implements Initializable {
         String cloudsValue = String.valueOf(Math.round(wi.getCloudsValue(0)));
         String icon = wi.getIcon(0);
 
-        Temp.setText(temp + "°C");
+        //Temp.setText(temp + "°C");
         //FeelsLike.setText("Feels like: " + feelsLike + "°C");
-        WindValue.setText(windSpeed + " km/h");
-        CloudsValue.setText(cloudsValue + " %");
+        //WindValue.setText(windSpeed + " km/h");
+        //CloudsValue.setText(cloudsValue + " %");
 
         File file = new File("");
         String imagesPath = file.getAbsolutePath() + "\\src\\main\\resources\\Images\\weatherIcons\\";
-        weatherImage.setImage(new Image(imagesPath + icon + ".png"));
+        weatherImage.setImage(new Image(imagesPath + "01d.png"));
     }
 
     public void refreshWeather(ActionEvent event) throws NonexistentZipCodeException, JSONException, IOException, IncorrectZipCodeFormatException {

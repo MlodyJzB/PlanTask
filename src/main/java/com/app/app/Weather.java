@@ -8,15 +8,20 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -25,53 +30,75 @@ public class Weather implements Initializable {
         System.exit(0);
     }
 
-    private String NormCol, DiffCol, BackCol;
+    private WeatherInfo wi = new WeatherInfo();
+
+    private final SimpleDateFormat dayFormater = new SimpleDateFormat("EEEEEEEEE", Locale.US);
+    private SimpleDateFormat dateFormater = new SimpleDateFormat("mm", Locale.US);
 
     @FXML
-    private ChoiceBox Mode;
-
-    @FXML
-    private Label City;
+    private Label City, Day1, Day2, Day3, Day4, Day5, Day6;
 
     @FXML
     private TextField ZipCodeField;
 
+    @FXML
+    private ImageView weatherImage;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        WeatherInfo wi = new WeatherInfo();
         try {
-            wi.updateOffline();
+            this.wi.updateOffline();
         } catch (JSONException e) {
-            ZipCodeField.setPromptText("1");
-        } catch (IOException e) {
-            ZipCodeField.setPromptText("2");
-        } catch (NonexistentZipCodeException e) {
             throw new RuntimeException(e);
-        }
-        ZipCodeField.setPromptText(wi.getZipCode());
-        try {
-            City.setText(wi.getCity());
-        } catch (JSONException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (NonexistentZipCodeException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void ColourFromDataJson(boolean DayMode) throws IOException, JSONException {
-        String contents = new String((Files.readAllBytes(Paths.get("colors.json"))));
-        JSONObject o = new JSONObject(contents);
-        if(DayMode) {
-            NormCol = (String) o.get(("BrightColorNormal"));
-            DiffCol = (String) o.get(("BrightColorDifferent"));
-            BackCol = (String) o.get(("BrightColorBackground"));
-        }
-        else{
-            NormCol = (String) o.get(("DarkColorNormal"));
-            DiffCol = (String) o.get(("DarkColorDifferent"));
-            BackCol = (String) o.get(("DarkColorBackground"));
+    public void refreshWeather(ActionEvent event) throws JSONException, IOException {
+        String newZipCode = ZipCodeField.getText();
+        String zipCodeNoWhite = newZipCode.replaceAll("\\s+","");
+        try {
+            if (newZipCode == "") this.wi.updateOnline();
+            else{
+                this.wi.updateOnline(zipCodeNoWhite);
+                ZipCodeField.setPromptText(zipCodeNoWhite);
             }
-    };
+            setDayLabels();
+        } catch (IncorrectZipCodeFormatException | NonexistentZipCodeException e) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Incorrect zip code. Try again!", ButtonType.OK);
+            alert.showAndWait();
+        }
+    }
+
+    public void setDayLabels() throws NonexistentZipCodeException, JSONException, IOException {
+        long timeDay1 = this.wi.getSunrise(1);
+        long timeDay2 = this.wi.getSunrise(2);
+        long timeDay3 = this.wi.getSunrise(3);
+        long timeDay4 = this.wi.getSunrise(4);
+        long timeDay5 = this.wi.getSunrise(5);
+        long timeDay6 = this.wi.getSunrise(6);
+
+        String day = this.dayFormater.format((timeDay1)*1000);
+        Day1.setText(day);
+
+        day = this.dayFormater.format((timeDay2)*1000);
+        Day2.setText(day);
+
+        day = this.dayFormater.format((timeDay3)*1000);
+        Day3.setText(day);
+
+        day = this.dayFormater.format((timeDay4)*1000);
+        Day4.setText(day);
+
+        day = this.dayFormater.format((timeDay5)*1000);
+        Day5.setText(day);
+
+        day = this.dayFormater.format((timeDay6)*1000);
+        Day6.setText(day);
+    }
 
     @FXML
     private ImageView minimalize_button;
@@ -84,18 +111,5 @@ public class Weather implements Initializable {
         //Restore down
         stage.setMaximized(stage.isMaximized());
     }
-    @FXML
-    private void onClickRefresh(ActionEvent event) throws JSONException, IOException, IncorrectZipCodeFormatException {
-        String zipCode = ZipCodeField.getText();
-        String zipCodeNoWhite = zipCode.replaceAll("\\s+","");
-        WeatherInfo wi = new WeatherInfo();
-        try{
-            wi.updateOnline(zipCodeNoWhite);
-            ZipCodeField.setPromptText(zipCodeNoWhite);
-        }
-        catch (IncorrectZipCodeFormatException | NonexistentZipCodeException e) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Incorrect zip code. Try again!", ButtonType.OK);
-            alert.showAndWait();
-        }
-    }
+
 }
