@@ -98,19 +98,17 @@ public class AppPanel implements Initializable {
 
         calendarSource.getCalendars().addAll(calendar);
         return calendarSource;
-    };
+    }
     private volatile boolean stop = false;
     private boolean InfoDayNight = true;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-//        CalendarSource newEvent = AddNewEntries("Przykład", LocalDate.now(), LocalDate.now(), LocalTime.of(14,30), LocalTime.of(23,30));
-//        detailedDayView.getCalendarSources().setAll(newEvent);
-        Event event = new Event("Event1", LocalDateTime.now(),
-                LocalDateTime.of(LocalDate.now(),
-                        LocalTime.of(23, 59)
-                )
-        );
-        detailedDayView.getCalendarSources().get(0).getCalendars().get(0).addEntry(event.toEntry());
+//        Event event = new Event("Event1", LocalDateTime.now(),
+//                LocalDateTime.of(LocalDate.now(),
+//                        LocalTime.of(23, 59)
+//                )
+//        );
+//        detailedDayView.getCalendarSources().get(0).getCalendars().get(0).addEntry(event.toEntry());
         try {
             JSONArray a = new LoginPanelController().getInfo(whichUserClicked());
             InfoDayNight = (Boolean) a.get(4);
@@ -226,7 +224,7 @@ public class AppPanel implements Initializable {
             }
         });
         tr1.start();
-    };
+    }
     @FXML
     private ImageView minimalize_button;
 
@@ -391,7 +389,8 @@ public class AppPanel implements Initializable {
         String contents = new String((Files.readAllBytes(Paths.get("panels.json"))));
         JSONObject o = new JSONObject(contents);
         return (int) o.get(("which"));
-    };
+    }
+
     public void ColourFromDataJson(boolean DayMode) throws IOException, JSONException {
         String contents = new String((Files.readAllBytes(Paths.get("colors.json"))));
         JSONObject o = new JSONObject(contents);
@@ -414,16 +413,15 @@ public class AppPanel implements Initializable {
             Incoming_events_Vbox.setStyle("-fx-background-color: #2b2b2b;");
             for (Label a : labelColors) {
                 a.setTextFill(Paint.valueOf("#ffffff"));
-            };
+            }
         }
-    };
+    }
 
     private void DayMode() {
         AnchorPane[] normalColors = new AnchorPane[]{normColor4, normColor3, normColor2, normColor1};
         for (AnchorPane a : normalColors) {
             a.setStyle("-fx-background-color: " + NormCol + "; -fx-background-radius: 10;");
         }
-        ;
         backgroundColor.setStyle("-fx-background-color: " + BackCol + "; -fx-background-radius: 0 15 15 0;");
         SideBarcolor.setStyle("-fx-background-color: " + SideCol + "; -fx-background-radius: 15 0 0 15;");
         diffColor2.setStyle("-fx-background-color: " + DiffCol + "; -fx-background-radius: 10;");
