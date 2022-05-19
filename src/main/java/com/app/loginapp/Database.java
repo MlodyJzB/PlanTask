@@ -86,12 +86,14 @@ public class Database {
         statement.executeUpdate();
     }
 
-    public static List<List<String>> getUserEventsAsString(String username) {
+    public static List<List<String>> getUserEventsAsString(String username, String startRangeDateTime, String endRangeDateTime) {
         try {
             String connectionString = "jdbc:sqlserver://plan-task-server.database.windows.net:1433;database=planTask;user=JakubNitkiewicz;password=planTask123;encrypt=true;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
             Connection con = DriverManager.getConnection(connectionString);
-            PreparedStatement statement = con.prepareStatement("EXEC GetUserEventsAsString @user = ?");
+            PreparedStatement statement = con.prepareStatement("EXEC GetUserEventsAsString @user = ?, @startRange = ?, @endRange = ?");
             statement.setString(1, username);
+            statement.setString(2, startRangeDateTime);
+            statement.setString(3, endRangeDateTime);
             ResultSet resultSet = statement.executeQuery();
 
             List<List<String>> userEventsList = new ArrayList<>();
@@ -100,8 +102,7 @@ public class Database {
                         resultSet.getString("title"),
                         resultSet.getString("startDateTime"),
                         resultSet.getString("endDateTime")
-                        )
-                );
+                        ));
             }
             return userEventsList;
         } catch (SQLException e) {

@@ -161,9 +161,12 @@ public class Event {
         return new Event(entry);
     }
 
-    public List<Event> getUserEventsFromDatabase(String username) throws UserEventsEmptyException {
+    public List<Event> getUserEventsFromDatabase(String username, LocalDateTime startRangeDateTime,
+                                                 LocalDateTime endRangeDateTime) throws UserEventsEmptyException {
         List<Event> userEvents = new ArrayList<>();
-        List<List<String>> userEventsAsString = Database.getUserEventsAsString(username);
+        List<List<String>> userEventsAsString = Database.getUserEventsAsString(username,
+                startRangeDateTime.format(dateTimeFormatter), endRangeDateTime.format(dateTimeFormatter)
+        );
         if (userEventsAsString.isEmpty())
             throw new UserEventsEmptyException("User doesn't have events in database");
         for (List<String> eventAsString: userEventsAsString) {
@@ -175,9 +178,12 @@ public class Event {
         return userEvents;
     }
 
-    public List<Entry<String>> getUserEntriesFromDatabase(String username) throws UserEventsEmptyException {
+    public List<Entry<String>> getUserEntriesFromDatabase(String username, LocalDateTime startRangeDateTime,
+                                                          LocalDateTime endRangeDateTime) throws UserEventsEmptyException {
         List<Entry<String>> userEntries = new ArrayList<>();
-        List<List<String>> userEventsAsString = Database.getUserEventsAsString(username);
+        List<List<String>> userEventsAsString = Database.getUserEventsAsString(username,
+                startRangeDateTime.format(dateTimeFormatter), endRangeDateTime.format(dateTimeFormatter)
+        );
         if (userEventsAsString.isEmpty())
             throw new UserEventsEmptyException("User doesn't have events in database");
         for (List<String> eventAsString : userEventsAsString) {
