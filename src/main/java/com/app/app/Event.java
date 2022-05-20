@@ -14,11 +14,6 @@ import java.util.List;
 public class Event {
     public static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
 
-    public static class UserEventsEmptyException extends Exception {
-        public UserEventsEmptyException(String errorMessage) {
-            super(errorMessage);
-        }
-    }
     private String title;
     private LocalDateTime startDateTime, endDateTime;
 
@@ -162,13 +157,11 @@ public class Event {
     }
 
     public static List<Event> getUserEventsFromDatabase(String username, LocalDateTime startRangeDateTime,
-                                                 LocalDateTime endRangeDateTime) throws UserEventsEmptyException {
+                                                 LocalDateTime endRangeDateTime) {
         List<Event> userEvents = new ArrayList<>();
         List<List<String>> userEventsAsString = Database.getUserEventsAsString(username,
                 startRangeDateTime.format(dateTimeFormatter), endRangeDateTime.format(dateTimeFormatter)
         );
-        if (userEventsAsString.isEmpty())
-            throw new UserEventsEmptyException("User doesn't have events in database");
         for (List<String> eventAsString: userEventsAsString) {
             String title = eventAsString.get(0);
             LocalDateTime startDateTime = LocalDateTime.parse(eventAsString.get(1), dateTimeFormatter);
@@ -179,13 +172,11 @@ public class Event {
     }
 
     public static List<Entry<String>> getUserEntriesFromDatabase(String username, LocalDateTime startRangeDateTime,
-                                                          LocalDateTime endRangeDateTime) throws UserEventsEmptyException {
+                                                          LocalDateTime endRangeDateTime) {
         List<Entry<String>> userEntries = new ArrayList<>();
         List<List<String>> userEventsAsString = Database.getUserEventsAsString(username,
                 startRangeDateTime.format(dateTimeFormatter), endRangeDateTime.format(dateTimeFormatter)
         );
-        if (userEventsAsString.isEmpty())
-            throw new UserEventsEmptyException("User doesn't have events in database");
         for (List<String> eventAsString : userEventsAsString) {
             String title = eventAsString.get(0);
             LocalDateTime startDateTime = LocalDateTime.parse(eventAsString.get(1), dateTimeFormatter);

@@ -112,6 +112,7 @@ public class AppPanel implements Initializable {
     }
     private volatile boolean stop = false;
     private boolean InfoDayNight = true;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         user = User.getInstance();
@@ -125,14 +126,11 @@ public class AppPanel implements Initializable {
 
         Calendar calendar = detailedDayView.getCalendarSources().get(0).getCalendars().get(0);
 
-        try {
-            List<Entry<String>> entryList = Event.getUserEntriesFromDatabase(user.getUsername(),
-                    LocalDateTime.now().minusYears(1), LocalDateTime.now().plusYears(1));
-            for (Entry<String> entry : entryList)
-                calendar.addEntry(entry);
-        } catch (Event.UserEventsEmptyException e) {
-            throw new RuntimeException(e);
-        }
+
+        List<Entry<String>> entryList = Event.getUserEntriesFromDatabase(user.getUsername(),
+                LocalDateTime.now().minusYears(1), LocalDateTime.now().plusYears(1));
+        for (Entry<String> entry : entryList)
+            calendar.addEntry(entry);
 
         detailedDayView.bind(monthView, true);
 
@@ -331,8 +329,15 @@ public class AppPanel implements Initializable {
         controller.bindWeekPage(detailedDayView);
 
     }
-    public void calendar(ActionEvent event) {
-        LoadSite("calendar");
+    public void calendar(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(
+                getClass().getResource(
+                        "calendar.fxml"
+                )
+        );
+        ourWindow.setCenter(loader.load());
+        com.app.app.Calendar controller = loader.getController();
+        controller.setUserEventsList(detailedDayView, LocalDate.now().minusYears(1), LocalDate.now().plusYears(1));
     }
     public void statics(ActionEvent event) { LoadSite("weather"); }
     public void settings(ActionEvent event) throws IOException {
