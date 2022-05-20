@@ -9,6 +9,7 @@ import com.calendarfx.view.page.YearPage;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -293,6 +294,21 @@ public class Calendar implements Initializable {
             popup.getContent().add(dateLabel);
             popup.getContent().add(noEvents);
             popup.getContent().add(specialDay);
+            for (int i =0;i<=0;i++){
+                Label back = new Label();
+                Label event = new Label("event");
+                back.setMinSize(480,45);
+                back.setStyle(" -fx-background-color: #ffbf70; -fx-background-radius: 10;");
+                back.setLayoutX(back.getLayoutX()+60);
+                back.setLayoutY(back.getLayoutY()+120+i*55);
+                popup.getContent().add(back);
+                event.setFont(new Font(20));
+                event.setLayoutY(event.getLayoutY()+125);
+                event.setLayoutX(event.getLayoutX()+60);
+                event.setMinWidth(480);
+                event.setAlignment(Pos.CENTER);
+                popup.getContent().add(event);
+            }
             popup.setAutoHide(true);
             if (! popup.isShowing()) {
                 popup.show(stage);
