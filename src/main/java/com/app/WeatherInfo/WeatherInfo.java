@@ -89,6 +89,33 @@ public class WeatherInfo {
         return (int) Math.round(Double.valueOf(cloudsValue));
     }
 
+    public int getHumidityValue(int day) throws JSONException{
+        String cloudsValue = "";
+        if (day == 0) cloudsValue = this.infoJson.getJSONObject("current").get("clouds").toString();
+        else cloudsValue = this.infoJson.getJSONArray("daily").getJSONObject(day).get("clouds").toString();
+
+
+        return (int) Math.round(Double.valueOf(cloudsValue));
+    }
+
+    public int getPressureValue(int day) throws JSONException{
+        String cloudsValue = "";
+        if (day == 0) cloudsValue = this.infoJson.getJSONObject("current").get("pressure").toString();
+        else cloudsValue = this.infoJson.getJSONArray("daily").getJSONObject(day).get("pressure").toString();
+
+
+        return (int) Math.round(Double.valueOf(cloudsValue));
+    }
+
+    public int getHumidity(int day) throws JSONException{
+        String cloudsValue = "";
+        if (day == 0) cloudsValue = this.infoJson.getJSONObject("current").get("humidity").toString();
+        else cloudsValue = this.infoJson.getJSONArray("daily").getJSONObject(day).get("humidity").toString();
+
+
+        return (int) Math.round(Double.valueOf(cloudsValue));
+    }
+
     public String getIcon(int day) throws JSONException{
         String icon = "";
         if (day == 0) icon = this.infoJson.getJSONObject("current").getJSONArray("weather").getJSONObject(0).get("icon").toString();
