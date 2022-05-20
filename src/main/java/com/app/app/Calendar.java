@@ -334,7 +334,7 @@ public class Calendar implements Initializable {
         drawNewCall();
         refreschLabel();
         if (darkmode) {
-            pane3.setStyle(" -fx-background-color: #424242;");
+            //pane3.setStyle(" -fx-background-color: #1c1c1c;");
             changeTextColour(nextb," #1c1c1c"," #424242");
             changeTextColour(previousb," #1c1c1c"," #424242");
             changeLabelTextColour(monLabel," #1c1c1c");
@@ -349,7 +349,7 @@ public class Calendar implements Initializable {
         }
         else
         {
-            pane3.setStyle(" -fx-background-color: #e8e8e8;");
+            //pane3.setStyle(" -fx-background-color: #e8e8e8;");
             changeTextColour(nextb," #000000"," white");
             changeTextColour(previousb," #000000"," white");
             changeLabelTextColour(monLabel," #000000");
