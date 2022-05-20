@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Event {
-    public static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    public static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
 
     public static class UserEventsEmptyException extends Exception {
         public UserEventsEmptyException(String errorMessage) {
@@ -161,7 +161,7 @@ public class Event {
         return new Event(entry);
     }
 
-    public List<Event> getUserEventsFromDatabase(String username, LocalDateTime startRangeDateTime,
+    public static List<Event> getUserEventsFromDatabase(String username, LocalDateTime startRangeDateTime,
                                                  LocalDateTime endRangeDateTime) throws UserEventsEmptyException {
         List<Event> userEvents = new ArrayList<>();
         List<List<String>> userEventsAsString = Database.getUserEventsAsString(username,
@@ -178,7 +178,7 @@ public class Event {
         return userEvents;
     }
 
-    public List<Entry<String>> getUserEntriesFromDatabase(String username, LocalDateTime startRangeDateTime,
+    public static List<Entry<String>> getUserEntriesFromDatabase(String username, LocalDateTime startRangeDateTime,
                                                           LocalDateTime endRangeDateTime) throws UserEventsEmptyException {
         List<Entry<String>> userEntries = new ArrayList<>();
         List<List<String>> userEventsAsString = Database.getUserEventsAsString(username,
