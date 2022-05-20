@@ -111,7 +111,7 @@ public class Settings implements Initializable {
         for (String treeItemName : treeItemsFromAccount)
             makeBranch(treeItemName, account);
 
-        List<String> treeItemsFromAppearance = List.of("first", "second");
+        List<String> treeItemsFromAppearance = List.of("first", "second", "ics");
         TreeItem<String> appearance = treeItemsMap.get("appearance");
         for (String treeItemName : treeItemsFromAppearance)
             makeBranch(treeItemName, appearance);
