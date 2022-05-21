@@ -117,6 +117,7 @@ public class Weather implements Initializable {
             else{
                 this.wi.updateOnline(zipCodeNoWhite);
                 ZipCodeField.setPromptText(zipCodeNoWhite);
+                ZipCodeField.clear();
             }
             this.setDayLabels();
             this.setLastUpdate();

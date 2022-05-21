@@ -208,7 +208,7 @@ public class WeatherInfo {
     }
 
 
-    private void updateInfoJsonOnline() throws JSONException, IOException {
+    private void updateInfoJsonOnline() throws JSONException, IOException, NonexistentZipCodeException {
         JsonHandling handle = new JsonHandling();
         JSONObject infoJson = handle.getFromUrl("https://api.openweathermap.org/data/2.5/onecall?lat=" + this.coordinates.getLat() + "&lon=" + this.coordinates.getLon() +"&appid=3604feeeebf154336d2e624506e5b388&units=metric&exclude=hourly,minutely,alerts");
         File file = new File("");
@@ -231,13 +231,13 @@ public class WeatherInfo {
         this.infoJson = infoJson;
     }
 
-    private void updateZipJsonOnline(String zipCode) throws IncorrectZipCodeFormatException, java.io.IOException, JSONException, NonexistentZipCodeException {
+    private void updateZipJsonOnline(String zipCode) throws java.io.IOException, JSONException, NonexistentZipCodeException {
         JsonHandling handle = new JsonHandling();
         JSONObject zipInfo = handle.getFromUrl("https://app.zipcodebase.com/api/v1/search?apikey=f6178de0-b1e6-11ec-ad2d-a971b4172138&codes=" + zipCode);
         File file = new File("");
         String path = file.getAbsolutePath() + "\\src\\main\\java\\com\\app\\WeatherInfo\\zipCode.json";
+        updateZipCodeOnline(zipInfo);
         handle.writeToFile(zipInfo, path);
-        this.zipCode = zipCode;
         this.updateCoordsOnline(zipInfo);
         this.zipJson = zipInfo;
     }
@@ -267,7 +267,18 @@ public class WeatherInfo {
         this.zipCode = results.keys().next().toString();
     }
 
-    public void updateOnline() throws JSONException, IOException{
+    private void updateZipCodeOnline(JSONObject zipJson) throws NonexistentZipCodeException, JSONException, IOException {
+        JSONObject results;
+        try{
+            results = zipJson.getJSONObject("results");
+            this.zipCode = results.keys().next().toString();
+        }
+        catch (JSONException e){
+            throw new NonexistentZipCodeException("Zipcode " + this.zipCode + " do not exist.");
+        }
+    }
+
+    public void updateOnline() throws JSONException, IOException, NonexistentZipCodeException {
         this.updateInfoJsonOnline();
         this.updateUpdateDate();
     }
