@@ -113,17 +113,20 @@ public class Weather implements Initializable {
         String newZipCode = ZipCodeField.getText();
         String zipCodeNoWhite = newZipCode.replaceAll("\\s+","");
         try {
-            if (newZipCode == "") this.wi.updateOnline();
+            if (newZipCode == "") {
+                this.wi.updateOnline();
+                this.setLastUpdate();
+            }
             else{
                 this.wi.updateOnline(zipCodeNoWhite);
-                ZipCodeField.setPromptText(zipCodeNoWhite);
+                this.setLocationLabels(zipCodeNoWhite);
                 ZipCodeField.clear();
             }
             this.setDayLabels();
-            this.setLastUpdate();
             this.setLocationBox();
             this.setDayInfoLabels(1, Icon1);
             this.setDayInfoLabels(2, Icon2);
+            this.setLocationLabels();
         } catch (IncorrectZipCodeFormatException | NonexistentZipCodeException e) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Incorrect zip code. Try again!", ButtonType.OK);
             alert.showAndWait();
@@ -189,6 +192,11 @@ public class Weather implements Initializable {
 
     public void setLocationLabels() throws NonexistentZipCodeException, JSONException {
         ZipCodeField.setPromptText(wi.getZipCode());
+        City.setText(wi.getCity());
+        this.setLastUpdate();
+    }
+    public void setLocationLabels(String zipCode) throws NonexistentZipCodeException, JSONException {
+        ZipCodeField.setPromptText(zipCode);
         City.setText(wi.getCity());
         this.setLastUpdate();
     }
