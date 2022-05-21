@@ -145,7 +145,6 @@ public class Calendar implements Initializable {
                 endRangeDate,
                 ZonedDateTime.now().getZone()
         );
-
         List<List<Entry<?>>> entryLists = new ArrayList<>(entryMap.values());
         Collections.reverse(entryLists);
         for (List<Entry<?>> entryList : entryLists) {
@@ -153,7 +152,7 @@ public class Calendar implements Initializable {
             for (Entry<?> entry : entryList) {
                 //May be multiple entries in one day
                 eventList.add(Event.toEvent(entry));
-                System.out.println(entry.toString());
+                System.out.println(Event.toEvent(entry));
                 drawNewCall();
             }
         }

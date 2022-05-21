@@ -14,8 +14,34 @@ import java.util.List;
 public class Event {
     public static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
 
-    private String title;
+    private String title, rrule;
     private LocalDateTime startDateTime, endDateTime;
+
+    public String getRrule() {
+        return rrule;
+    }
+
+    public void setRrule(String rrule) {
+        this.rrule = rrule;
+    }
+
+    public boolean isFullDay() {
+        return fullDay;
+    }
+
+    public void setFullDay(boolean fullDay) {
+        this.fullDay = fullDay;
+    }
+
+    public boolean isRecurring() {
+        return recurring;
+    }
+
+    public void setRecurring(boolean recurring) {
+        this.recurring = recurring;
+    }
+
+    private boolean fullDay, recurring;
 
     public String getTitle() {
         return title;
@@ -61,6 +87,9 @@ public class Event {
         this.title=entry.getTitle();
         this.startDateTime=LocalDateTime.of(entry.getStartDate(), entry.getStartTime());
         this.endDateTime=LocalDateTime.of(entry.getEndDate(), entry.getEndTime());
+        this.fullDay=entry.isFullDay();
+        this.recurring=entry.isRecurring();
+        this.rrule=entry.getRecurrenceRule();
     }
 
     public void addEventToDatabase(String username) {
@@ -70,7 +99,8 @@ public class Event {
     public void addEventToDatabase(Event event, String username) {
         try {
             Database.addEvent(event.getTitle(), username,
-                    event.getStartDateTimeString(), event.getEndDateTimeString()
+                    event.getStartDateTimeString(), event.getEndDateTimeString(),
+                    event.isFullDay()
             );
         } catch (SQLException e) {
             e.printStackTrace();
@@ -84,7 +114,8 @@ public class Event {
                 Event event = Event.toEvent(entry);
                 try {
                     Database.addEvent(event.getTitle(), username,
-                            event.getStartDateTimeString(), event.getEndDateTimeString()
+                            event.getStartDateTimeString(), event.getEndDateTimeString(),
+                            event.isFullDay()
                     );
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -148,6 +179,42 @@ public class Event {
         };
     }
 
+    public static Task<Void> changeEventFullDayInDatabase(boolean oldFullDay, Entry<?> entry, String username) {
+        return new Task<>() {
+            @Override
+            public Void call() {
+                Event event = Event.toEvent(entry);
+                try {
+                    Database.changeEventFullDay(username, event.getTitle(),
+                            event.getStartDateTimeString(), event.getEndDateTimeString(),
+                            oldFullDay, event.isFullDay()
+                    );
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        };
+    }
+
+    public static Task<Void> ChangeEventRecurringAndRruleInDatabase(Entry<?> entry, String username) {
+        return new Task<>() {
+            @Override
+            public Void call() {
+                Event event = Event.toEvent(entry);
+                try {
+                    Database.ChangeEventRecurringAndRrule(username, event.getTitle(),
+                            event.getStartDateTimeString(), event.getEndDateTimeString(),
+                            event.isRecurring(), event.getRrule()
+                    );
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        };
+    }
+
     public Entry<String> toEntry() {
         return new Entry<>(title, new Interval(startDateTime, endDateTime));
     }
@@ -156,20 +223,6 @@ public class Event {
         return new Event(entry);
     }
 
-    public static List<Event> getUserEventsFromDatabase(String username, LocalDateTime startRangeDateTime,
-                                                 LocalDateTime endRangeDateTime) {
-        List<Event> userEvents = new ArrayList<>();
-        List<List<String>> userEventsAsString = Database.getUserEventsAsString(username,
-                startRangeDateTime.format(dateTimeFormatter), endRangeDateTime.format(dateTimeFormatter)
-        );
-        for (List<String> eventAsString: userEventsAsString) {
-            String title = eventAsString.get(0);
-            LocalDateTime startDateTime = LocalDateTime.parse(eventAsString.get(1), dateTimeFormatter);
-            LocalDateTime endDateTime = LocalDateTime.parse(eventAsString.get(2), dateTimeFormatter);
-            userEvents.add(new Event(title, startDateTime, endDateTime));
-        }
-        return userEvents;
-    }
 
     public static List<Entry<String>> getUserEntriesFromDatabase(String username, LocalDateTime startRangeDateTime,
                                                           LocalDateTime endRangeDateTime) {
@@ -181,9 +234,25 @@ public class Event {
             String title = eventAsString.get(0);
             LocalDateTime startDateTime = LocalDateTime.parse(eventAsString.get(1), dateTimeFormatter);
             LocalDateTime endDateTime = LocalDateTime.parse(eventAsString.get(2), dateTimeFormatter);
-            userEntries.add(new Entry<>(title, new Interval(startDateTime, endDateTime)));
+            boolean fullDay = Integer.parseInt(eventAsString.get(3)) == 1;
+            boolean recurring = Integer.parseInt(eventAsString.get(4)) == 1;
+            String rrule = eventAsString.get(5).equals("") ? null : eventAsString.get(5);
+
+            System.out.println(rrule);
+            Entry<String> entry = new Entry<>(title, new Interval(startDateTime, endDateTime));
+            entry.setFullDay(fullDay);
+            entry.setRecurrenceRule(rrule);
+            userEntries.add(entry);
         }
         return userEntries;
     }
 
+    @Override
+    public String toString() {
+        return "Event{" +
+                "title='" + title + '\'' +
+                ", startDateTime=" + startDateTime +
+                ", endDateTime=" + endDateTime +
+                '}';
+    }
 }
