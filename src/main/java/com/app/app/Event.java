@@ -238,7 +238,6 @@ public class Event {
             boolean recurring = Integer.parseInt(eventAsString.get(4)) == 1;
             String rrule = eventAsString.get(5).equals("") ? null : eventAsString.get(5);
 
-            System.out.println(rrule);
             Entry<String> entry = new Entry<>(title, new Interval(startDateTime, endDateTime));
             entry.setFullDay(fullDay);
             entry.setRecurrenceRule(rrule);
