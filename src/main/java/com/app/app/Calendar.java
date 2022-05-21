@@ -28,6 +28,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.*;
+import java.time.chrono.ChronoLocalDateTime;
 import java.util.*;
 
 public class Calendar implements Initializable {
@@ -153,6 +154,7 @@ public class Calendar implements Initializable {
                 //May be multiple entries in one day
                 eventList.add(Event.toEvent(entry));
                 System.out.println(entry.toString());
+                drawNewCall();
             }
         }
     }
@@ -219,10 +221,15 @@ public class Calendar implements Initializable {
         int first = weekDay.getValue();
         int monthLenght = currentdate.lengthOfMonth();
         int days = 1;
+        System.out.println("jestemt");
         int weekDays = 1;
         for (var day : buttonList) {
             if (weekDays >= first && days <= monthLenght) {
                 day.setText(String.valueOf(days));
+                if(isDayHaveEvents(getButtonDate(day)))
+                {
+                    day.setText(day.getText()+"*");
+                }
                 days++;
                 if(darkmode){
                     changeTextColour(day, "#1c1c1c", "  #424242");
@@ -264,9 +271,11 @@ public class Calendar implements Initializable {
     }
 
     public void getDay(ActionEvent actionEvent) {
+
         Stage stage = (Stage) minimalize_button.getScene().getWindow();
         if (!((Button) actionEvent.getSource()).getText().equals("")) {
             LocalDate dayDate =getButtonDate((Button) actionEvent.getSource());
+            System.out.println(isDayHaveEvents(dayDate));
             System.out.println(dayDate);
             Popup popup = new Popup();
             String nameOfday = isSpecialDay(dayDate);
@@ -279,17 +288,22 @@ public class Calendar implements Initializable {
             Label background = new Label();
             Label specialDay = new Label(nameOfday);
             background.setMinSize(500,350);
-            background.setLayoutX(background.getLayoutX()+50);
+            background.setLayoutX(background.getLayoutX()+55);
             background.setLayoutY(background.getLayoutY()+55);
-            noEvents.setLayoutX(noEvents.getLayoutX()+230+50);
+            noEvents.setLayoutX(noEvents.getLayoutX()+55);
+            noEvents.setMinWidth(500);
             noEvents.setLayoutY(noEvents.getLayoutY()+160+55);
+            noEvents.setAlignment(Pos.CENTER);
             dateLabel.setFont(Font.font("System", FontWeight.BOLD, 25));
-            dateLabel.setLayoutX(dateLabel.getLayoutX()+185+50);
+            dateLabel.setLayoutX(dateLabel.getLayoutX()+55);
             dateLabel.setLayoutY(dateLabel.getLayoutY()+55);
+            dateLabel.setMinWidth(500);
+            dateLabel.setAlignment(Pos.CENTER);
             background.setStyle(" -fx-background-color: #e8e8e8; -fx-background-radius: 10;");
-            specialDay.setTextAlignment(TextAlignment.CENTER);
-            specialDay.setLayoutX(specialDay.getLayoutX()+260+50- nameOfday.length()*3);
+            specialDay.setLayoutX(specialDay.getLayoutX()+55);
             specialDay.setLayoutY(specialDay.getLayoutY()+90);
+            specialDay.setMinWidth(500);
+            specialDay.setAlignment(Pos.CENTER);
             popup.getContent().add(background);
             popup.getContent().add(dateLabel);
             popup.getContent().add(noEvents);
@@ -299,12 +313,12 @@ public class Calendar implements Initializable {
                 Label event = new Label("event");
                 back.setMinSize(480,45);
                 back.setStyle(" -fx-background-color: #ffbf70; -fx-background-radius: 10;");
-                back.setLayoutX(back.getLayoutX()+60);
+                back.setLayoutX(back.getLayoutX()+65);
                 back.setLayoutY(back.getLayoutY()+120+i*55);
                 popup.getContent().add(back);
                 event.setFont(new Font(20));
                 event.setLayoutY(event.getLayoutY()+125);
-                event.setLayoutX(event.getLayoutX()+60);
+                event.setLayoutX(event.getLayoutX()+65);
                 event.setMinWidth(480);
                 event.setAlignment(Pos.CENTER);
                 popup.getContent().add(event);
@@ -364,7 +378,9 @@ public class Calendar implements Initializable {
     }
 
     LocalDate getButtonDate(@NotNull Button button){
-        LocalDate dayDate = LocalDate.of(currentdate.getYear(), currentdate.getMonth(), Integer.parseInt(button.getText()));
+        String day = new String(button.getText());
+        day = day.replace("*", "");
+        LocalDate dayDate = LocalDate.of(currentdate.getYear(), currentdate.getMonth(), Integer.parseInt(day));
         return dayDate;
     }
 
@@ -411,6 +427,18 @@ public class Calendar implements Initializable {
 
         label.setLayoutX((Width-710)/2+offx+spacex);
         label.setLayoutY((Height-417)/2+offy+spacey);
+    }
+
+    public boolean isDayHaveEvents(LocalDate date){
+        for (var ev : eventList){
+
+            if ((((ev.getStartDateTime().toLocalDate()).isBefore(date) || (ev.getStartDateTime().toLocalDate()).isEqual(date) ))
+            && ((ev.getEndDateTime().toLocalDate().isAfter(date))||(ev.getEndDateTime().toLocalDate().isEqual(date)) ))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void resizeCalendar(double Height, double Width, int offx, int offy, int spacesx, int spacesy, int font ){
