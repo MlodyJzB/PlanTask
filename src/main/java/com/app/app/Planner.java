@@ -2,25 +2,16 @@ package com.app.app;
 
 import com.app.loginapp.LoginPanelController;
 import com.app.loginapp.User;
-import com.calendarfx.model.*;
 import com.calendarfx.model.Calendar;
 import com.calendarfx.view.*;
 import com.calendarfx.view.page.WeekPage;
-import javafx.beans.InvalidationListener;
-import javafx.beans.value.ChangeListener;
 import javafx.collections.ListChangeListener;
-import javafx.collections.SetChangeListener;
 import javafx.concurrent.Task;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.control.ContextMenu;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -28,11 +19,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.ZonedDateTime;
 import java.util.*;
 import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Planner implements Initializable {
     User user;
@@ -80,56 +69,16 @@ public class Planner implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         user = User.getInstance();
-        System.out.println("User name: \"" + user.getUsername() + "\"");
         boolean a;
         try {
             a = (boolean) new LoginPanelController().getInfo(new AppPanel().whichUserClicked()).get(4);
             this.DayMode(a);
         } catch (JSONException | IOException |com.app.WeatherInfo.NonexistentZipCodeException e) {e.printStackTrace();}
 
+    }
 
-        weekPage.getDetailedWeekView().getWeekView().getCalendars().addListener((ListChangeListener<Calendar>) c -> {
-            c.next();
-            if (c.getAddedSize()>0) {
-                Calendar calendar = weekPage.getDetailedWeekView().getWeekView().getCalendars().get(0);
-                calendar.addEventHandler(calendarEvent -> {
-                    if (calendarEvent.isEntryAdded()) {
-                        ScheduledExecutorService executor = new ScheduledThreadPoolExecutor(1);
-                        Task<Void> task = Event.addEntryToDatabase(
-                                calendarEvent.getEntry(), user.getUsername());
-                        executor.schedule(task, 5, TimeUnit.SECONDS);
-                        executor.shutdown();
-                    }
-
-                    else if (calendarEvent.isEntryRemoved()) {
-                        ScheduledExecutorService executor = new ScheduledThreadPoolExecutor(1);
-                        Task<Void> task = Event.removeEntryFromDatabase(
-                                calendarEvent.getEntry(), user.getUsername());
-                        executor.schedule(task, 5, TimeUnit.SECONDS);
-                        executor.shutdown();
-                    }
-
-                    else {
-                        if (calendarEvent.getOldInterval() != null) {
-                            ScheduledExecutorService  executor = new ScheduledThreadPoolExecutor(1);
-                            Task<Void> task =Event.changeEntryIntervalInDatabase(calendarEvent.getOldInterval(),
-                                    calendarEvent.getEntry(), user.getUsername());
-                            executor.schedule(task, 5, TimeUnit.SECONDS);
-                            executor.shutdown();
-                        }
-                        else if (calendarEvent.getOldText() != null) {
-                            ScheduledExecutorService  executor = new ScheduledThreadPoolExecutor(1);
-                            Task<Void> task = Event.changeEntryTitleInDatabase(calendarEvent.getOldText(),
-                                    calendarEvent.getEntry(), user.getUsername());
-                            executor.schedule(task, 5, TimeUnit.SECONDS);
-                            executor.shutdown();
-                        }
-
-                    }
-                });
-            }
-
-        });
+    public void bindWeekPage(DetailedDayView detailedDayView) {
+        detailedDayView.bind(weekPage, true);
     }
 
 

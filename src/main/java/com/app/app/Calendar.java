@@ -1,9 +1,15 @@
 package com.app.app;
 
 import com.app.loginapp.LoginPanelController;
+import com.calendarfx.model.Entry;
+import com.calendarfx.view.DetailedDayView;
+import com.calendarfx.view.page.MonthPage;
+import com.calendarfx.view.page.WeekPage;
+import com.calendarfx.view.page.YearPage;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -21,12 +27,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.Month;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.time.*;
+import java.util.*;
 
 public class Calendar implements Initializable {
 
@@ -132,6 +134,28 @@ public class Calendar implements Initializable {
     @FXML
     private Label sunLabel;
     private LocalDate currentdate;
+
+    private List<Event> eventList = new ArrayList<>();
+
+    public void setUserEventsList(DetailedDayView detailedDayView, LocalDate startRangeDate, LocalDate endRangeDate) {
+        com.calendarfx.model.Calendar calendar = detailedDayView.getCalendarSources().get(0).getCalendars().get(0);
+        Map<LocalDate, List<Entry<?>>> entryMap = calendar.findEntries(
+                startRangeDate,
+                endRangeDate,
+                ZonedDateTime.now().getZone()
+        );
+
+        List<List<Entry<?>>> entryLists = new ArrayList<>(entryMap.values());
+        Collections.reverse(entryLists);
+        for (List<Entry<?>> entryList : entryLists) {
+            //Different entryList for every day
+            for (Entry<?> entry : entryList) {
+                //May be multiple entries in one day
+                eventList.add(Event.toEvent(entry));
+                System.out.println(entry.toString());
+            }
+        }
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -270,6 +294,21 @@ public class Calendar implements Initializable {
             popup.getContent().add(dateLabel);
             popup.getContent().add(noEvents);
             popup.getContent().add(specialDay);
+            for (int i =0;i<=0;i++){
+                Label back = new Label();
+                Label event = new Label("event");
+                back.setMinSize(480,45);
+                back.setStyle(" -fx-background-color: #ffbf70; -fx-background-radius: 10;");
+                back.setLayoutX(back.getLayoutX()+60);
+                back.setLayoutY(back.getLayoutY()+120+i*55);
+                popup.getContent().add(back);
+                event.setFont(new Font(20));
+                event.setLayoutY(event.getLayoutY()+125);
+                event.setLayoutX(event.getLayoutX()+60);
+                event.setMinWidth(480);
+                event.setAlignment(Pos.CENTER);
+                popup.getContent().add(event);
+            }
             popup.setAutoHide(true);
             if (! popup.isShowing()) {
                 popup.show(stage);

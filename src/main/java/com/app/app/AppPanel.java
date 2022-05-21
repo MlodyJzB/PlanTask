@@ -4,12 +4,15 @@ import com.app.WeatherInfo.IncorrectZipCodeFormatException;
 import com.app.WeatherInfo.NonexistentZipCodeException;
 import com.app.WeatherInfo.WeatherInfo;
 import com.app.loginapp.LoginPanelController;
+import com.app.loginapp.User;
 import com.calendarfx.model.Calendar;
 import com.calendarfx.model.CalendarSource;
 import com.calendarfx.model.Entry;
 import com.calendarfx.view.DetailedDayView;
 import com.calendarfx.view.MonthView;
 import javafx.application.Platform;
+import javafx.collections.ListChangeListener;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -51,9 +54,13 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class AppPanel implements Initializable {
+    User user;
     private WeatherInfo wi = new WeatherInfo();
     @FXML
     private Text HourInfo, DateInfo;
@@ -102,35 +109,69 @@ public class AppPanel implements Initializable {
 
         calendarSource.getCalendars().addAll(calendar);
         return calendarSource;
-    };
+    }
     private volatile boolean stop = false;
     private boolean InfoDayNight = true;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        user = User.getInstance();
         Image image1 = null;
-        try {
-            image1 = new Image(new FileInputStream("src/main/resources/Images/refresh.gif"));
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        weatherImage.setImage(image1);
+//        try {
+//            image1 = new Image(new FileInputStream("src/main/resources/Images/refresh.gif"));
+//        } catch (FileNotFoundException e) {
+//            throw new RuntimeException(e);
+//        }
+//        weatherImage.setImage(image1);
 
-//        CalendarSource newEvent = AddNewEntries("Przykład", LocalDate.now(), LocalDate.now(), LocalTime.of(14,30), LocalTime.of(23,30));
-//        detailedDayView.getCalendarSources().setAll(newEvent);
-        Event event = new Event("Event1", LocalDateTime.now(),
-                LocalDateTime.of(LocalDate.now(),
-                        LocalTime.of(23, 59)
-                )
-        );
-        detailedDayView.getCalendarSources().get(0).getCalendars().get(0).addEntry(event.toEntry());
+        Calendar calendar = detailedDayView.getCalendarSources().get(0).getCalendars().get(0);
+
+
+        List<Entry<String>> entryList = Event.getUserEntriesFromDatabase(user.getUsername(),
+                LocalDateTime.now().minusYears(1), LocalDateTime.now().plusYears(1));
+        for (Entry<String> entry : entryList)
+            calendar.addEntry(entry);
+
+        detailedDayView.bind(monthView, true);
+
+        calendar.addEventHandler(calendarEvent -> {
+
+            if (calendarEvent.isEntryAdded()) {
+                ScheduledExecutorService executor = new ScheduledThreadPoolExecutor(1);
+                Task<Void> task = Event.addEntryToDatabase(
+                        calendarEvent.getEntry(), user.getUsername());
+                executor.schedule(task, 5, TimeUnit.SECONDS);
+                executor.shutdown();
+            } else if (calendarEvent.isEntryRemoved()) {
+                ScheduledExecutorService executor = new ScheduledThreadPoolExecutor(1);
+                Task<Void> task = Event.removeEntryFromDatabase(
+                        calendarEvent.getEntry(), user.getUsername());
+                executor.schedule(task, 5, TimeUnit.SECONDS);
+                executor.shutdown();
+            } else {
+                if (calendarEvent.getOldInterval() != null) {
+                    ScheduledExecutorService  executor = new ScheduledThreadPoolExecutor(1);
+                    Task<Void> task =Event.changeEntryIntervalInDatabase(calendarEvent.getOldInterval(),
+                            calendarEvent.getEntry(), user.getUsername());
+                    executor.schedule(task, 5, TimeUnit.SECONDS);
+                    executor.shutdown();
+                }
+                else if (calendarEvent.getOldText() != null) {
+                    ScheduledExecutorService  executor = new ScheduledThreadPoolExecutor(1);
+                    Task<Void> task = Event.changeEntryTitleInDatabase(calendarEvent.getOldText(),
+                            calendarEvent.getEntry(), user.getUsername());
+                    executor.schedule(task, 5, TimeUnit.SECONDS);
+                    executor.shutdown();
+                }
+            }
+        });
+
         try {
             JSONArray a = new LoginPanelController().getInfo(whichUserClicked());
             InfoDayNight = (Boolean) a.get(4);
             ColourFromDataJson(InfoDayNight);
             DayMode();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
 
@@ -216,13 +257,8 @@ public class AppPanel implements Initializable {
                     Platform.runLater(() -> {
                         try {
                             setWeather(wi);
-                        } catch (NonexistentZipCodeException e) {
-                            e.printStackTrace();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        } catch (IncorrectZipCodeFormatException e) {
+                        } catch (NonexistentZipCodeException | JSONException | IOException |
+                                 IncorrectZipCodeFormatException e) {
                             e.printStackTrace();
                         }
                     });
@@ -237,7 +273,7 @@ public class AppPanel implements Initializable {
             }
         });
         tr1.start();
-    };
+    }
     @FXML
     private ImageView minimalize_button;
 
@@ -290,11 +326,18 @@ public class AppPanel implements Initializable {
         );
         ourWindow.setCenter(loader.load());
         Planner controller = loader.getController();
-        //controller.addEventHandler();
+        controller.bindWeekPage(detailedDayView);
 
     }
-    public void calendar(ActionEvent event) {
-        LoadSite("calendar");
+    public void calendar(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(
+                getClass().getResource(
+                        "calendar.fxml"
+                )
+        );
+        ourWindow.setCenter(loader.load());
+        com.app.app.Calendar controller = loader.getController();
+        controller.setUserEventsList(detailedDayView, LocalDate.now().minusYears(1), LocalDate.now().plusYears(1));
     }
     public void statics(ActionEvent event) { LoadSite("weather"); }
     public void settings(ActionEvent event) throws IOException {
@@ -398,7 +441,7 @@ public class AppPanel implements Initializable {
         String contents = new String((Files.readAllBytes(Paths.get("panels.json"))));
         JSONObject o = new JSONObject(contents);
         return (int) o.get(("which"));
-    };
+    }
     public void ColourFromDataJson(boolean DayMode) throws IOException, JSONException {
         String contents = new String((Files.readAllBytes(Paths.get("colors.json"))));
         JSONObject o = new JSONObject(contents);
@@ -421,16 +464,15 @@ public class AppPanel implements Initializable {
             Incoming_events_Vbox.setStyle("-fx-background-color: #2b2b2b;");
             for (Label a : labelColors) {
                 a.setTextFill(Paint.valueOf("#ffffff"));
-            };
+            }
         }
-    };
+    }
 
     private void DayMode() {
         AnchorPane[] normalColors = new AnchorPane[]{normColor4, normColor3, normColor2, normColor1};
         for (AnchorPane a : normalColors) {
             a.setStyle("-fx-background-color: " + NormCol + "; -fx-background-radius: 10;");
         }
-        ;
         backgroundColor.setStyle("-fx-background-color: " + BackCol + "; -fx-background-radius: 0 15 15 0;");
         SideBarcolor.setStyle("-fx-background-color: " + SideCol + "; -fx-background-radius: 15 0 0 15;");
         diffColor2.setStyle("-fx-background-color: " + DiffCol + "; -fx-background-radius: 10;");

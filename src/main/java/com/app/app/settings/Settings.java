@@ -19,7 +19,7 @@ import java.util.*;
 
 public class Settings implements Initializable {
     User user;
-
+    public boolean daynight=false;
     private static final Map<String, TreeItem<String>> treeItemsMap = new HashMap<>();
     @FXML
     private TreeView<String> settingsTree;
@@ -63,7 +63,8 @@ public class Settings implements Initializable {
         settingsTree.getSelectionModel().select(selectedItem);
     }
 
-
+    @FXML
+    private CheckBox DayNight;
 
     private Pane getPane(String treeItemName){
         Pane pane = null;
@@ -94,6 +95,7 @@ public class Settings implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         user = User.getInstance();
+        //daynight = DayNight.isSelected();
 
         TreeItem<String> root, general;
         root = new TreeItem<>();
@@ -102,7 +104,7 @@ public class Settings implements Initializable {
         general = makeBranch("General", root);
         general.setExpanded(true);
 
-        List<String> treeItemsFromGeneral = List.of("account", "appearance");
+        List<String> treeItemsFromGeneral = List.of("account", "appearance", "ics");
         for (String treeItemName : treeItemsFromGeneral)
             makeBranch(treeItemName, general);
 
@@ -111,10 +113,15 @@ public class Settings implements Initializable {
         for (String treeItemName : treeItemsFromAccount)
             makeBranch(treeItemName, account);
 
-        List<String> treeItemsFromAppearance = List.of("first", "second", "ics");
+        List<String> treeItemsFromAppearance = List.of("first", "second");
         TreeItem<String> appearance = treeItemsMap.get("appearance");
         for (String treeItemName : treeItemsFromAppearance)
             makeBranch(treeItemName, appearance);
+
+        List<String> treeItemsFromIcs = List.of("ics");
+        TreeItem<String> ics = treeItemsMap.get("ics");
+        for (String treeItemName : treeItemsFromIcs)
+            makeBranch(treeItemName, ics);
 
         settingsTree.setRoot(root);
         settingsTree.setShowRoot(false);

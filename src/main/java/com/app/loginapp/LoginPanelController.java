@@ -47,6 +47,8 @@ public class LoginPanelController implements Initializable {
         else{
             String username = (String) getInfo(userNum).get(3);
             goToApp(username);
+            Stage stage = (Stage) imageView.getScene().getWindow();
+            stage.close();
         }
     }
 
