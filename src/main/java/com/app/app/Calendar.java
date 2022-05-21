@@ -313,12 +313,28 @@ public class Calendar implements Initializable {
             int amount = getAmountOfEvens(dayEvents);
             if(amount==0){popup.getContent().add(noEvents);}
             int iterations = 5;
-            if(amount<=5){iterations = amount;}
-            for (int i =0;i<amount;i++){
+            if(amount<=iterations){iterations = amount;}
+            else {
+                int eventsLeft = amount-iterations;
+                Label eventsLeftLabel = new Label("-- "+String.valueOf(eventsLeft)+" More --");
+                eventsLeftLabel.setStyle("-fx-text-fill: grey");
+                eventsLeftLabel.setLayoutX(eventsLeftLabel.getLayoutX()+55);
+                eventsLeftLabel.setMinWidth(500);
+                eventsLeftLabel.setLayoutY(eventsLeftLabel.getLayoutY()+330+55);
+                eventsLeftLabel.setAlignment(Pos.CENTER);
+                popup.getContent().add(eventsLeftLabel);
+            }
+            for (int i =0;i<iterations;i++){
                 Label back = new Label();
                 Label event = new Label(dayEvents.get(i).getTitle());
                 back.setMinSize(480,45);
-                back.setStyle(" -fx-background-color: #ffbf70; -fx-background-radius: 10;");
+                if(darkmode)
+                {
+                    back.setStyle(" -fx-background-color: #4d754c; -fx-background-radius: 10;");
+                }
+                else {
+                    back.setStyle(" -fx-background-color: #ffbf70; -fx-background-radius: 10;");
+                }
                 back.setLayoutX(back.getLayoutX()+65);
                 back.setLayoutY(back.getLayoutY()+120+i*55);
                 popup.getContent().add(back);
@@ -329,6 +345,7 @@ public class Calendar implements Initializable {
                 event.setAlignment(Pos.CENTER);
                 popup.getContent().add(event);
             }
+
             popup.setAutoHide(true);
             if (! popup.isShowing()) {
                 popup.show(stage);
