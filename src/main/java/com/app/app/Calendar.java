@@ -154,9 +154,10 @@ public class Calendar implements Initializable {
                 //May be multiple entries in one day
                 eventList.add(Event.toEvent(entry));
                 System.out.println(entry.toString());
-                drawNewCall();
+
             }
         }
+        drawNewCall();
     }
 
     @Override
@@ -221,7 +222,6 @@ public class Calendar implements Initializable {
         int first = weekDay.getValue();
         int monthLenght = currentdate.lengthOfMonth();
         int days = 1;
-        System.out.println("jestemt");
         int weekDays = 1;
         for (var day : buttonList) {
             if (weekDays >= first && days <= monthLenght) {
@@ -306,18 +306,24 @@ public class Calendar implements Initializable {
             specialDay.setAlignment(Pos.CENTER);
             popup.getContent().add(background);
             popup.getContent().add(dateLabel);
-            popup.getContent().add(noEvents);
+            //popup.getContent().add(noEvents);
             popup.getContent().add(specialDay);
-            for (int i =0;i<=0;i++){
+            List<Event> dayEvents = new ArrayList<>();
+            dayEvents = getDayEvents(dayDate);
+            int amount = getAmountOfEvens(dayEvents);
+            if(amount==0){popup.getContent().add(noEvents);}
+            int iterations = 5;
+            if(amount<=5){iterations = amount;}
+            for (int i =0;i<amount;i++){
                 Label back = new Label();
-                Label event = new Label("event");
+                Label event = new Label(dayEvents.get(i).getTitle());
                 back.setMinSize(480,45);
                 back.setStyle(" -fx-background-color: #ffbf70; -fx-background-radius: 10;");
                 back.setLayoutX(back.getLayoutX()+65);
                 back.setLayoutY(back.getLayoutY()+120+i*55);
                 popup.getContent().add(back);
                 event.setFont(new Font(20));
-                event.setLayoutY(event.getLayoutY()+125);
+                event.setLayoutY(event.getLayoutY()+128+i*55);
                 event.setLayoutX(event.getLayoutX()+65);
                 event.setMinWidth(480);
                 event.setAlignment(Pos.CENTER);
@@ -474,6 +480,26 @@ public class Calendar implements Initializable {
         settingLabelsLayouts(friLabel, spacesx*4, spacesy*0,Width,Height,offx+20,offy-20);
         settingLabelsLayouts(satLabel, spacesx*5, spacesy*0,Width,Height,offx+20,offy-20);
         settingLabelsLayouts(sunLabel, spacesx*6, spacesy*0,Width,Height,offx+20,offy-20);
+    }
+
+    public List<Event> getDayEvents(LocalDate date){
+        List<Event> dayEventList = new ArrayList<>();
+        for (var ev:eventList){
+            if ((((ev.getStartDateTime().toLocalDate()).isBefore(date) || (ev.getStartDateTime().toLocalDate()).isEqual(date) ))
+                    && ((ev.getEndDateTime().toLocalDate().isAfter(date))||(ev.getEndDateTime().toLocalDate().isEqual(date)) ))
+            {
+                dayEventList.add(ev);
+            }
+        }
+        return dayEventList;
+    }
+
+    public int getAmountOfEvens(List<Event> list){
+        int amount = 0;
+        for(var ev:list){
+            amount = amount+1;
+        }
+        return amount;
     }
 
     public void Exit() {
