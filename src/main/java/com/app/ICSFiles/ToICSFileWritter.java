@@ -1,6 +1,25 @@
 package com.app.ICSFiles;
 
-/*
+
+import net.fortuna.ical4j.data.CalendarOutputter;
+import net.fortuna.ical4j.model.Calendar;
+import net.fortuna.ical4j.model.DateTime;
+import net.fortuna.ical4j.model.PropertyList;
+import net.fortuna.ical4j.model.component.VEvent;
+import net.fortuna.ical4j.model.property.*;
+import net.fortuna.ical4j.validate.ValidationException;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 public class ToICSFileWritter {
     private List<JSONObject> listOfEvents = new ArrayList<JSONObject>();
 
@@ -37,8 +56,8 @@ public class ToICSFileWritter {
             String uidSequence = "/" + (int) Math.ceil(Math.random() * 1000);
             String uidDomain = "@notour.domain.com";
             eventProps.add(new Uid(uidTimestamp + uidSequence + uidDomain));
-            eventProps.add(new DtStart(new DateTime(String.valueOf(json.get("start")))));
-            eventProps.add(new DtEnd(new DateTime(String.valueOf(json.get("end")))));
+            eventProps.add(new DtStart(String.valueOf(json.get("start"))));
+            eventProps.add(new DtEnd(String.valueOf(json.get("end"))));
             eventProps.add(new Summary(String.valueOf(json.get("event_name"))));
             eventProps.add(new Description(String.valueOf(json.get("description"))));
             calendar.getComponents().add(event);
@@ -49,4 +68,3 @@ public class ToICSFileWritter {
         outputter.output(calendar, fout);
     }
 }
-*/
