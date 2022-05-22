@@ -14,43 +14,50 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import static java.lang.Thread.sleep;
+
 public class Database {
     static final String connectionString = "jdbc:sqlserver://plan-task-server.database.windows.net:1433;" +
             "database=planTask;user=JakubNitkiewicz;password=planTask123;encrypt=true;" +
             "hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
     public static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
 
-    private static class CheckIfUserExistsTask extends Task<Boolean> {
-        private final String username;
-        private CheckIfUserExistsTask(String username) {
-            this.username=username;
-        }
-        @Override
-        protected Boolean call() {
-            try {
-                Connection con = DriverManager.getConnection(connectionString);
-                PreparedStatement statement = con.prepareStatement("EXEC GetUser @username = ?");
-                statement.setString(1, username);
-                ResultSet resultSet = statement.executeQuery();
-                boolean userExists = resultSet.next();
-                statement.close();
-                return userExists;
-            } catch (SQLException e) {
-                e.printStackTrace();
-                return false;
-            }
-        }
-    }
+//    private static class CheckIfUserExistsTask extends Task<Boolean> {
+//        private final String username;
+//        private CheckIfUserExistsTask(String username) {
+//            this.username=username;
+//        }
+//        @Override
+//        protected Boolean call() {
+//            try {
+//                Connection con = DriverManager.getConnection(connectionString);
+//                PreparedStatement statement = con.prepareStatement("EXEC GetUser @username = ?");
+//                statement.setString(1, username);
+//                ResultSet resultSet = statement.executeQuery();
+//                boolean userExists = resultSet.next();
+//                statement.close();
+//                return userExists;
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//                return false;
+//            }
+//        }
+//    }
 
 
     static boolean checkIfUserExists(String username) {
-        ScheduledExecutorService executor = new ScheduledThreadPoolExecutor(1);
-        Task<Boolean> task = new CheckIfUserExistsTask(username);
-        var wrapper = new Object(){ boolean userExists = false; };
-        task.setOnSucceeded((workerStateEvent)-> wrapper.userExists = task.getValue());
-        executor.submit(task);
-        executor.shutdown();
-        return wrapper.userExists;
+        try {
+            Connection con = DriverManager.getConnection(connectionString);
+            PreparedStatement statement = con.prepareStatement("EXEC GetUser @username = ?");
+            statement.setString(1, username);
+            ResultSet resultSet = statement.executeQuery();
+            boolean userExists = resultSet.next();
+            statement.close();
+            return userExists;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
 
