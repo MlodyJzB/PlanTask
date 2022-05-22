@@ -5,6 +5,7 @@ import com.app.app.Event;
 import net.fortuna.ical4j.data.CalendarOutputter;
 import net.fortuna.ical4j.model.*;
 import net.fortuna.ical4j.model.component.VEvent;
+import net.fortuna.ical4j.model.component.VTimeZone;
 import net.fortuna.ical4j.model.property.*;
 import net.fortuna.ical4j.validate.ValidationException;
 import org.json.JSONException;
@@ -83,11 +84,23 @@ public class ToICSFileWritter {
             eventProps.add(new Uid(uidTimestamp + uidSequence + uidDomain));
             DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("yyyyMMdd");
             DateTimeFormatter formatterTime = DateTimeFormatter.ofPattern("HHmmss");
-            TimeZoneRegistry tzReg = TimeZoneRegistryFactory.getInstance().createRegistry();
-            eventProps.add(new DtStart(formatterDate.format(calendarEvent.getStartDateTime())+"T"+formatterTime.format(calendarEvent.getStartDateTime())));
-            eventProps.add(new DtEnd(formatterDate.format(calendarEvent.getEndDateTime())+"T"+formatterTime.format(calendarEvent.getEndDateTime())));
+            if (calendarEvent.isFullDay())
+            {
+                eventProps.add(new DtStart(formatterDate.format(calendarEvent.getStartDateTime()) + "T" + "000001"));
+                eventProps.add(new DtEnd(formatterDate.format(calendarEvent.getEndDateTime()) + "T" + "240000"));
+            }
+            else {
+                eventProps.add(new DtStart(formatterDate.format(calendarEvent.getStartDateTime()) + "T" + formatterTime.format(calendarEvent.getStartDateTime())));
+                eventProps.add(new DtEnd(formatterDate.format(calendarEvent.getEndDateTime()) + "T" + formatterTime.format(calendarEvent.getEndDateTime())));
+            }
             eventProps.add(new Summary(calendarEvent.getTitle()));
+            //System.out.println(calendarEvent.toEntry().getZoneId().getId());
+            TimeZoneRegistry registry = TimeZoneRegistryFactory.getInstance().createRegistry();
+            TimeZone timezone = registry.getTimeZone(calendarEvent.toEntry().getZoneId().getId());
+            VTimeZone tz = timezone.getVTimeZone();
+            events.getProperties().add(tz.getTimeZoneId());
             calendar.getComponents().add(events);
+
         }
         CalendarOutputter outputter = new CalendarOutputter();
         outputter.output(calendar,new FileOutputStream(file));
