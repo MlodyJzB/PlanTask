@@ -1,97 +1,151 @@
 package com.app.loginapp;
 
-import javax.sql.ConnectionPoolDataSource;
-import javax.sql.PooledConnection;
-import java.io.PrintWriter;
+import com.app.app.Event;
+import com.calendarfx.model.Entry;
+import com.calendarfx.model.Interval;
+import javafx.concurrent.Task;
+
 import java.sql.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 public class Database {
     static final String connectionString = "jdbc:sqlserver://plan-task-server.database.windows.net:1433;" +
             "database=planTask;user=JakubNitkiewicz;password=planTask123;encrypt=true;" +
             "hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
-    static boolean checkIfUserExists(String username, String password) {
-        try {
-            Connection con = DriverManager.getConnection(connectionString);
-            PreparedStatement statement = con.prepareStatement("EXEC GetUser @username = ?, @password = ?");
-            statement.setString(1, username);
-            statement.setString(2, password);
-            ResultSet resultSet = statement.executeQuery();
-            statement.close();
-            return resultSet.next();
-        } catch (SQLException e) {
-            e.printStackTrace();
+    public static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
+
+    private static class CheckIfUserExistsTask extends Task<Boolean> {
+        private final String username;
+        private CheckIfUserExistsTask(String username) {
+            this.username=username;
         }
-        return false;
+        @Override
+        protected Boolean call() {
+            try {
+                Connection con = DriverManager.getConnection(connectionString);
+                PreparedStatement statement = con.prepareStatement("EXEC GetUser @username = ?");
+                statement.setString(1, username);
+                ResultSet resultSet = statement.executeQuery();
+                boolean userExists = resultSet.next();
+                statement.close();
+                return userExists;
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
     }
 
-    public static boolean checkIfUsernameExists(String username) {
-        try {
-            Connection con = DriverManager.getConnection(connectionString);
-            PreparedStatement statement = con.prepareStatement("EXEC GetUsername @username = ?");
-            statement.setString(1, username);
-            ResultSet resultSet = statement.executeQuery();
-            statement.close();
-            return resultSet.next();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
+
+    static boolean checkIfUserExists(String username) {
+        ScheduledExecutorService executor = new ScheduledThreadPoolExecutor(1);
+        Task<Boolean> task = new CheckIfUserExistsTask(username);
+        var wrapper = new Object(){ boolean userExists = false; };
+        task.setOnSucceeded((workerStateEvent)-> wrapper.userExists = task.getValue());
+        executor.submit(task);
+        executor.shutdown();
+        return wrapper.userExists;
     }
+
 
     static void addUser(String username, String password) throws SQLException {
-        try {
-            Connection con = DriverManager.getConnection(connectionString);
-            PreparedStatement statement = con.prepareStatement("EXEC AddUser @username = ?, @password = ?");
-            statement.setString(1, username);
-            statement.setString(2, password);
-            statement.executeUpdate();
-            statement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        Task<Void> task = new Task<>() {
+            @Override
+            public Void call() {
+                try {
+                    Connection con = DriverManager.getConnection(connectionString);
+                    PreparedStatement statement = con.prepareStatement("EXEC AddUser @username = ?, @password = ?");
+                    statement.setString(1, username);
+                    statement.setString(2, password);
+                    statement.executeUpdate();
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        };
+        ScheduledExecutorService  executor = new ScheduledThreadPoolExecutor(1);
+        executor.submit(task);
+        executor.shutdown();
     }
 
     public static void changePassword(String username, String oldPassword, String newPassword) throws SQLException {
-        try {
-            Connection con = DriverManager.getConnection(connectionString);
-            PreparedStatement statement = con.prepareStatement("EXEC ChangePassword @username = ?, " + "@oldPassword = ?, @newPassword = ?");
-            statement.setString(1, username);
-            statement.setString(2, oldPassword);
-            statement.setString(3, newPassword);
-            final int status = statement.executeUpdate();
-            statement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
+        Task<Void> task = new Task<>() {
+            @Override
+            public Void call() {
+                try {
+                    Connection con = DriverManager.getConnection(connectionString);
+                    PreparedStatement statement = con.prepareStatement("EXEC ChangePassword @username = ?, " + "@oldPassword = ?, @newPassword = ?");
+                    statement.setString(1, username);
+                    statement.setString(2, oldPassword);
+                    statement.setString(3, newPassword);
+                    statement.executeUpdate();
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        };
+        ScheduledExecutorService  executor = new ScheduledThreadPoolExecutor(1);
+        executor.submit(task);
+        executor.shutdown();
     }
 
     public static void changeUsername(String username, String newUsername) throws SQLException {
-        Connection con = DriverManager.getConnection(connectionString);
-        PreparedStatement statement = con.prepareStatement("EXEC ChangeUsername @username = ?, @newUsername = ?");
-        statement.setString(1, username);
-        statement.setString(2, newUsername);
-        statement.executeUpdate();
-        statement.close();
-//        if (statement.executeUpdate() == -1)
-//            throw new SQLException("Failed to change Username!");
+        Task<Void> task = new Task<>() {
+            @Override
+            public Void call() {
+                try {
+                    Connection con = DriverManager.getConnection(connectionString);
+                    PreparedStatement statement = con.prepareStatement("EXEC ChangeUsername @username = ?, @newUsername = ?");
+                    statement.setString(1, username);
+                    statement.setString(2, newUsername);
+                    statement.executeUpdate();
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        };
+        ScheduledExecutorService  executor = new ScheduledThreadPoolExecutor(1);
+        executor.submit(task);
+        executor.shutdown();
     }
 
-    public static void addEvent(String title, String username, String startDateTime,
-                                String endDateTime, boolean fullDay) throws SQLException {
-        Connection con = DriverManager.getConnection(connectionString);
-        PreparedStatement statement = con.prepareStatement("EXEC AddEvent @title = ?, @user = ?, @startDateTime = ?, @endDateTime = ?, @fullDay = ?");
-        statement.setString(1, title);
-        statement.setString(2, username);
-        statement.setString(3, startDateTime);
-        statement.setString(4, endDateTime);
-        statement.setString(5, String.valueOf(fullDay));
-//        System.out.println(title + "\n" + username + "\n" + startDateTime + "\n" + endDateTime);
-        statement.executeUpdate();
-        statement.close();
+    public static void addEvent(Entry<?> entry, String username) {
+        Task<Void> task = new Task<>() {
+            @Override
+            public Void call() {
+                Event event = Event.toEvent(entry);
+                try {
+                    Connection con = DriverManager.getConnection(connectionString);
+                    PreparedStatement statement = con.prepareStatement("EXEC AddEvent @title = ?, @user = ?, @startDateTime = ?, @endDateTime = ?, @fullDay = ?");
+                    statement.setString(1, event.getTitle());
+                    statement.setString(2, username);
+                    statement.setString(3, event.getStartDateTimeString());
+                    statement.setString(4, event.getEndDateTimeString());
+                    statement.setBoolean(5, event.isFullDay());
+                    statement.executeUpdate();
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        };
+        ScheduledExecutorService  executor = new ScheduledThreadPoolExecutor(1);
+        executor.schedule(task, 5, TimeUnit.SECONDS);
+        executor.shutdown();
+
     }
 
     public static List<List<String>> getUserEventsAsString(String username,
@@ -113,8 +167,9 @@ public class Database {
                         resultSet.getString("fullDay"),
                         resultSet.getString("recurring"),
                         resultSet.getString("rrule")
-                        ));
+                ));
             }
+            statement.close();
             return userEventsList;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -122,69 +177,156 @@ public class Database {
         return new ArrayList<>();
     }
 
-    public static void deleteEvent(String title, String username,
-                                   String startDateTime, String endDateTime) throws SQLException{
-            Connection con = DriverManager.getConnection(connectionString);
-            PreparedStatement statement = con.prepareStatement("EXEC DeleteRowFromEvents @title = ?, @user = ?, @startDateTime = ?, @endDateTime = ?");
-            statement.setString(1, title);
-            statement.setString(2, username);
-            statement.setString(3, startDateTime);
-            statement.setString(4, endDateTime);
-            statement.executeUpdate();
-        statement.close();
+    public static List<Entry<String>> getUserEntries(String username, LocalDateTime startRangeDateTime,
+                                                     LocalDateTime endRangeDateTime) {
+        List<Entry<String>> userEntries = new ArrayList<>();
+        List<List<String>> userEventsAsString = Database.getUserEventsAsString(username,
+                startRangeDateTime.format(dateTimeFormatter), endRangeDateTime.format(dateTimeFormatter)
+        );
+        for (List<String> eventAsString : userEventsAsString) {
+            String title = eventAsString.get(0);
+            LocalDateTime startDateTime = LocalDateTime.parse(eventAsString.get(1), dateTimeFormatter);
+            LocalDateTime endDateTime = LocalDateTime.parse(eventAsString.get(2), dateTimeFormatter);
+            boolean fullDay = Integer.parseInt(eventAsString.get(3)) == 1;
+            //boolean recurring = Integer.parseInt(eventAsString.get(4)) == 1;
+            String rrule = eventAsString.get(5).equals("") ? null : eventAsString.get(5);
+
+            Entry<String> entry = new Entry<>(title, new Interval(startDateTime, endDateTime));
+            entry.setFullDay(fullDay);
+            entry.setRecurrenceRule(rrule);
+            userEntries.add(entry);
+        }
+        return userEntries;
     }
 
-    public static void changeEventTitle(String username, String newTitle, String oldTitle,
-                                        String startDateTime, String endDateTime) throws SQLException {
-        Connection con = DriverManager.getConnection(connectionString);
-        PreparedStatement statement = con.prepareStatement("EXEC ChangeEventTitle @user = ?, @oldTitle = ?, " + "@newTitle = ?, @startDateTime = ?, @endDateTime = ?");
-        statement.setString(1, username);
-        statement.setString(2, oldTitle);
-        statement.setString(3, newTitle);
-        statement.setString(4, startDateTime);
-        statement.setString(5, endDateTime);
-        statement.executeUpdate();
-        statement.close();
+
+    public static void removeEvent(Entry<?> entry, String username) {
+        Task<Void> task = new Task<>() {
+            @Override
+            public Void call() {
+                Event event = Event.toEvent(entry);
+                try {
+                    Connection con = DriverManager.getConnection(connectionString);
+                    PreparedStatement statement = con.prepareStatement("EXEC DeleteRowFromEvents @title = ?, @user = ?, @startDateTime = ?, @endDateTime = ?");
+                    statement.setString(1, event.getTitle());
+                    statement.setString(2, username);
+                    statement.setString(3, event.getStartDateTimeString());
+                    statement.setString(4, event.getEndDateTimeString());
+                    statement.executeUpdate();
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        };
+        ScheduledExecutorService  executor = new ScheduledThreadPoolExecutor(1);
+        executor.schedule(task, 5, TimeUnit.SECONDS);
+        executor.shutdown();
     }
 
-    public static void changeEventInterval(String username, String title, String oldStartDateTime, String oldEndDateTime,
-                                           String newStartDateTime, String newEndDateTime) throws SQLException {
-        Connection con = DriverManager.getConnection(connectionString);
-        PreparedStatement statement = con.prepareStatement("EXEC ChangeEventInterval @user = ?, @title = ?, @oldStartDateTime = ?, @oldEndDateTime = ?, @newStartDateTime = ?, @newEndDateTime = ?");
-        statement.setString(1, username);
-        statement.setString(2, title);
-        statement.setString(3, oldStartDateTime);
-        statement.setString(4, oldEndDateTime);
-        statement.setString(5, newStartDateTime);
-        statement.setString(6, newEndDateTime);
-        statement.executeUpdate();
-        statement.close();
+    public static void changeEventTitle(String oldTitle, Entry<?> entry, String username) {
+        Task<Void> task = new Task<>() {
+            @Override
+            public Void call() {
+                Event event = Event.toEvent(entry);
+                try {
+                    Connection con = DriverManager.getConnection(connectionString);
+                    PreparedStatement statement = con.prepareStatement("EXEC ChangeEventTitle @user = ?, @oldTitle = ?, @newTitle = ?, @startDateTime = ?, @endDateTime = ?");
+                    statement.setString(1, username);
+                    statement.setString(2, oldTitle);
+                    statement.setString(3, event.getTitle());
+                    statement.setString(4, event.getStartDateTimeString());
+                    statement.setString(5, event.getEndDateTimeString());
+                    statement.executeUpdate();
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        };
+        ScheduledExecutorService  executor = new ScheduledThreadPoolExecutor(1);
+        executor.schedule(task, 5, TimeUnit.SECONDS);
+        executor.shutdown();
     }
-    public static void changeEventFullDay(String username, String title, String startDateTime, String endDateTime,
-                                          boolean oldFullDay, boolean newFullDay) throws SQLException {
-        Connection con = DriverManager.getConnection(connectionString);
-        PreparedStatement statement = con.prepareStatement("EXEC ChangeEventFullDay @user = ?, @title = ?, @startDateTime = ?, @endDateTime = ?, @oldFullDay = ?, @newFullDay = ?");
-        statement.setString(1, username);
-        statement.setString(2, title);
-        statement.setString(3, startDateTime);
-        statement.setString(4, endDateTime);
-        statement.setString(5, String.valueOf(oldFullDay));
-        statement.setString(6, String.valueOf(newFullDay));
-        statement.executeUpdate();
-        statement.close();
+
+    public static void changeEventInterval(Interval oldInterval, Entry<?> entry, String username) {
+        Task<Void> task = new Task<>() {
+            @Override
+            public Void call() {
+                Event event = Event.toEvent(entry);
+                try {
+                    Connection con = DriverManager.getConnection(connectionString);
+                    PreparedStatement statement = con.prepareStatement("EXEC ChangeEventInterval @user = ?, @title = ?, @oldStartDateTime = ?, @oldEndDateTime = ?, @newStartDateTime = ?, @newEndDateTime = ?");
+                    statement.setString(1, username);
+                    statement.setString(2, event.getTitle());
+                    statement.setString(3, oldInterval.getStartDateTime().format(dateTimeFormatter));
+                    statement.setString(4, oldInterval.getEndDateTime().format(dateTimeFormatter));
+                    statement.setString(5, event.getStartDateTimeString());
+                    statement.setString(6, event.getEndDateTimeString());
+                    statement.executeUpdate();
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        };
+        ScheduledExecutorService  executor = new ScheduledThreadPoolExecutor(1);
+        executor.schedule(task, 5, TimeUnit.SECONDS);
+        executor.shutdown();
     }
-    public static void ChangeEventRecurringAndRrule(String username, String title,
-                                                    String startDateTime, String endDateTime,
-                                                    boolean recurring, String rrule) throws SQLException {
-        Connection con = DriverManager.getConnection(connectionString);
-        PreparedStatement statement = con.prepareStatement("EXEC ChangeEventRecurringAndRrule @user = ?, @title = ?, @startDateTime = ?, @endDateTime = ?, @recurring = ?, @rrule = ?");
-        statement.setString(1, username);
-        statement.setString(2, title);
-        statement.setString(3, startDateTime);
-        statement.setString(4, endDateTime);
-        statement.setString(5, String.valueOf(recurring));
-        statement.setString(6, rrule);
-        statement.executeUpdate();
-        statement.close();
+    public static void changeEventFullDay(boolean oldFullDay, Entry<?> entry, String username) {
+        Task<Void> task = new Task<>() {
+            @Override
+            public Void call() {
+                Event event = Event.toEvent(entry);
+                try {
+                    Connection con = DriverManager.getConnection(connectionString);
+                    PreparedStatement statement = con.prepareStatement("EXEC ChangeEventFullDay @user = ?, @title = ?, @startDateTime = ?, @endDateTime = ?, @oldFullDay = ?, @newFullDay = ?");
+                    statement.setString(1, username);
+                    statement.setString(2, event.getTitle());
+                    statement.setString(3, event.getStartDateTimeString());
+                    statement.setString(4, event.getEndDateTimeString());
+                    statement.setBoolean(5,oldFullDay);
+                    statement.setBoolean(6, event.isFullDay());
+                    statement.executeUpdate();
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        };
+        ScheduledExecutorService  executor = new ScheduledThreadPoolExecutor(1);
+        executor.schedule(task, 5, TimeUnit.SECONDS);
+        executor.shutdown();
+    }
+    public static void ChangeEventRecurringAndRrule(Entry<?> entry, String username) {
+        Task<Void> task = new Task<>() {
+            @Override
+            public Void call() {
+                Event event = Event.toEvent(entry);
+                try {
+                    Connection con = DriverManager.getConnection(connectionString);
+                    PreparedStatement statement = con.prepareStatement("EXEC ChangeEventRecurringAndRrule @user = ?, @title = ?, @startDateTime = ?, @endDateTime = ?, @recurring = ?, @rrule = ?");
+                    statement.setString(1, username);
+                    statement.setString(2, event.getTitle());
+                    statement.setString(3, event.getStartDateTimeString());
+                    statement.setString(4, event.getEndDateTimeString());
+                    statement.setBoolean(5, event.isRecurring());
+                    statement.setString(6, event.getRrule());
+                    statement.executeUpdate();
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        };
+        ScheduledExecutorService  executor = new ScheduledThreadPoolExecutor(1);
+        executor.schedule(task, 5, TimeUnit.SECONDS);
+        executor.shutdown();
     }
 }

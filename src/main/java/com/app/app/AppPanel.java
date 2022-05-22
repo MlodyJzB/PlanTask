@@ -3,6 +3,7 @@ package com.app.app;
 import com.app.WeatherInfo.IncorrectZipCodeFormatException;
 import com.app.WeatherInfo.NonexistentZipCodeException;
 import com.app.WeatherInfo.WeatherInfo;
+import com.app.loginapp.Database;
 import com.app.loginapp.LoginPanelController;
 import com.app.loginapp.User;
 import com.calendarfx.model.Calendar;
@@ -125,7 +126,7 @@ public class AppPanel implements Initializable {
 //        weatherImage.setImage(image1);
 
         Calendar calendar = detailedDayView.getCalendarSources().get(0).getCalendars().get(0);
-        List<Entry<String>> entryList = Event.getUserEntriesFromDatabase(user.getUsername(),
+        List<Entry<String>> entryList = Database.getUserEntries(user.getUsername(),
                 LocalDateTime.now().minusYears(1), LocalDateTime.now().plusYears(1));
         for (Entry<String> entry : entryList)
             calendar.addEntry(entry);
@@ -135,50 +136,32 @@ public class AppPanel implements Initializable {
         calendar.addEventHandler(calendarEvent -> {
             if (calendarEvent.isEntryAdded()) {
                 System.out.println(calendarEvent.getEntry());
-                ScheduledExecutorService executor = new ScheduledThreadPoolExecutor(1);
-                Task<Void> task = Event.addEntryToDatabase(
-                        calendarEvent.getEntry(), user.getUsername());
-                executor.schedule(task, 5, TimeUnit.SECONDS);
-                executor.shutdown();
+                Database.addEvent(calendarEvent.getEntry(), user.getUsername()
+                );
             } else if (calendarEvent.isEntryRemoved()) {
                 System.out.println(calendarEvent.getEntry());
-                ScheduledExecutorService executor = new ScheduledThreadPoolExecutor(1);
-                Task<Void> task = Event.removeEntryFromDatabase(
-                        calendarEvent.getEntry(), user.getUsername());
-                executor.schedule(task, 5, TimeUnit.SECONDS);
-                executor.shutdown();
+                Database.removeEvent(calendarEvent.getEntry(), user.getUsername()
+                );
             } else {
                 System.out.println(calendarEvent.getEntry());
                 if (calendarEvent.getOldInterval() != null) {
-                    ScheduledExecutorService  executor = new ScheduledThreadPoolExecutor(1);
-                    Task<Void> task = Event.changeEntryIntervalInDatabase(calendarEvent.getOldInterval(),
-                            calendarEvent.getEntry(), user.getUsername());
-                    executor.schedule(task, 5, TimeUnit.SECONDS);
-                    executor.shutdown();
-                }
-                else if (calendarEvent.getOldText() != null) {
-                    ScheduledExecutorService  executor = new ScheduledThreadPoolExecutor(1);
-                    Task<Void> task = Event.changeEntryTitleInDatabase(calendarEvent.getOldText(),
-                            calendarEvent.getEntry(), user.getUsername());
-                    executor.schedule(task, 5, TimeUnit.SECONDS);
-                    executor.shutdown();
-                }
-                else if (calendarEvent.getOldFullDay() != calendarEvent.getEntry().isFullDay()) {
+                    Database.changeEventInterval(calendarEvent.getOldInterval(),
+                            calendarEvent.getEntry(), user.getUsername()
+                    );
+                } else if (calendarEvent.getOldText() != null) {
+                    Database.changeEventTitle(calendarEvent.getOldText(),
+                            calendarEvent.getEntry(), user.getUsername()
+                    );
+                } else if (calendarEvent.getOldFullDay() != calendarEvent.getEntry().isFullDay()) {
                     System.out.println("Changed fullDay!");
-                    ScheduledExecutorService  executor = new ScheduledThreadPoolExecutor(1);
-                    Task<Void> task = Event.changeEventFullDayInDatabase(calendarEvent.getOldFullDay(),
-                            calendarEvent.getEntry(), user.getUsername());
-                    executor.schedule(task, 5, TimeUnit.SECONDS);
-                    executor.shutdown();
-                }
-                else {
+                    Database.changeEventFullDay(calendarEvent.getOldFullDay(),
+                            calendarEvent.getEntry(), user.getUsername()
+                    );
+                } else {
                     System.out.println("Changed recurrence!");
-                    ScheduledExecutorService  executor = new ScheduledThreadPoolExecutor(1);
-                    Task<Void> task = Event.ChangeEventRecurringAndRruleInDatabase(
-                            calendarEvent.getEntry(), user.getUsername());
-                    executor.schedule(task, 5, TimeUnit.SECONDS);
-                    executor.shutdown();
-
+                    Database.ChangeEventRecurringAndRrule(
+                            calendarEvent.getEntry(), user.getUsername()
+                    );
                 }
             }
         });

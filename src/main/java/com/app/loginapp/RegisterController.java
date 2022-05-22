@@ -96,7 +96,7 @@ public class RegisterController implements Initializable {
                     user.setUsernameLongEnough(true);
 
                     //Checking if username exists and setting appropriate variable in User class
-                    user.setUsernameAvailable(!Database.checkIfUsernameExists(user.getUsername()));
+                    user.setUsernameAvailable(!Database.checkIfUserExists(user.getUsername()));
                     //Setting appropriate text on usernameErrorLabel
                     if (user.isUsernameAvailable()) {
                         usernameErrorLabel.setStyle("-fx-text-fill: green");
