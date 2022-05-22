@@ -1,6 +1,9 @@
 package com.app.app.settings;
 
+import com.app.app.Event;
 import com.app.loginapp.User;
+import com.calendarfx.model.Entry;
+import com.calendarfx.view.DetailedDayView;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,6 +18,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.*;
 
 public class Settings implements Initializable {
@@ -30,6 +35,7 @@ public class Settings implements Initializable {
         Stage stage = (Stage) stackPane.getScene().getWindow();
         stage.close();
     }
+    public DetailedDayView detailedDayView1;
 
     @FXML
     private ImageView minimalize_button;
@@ -85,6 +91,11 @@ public class Settings implements Initializable {
                                 treeItemName+".fxml"
                         )
                 );
+                if (treeItemName.equals("ics")) {
+
+                com.app.app.settings.Ics controller =loader.getController();
+                controller.setUserEventsList(detailedDayView1, LocalDate.now().minusYears(1), LocalDate.now().plusYears(1));
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();

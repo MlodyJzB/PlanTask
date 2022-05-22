@@ -369,7 +369,8 @@ public class AppPanel implements Initializable {
 
         Scene scene = new Scene(loader.load());
         scene.setFill(Color.TRANSPARENT);
-
+        com.app.app.settings.Settings controller = loader.getController();
+        controller.detailedDayView1=detailedDayView;
         stage.setScene(scene);
         //Settings controller = loader.getController();
         stage.show();
