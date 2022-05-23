@@ -73,10 +73,10 @@ public class Event {
         this.endDateTime = endDateTime;
     }
 
-
-    public Event(String title, LocalDateTime startTime, LocalDateTime endTime) {
-        this.title=title; this.startDateTime=startTime; this.endDateTime=endTime;
+    public Event(String title, LocalDateTime startTime, LocalDateTime endTime, boolean fullDay) {
+        this.title=title; this.startDateTime=startTime; this.endDateTime=endTime; this.fullDay=fullDay;
     }
+
     public Event(String title) {
         this.title=title;
     }

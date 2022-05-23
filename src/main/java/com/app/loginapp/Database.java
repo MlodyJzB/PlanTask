@@ -129,10 +129,14 @@ public class Database {
     }
 
     public static void addEvent(Entry<?> entry, String username) {
+        Event event = Event.toEvent(entry);
+        addEvent(event, username);
+    }
+
+    public static void addEvent(Event event, String username) {
         Task<Void> task = new Task<>() {
             @Override
             public Void call() {
-                Event event = Event.toEvent(entry);
                 try {
                     Connection con = DriverManager.getConnection(connectionString);
                     PreparedStatement statement = con.prepareStatement("EXEC AddEvent @title = ?, @user = ?, @startDateTime = ?, @endDateTime = ?, @fullDay = ?");
@@ -152,7 +156,6 @@ public class Database {
         ScheduledExecutorService  executor = new ScheduledThreadPoolExecutor(1);
         executor.schedule(task, 5, TimeUnit.SECONDS);
         executor.shutdown();
-
     }
 
     public static List<List<String>> getUserEventsAsString(String username,
