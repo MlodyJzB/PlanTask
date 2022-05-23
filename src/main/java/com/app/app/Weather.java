@@ -61,13 +61,45 @@ public class Weather implements Initializable {
     @FXML
     private ImageView Icon1;
 
-    //2
+    // Day2
     @FXML
     private Label Wind2, Clouds2, Hum2, Pres2;
     @FXML
     private Label Temp2, Min2, Max2, Sunset2, Sunrise2;
     @FXML
     private ImageView Icon2;
+
+    // Day3
+    @FXML
+    private Label Wind3, Clouds3, Hum3, Pres3;
+    @FXML
+    private Label Temp3, Min3, Max3, Sunset3, Sunrise3;
+    @FXML
+    private ImageView Icon3;
+
+    // Day4
+    @FXML
+    private Label Wind4, Clouds4, Hum4, Pres4;
+    @FXML
+    private Label Temp4, Min4, Max4, Sunset4, Sunrise4;
+    @FXML
+    private ImageView Icon4;
+
+    // Day5
+    @FXML
+    private Label Wind5, Clouds5, Hum5, Pres5;
+    @FXML
+    private Label Temp5, Min5, Max5, Sunset5, Sunrise5;
+    @FXML
+    private ImageView Icon5;
+
+    // Day6
+    @FXML
+    private Label Wind6, Clouds6, Hum6, Pres6;
+    @FXML
+    private Label Temp6, Min6, Max6, Sunset6, Sunrise6;
+    @FXML
+    private ImageView Icon6;
 
 
     @FXML
@@ -88,6 +120,10 @@ public class Weather implements Initializable {
             this.setDayLabelMap();
             this.setDayInfoLabels(1, Icon1);
             this.setDayInfoLabels(2, Icon2);
+            this.setDayInfoLabels(3, Icon2);
+            this.setDayInfoLabels(4, Icon1);
+            this.setDayInfoLabels(5, Icon2);
+            this.setDayInfoLabels(6, Icon2);
         } catch (NonexistentZipCodeException e) {
             throw new RuntimeException(e);
         } catch (JSONException e) {
@@ -126,6 +162,10 @@ public class Weather implements Initializable {
             this.setLocationBox();
             this.setDayInfoLabels(1, Icon1);
             this.setDayInfoLabels(2, Icon2);
+            this.setDayInfoLabels(3, Icon3);
+            this.setDayInfoLabels(4, Icon4);
+            this.setDayInfoLabels(5, Icon5);
+            this.setDayInfoLabels(6, Icon6);
             this.setLocationLabels();
         } catch (IncorrectZipCodeFormatException | NonexistentZipCodeException e) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Incorrect zip code. Try again!", ButtonType.OK);
@@ -251,6 +291,10 @@ public class Weather implements Initializable {
         ArrayList<Map<String,Label>> dayInfoLabels = new ArrayList<>();
         Map<String, Label> day1= new HashMap<>();
         Map<String, Label> day2= new HashMap<>();
+        Map<String, Label> day3= new HashMap<>();
+        Map<String, Label> day4= new HashMap<>();
+        Map<String, Label> day5= new HashMap<>();
+        Map<String, Label> day6= new HashMap<>();
 
         // Add day1
         day1.put("temp", Temp1);
@@ -275,6 +319,53 @@ public class Weather implements Initializable {
         day2.put("sunset", Sunset2);
         day2.put("sunrise", Sunrise2);
         dayInfoLabels.add(day2);
+
+        // Add day3
+        day3.put("temp", Temp3);
+        day3.put("min", Min3);
+        day3.put("max", Max3);
+        day3.put("wind", Wind3);
+        day3.put("clouds", Clouds3);
+        day3.put("hum", Hum3);
+        day3.put("pres", Pres3);
+        day3.put("sunset", Sunset3);
+        day3.put("sunrise", Sunrise3);
+        dayInfoLabels.add(day3);
+
+        // Add day4
+        day4.put("temp", Temp4);
+        day4.put("min", Min4);
+        day4.put("max", Max4);
+        day4.put("wind", Wind4);
+        day4.put("clouds", Clouds4);
+        day4.put("hum", Hum4);
+        day4.put("pres", Pres4);
+        day4.put("sunset", Sunset4);
+        day4.put("sunrise", Sunrise4);
+        dayInfoLabels.add(day4);
+
+        day5.put("temp", Temp5);
+        day5.put("min", Min5);
+        day5.put("max", Max5);
+        day5.put("wind", Wind5);
+        day5.put("clouds", Clouds5);
+        day5.put("hum", Hum5);
+        day5.put("pres", Pres5);
+        day5.put("sunset", Sunset5);
+        day5.put("sunrise", Sunrise5);
+        dayInfoLabels.add(day5);
+
+        // Add day4
+        day6.put("temp", Temp6);
+        day6.put("min", Min6);
+        day6.put("max", Max6);
+        day6.put("wind", Wind6);
+        day6.put("clouds", Clouds6);
+        day6.put("hum", Hum6);
+        day6.put("pres", Pres6);
+        day6.put("sunset", Sunset6);
+        day6.put("sunrise", Sunrise6);
+        dayInfoLabels.add(day6);
 
         this.dayInfoLabels = dayInfoLabels;
 

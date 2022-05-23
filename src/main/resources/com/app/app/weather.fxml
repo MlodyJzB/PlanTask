@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
@@ -62,7 +63,7 @@
                                           </Label>
                                           <HBox alignment="CENTER" prefHeight="91.0" prefWidth="316.0">
                                              <children>
-                                                <ImageView fx:id="Icon1" fitHeight="72.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true">
+                                                <ImageView fx:id="Icon1" fitHeight="70.0" fitWidth="73.0" pickOnBounds="true" preserveRatio="true">
                                                    <image>
                                                       <Image url="@../../../Images/weatherIcons/01d.png" />
                                                    </image>
@@ -121,30 +122,33 @@
                                              <children>
                                                 <VBox prefHeight="400.0" prefWidth="400.0">
                                                    <children>
-                                                      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                                      <HBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0">
                                                          <children>
                                                             <Label prefWidth="70.0" text="Wind:">
                                                                <font>
-                                                                  <Font size="16.0" />
+                                                                  <Font size="15.0" />
                                                                </font>
                                                             </Label>
                                                             <Label fx:id="Wind1" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefWidth="70.0" text="10 km/h ">
                                                                <font>
-                                                                  <Font size="16.0" />
+                                                                  <Font size="15.0" />
                                                                </font>
                                                             </Label>
                                                          </children>
+                                                         <cursor>
+                                                            <Cursor fx:constant="DEFAULT" />
+                                                         </cursor>
                                                       </HBox>
                                                       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                                                          <children>
                                                             <Label prefWidth="70.0" text="Clouds:">
                                                                <font>
-                                                                  <Font size="16.0" />
+                                                                  <Font size="15.0" />
                                                                </font>
                                                             </Label>
                                                             <Label fx:id="Clouds1" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="25.0" prefWidth="70.0" text="20% ">
                                                                <font>
-                                                                  <Font size="16.0" />
+                                                                  <Font size="15.0" />
                                                                </font>
                                                             </Label>
                                                          </children>
@@ -153,30 +157,33 @@
                                                 </VBox>
                                                 <VBox prefHeight="400.0" prefWidth="400.0">
                                                    <children>
-                                                      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                                      <HBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0">
                                                          <children>
                                                             <Label prefWidth="70.0" text="Humidity:">
                                                                <font>
-                                                                  <Font size="16.0" />
+                                                                  <Font size="15.0" />
                                                                </font>
                                                             </Label>
                                                             <Label fx:id="Hum1" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefWidth="70.0" text="10 km/h">
                                                                <font>
-                                                                  <Font size="16.0" />
+                                                                  <Font size="15.0" />
                                                                </font>
                                                             </Label>
                                                          </children>
+                                                         <cursor>
+                                                            <Cursor fx:constant="DEFAULT" />
+                                                         </cursor>
                                                       </HBox>
                                                       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                                                          <children>
                                                             <Label prefWidth="70.0" text="Pressure:">
                                                                <font>
-                                                                  <Font size="16.0" />
+                                                                  <Font size="15.0" />
                                                                </font>
                                                             </Label>
                                                             <Label fx:id="Pres1" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefWidth="70.0" text="1040 hPa">
                                                                <font>
-                                                                  <Font size="16.0" />
+                                                                  <Font size="15.0" />
                                                                </font>
                                                             </Label>
                                                          </children>
@@ -258,30 +265,33 @@
                                              <children>
                                                 <VBox prefHeight="400.0" prefWidth="400.0">
                                                    <children>
-                                                      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                                      <HBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0">
                                                          <children>
                                                             <Label prefWidth="70.0" text="Wind:">
                                                                <font>
-                                                                  <Font size="16.0" />
+                                                                  <Font size="15.0" />
                                                                </font>
                                                             </Label>
                                                             <Label fx:id="Wind2" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefWidth="70.0" text="10 km/h ">
                                                                <font>
-                                                                  <Font size="16.0" />
+                                                                  <Font size="15.0" />
                                                                </font>
                                                             </Label>
                                                          </children>
+                                                         <cursor>
+                                                            <Cursor fx:constant="DEFAULT" />
+                                                         </cursor>
                                                       </HBox>
                                                       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                                                          <children>
                                                             <Label prefWidth="70.0" text="Clouds:">
                                                                <font>
-                                                                  <Font size="16.0" />
+                                                                  <Font size="15.0" />
                                                                </font>
                                                             </Label>
                                                             <Label fx:id="Clouds2" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="25.0" prefWidth="70.0" text="20% ">
                                                                <font>
-                                                                  <Font size="16.0" />
+                                                                  <Font size="15.0" />
                                                                </font>
                                                             </Label>
                                                          </children>
@@ -290,30 +300,33 @@
                                                 </VBox>
                                                 <VBox prefHeight="400.0" prefWidth="400.0">
                                                    <children>
-                                                      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                                      <HBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0">
                                                          <children>
                                                             <Label prefWidth="70.0" text="Humidity:">
                                                                <font>
-                                                                  <Font size="16.0" />
+                                                                  <Font size="15.0" />
                                                                </font>
                                                             </Label>
                                                             <Label fx:id="Hum2" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefWidth="70.0" text="10 km/h">
                                                                <font>
-                                                                  <Font size="16.0" />
+                                                                  <Font size="15.0" />
                                                                </font>
                                                             </Label>
                                                          </children>
+                                                         <cursor>
+                                                            <Cursor fx:constant="DEFAULT" />
+                                                         </cursor>
                                                       </HBox>
                                                       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                                                          <children>
                                                             <Label prefWidth="70.0" text="Pressure:">
                                                                <font>
-                                                                  <Font size="16.0" />
+                                                                  <Font size="15.0" />
                                                                </font>
                                                             </Label>
                                                             <Label fx:id="Pres2" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefWidth="70.0" text="1040 hPa">
                                                                <font>
-                                                                  <Font size="16.0" />
+                                                                  <Font size="15.0" />
                                                                </font>
                                                             </Label>
                                                          </children>
@@ -338,6 +351,137 @@
                                                 <Font size="24.0" />
                                              </font>
                                           </Label>
+                                          <HBox alignment="CENTER" prefHeight="91.0" prefWidth="316.0">
+                                             <children>
+                                                <ImageView fx:id="Icon4" fitHeight="72.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../../../Images/weatherIcons/01d.png" />
+                                                   </image>
+                                                </ImageView>
+                                                <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                                                   <children>
+                                                      <Label fx:id="Temp4" alignment="CENTER" prefHeight="32.0" prefWidth="101.0" text="5°C">
+                                                         <font>
+                                                            <Font size="36.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <HBox alignment="CENTER" prefHeight="27.0" prefWidth="105.0">
+                                                         <children>
+                                                            <Label fx:id="Max4" alignment="CENTER" prefHeight="21.0" prefWidth="43.0" text="5°C" />
+                                                            <Label prefWidth="1.0" text="|" />
+                                                            <Label fx:id="Min4" alignment="CENTER" prefHeight="18.0" prefWidth="43.0" text="5°C" />
+                                                         </children>
+                                                      </HBox>
+                                                   </children>
+                                                </VBox>
+                                                <VBox prefHeight="76.0" prefWidth="73.0">
+                                                   <children>
+                                                      <HBox alignment="CENTER" prefHeight="7.0" prefWidth="92.0">
+                                                         <children>
+                                                            <ImageView fitHeight="48.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../../../Images/sunrise.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                            <Label fx:id="Sunrise4" text="04:20">
+                                                               <font>
+                                                                  <Font size="16.0" />
+                                                               </font>
+                                                            </Label>
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox alignment="CENTER" prefHeight="41.0" prefWidth="125.0">
+                                                         <children>
+                                                            <ImageView fitHeight="34.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../../../Images/sunset.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                            <Label fx:id="Sunset4" text="20:20">
+                                                               <font>
+                                                                  <Font size="16.0" />
+                                                               </font>
+                                                            </Label>
+                                                         </children>
+                                                      </HBox>
+                                                   </children>
+                                                </VBox>
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                             <children>
+                                                <VBox prefHeight="400.0" prefWidth="400.0">
+                                                   <children>
+                                                      <HBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0">
+                                                         <children>
+                                                            <Label prefWidth="70.0" text="Wind:">
+                                                               <font>
+                                                                  <Font size="15.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Label fx:id="Wind4" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefWidth="70.0" text="10 km/h ">
+                                                               <font>
+                                                                  <Font size="15.0" />
+                                                               </font>
+                                                            </Label>
+                                                         </children>
+                                                         <cursor>
+                                                            <Cursor fx:constant="DEFAULT" />
+                                                         </cursor>
+                                                      </HBox>
+                                                      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                                         <children>
+                                                            <Label prefWidth="70.0" text="Clouds:">
+                                                               <font>
+                                                                  <Font size="15.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Label fx:id="Clouds4" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="25.0" prefWidth="70.0" text="20% ">
+                                                               <font>
+                                                                  <Font size="15.0" />
+                                                               </font>
+                                                            </Label>
+                                                         </children>
+                                                      </HBox>
+                                                   </children>
+                                                </VBox>
+                                                <VBox prefHeight="400.0" prefWidth="400.0">
+                                                   <children>
+                                                      <HBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0">
+                                                         <children>
+                                                            <Label prefWidth="70.0" text="Humidity:">
+                                                               <font>
+                                                                  <Font size="15.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Label fx:id="Hum4" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefWidth="70.0" text="10 km/h">
+                                                               <font>
+                                                                  <Font size="15.0" />
+                                                               </font>
+                                                            </Label>
+                                                         </children>
+                                                         <cursor>
+                                                            <Cursor fx:constant="DEFAULT" />
+                                                         </cursor>
+                                                      </HBox>
+                                                      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                                         <children>
+                                                            <Label prefWidth="70.0" text="Pressure:">
+                                                               <font>
+                                                                  <Font size="15.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Label fx:id="Pres4" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefWidth="70.0" text="1040 hPa">
+                                                               <font>
+                                                                  <Font size="15.0" />
+                                                               </font>
+                                                            </Label>
+                                                         </children>
+                                                      </HBox>
+                                                   </children>
+                                                </VBox>
+                                             </children>
+                                          </HBox>
                                        </children>
                                        <HBox.margin>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -350,6 +494,137 @@
                                                 <Font size="24.0" />
                                              </font>
                                           </Label>
+                                          <HBox alignment="CENTER" prefHeight="91.0" prefWidth="316.0">
+                                             <children>
+                                                <ImageView fx:id="Icon5" fitHeight="72.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../../../Images/weatherIcons/01d.png" />
+                                                   </image>
+                                                </ImageView>
+                                                <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                                                   <children>
+                                                      <Label fx:id="Temp5" alignment="CENTER" prefHeight="32.0" prefWidth="101.0" text="5°C">
+                                                         <font>
+                                                            <Font size="36.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <HBox alignment="CENTER" prefHeight="27.0" prefWidth="105.0">
+                                                         <children>
+                                                            <Label fx:id="Max5" alignment="CENTER" prefHeight="21.0" prefWidth="43.0" text="5°C" />
+                                                            <Label prefWidth="1.0" text="|" />
+                                                            <Label fx:id="Min5" alignment="CENTER" prefHeight="18.0" prefWidth="43.0" text="5°C" />
+                                                         </children>
+                                                      </HBox>
+                                                   </children>
+                                                </VBox>
+                                                <VBox prefHeight="76.0" prefWidth="73.0">
+                                                   <children>
+                                                      <HBox alignment="CENTER" prefHeight="7.0" prefWidth="92.0">
+                                                         <children>
+                                                            <ImageView fitHeight="48.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../../../Images/sunrise.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                            <Label fx:id="Sunrise5" text="04:20">
+                                                               <font>
+                                                                  <Font size="16.0" />
+                                                               </font>
+                                                            </Label>
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox alignment="CENTER" prefHeight="41.0" prefWidth="125.0">
+                                                         <children>
+                                                            <ImageView fitHeight="34.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../../../Images/sunset.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                            <Label fx:id="Sunset5" text="20:20">
+                                                               <font>
+                                                                  <Font size="16.0" />
+                                                               </font>
+                                                            </Label>
+                                                         </children>
+                                                      </HBox>
+                                                   </children>
+                                                </VBox>
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                             <children>
+                                                <VBox prefHeight="400.0" prefWidth="400.0">
+                                                   <children>
+                                                      <HBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0">
+                                                         <children>
+                                                            <Label prefWidth="70.0" text="Wind:">
+                                                               <font>
+                                                                  <Font size="15.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Label fx:id="Wind5" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefWidth="70.0" text="10 km/h ">
+                                                               <font>
+                                                                  <Font size="15.0" />
+                                                               </font>
+                                                            </Label>
+                                                         </children>
+                                                         <cursor>
+                                                            <Cursor fx:constant="DEFAULT" />
+                                                         </cursor>
+                                                      </HBox>
+                                                      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                                         <children>
+                                                            <Label prefWidth="70.0" text="Clouds:">
+                                                               <font>
+                                                                  <Font size="15.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Label fx:id="Clouds5" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="25.0" prefWidth="70.0" text="20% ">
+                                                               <font>
+                                                                  <Font size="15.0" />
+                                                               </font>
+                                                            </Label>
+                                                         </children>
+                                                      </HBox>
+                                                   </children>
+                                                </VBox>
+                                                <VBox prefHeight="400.0" prefWidth="400.0">
+                                                   <children>
+                                                      <HBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0">
+                                                         <children>
+                                                            <Label prefWidth="70.0" text="Humidity:">
+                                                               <font>
+                                                                  <Font size="15.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Label fx:id="Hum5" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefWidth="70.0" text="10 km/h">
+                                                               <font>
+                                                                  <Font size="15.0" />
+                                                               </font>
+                                                            </Label>
+                                                         </children>
+                                                         <cursor>
+                                                            <Cursor fx:constant="DEFAULT" />
+                                                         </cursor>
+                                                      </HBox>
+                                                      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                                         <children>
+                                                            <Label prefWidth="70.0" text="Pressure:">
+                                                               <font>
+                                                                  <Font size="15.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Label fx:id="Pres5" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefWidth="70.0" text="1040 hPa">
+                                                               <font>
+                                                                  <Font size="15.0" />
+                                                               </font>
+                                                            </Label>
+                                                         </children>
+                                                      </HBox>
+                                                   </children>
+                                                </VBox>
+                                             </children>
+                                          </HBox>
                                        </children>
                                        <HBox.margin>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -359,7 +634,7 @@
                               </HBox>
                            </children>
                         </VBox>
-                        <VBox prefWidth="400.0" spacing="10.0">
+                        <VBox prefWidth="430.0" spacing="10.0">
                            <HBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </HBox.margin>
@@ -405,6 +680,11 @@
                                        </children>
                                     </HBox>
                                     <Button fx:id="refreshImage" mnemonicParsing="false" onAction="#refreshWeather" text="Refresh" />
+                                    <ImageView fitHeight="52.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../Images/refresh.gif" />
+                                       </image>
+                                    </ImageView>
                                  </children>
                               </VBox>
                               <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="400.0" style="-fx-background-radius: 10; -fx-background-color: #ffbf70;">
@@ -414,6 +694,137 @@
                                           <Font size="24.0" />
                                        </font>
                                     </Label>
+                                    <HBox alignment="CENTER" prefHeight="91.0" prefWidth="316.0">
+                                       <children>
+                                          <ImageView fx:id="Icon3" fitHeight="72.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../../../Images/weatherIcons/01d.png" />
+                                             </image>
+                                          </ImageView>
+                                          <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                                             <children>
+                                                <Label fx:id="Temp3" alignment="CENTER" prefHeight="32.0" prefWidth="101.0" text="5°C">
+                                                   <font>
+                                                      <Font size="36.0" />
+                                                   </font>
+                                                </Label>
+                                                <HBox alignment="CENTER" prefHeight="27.0" prefWidth="105.0">
+                                                   <children>
+                                                      <Label fx:id="Max3" alignment="CENTER" prefHeight="21.0" prefWidth="43.0" text="5°C" />
+                                                      <Label prefWidth="1.0" text="|" />
+                                                      <Label fx:id="Min3" alignment="CENTER" prefHeight="18.0" prefWidth="43.0" text="5°C" />
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                          <VBox prefHeight="76.0" prefWidth="73.0">
+                                             <children>
+                                                <HBox alignment="CENTER" prefHeight="7.0" prefWidth="92.0">
+                                                   <children>
+                                                      <ImageView fitHeight="48.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@../../../Images/sunrise.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                      <Label fx:id="Sunrise3" text="04:20">
+                                                         <font>
+                                                            <Font size="16.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </HBox>
+                                                <HBox alignment="CENTER" prefHeight="41.0" prefWidth="125.0">
+                                                   <children>
+                                                      <ImageView fitHeight="34.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@../../../Images/sunset.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                      <Label fx:id="Sunset3" text="20:20">
+                                                         <font>
+                                                            <Font size="16.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <VBox prefHeight="400.0" prefWidth="400.0">
+                                             <children>
+                                                <HBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0">
+                                                   <children>
+                                                      <Label prefWidth="70.0" text="Wind:">
+                                                         <font>
+                                                            <Font size="15.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label fx:id="Wind3" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefWidth="70.0" text="10 km/h ">
+                                                         <font>
+                                                            <Font size="15.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                   <cursor>
+                                                      <Cursor fx:constant="DEFAULT" />
+                                                   </cursor>
+                                                </HBox>
+                                                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                                   <children>
+                                                      <Label prefWidth="70.0" text="Clouds:">
+                                                         <font>
+                                                            <Font size="15.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label fx:id="Clouds3" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="25.0" prefWidth="70.0" text="20% ">
+                                                         <font>
+                                                            <Font size="15.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                          <VBox prefHeight="400.0" prefWidth="400.0">
+                                             <children>
+                                                <HBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0">
+                                                   <children>
+                                                      <Label prefWidth="70.0" text="Humidity:">
+                                                         <font>
+                                                            <Font size="15.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label fx:id="Hum3" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="25.0" prefWidth="67.0" text="10 km/h">
+                                                         <font>
+                                                            <Font size="15.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                   <cursor>
+                                                      <Cursor fx:constant="DEFAULT" />
+                                                   </cursor>
+                                                </HBox>
+                                                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                                   <children>
+                                                      <Label prefWidth="70.0" text="Pressure:">
+                                                         <font>
+                                                            <Font size="15.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label fx:id="Pres3" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefWidth="70.0" text="1040 hPa">
+                                                         <font>
+                                                            <Font size="15.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
                                  </children>
                               </VBox>
                               <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="400.0" style="-fx-background-radius: 10; -fx-background-color: #ffbf70;">
@@ -423,6 +834,137 @@
                                           <Font size="24.0" />
                                        </font>
                                     </Label>
+                                    <HBox alignment="CENTER" prefHeight="91.0" prefWidth="316.0">
+                                       <children>
+                                          <ImageView fx:id="Icon6" fitHeight="72.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../../../Images/weatherIcons/01d.png" />
+                                             </image>
+                                          </ImageView>
+                                          <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                                             <children>
+                                                <Label fx:id="Temp6" alignment="CENTER" prefHeight="32.0" prefWidth="101.0" text="5°C">
+                                                   <font>
+                                                      <Font size="36.0" />
+                                                   </font>
+                                                </Label>
+                                                <HBox alignment="CENTER" prefHeight="27.0" prefWidth="105.0">
+                                                   <children>
+                                                      <Label fx:id="Max6" alignment="CENTER" prefHeight="21.0" prefWidth="43.0" text="5°C" />
+                                                      <Label prefWidth="1.0" text="|" />
+                                                      <Label fx:id="Min6" alignment="CENTER" prefHeight="18.0" prefWidth="43.0" text="5°C" />
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                          <VBox prefHeight="76.0" prefWidth="73.0">
+                                             <children>
+                                                <HBox alignment="CENTER" prefHeight="7.0" prefWidth="92.0">
+                                                   <children>
+                                                      <ImageView fitHeight="48.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@../../../Images/sunrise.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                      <Label fx:id="Sunrise6" text="04:20">
+                                                         <font>
+                                                            <Font size="16.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </HBox>
+                                                <HBox alignment="CENTER" prefHeight="41.0" prefWidth="125.0">
+                                                   <children>
+                                                      <ImageView fitHeight="34.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@../../../Images/sunset.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                      <Label fx:id="Sunset6" text="20:20">
+                                                         <font>
+                                                            <Font size="16.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <VBox prefHeight="400.0" prefWidth="400.0">
+                                             <children>
+                                                <HBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0">
+                                                   <children>
+                                                      <Label prefWidth="70.0" text="Wind:">
+                                                         <font>
+                                                            <Font size="15.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label fx:id="Wind6" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefWidth="70.0" text="10 km/h ">
+                                                         <font>
+                                                            <Font size="15.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                   <cursor>
+                                                      <Cursor fx:constant="DEFAULT" />
+                                                   </cursor>
+                                                </HBox>
+                                                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                                   <children>
+                                                      <Label prefWidth="70.0" text="Clouds:">
+                                                         <font>
+                                                            <Font size="15.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label fx:id="Clouds6" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="25.0" prefWidth="70.0" text="20% ">
+                                                         <font>
+                                                            <Font size="15.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                          <VBox prefHeight="400.0" prefWidth="400.0">
+                                             <children>
+                                                <HBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0">
+                                                   <children>
+                                                      <Label prefWidth="70.0" text="Humidity:">
+                                                         <font>
+                                                            <Font size="15.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label fx:id="Hum6" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefWidth="70.0" text="10 km/h">
+                                                         <font>
+                                                            <Font size="15.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                   <cursor>
+                                                      <Cursor fx:constant="DEFAULT" />
+                                                   </cursor>
+                                                </HBox>
+                                                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                                   <children>
+                                                      <Label prefWidth="70.0" text="Pressure:">
+                                                         <font>
+                                                            <Font size="15.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label fx:id="Pres6" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefWidth="70.0" text="1040 hPa">
+                                                         <font>
+                                                            <Font size="15.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
                                  </children>
                               </VBox>
                            </children>
