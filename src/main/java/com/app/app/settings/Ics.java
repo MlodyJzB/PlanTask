@@ -1,5 +1,6 @@
 package com.app.app.settings;
 
+import com.app.ICSFiles.ICSFilesReader;
 import com.app.ICSFiles.ToICSFileWritter;
 import com.app.app.Event;
 import com.calendarfx.model.Entry;
@@ -15,6 +16,7 @@ import com.calendarfx.view.DetailedDayView;
 import com.calendarfx.view.page.MonthPage;
 import com.calendarfx.view.page.WeekPage;
 import com.calendarfx.view.page.YearPage;
+import net.fortuna.ical4j.data.ParserException;
 
 import java.io.*;
 import java.net.URL;
@@ -59,13 +61,14 @@ public class Ics implements Initializable {
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {}
 
-    public void importIcs(ActionEvent actionEvent) {
+    public void importIcs(ActionEvent actionEvent) throws ParserException, IOException {
         System.out.println("import");
         Stage stage = (Stage) ImportButton.getScene().getWindow();
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("ICS Files","*.ics"));
         File file = fileChooser.showOpenDialog(stage);
-        System.out.println(file.getName());
+        ICSFilesReader icsFilesReader = new ICSFilesReader();
+        icsFilesReader.icsToOurCall(file,eventList1);
 
     }
 
