@@ -92,7 +92,7 @@ public class ICSFilesReader {
             boolean isSameEndTime =event.getEndDateTimeString().equals(String.valueOf(endd));
             boolean isSameStartTime =event.getEndDateTimeString().equals(String.valueOf(startd));
             boolean isSameName =event.getTitle().equals(String.valueOf(component.getProperty("SUMMARY").getValue()));
-                    if(isSameEndTime && isSameName && isSameStartTime){return true;}
+            if(isSameEndTime && isSameName && isSameStartTime){return true;}
         }
 
         return false;
