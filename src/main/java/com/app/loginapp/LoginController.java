@@ -44,7 +44,7 @@ public class LoginController implements Initializable
     private void onClickLogin(ActionEvent event) throws IOException, JSONException {
         user.setUsername(usernameTextField.getText());
         user.setPassword(passwordField.getText());
-        if (Database.checkIfUserExists(user.getUsername(), user.getPassword())) {
+        if (Database.checkIfUserExists(user.getUsername())) {
             loginStatusText.setStyle("-fx-fill: green");
             loginStatusText.setText("Logged successfully");
 

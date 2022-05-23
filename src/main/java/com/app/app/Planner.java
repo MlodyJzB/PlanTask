@@ -81,7 +81,7 @@ public class Planner implements Initializable {
         detailedDayView.bind(weekPage, true);
     }
 
-
+    @FXML
     public void Exit() {
         System.exit(0);
     }

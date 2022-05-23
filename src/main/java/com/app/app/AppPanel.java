@@ -3,6 +3,7 @@ package com.app.app;
 import com.app.WeatherInfo.IncorrectZipCodeFormatException;
 import com.app.WeatherInfo.NonexistentZipCodeException;
 import com.app.WeatherInfo.WeatherInfo;
+import com.app.loginapp.Database;
 import com.app.loginapp.LoginPanelController;
 import com.app.loginapp.User;
 import com.calendarfx.model.Calendar;
@@ -125,9 +126,7 @@ public class AppPanel implements Initializable {
 //        weatherImage.setImage(image1);
 
         Calendar calendar = detailedDayView.getCalendarSources().get(0).getCalendars().get(0);
-
-
-        List<Entry<String>> entryList = Event.getUserEntriesFromDatabase(user.getUsername(),
+        List<Entry<String>> entryList = Database.getUserEntries(user.getUsername(),
                 LocalDateTime.now().minusYears(1), LocalDateTime.now().plusYears(1));
         for (Entry<String> entry : entryList)
             calendar.addEntry(entry);
@@ -135,33 +134,34 @@ public class AppPanel implements Initializable {
         detailedDayView.bind(monthView, true);
 
         calendar.addEventHandler(calendarEvent -> {
-
             if (calendarEvent.isEntryAdded()) {
-                ScheduledExecutorService executor = new ScheduledThreadPoolExecutor(1);
-                Task<Void> task = Event.addEntryToDatabase(
-                        calendarEvent.getEntry(), user.getUsername());
-                executor.schedule(task, 5, TimeUnit.SECONDS);
-                executor.shutdown();
+                System.out.println(calendarEvent.getEntry());
+                Database.addEvent(calendarEvent.getEntry(), user.getUsername()
+                );
             } else if (calendarEvent.isEntryRemoved()) {
-                ScheduledExecutorService executor = new ScheduledThreadPoolExecutor(1);
-                Task<Void> task = Event.removeEntryFromDatabase(
-                        calendarEvent.getEntry(), user.getUsername());
-                executor.schedule(task, 5, TimeUnit.SECONDS);
-                executor.shutdown();
+                System.out.println(calendarEvent.getEntry());
+                Database.removeEvent(calendarEvent.getEntry(), user.getUsername()
+                );
             } else {
+                System.out.println(calendarEvent.getEntry());
                 if (calendarEvent.getOldInterval() != null) {
-                    ScheduledExecutorService  executor = new ScheduledThreadPoolExecutor(1);
-                    Task<Void> task =Event.changeEntryIntervalInDatabase(calendarEvent.getOldInterval(),
-                            calendarEvent.getEntry(), user.getUsername());
-                    executor.schedule(task, 5, TimeUnit.SECONDS);
-                    executor.shutdown();
-                }
-                else if (calendarEvent.getOldText() != null) {
-                    ScheduledExecutorService  executor = new ScheduledThreadPoolExecutor(1);
-                    Task<Void> task = Event.changeEntryTitleInDatabase(calendarEvent.getOldText(),
-                            calendarEvent.getEntry(), user.getUsername());
-                    executor.schedule(task, 5, TimeUnit.SECONDS);
-                    executor.shutdown();
+                    Database.changeEventInterval(calendarEvent.getOldInterval(),
+                            calendarEvent.getEntry(), user.getUsername()
+                    );
+                } else if (calendarEvent.getOldText() != null) {
+                    Database.changeEventTitle(calendarEvent.getOldText(),
+                            calendarEvent.getEntry(), user.getUsername()
+                    );
+                } else if (calendarEvent.getOldFullDay() != calendarEvent.getEntry().isFullDay()) {
+                    System.out.println("Changed fullDay!");
+                    Database.changeEventFullDay(calendarEvent.getOldFullDay(),
+                            calendarEvent.getEntry(), user.getUsername()
+                    );
+                } else {
+                    System.out.println("Changed recurrence!");
+                    Database.ChangeEventRecurringAndRrule(
+                            calendarEvent.getEntry(), user.getUsername()
+                    );
                 }
             }
         });
@@ -352,7 +352,8 @@ public class AppPanel implements Initializable {
 
         Scene scene = new Scene(loader.load());
         scene.setFill(Color.TRANSPARENT);
-
+        com.app.app.settings.Settings controller = loader.getController();
+        controller.detailedDayView1=detailedDayView;
         stage.setScene(scene);
         //Settings controller = loader.getController();
         stage.show();
