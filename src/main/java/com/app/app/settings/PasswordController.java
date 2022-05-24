@@ -33,7 +33,7 @@ public class PasswordController implements Initializable {
             repeatedPasswordErrorLabel, passwordChangeStatusLabel;
     @FXML
     void okClicked(ActionEvent event) {
-        if (user.isPasswordChanged()) {
+        if (!applyButton.disableProperty().getValue()) {
             try {
                 Database.changePassword(user.getUsername(), user.getPassword(), user.getChangedPassword());
                 user.setPassword(user.getChangedPassword());

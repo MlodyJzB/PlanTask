@@ -45,7 +45,6 @@ public class RegisterController implements Initializable {
         user.setPassword(passwordField.getText());
         try {
             Database.addUser(user.getUsername(), user.getPassword());
-            Database.addAppearance(user.getUsername());
             registerStatusLabel.setStyle("-fx-text-fill: green");
             registerStatusLabel.setText("Registered successfully!");
         } catch (SQLException e) {

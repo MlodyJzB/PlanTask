@@ -191,40 +191,37 @@ public class Database {
         executor.shutdown();
     }
 
-    private record getAppearance(String username) implements Callable<List<Boolean>> {
+    private record getAppearance(String username) implements Callable<Boolean> {
         @Override
-        public List<Boolean> call() {
+        public Boolean call() {
             try {
                 Connection con = DriverManager.getConnection(connectionString);
                 PreparedStatement statement = con.prepareStatement("EXEC GetMode1 @UserName = ?");
                 statement.setString(1, username);
                 ResultSet resultSet = statement.executeQuery();
-
-                List<Boolean> userEventsList = new ArrayList<>();
-                while (resultSet.next()) {
-                    userEventsList.add(resultSet.getBoolean("Mode"));
-                }
+                resultSet.next();
+                Boolean dayMode = (resultSet.getBoolean("Mode"));
                 statement.close();
                 con.close();
-                return userEventsList;
+                return dayMode;
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            return new ArrayList<>();
+            return null;
         }
     }
-    public static List<Boolean> getAppearance(String username) {
-        Callable<List<Boolean>> bol = new getAppearance(username);
+    public static Boolean getAppearance(String username) {
+        Callable<Boolean> bol = new getAppearance(username);
         ScheduledExecutorService  executor = new ScheduledThreadPoolExecutor(1);
-        Future<List<Boolean>> future = executor.submit(bol);
+        Future<Boolean> future = executor.submit(bol);
         executor.shutdown();
-        List<Boolean> userEventsAsString = new ArrayList<>();
+        Boolean dayMode = null;
         try {
-            userEventsAsString = future.get();
+            dayMode = future.get();
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
-        return userEventsAsString;
+        return dayMode;
     }
 
     public static void addEvents(List<Event> eventList, String username) {
