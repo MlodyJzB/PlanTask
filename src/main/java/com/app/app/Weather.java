@@ -3,29 +3,23 @@ package com.app.app;
 import com.app.WeatherInfo.IncorrectZipCodeFormatException;
 import com.app.WeatherInfo.NonexistentZipCodeException;
 import com.app.WeatherInfo.WeatherInfo;
-import com.app.WeatherInfo.ZipCodeException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
-import net.fortuna.ical4j.model.Component;
 import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -33,12 +27,8 @@ import java.util.*;
 
 public class Weather implements Initializable {
 
-    public Weather() throws NonexistentZipCodeException, JSONException, IOException {
-    }
-
-    public void Exit() {
-        System.exit(0);
-    }
+    public Weather() throws NonexistentZipCodeException, JSONException, IOException {}
+    public void Exit() {System.exit(0);}
 
     private WeatherInfo wi = new WeatherInfo();
 
@@ -61,7 +51,7 @@ public class Weather implements Initializable {
     @FXML
     private ImageView Icon1;
 
-    // Day2
+    //2
     @FXML
     private Label Wind2, Clouds2, Hum2, Pres2;
     @FXML
@@ -101,7 +91,6 @@ public class Weather implements Initializable {
     @FXML
     private ImageView Icon6;
 
-
     @FXML
     private TextField ZipCodeField;
 
@@ -124,6 +113,7 @@ public class Weather implements Initializable {
             this.setDayInfoLabels(4, Icon1);
             this.setDayInfoLabels(5, Icon2);
             this.setDayInfoLabels(6, Icon2);
+
         } catch (NonexistentZipCodeException e) {
             throw new RuntimeException(e);
         } catch (JSONException e) {
@@ -131,14 +121,47 @@ public class Weather implements Initializable {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
+        try {
+            String[] colorArray = new AppPanel().colorArray();
+            BackCol = colorArray[0];
+            NormCol = colorArray[2];
+            DiffCol = colorArray[3];
+            DarkMode(new AppPanel().Mode());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (NonexistentZipCodeException e) {
+            e.printStackTrace();
+        }
+    }
+    private String BackCol;
+    private String NormCol;
+    private String DiffCol;
+    @FXML
+    private AnchorPane diffColor1;
+    @FXML
+    private HBox normcol1, normcol2, diffColor3, diffColor4, diffColor5, diffColor6, diffColor7, diffColor8;
+    @FXML
+    private VBox backcolor, normcol3, normcol4, normcol5, normcol6, normcol7, normcol8, diffColor2;
+    public void DarkMode(boolean mode){
+        VBox[] normalColors = new VBox[]{normcol3, normcol4, normcol5, normcol6, normcol7, normcol8};
+        for (VBox a : normalColors) {a.setStyle("-fx-background-color: " + NormCol + "; -fx-background-radius: 10;");}
+        HBox[] diffColors = new HBox[]{diffColor3, diffColor4, diffColor5, diffColor6, diffColor7, diffColor8};
+        for (HBox a : diffColors) {a.setStyle("-fx-background-color: " + DiffCol + ";");}
+        backcolor.setStyle("-fx-background-color: " + BackCol + "; -fx-background-radius: 0 15 15 0;");
+        diffColor2.setStyle("-fx-background-color: " + DiffCol + "; -fx-background-radius: 10;");
+        diffColor1.setStyle("-fx-background-color: " + DiffCol + "; -fx-background-radius: 10;");
+        normcol1.setStyle("-fx-background-color: " + NormCol + "; -fx-background-radius: 10;");
+        normcol2.setStyle("-fx-background-color: " + NormCol + "; -fx-background-radius: 10;");
     }
 
     @FXML
-    private ImageView minimalize_button;
+    private ImageView minimalize_button1;
 
     @FXML
     private void Minimize_clicked() {
-        Stage stage = (Stage) minimalize_button.getScene().getWindow();
+        Stage stage = (Stage) minimalize_button1.getScene().getWindow();
         //stage.setIconified(true);
         stage.setMaximized(!stage.isMaximized());
         //Restore down
@@ -166,6 +189,7 @@ public class Weather implements Initializable {
             this.setDayInfoLabels(4, Icon4);
             this.setDayInfoLabels(5, Icon5);
             this.setDayInfoLabels(6, Icon6);
+
             this.setLocationLabels();
         } catch (IncorrectZipCodeFormatException | NonexistentZipCodeException e) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Incorrect zip code. Try again!", ButtonType.OK);
@@ -296,6 +320,7 @@ public class Weather implements Initializable {
         Map<String, Label> day5= new HashMap<>();
         Map<String, Label> day6= new HashMap<>();
 
+
         // Add day1
         day1.put("temp", Temp1);
         day1.put("min", Min1);
@@ -368,8 +393,6 @@ public class Weather implements Initializable {
         dayInfoLabels.add(day6);
 
         this.dayInfoLabels = dayInfoLabels;
-
-
     }
 
 }
