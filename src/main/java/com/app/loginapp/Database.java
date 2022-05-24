@@ -10,9 +10,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 import static java.lang.Thread.sleep;
 
@@ -22,41 +20,35 @@ public class Database {
             "hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
     public static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
 
-//    private static class CheckIfUserExistsTask extends Task<Boolean> {
-//        private final String username;
-//        private CheckIfUserExistsTask(String username) {
-//            this.username=username;
-//        }
-//        @Override
-//        protected Boolean call() {
-//            try {
-//                Connection con = DriverManager.getConnection(connectionString);
-//                PreparedStatement statement = con.prepareStatement("EXEC GetUser @username = ?");
-//                statement.setString(1, username);
-//                ResultSet resultSet = statement.executeQuery();
-//                boolean userExists = resultSet.next();
-//                statement.close();
-//                return userExists;
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//                return false;
-//            }
-//        }
-//    }
+    private record CheckIfUserExistsCallable(String username) implements Callable<Boolean> {
+        @Override
+        public Boolean call() {
+            try {
+                Connection con = DriverManager.getConnection(connectionString);
+                PreparedStatement statement = con.prepareStatement("EXEC GetUser @username = ?");
+                statement.setString(1, username);
+                ResultSet resultSet = statement.executeQuery();
+                boolean userExists = resultSet.next();
+                statement.close();
+                return userExists;
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+    }
 
 
     static boolean checkIfUserExists(String username) {
+        Callable<Boolean> callable = new CheckIfUserExistsCallable(username);
+        ScheduledExecutorService  executor = new ScheduledThreadPoolExecutor(1);
+        Future<Boolean> future = executor.submit(callable);
+        executor.shutdown();
         try {
-            Connection con = DriverManager.getConnection(connectionString);
-            PreparedStatement statement = con.prepareStatement("EXEC GetUser @username = ?");
-            statement.setString(1, username);
-            ResultSet resultSet = statement.executeQuery();
-            boolean userExists = resultSet.next();
-            statement.close();
-            return userExists;
-        } catch (SQLException e) {
+            return future.get();
+        } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
-            return false;
+            return true;
         }
     }
 
@@ -158,41 +150,80 @@ public class Database {
         executor.shutdown();
     }
 
-    public static List<List<String>> getUserEventsAsString(String username,
-                                                           String startRangeDateTime, String endRangeDateTime) {
-        try {
-            Connection con = DriverManager.getConnection(connectionString);
-            PreparedStatement statement = con.prepareStatement("EXEC GetUserEventsAsString @user = ?, @startRange = ?, @endRange = ?");
-            statement.setString(1, username);
-            statement.setString(2, startRangeDateTime);
-            statement.setString(3, endRangeDateTime);
-            ResultSet resultSet = statement.executeQuery();
-
-            List<List<String>> userEventsList = new ArrayList<>();
-            while (resultSet.next()) {
-                userEventsList.add(List.of(
-                        resultSet.getString("title"),
-                        resultSet.getString("startDateTime"),
-                        resultSet.getString("endDateTime"),
-                        resultSet.getString("fullDay"),
-                        resultSet.getString("recurring"),
-                        resultSet.getString("rrule")
-                ));
+    public static void addEvents(List<Event> eventList, String username) {
+        Runnable runnable = () -> {
+            try {
+                Connection con = DriverManager.getConnection(connectionString);
+                PreparedStatement statement = con.prepareStatement("EXEC AddEvent @title = ?, @user = ?, @startDateTime = ?, @endDateTime = ?, @fullDay = ?");
+                for (Event event : eventList) {
+                    System.out.println(event);
+                    statement.setString(1, event.getTitle());
+                    statement.setString(2, username);
+                    statement.setString(3, event.getStartDateTimeString());
+                    statement.setString(4, event.getEndDateTimeString());
+                    statement.setBoolean(5, event.isFullDay());
+                    statement.addBatch();
+                }
+                statement.executeBatch();
+                statement.close();
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-            statement.close();
-            return userEventsList;
-        } catch (SQLException e) {
-            e.printStackTrace();
+        };
+        ScheduledExecutorService  executor = new ScheduledThreadPoolExecutor(1);
+        executor.submit(runnable);
+        executor.shutdown();
+    }
+
+    private record GetUserEventsAsStringCallable(
+            String username, String startRangeDateTime, String endRangeDateTime) implements Callable<List<List<String>>> {
+        @Override
+        public List<List<String>> call() {
+            try {
+                Connection con = DriverManager.getConnection(connectionString);
+                PreparedStatement statement = con.prepareStatement("EXEC GetUserEventsAsString @user = ?, @startRange = ?, @endRange = ?");
+                statement.setString(1, username);
+                statement.setString(2, startRangeDateTime);
+                statement.setString(3, endRangeDateTime);
+                ResultSet resultSet = statement.executeQuery();
+
+                List<List<String>> userEventsList = new ArrayList<>();
+                while (resultSet.next()) {
+                    userEventsList.add(List.of(
+                            resultSet.getString("title"),
+                            resultSet.getString("startDateTime"),
+                            resultSet.getString("endDateTime"),
+                            resultSet.getString("fullDay"),
+                            resultSet.getString("recurring"),
+                            resultSet.getString("rrule")
+                    ));
+                }
+                statement.close();
+                con.close();
+                return userEventsList;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return new ArrayList<>();
         }
-        return new ArrayList<>();
     }
 
     public static List<Entry<String>> getUserEntries(String username, LocalDateTime startRangeDateTime,
                                                      LocalDateTime endRangeDateTime) {
+        Callable<List<List<String>>> callable = new GetUserEventsAsStringCallable(
+                username, startRangeDateTime.format(dateTimeFormatter), endRangeDateTime.format(dateTimeFormatter));
+        ScheduledExecutorService  executor = new ScheduledThreadPoolExecutor(1);
+        Future<List<List<String>>> future = executor.submit(callable);
+        executor.shutdown();
+        List<List<String>> userEventsAsString = new ArrayList<>();
+        try {
+            userEventsAsString = future.get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+
         List<Entry<String>> userEntries = new ArrayList<>();
-        List<List<String>> userEventsAsString = Database.getUserEventsAsString(username,
-                startRangeDateTime.format(dateTimeFormatter), endRangeDateTime.format(dateTimeFormatter)
-        );
         for (List<String> eventAsString : userEventsAsString) {
             String title = eventAsString.get(0);
             LocalDateTime startDateTime = LocalDateTime.parse(eventAsString.get(1), dateTimeFormatter);
