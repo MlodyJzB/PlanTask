@@ -153,7 +153,6 @@ public class Calendar implements Initializable {
             for (Entry<?> entry : entryList) {
                 //May be multiple entries in one day
                 eventList.add(Event.toEvent(entry));
-                System.out.println(entry.toString());
 
             }
         }

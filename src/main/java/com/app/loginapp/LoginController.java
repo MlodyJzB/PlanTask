@@ -78,7 +78,7 @@ public class LoginController implements Initializable
             loginStatusText.setText("Incorrect username/password");
         }
     }
-    public void PutJsonInfo(int number, String name, boolean mode) throws JSONException, IOException {
+    public static void PutJsonInfo(int number, String name, boolean mode) throws JSONException, IOException {
         JSONArray info = new JSONArray();
         info.put(number);
         info.put("user.png");
