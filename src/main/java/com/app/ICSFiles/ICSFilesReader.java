@@ -101,6 +101,7 @@ public class ICSFilesReader {
     public void icsToOurCall(File file, List<Event> list) throws ParserException, IOException {
         this.icsReader(file);
         Iterator var1 = this.icsCalendar.getComponents().iterator();
+        List<Event> newEventList = new ArrayList<>();
 
         while(var1.hasNext()) {
             Object object = var1.next();
@@ -113,9 +114,10 @@ public class ICSFilesReader {
                 boolean isFull = false;
                 if (duration.toHours() >21 && duration.toHours() <25){isFull = true;}
                 Event event = new Event(String.valueOf(component.getProperty("SUMMARY").getValue()), startd,endd, isFull);
-                User user = User.getInstance();
-                Database.addEvent(event, user.getUsername());
+                newEventList.add(event);
             }
+            User user = User.getInstance();
+            Database.addEvents(newEventList, user.getUsername());
         }
     }
 }
