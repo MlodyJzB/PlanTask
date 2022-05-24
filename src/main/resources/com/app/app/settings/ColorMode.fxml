@@ -1,10 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="408.0" prefWidth="314.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.app.settings.Appearance">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="320.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.app.settings.Appearance">
    <children>
-      <CheckBox fx:id="dayMode" layoutX="102.0" layoutY="143.0" mnemonicParsing="false" onAction="#setDayMode" text="DayMode" />
+      <VBox layoutX="14.0" layoutY="30.0" prefHeight="600.0" prefWidth="100.0" style="-fx-background-color: #424242;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label alignment="BASELINE_CENTER" prefHeight="40.0" prefWidth="400.0" text="Appearance" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <CheckBox fx:id="dayMode" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#setDayMode" prefHeight="40.0" prefWidth="400.0" style="-fx-background-color: #828281  #828281;" text="DayMode">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </CheckBox>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>

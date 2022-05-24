@@ -72,10 +72,7 @@ public class LoginController implements Initializable
             Window owner = Stage.getWindows().stream().filter(Window::isShowing).findFirst().orElse(null);
             Stage stage1 = (Stage) owner.getScene().getWindow();
             stage1.close();
-            //zamykam logunController2
-            Window owner1 = Stage.getWindows().stream().filter(Window::isShowing).findFirst().orElse(null);
-            Stage stage11 = (Stage) owner1.getScene().getWindow();
-            stage11.close();
+
             //otwieram update'owany loginControllerPanel
             Platform.runLater( () -> {
                 try {

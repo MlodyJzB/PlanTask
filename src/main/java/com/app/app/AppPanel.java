@@ -343,8 +343,7 @@ public class AppPanel implements Initializable {
     }
     public void Exit() {
         stop = true;
-        Stage stage = (Stage) ourWindow.getScene().getWindow();
-        stage.close();
+        System.exit(0);
     }
 
     public void homepanel(ActionEvent event) {
