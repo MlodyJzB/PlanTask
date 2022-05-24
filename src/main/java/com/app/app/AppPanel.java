@@ -191,7 +191,7 @@ public class AppPanel implements Initializable {
 
 
         try {
-            Incoming_events_Vbox.getChildren().setAll(add_event(InfoDayNight, jsonCalendar), add_event(InfoDayNight, jsonCalendar1));
+            Incoming_events_Vbox.getChildren().setAll(add_event(jsonCalendar), add_event(jsonCalendar1));
         } catch (JSONException | FileNotFoundException | ParseException e) {
             e.printStackTrace();
         }
@@ -357,7 +357,7 @@ public class AppPanel implements Initializable {
         ourWindow.setCenter(backgroundColor);
     }
 
-    public HBox add_event(boolean YesNo, JSONObject j) throws JSONException, FileNotFoundException, ParseException {
+    public HBox add_event(JSONObject j) throws JSONException, FileNotFoundException, ParseException {
         String img = j.getString("event_name");
         Image image1 = new Image(new FileInputStream("src/main/resources/Images/"+img+".png"));
         ImageView image = new ImageView(image1);
@@ -396,13 +396,7 @@ public class AppPanel implements Initializable {
         duration.setPrefSize(200, 46);
 
         HBox hbox = new HBox(pane1, to, from, duration);
-        if(YesNo) {
-            hbox.setStyle("-fx-background-color: #ffbf70; -fx-background-radius: 10;");
-        }
-        else{
-            //diff-color4
-            hbox.setStyle("-fx-background-color: #4d754c; -fx-background-radius: 10;");
-        }
+        hbox.setStyle("-fx-background-color: "+DiffCol+"; -fx-background-radius: 10;");
         hbox.setPrefSize(200, 46);
         hbox.setSpacing(10);
         return hbox;
