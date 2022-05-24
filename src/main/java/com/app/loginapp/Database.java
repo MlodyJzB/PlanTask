@@ -156,7 +156,6 @@ public class Database {
                 Connection con = DriverManager.getConnection(connectionString);
                 PreparedStatement statement = con.prepareStatement("EXEC AddEvent @title = ?, @user = ?, @startDateTime = ?, @endDateTime = ?, @fullDay = ?");
                 for (Event event : eventList) {
-                    System.out.println(event);
                     statement.setString(1, event.getTitle());
                     statement.setString(2, username);
                     statement.setString(3, event.getStartDateTimeString());
