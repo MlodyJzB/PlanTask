@@ -43,6 +43,14 @@ public class Weather implements Initializable {
     @FXML
     private Label ZipCodeLabel, CityLabel, LastUpdateLabel;
 
+    // Today
+    @FXML
+    private Label Wind11, Clouds11, Hum11, Pres11;
+    @FXML
+    private Label Temp11, Min11, Max11, Sunset11, Sunrise11;
+    @FXML
+    private ImageView Icon11;
+
     // Day1
     @FXML
     private Label Wind1, Clouds1, Hum1, Pres1;
@@ -109,10 +117,10 @@ public class Weather implements Initializable {
             this.setDayLabelMap();
             this.setDayInfoLabels(1, Icon1);
             this.setDayInfoLabels(2, Icon2);
-            this.setDayInfoLabels(3, Icon2);
-            this.setDayInfoLabels(4, Icon1);
-            this.setDayInfoLabels(5, Icon2);
-            this.setDayInfoLabels(6, Icon2);
+            this.setDayInfoLabels(3, Icon3);
+            this.setDayInfoLabels(4, Icon4);
+            this.setDayInfoLabels(5, Icon5);
+            this.setDayInfoLabels(6, Icon6);
 
         } catch (NonexistentZipCodeException e) {
             throw new RuntimeException(e);
@@ -141,17 +149,17 @@ public class Weather implements Initializable {
     @FXML
     private AnchorPane diffColor1;
     @FXML
-    private HBox normcol1, normcol2, diffColor3, diffColor4, diffColor5, diffColor6, diffColor7, diffColor8;
+    private HBox normcol1, normcol2, diffColor2, diffColor3, diffColor4, diffColor5, diffColor6, diffColor7, diffColor8;
     @FXML
-    private VBox backcolor, normcol3, normcol4, normcol5, normcol6, normcol7, normcol8, diffColor2;
+    private VBox backcolor, normcol3, normcol4, normcol5, normcol6, normcol7, normcol8;
     public void DarkMode(boolean mode){
         VBox[] normalColors = new VBox[]{normcol3, normcol4, normcol5, normcol6, normcol7, normcol8};
         for (VBox a : normalColors) {a.setStyle("-fx-background-color: " + NormCol + "; -fx-background-radius: 10;");}
-        HBox[] diffColors = new HBox[]{diffColor3, diffColor4, diffColor5, diffColor6, diffColor7, diffColor8};
+        HBox[] diffColors = new HBox[]{ diffColor3, diffColor4, diffColor5, diffColor6, diffColor7, diffColor8};
         for (HBox a : diffColors) {a.setStyle("-fx-background-color: " + DiffCol + ";");}
         backcolor.setStyle("-fx-background-color: " + BackCol + "; -fx-background-radius: 0 15 15 0;");
-        diffColor2.setStyle("-fx-background-color: " + DiffCol + "; -fx-background-radius: 10;");
         diffColor1.setStyle("-fx-background-color: " + DiffCol + "; -fx-background-radius: 10;");
+        diffColor2.setStyle("-fx-background-color: " + DiffCol + "; -fx-background-radius: 10;");
         normcol1.setStyle("-fx-background-color: " + NormCol + "; -fx-background-radius: 10;");
         normcol2.setStyle("-fx-background-color: " + NormCol + "; -fx-background-radius: 10;");
     }
