@@ -1,16 +1,13 @@
 package com.app.app.settings;
 
-import com.app.app.Event;
 import com.app.loginapp.User;
-import com.calendarfx.model.Entry;
 import com.calendarfx.view.DetailedDayView;
-import javafx.beans.binding.Bindings;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.control.*;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -19,8 +16,10 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
-import java.time.ZonedDateTime;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.ResourceBundle;
 
 public class Settings implements Initializable {
     User user;
@@ -124,7 +123,7 @@ public class Settings implements Initializable {
         for (String treeItemName : treeItemsFromAccount)
             makeBranch(treeItemName, account);
 
-        List<String> treeItemsFromAppearance = List.of("first", "second");
+        List<String> treeItemsFromAppearance = List.of("ColorMode");
         TreeItem<String> appearance = treeItemsMap.get("appearance");
         for (String treeItemName : treeItemsFromAppearance)
             makeBranch(treeItemName, appearance);

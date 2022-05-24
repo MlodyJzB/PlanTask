@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="408.0" prefWidth="314.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.app.settings.Appearance">
+   <children>
+      <CheckBox fx:id="dayMode" layoutX="102.0" layoutY="143.0" mnemonicParsing="false" onAction="#setDayMode" text="DayMode" />
+   </children>
+</AnchorPane>

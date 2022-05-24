@@ -12,13 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
 
-import static java.lang.Thread.sleep;
-
 public class Database {
     static final String connectionString = "jdbc:sqlserver://plan-task-server.database.windows.net:1433;" +
             "database=planTask;user=JakubNitkiewicz;password=planTask123;encrypt=true;" +
             "hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
     public static final DateTimeFormatter databaseDateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
+
 
     private record CheckIfUserExistsCallable(String username) implements Callable<Boolean> {
         @Override
@@ -148,6 +147,84 @@ public class Database {
         ScheduledExecutorService  executor = new ScheduledThreadPoolExecutor(1);
         executor.schedule(task, 5, TimeUnit.SECONDS);
         executor.shutdown();
+    }
+    public static void addAppearance(String username) {
+        Task<Void> task = new Task<>() {
+            @Override
+            public Void call() {
+                try {
+                    Connection con = DriverManager.getConnection(connectionString);
+                    PreparedStatement statement = con.prepareStatement("EXEC AddAppearance @UserName = ?, @Mode = ?");
+                    statement.setString(1, username);
+                    statement.setBoolean(2, true);
+                    statement.executeUpdate();
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        };
+        ScheduledExecutorService  executor = new ScheduledThreadPoolExecutor(1);
+        executor.submit(task);
+        executor.shutdown();
+    }
+    public static void changeAppearance(String User, boolean newMode) throws SQLException {
+        Task<Void> task = new Task<>() {
+            @Override
+            public Void call() {
+                try {
+                    Connection con = DriverManager.getConnection(connectionString);
+                    PreparedStatement statement = con.prepareStatement("EXEC ChangeAppearance @UserName = ?, @NewMode = ?");
+                    statement.setString(1, User);
+                    statement.setBoolean(2, newMode);
+                    statement.executeUpdate();
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        };
+        ScheduledExecutorService  executor = new ScheduledThreadPoolExecutor(1);
+        executor.submit(task);
+        executor.shutdown();
+    }
+
+    private record getAppearance(String username) implements Callable<List<Boolean>> {
+        @Override
+        public List<Boolean> call() {
+            try {
+                Connection con = DriverManager.getConnection(connectionString);
+                PreparedStatement statement = con.prepareStatement("EXEC GetMode1 @UserName = ?");
+                statement.setString(1, username);
+                ResultSet resultSet = statement.executeQuery();
+
+                List<Boolean> userEventsList = new ArrayList<>();
+                while (resultSet.next()) {
+                    userEventsList.add(resultSet.getBoolean("Mode"));
+                }
+                statement.close();
+                con.close();
+                return userEventsList;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return new ArrayList<>();
+        }
+    }
+    public static List<Boolean> getAppearance(String username) {
+        Callable<List<Boolean>> bol = new getAppearance(username);
+        ScheduledExecutorService  executor = new ScheduledThreadPoolExecutor(1);
+        Future<List<Boolean>> future = executor.submit(bol);
+        executor.shutdown();
+        List<Boolean> userEventsAsString = new ArrayList<>();
+        try {
+            userEventsAsString = future.get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+        return userEventsAsString;
     }
 
     public static void addEvents(List<Event> eventList, String username) {

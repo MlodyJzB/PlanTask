@@ -134,14 +134,8 @@ public class Weather implements Initializable {
             BackCol = colorArray[0];
             NormCol = colorArray[2];
             DiffCol = colorArray[3];
-            DarkMode(new AppPanel().Mode());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (NonexistentZipCodeException e) {
-            e.printStackTrace();
-        }
+            DarkMode(new AppPanel().Mode());}
+        catch (JSONException | IOException | NonexistentZipCodeException e) {e.printStackTrace();}
     }
     private String BackCol;
     private String NormCol;
