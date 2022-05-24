@@ -32,7 +32,7 @@ public class UsernameController implements Initializable {
     Button okButton, cancelButton, applyButton;
     @FXML
     void okClicked(ActionEvent event) {
-        if (user.isUsernameChanged()) {
+        if (!applyButton.disableProperty().getValue()) {
             applyClicked(event);
         }
         Node node = (Node) event.getSource();
