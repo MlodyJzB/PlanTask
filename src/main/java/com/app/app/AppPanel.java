@@ -12,8 +12,6 @@ import com.calendarfx.model.Entry;
 import com.calendarfx.view.DetailedDayView;
 import com.calendarfx.view.MonthView;
 import javafx.application.Platform;
-import javafx.collections.ListChangeListener;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -40,7 +38,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -55,9 +52,6 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class AppPanel implements Initializable {
@@ -87,30 +81,25 @@ public class AppPanel implements Initializable {
     public Label Label1, Label2, Label3;
     @FXML
     private DetailedDayView detailedDayView;
+    @FXML
+    private Button refreshButton;
 
     private String BackCol;
     private String SideCol;
     private String NormCol;
     private String DiffCol;
 
-    public AppPanel() throws NonexistentZipCodeException, JSONException, IOException {
+    public boolean Mode() throws JSONException, IOException {
+        JSONArray a = new LoginPanelController().getInfo(whichUserClicked());
+        return (Boolean) a.get(4);
     }
 
-    private CalendarSource AddNewEntries(String addedEvent, LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime){
-        Calendar calendar = new Calendar("Test");
-        CalendarSource calendarSource = new CalendarSource("source");
-
-        Entry<String> entry = new Entry<>(addedEvent);
-        entry.setInterval(startDate);
-        entry.changeStartDate(startDate);
-        entry.changeEndDate(endDate);
-        entry.changeStartTime(startTime);
-        entry.changeEndTime(endTime);
-        calendar.addEntry(entry);
-
-        calendarSource.getCalendars().addAll(calendar);
-        return calendarSource;
+    public String[] colorArray() throws JSONException, IOException {
+        ColourFromDataJson(Mode(), false);
+        return new String[]{BackCol, SideCol, NormCol, DiffCol};
     }
+
+    public AppPanel() throws NonexistentZipCodeException, JSONException, IOException {}
     private volatile boolean stop = false;
     private boolean InfoDayNight = true;
 
@@ -169,7 +158,7 @@ public class AppPanel implements Initializable {
         try {
             JSONArray a = new LoginPanelController().getInfo(whichUserClicked());
             InfoDayNight = (Boolean) a.get(4);
-            ColourFromDataJson(InfoDayNight);
+            ColourFromDataJson(InfoDayNight, true);
             DayMode();
         } catch (IOException | JSONException e) {
             e.printStackTrace();
@@ -283,7 +272,7 @@ public class AppPanel implements Initializable {
     private void onMouseEntered(MouseEvent event) {
         Button enteredButton = (Button) event.getSource();
         enteredButtonStyle = enteredButton.getStyle();
-        enteredButton.setStyle("-fx-background-color: rgb(255,132,31)");
+        enteredButton.setStyle("-fx-background-color: "+DiffCol);
     }
 
     @FXML
@@ -443,7 +432,7 @@ public class AppPanel implements Initializable {
         JSONObject o = new JSONObject(contents);
         return (int) o.get(("which"));
     }
-    public void ColourFromDataJson(boolean DayMode) throws IOException, JSONException {
+    public void ColourFromDataJson(boolean DayMode, boolean workingOnApp) throws IOException, JSONException {
         String contents = new String((Files.readAllBytes(Paths.get("colors.json"))));
         JSONObject o = new JSONObject(contents);
         Label[] labelColors = new Label[]{Label1, Label2, Label3};
@@ -452,19 +441,23 @@ public class AppPanel implements Initializable {
             DiffCol = (String) o.get(("BrightColorDifferent"));
             SideCol = (String) o.get(("BrightSideBarColor"));
             BackCol = (String) o.get(("BrightColorBackground"));
-            monthView.getStylesheets().removeAll();
-            detailedDayView.getStylesheets().removeAll();
+            if(workingOnApp) {
+                monthView.getStylesheets().removeAll();
+                detailedDayView.getStylesheets().removeAll();
+            }
         }
         else{
             NormCol = (String) o.get(("DarkColorNormal"));
             DiffCol = (String) o.get(("DarkColorDifferent"));
             SideCol = (String) o.get(("DarkSideBarColor"));
             BackCol = (String) o.get(("DarkColorBackground"));
-            monthView.getStylesheets().add(Objects.requireNonNull(getClass().getResource("AppPanel1.css")).toExternalForm());
-            detailedDayView.getStylesheets().add(Objects.requireNonNull(getClass().getResource("AppPanel1.css")).toExternalForm());
-            Incoming_events_Vbox.setStyle("-fx-background-color: #2b2b2b;");
-            for (Label a : labelColors) {
-                a.setTextFill(Paint.valueOf("#ffffff"));
+            if(workingOnApp) {
+                monthView.getStylesheets().add(Objects.requireNonNull(getClass().getResource("AppPanel1.css")).toExternalForm());
+                detailedDayView.getStylesheets().add(Objects.requireNonNull(getClass().getResource("AppPanel1.css")).toExternalForm());
+                Incoming_events_Vbox.setStyle("-fx-background-color: #2b2b2b;");
+                for (Label a : labelColors) {
+                    a.setTextFill(Paint.valueOf("#ffffff"));
+                }
             }
         }
     }
@@ -478,5 +471,24 @@ public class AppPanel implements Initializable {
         SideBarcolor.setStyle("-fx-background-color: " + SideCol + "; -fx-background-radius: 15 0 0 15;");
         diffColor2.setStyle("-fx-background-color: " + DiffCol + "; -fx-background-radius: 10;");
         diffColor1.setStyle("-fx-background-color: " + DiffCol + "; -fx-background-radius: 10;");
+        refreshButton.setStyle("-fx-background-color: " + DiffCol + ";");
+    }
+
+    //Nieużywane metody
+
+    private CalendarSource AddNewEntries(String addedEvent, LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime){
+        Calendar calendar = new Calendar("Test");
+        CalendarSource calendarSource = new CalendarSource("source");
+
+        Entry<String> entry = new Entry<>(addedEvent);
+        entry.setInterval(startDate);
+        entry.changeStartDate(startDate);
+        entry.changeEndDate(endDate);
+        entry.changeStartTime(startTime);
+        entry.changeEndTime(endTime);
+        calendar.addEntry(entry);
+
+        calendarSource.getCalendars().addAll(calendar);
+        return calendarSource;
     }
 }

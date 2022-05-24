@@ -13,7 +13,7 @@
 
 <AnchorPane fx:id="pane3" prefHeight="650.0" prefWidth="910.0" style="-fx-background-color: #e8e8e8; -fx-background-radius: 0 15 15 0;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.app.Weather">
    <children>
-      <VBox layoutX="28.0" layoutY="15.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox fx:id="backcolor" layoutX="28.0" layoutY="15.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <AnchorPane fx:id="diffColor1" style="-fx-background-color: #ffbf70; -fx-background-radius: 10;">
                <children>
@@ -29,38 +29,41 @@
                   </ImageView>
                </children>
             </AnchorPane>
-            <AnchorPane prefHeight="650.0" prefWidth="1200.0">
+            <AnchorPane prefHeight="1000.0" prefWidth="2000.0">
                <children>
-                  <HBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <HBox prefWidth="2000.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <VBox prefHeight="400.0" prefWidth="800.0">
+                        <VBox minWidth="597.0" prefHeight="1000.0" prefWidth="1000.0" spacing="5.0">
                            <children>
-                              <HBox prefHeight="1200.0" prefWidth="1200.0">
+                              <HBox fx:id="normcol1" prefHeight="1200.0" prefWidth="1000.0" style="-fx-background-color: white; -fx-background-radius: 10;">
                                  <children>
-                                    <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="800.0" style="-fx-background-radius: 10; -fx-background-color: #d66813;">
+                                    <VBox fx:id="diffColor2" alignment="TOP_CENTER" prefHeight="500.0" prefWidth="1000.0" style="-fx-background-radius: 10; -fx-background-color: #ffbf70;">
                                        <children>
-                                          <Label fx:id="Day0" alignment="CENTER" prefHeight="25.0" prefWidth="155.0" text="Today">
+                                          <Label fx:id="Day0" alignment="CENTER" prefHeight="25.0" prefWidth="155.0" stylesheets="@LabelColor.css" text="Today">
                                              <font>
                                                 <Font size="24.0" />
                                              </font>
                                           </Label>
                                        </children>
                                        <HBox.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                          <Insets />
                                        </HBox.margin>
                                     </VBox>
                                  </children>
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </padding>
                               </HBox>
-                              <HBox prefHeight="1200.0" prefWidth="1200.0">
+                              <HBox prefHeight="1200.0" prefWidth="1000.0" spacing="5.0">
                                  <children>
-                                    <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="400.0" style="-fx-background-radius: 10; -fx-background-color: #ffbf70;">
+                                    <VBox fx:id="normcol3" alignment="TOP_CENTER" prefHeight="500.0" prefWidth="500.0" style="-fx-background-radius: 10; -fx-background-color: white;">
                                        <children>
-                                          <Label fx:id="Day1" alignment="CENTER" prefHeight="13.0" prefWidth="188.0" text="Day">
+                                          <Label fx:id="Day1" alignment="CENTER" prefHeight="13.0" prefWidth="188.0" stylesheets="@LabelColor.css" text="Day">
                                              <font>
                                                 <Font size="24.0" />
                                              </font>
                                           </Label>
-                                          <HBox alignment="CENTER" prefHeight="91.0" prefWidth="316.0">
+                                          <HBox fx:id="diffColor3" alignment="CENTER" prefHeight="91.0" prefWidth="316.0" style="-fx-background-color: #ffbf70;">
                                              <children>
                                                 <ImageView fx:id="Icon1" fitHeight="72.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true">
                                                    <image>
@@ -69,16 +72,16 @@
                                                 </ImageView>
                                                 <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                                                    <children>
-                                                      <Label fx:id="Temp1" alignment="CENTER" prefHeight="32.0" prefWidth="101.0" text="5°C">
+                                                      <Label fx:id="Temp1" alignment="CENTER" prefHeight="32.0" prefWidth="101.0" stylesheets="@LabelColor.css" text="5°C">
                                                          <font>
                                                             <Font size="36.0" />
                                                          </font>
                                                       </Label>
                                                       <HBox alignment="CENTER" prefHeight="27.0" prefWidth="105.0">
                                                          <children>
-                                                            <Label fx:id="Max1" alignment="CENTER" prefHeight="21.0" prefWidth="43.0" text="5°C" />
-                                                            <Label prefWidth="1.0" text="|" />
-                                                            <Label fx:id="Min1" alignment="CENTER" prefHeight="18.0" prefWidth="43.0" text="5°C" />
+                                                            <Label fx:id="Max1" alignment="CENTER" prefHeight="21.0" prefWidth="43.0" stylesheets="@LabelColor.css" text="5°C" />
+                                                            <Label prefWidth="1.0" stylesheets="@LabelColor.css" text="|" />
+                                                            <Label fx:id="Min1" alignment="CENTER" prefHeight="18.0" prefWidth="43.0" stylesheets="@LabelColor.css" text="5°C" />
                                                          </children>
                                                       </HBox>
                                                    </children>
@@ -92,7 +95,7 @@
                                                                   <Image url="@../../../Images/sunrise.png" />
                                                                </image>
                                                             </ImageView>
-                                                            <Label fx:id="Sunrise1" text="04:20">
+                                                            <Label fx:id="Sunrise1" stylesheets="@LabelColor.css" text="04:20">
                                                                <font>
                                                                   <Font size="16.0" />
                                                                </font>
@@ -106,7 +109,7 @@
                                                                   <Image url="@../../../Images/sunset.png" />
                                                                </image>
                                                             </ImageView>
-                                                            <Label fx:id="Sunset1" text="20:20">
+                                                            <Label fx:id="Sunset1" stylesheets="@LabelColor.css" text="20:20">
                                                                <font>
                                                                   <Font size="16.0" />
                                                                </font>
@@ -116,6 +119,9 @@
                                                    </children>
                                                 </VBox>
                                              </children>
+                                             <VBox.margin>
+                                                <Insets />
+                                             </VBox.margin>
                                           </HBox>
                                           <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                                              <children>
@@ -123,12 +129,12 @@
                                                    <children>
                                                       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                                                          <children>
-                                                            <Label prefWidth="70.0" text="Wind:">
+                                                            <Label prefWidth="70.0" stylesheets="@LabelColor.css" text="Wind:">
                                                                <font>
                                                                   <Font size="16.0" />
                                                                </font>
                                                             </Label>
-                                                            <Label fx:id="Wind1" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefWidth="70.0" text="10 km/h ">
+                                                            <Label fx:id="Wind1" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefWidth="70.0" stylesheets="@LabelColor.css" text="10 km/h ">
                                                                <font>
                                                                   <Font size="16.0" />
                                                                </font>
@@ -137,12 +143,12 @@
                                                       </HBox>
                                                       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                                                          <children>
-                                                            <Label prefWidth="70.0" text="Clouds:">
+                                                            <Label prefWidth="70.0" stylesheets="@LabelColor.css" text="Clouds:">
                                                                <font>
                                                                   <Font size="16.0" />
                                                                </font>
                                                             </Label>
-                                                            <Label fx:id="Clouds1" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="25.0" prefWidth="70.0" text="20% ">
+                                                            <Label fx:id="Clouds1" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="25.0" prefWidth="70.0" stylesheets="@LabelColor.css" text="20% ">
                                                                <font>
                                                                   <Font size="16.0" />
                                                                </font>
@@ -155,12 +161,12 @@
                                                    <children>
                                                       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                                                          <children>
-                                                            <Label prefWidth="70.0" text="Humidity:">
+                                                            <Label prefWidth="70.0" stylesheets="@LabelColor.css" text="Humidity:">
                                                                <font>
                                                                   <Font size="16.0" />
                                                                </font>
                                                             </Label>
-                                                            <Label fx:id="Hum1" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefWidth="70.0" text="10 km/h">
+                                                            <Label fx:id="Hum1" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefWidth="70.0" stylesheets="@LabelColor.css" text="10 km/h">
                                                                <font>
                                                                   <Font size="16.0" />
                                                                </font>
@@ -169,12 +175,12 @@
                                                       </HBox>
                                                       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                                                          <children>
-                                                            <Label prefWidth="70.0" text="Pressure:">
+                                                            <Label prefWidth="70.0" stylesheets="@LabelColor.css" text="Pressure:">
                                                                <font>
                                                                   <Font size="16.0" />
                                                                </font>
                                                             </Label>
-                                                            <Label fx:id="Pres1" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefWidth="70.0" text="1040 hPa">
+                                                            <Label fx:id="Pres1" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefWidth="70.0" stylesheets="@LabelColor.css" text="1040 hPa">
                                                                <font>
                                                                   <Font size="16.0" />
                                                                </font>
@@ -187,17 +193,17 @@
                                           </HBox>
                                        </children>
                                        <HBox.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                          <Insets />
                                        </HBox.margin>
                                     </VBox>
-                                    <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="400.0" style="-fx-background-radius: 10; -fx-background-color: #ffbf70;">
+                                    <VBox fx:id="normcol4" alignment="TOP_CENTER" prefHeight="500.0" prefWidth="500.0" style="-fx-background-radius: 10; -fx-background-color: white;">
                                        <children>
-                                          <Label fx:id="Day2" alignment="CENTER" prefHeight="13.0" prefWidth="188.0" text="Day">
+                                          <Label fx:id="Day2" alignment="CENTER" prefHeight="13.0" prefWidth="188.0" stylesheets="@LabelColor.css" text="Day">
                                              <font>
                                                 <Font size="24.0" />
                                              </font>
                                           </Label>
-                                          <HBox alignment="CENTER" prefHeight="91.0" prefWidth="316.0">
+                                          <HBox fx:id="diffColor4" alignment="CENTER" prefHeight="91.0" prefWidth="316.0" style="-fx-background-color: #ffbf70;">
                                              <children>
                                                 <ImageView fx:id="Icon2" fitHeight="72.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true">
                                                    <image>
@@ -206,16 +212,16 @@
                                                 </ImageView>
                                                 <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                                                    <children>
-                                                      <Label fx:id="Temp2" alignment="CENTER" prefHeight="32.0" prefWidth="101.0" text="5°C">
+                                                      <Label fx:id="Temp2" alignment="CENTER" prefHeight="32.0" prefWidth="101.0" stylesheets="@LabelColor.css" text="5°C">
                                                          <font>
                                                             <Font size="36.0" />
                                                          </font>
                                                       </Label>
                                                       <HBox alignment="CENTER" prefHeight="27.0" prefWidth="105.0">
                                                          <children>
-                                                            <Label fx:id="Max2" alignment="CENTER" prefHeight="21.0" prefWidth="43.0" text="5°C" />
-                                                            <Label prefWidth="1.0" text="|" />
-                                                            <Label fx:id="Min2" alignment="CENTER" prefHeight="18.0" prefWidth="43.0" text="5°C" />
+                                                            <Label fx:id="Max2" alignment="CENTER" prefHeight="21.0" prefWidth="43.0" stylesheets="@LabelColor.css" text="5°C" />
+                                                            <Label prefWidth="1.0" stylesheets="@LabelColor.css" text="|" />
+                                                            <Label fx:id="Min2" alignment="CENTER" prefHeight="18.0" prefWidth="43.0" stylesheets="@LabelColor.css" text="5°C" />
                                                          </children>
                                                       </HBox>
                                                    </children>
@@ -229,7 +235,7 @@
                                                                   <Image url="@../../../Images/sunrise.png" />
                                                                </image>
                                                             </ImageView>
-                                                            <Label fx:id="Sunrise2" text="04:20">
+                                                            <Label fx:id="Sunrise2" stylesheets="@LabelColor.css" text="04:20">
                                                                <font>
                                                                   <Font size="16.0" />
                                                                </font>
@@ -243,7 +249,7 @@
                                                                   <Image url="@../../../Images/sunset.png" />
                                                                </image>
                                                             </ImageView>
-                                                            <Label fx:id="Sunset2" text="20:20">
+                                                            <Label fx:id="Sunset2" stylesheets="@LabelColor.css" text="20:20">
                                                                <font>
                                                                   <Font size="16.0" />
                                                                </font>
@@ -260,12 +266,12 @@
                                                    <children>
                                                       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                                                          <children>
-                                                            <Label prefWidth="70.0" text="Wind:">
+                                                            <Label prefWidth="70.0" stylesheets="@LabelColor.css" text="Wind:">
                                                                <font>
                                                                   <Font size="16.0" />
                                                                </font>
                                                             </Label>
-                                                            <Label fx:id="Wind2" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefWidth="70.0" text="10 km/h ">
+                                                            <Label fx:id="Wind2" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefWidth="70.0" stylesheets="@LabelColor.css" text="10 km/h ">
                                                                <font>
                                                                   <Font size="16.0" />
                                                                </font>
@@ -274,12 +280,12 @@
                                                       </HBox>
                                                       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                                                          <children>
-                                                            <Label prefWidth="70.0" text="Clouds:">
+                                                            <Label prefWidth="70.0" stylesheets="@LabelColor.css" text="Clouds:">
                                                                <font>
                                                                   <Font size="16.0" />
                                                                </font>
                                                             </Label>
-                                                            <Label fx:id="Clouds2" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="25.0" prefWidth="70.0" text="20% ">
+                                                            <Label fx:id="Clouds2" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="25.0" prefWidth="70.0" stylesheets="@LabelColor.css" text="20% ">
                                                                <font>
                                                                   <Font size="16.0" />
                                                                </font>
@@ -292,12 +298,12 @@
                                                    <children>
                                                       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                                                          <children>
-                                                            <Label prefWidth="70.0" text="Humidity:">
+                                                            <Label prefWidth="70.0" stylesheets="@LabelColor.css" text="Humidity:">
                                                                <font>
                                                                   <Font size="16.0" />
                                                                </font>
                                                             </Label>
-                                                            <Label fx:id="Hum2" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefWidth="70.0" text="10 km/h">
+                                                            <Label fx:id="Hum2" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefWidth="70.0" stylesheets="@LabelColor.css" text="10 km/h">
                                                                <font>
                                                                   <Font size="16.0" />
                                                                </font>
@@ -306,12 +312,12 @@
                                                       </HBox>
                                                       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                                                          <children>
-                                                            <Label prefWidth="70.0" text="Pressure:">
+                                                            <Label prefWidth="70.0" stylesheets="@LabelColor.css" text="Pressure:">
                                                                <font>
                                                                   <Font size="16.0" />
                                                                </font>
                                                             </Label>
-                                                            <Label fx:id="Pres2" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefWidth="70.0" text="1040 hPa">
+                                                            <Label fx:id="Pres2" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefWidth="70.0" stylesheets="@LabelColor.css" text="1040 hPa">
                                                                <font>
                                                                   <Font size="16.0" />
                                                                </font>
@@ -324,101 +330,237 @@
                                           </HBox>
                                        </children>
                                        <HBox.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                          <Insets />
                                        </HBox.margin>
                                     </VBox>
                                  </children>
                               </HBox>
-                              <HBox prefHeight="1200.0" prefWidth="1200.0">
+                              <HBox prefHeight="1200.0" prefWidth="1000.0" spacing="5.0">
                                  <children>
-                                    <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="400.0" style="-fx-background-radius: 10; -fx-background-color: #ffbf70;">
+                                    <VBox fx:id="normcol6" alignment="TOP_CENTER" prefHeight="500.0" prefWidth="500.0" style="-fx-background-radius: 10; -fx-background-color: white;">
                                        <children>
-                                          <Label fx:id="Day4" alignment="CENTER" prefHeight="13.0" prefWidth="188.0" text="Day">
+                                          <Label fx:id="Day4" alignment="CENTER" prefHeight="13.0" prefWidth="188.0" stylesheets="@LabelColor.css" text="Day">
                                              <font>
                                                 <Font size="24.0" />
                                              </font>
                                           </Label>
                                        </children>
                                        <HBox.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                          <Insets />
                                        </HBox.margin>
                                     </VBox>
-                                    <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="400.0" style="-fx-background-radius: 10; -fx-background-color: #ffbf70;">
+                                    <VBox fx:id="normcol7" alignment="TOP_CENTER" prefHeight="500.0" prefWidth="500.0" style="-fx-background-radius: 10; -fx-background-color: white;">
                                        <children>
-                                          <Label fx:id="Day5" alignment="CENTER" prefHeight="13.0" prefWidth="188.0" text="Day">
+                                          <Label fx:id="Day5" alignment="CENTER" prefHeight="13.0" prefWidth="188.0" stylesheets="@LabelColor.css" text="Day">
                                              <font>
                                                 <Font size="24.0" />
                                              </font>
                                           </Label>
                                        </children>
                                        <HBox.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                          <Insets />
                                        </HBox.margin>
                                     </VBox>
                                  </children>
                               </HBox>
                            </children>
                         </VBox>
-                        <VBox prefWidth="400.0" spacing="10.0">
+                        <VBox minWidth="298.0" prefHeight="1000.0" prefWidth="500.0" spacing="5.0">
                            <HBox.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                              <Insets />
                            </HBox.margin>
                            <children>
-                              <VBox fx:id="LocationBox" alignment="CENTER" prefHeight="400.0" prefWidth="400.0" style="-fx-background-radius: 10; -fx-background-color: #84def5;">
+                              <HBox fx:id="normcol2" prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: white; -fx-background-radius: 10;">
                                  <children>
-                                    <HBox alignment="CENTER" prefHeight="15.0" prefWidth="400.0">
+                                    <VBox fx:id="LocationBox" alignment="CENTER" prefHeight="500.0" prefWidth="500.0" style="-fx-background-radius: 10; -fx-background-color: #84def5;">
                                        <children>
-                                          <Label fx:id="ZipCodeLabel" alignment="CENTER" prefHeight="37.0" prefWidth="88.0" text="Zipcode:">
-                                             <font>
-                                                <Font size="16.0" />
-                                             </font></Label>
-                                          <TextField fx:id="ZipCodeField" alignment="CENTER" prefHeight="37.0" prefWidth="88.0" promptText="00-631">
-                                             <font>
-                                                <Font size="16.0" />
-                                             </font></TextField>
+                                          <HBox alignment="CENTER" prefHeight="15.0" prefWidth="400.0">
+                                             <children>
+                                                <Label fx:id="ZipCodeLabel" alignment="CENTER" prefHeight="37.0" prefWidth="88.0" text="Zipcode:">
+                                                   <font>
+                                                      <Font size="16.0" />
+                                                   </font>
+                                                </Label>
+                                                <TextField fx:id="ZipCodeField" alignment="CENTER" prefHeight="37.0" prefWidth="88.0" promptText="00-631">
+                                                   <font>
+                                                      <Font size="16.0" />
+                                                   </font>
+                                                </TextField>
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER" prefHeight="15.0" prefWidth="400.0">
+                                             <children>
+                                                <Label fx:id="CityLabel" alignment="CENTER" prefHeight="37.0" prefWidth="88.0" text="City:">
+                                                   <font>
+                                                      <Font size="16.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label fx:id="City" alignment="CENTER" contentDisplay="CENTER" prefWidth="88.0" text="Warsaw">
+                                                   <font>
+                                                      <Font size="16.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER" prefHeight="15.0" prefWidth="400.0">
+                                             <children>
+                                                <Label fx:id="LastUpdateLabel" alignment="CENTER" prefHeight="37.0" prefWidth="88.0" text="Last update:">
+                                                   <font>
+                                                      <Font size="16.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label fx:id="LastUpdate" alignment="CENTER" contentDisplay="CENTER" prefWidth="88.0" text="11:10 10/05">
+                                                   <font>
+                                                      <Font size="16.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </HBox>
+                                          <Button fx:id="refreshImage" mnemonicParsing="false" onAction="#refreshWeather" text="Refresh" />
                                        </children>
-                                    </HBox>
-                                    <HBox alignment="CENTER" prefHeight="15.0" prefWidth="400.0">
-                                       <children>
-                                          <Label fx:id="CityLabel" alignment="CENTER" prefHeight="37.0" prefWidth="88.0" text="City:">
-                                             <font>
-                                                <Font size="16.0" />
-                                             </font></Label>
-                                          <Label fx:id="City" alignment="CENTER" contentDisplay="CENTER" prefWidth="88.0" text="Warsaw">
-                                             <font>
-                                                <Font size="16.0" />
-                                             </font></Label>
-                                       </children>
-                                    </HBox>
-                                    <HBox alignment="CENTER" prefHeight="15.0" prefWidth="400.0">
-                                       <children>
-                                          <Label fx:id="LastUpdateLabel" alignment="CENTER" prefHeight="37.0" prefWidth="88.0" text="Last update:">
-                                             <font>
-                                                <Font size="16.0" />
-                                             </font>
-                                          </Label>
-                                          <Label fx:id="LastUpdate" alignment="CENTER" contentDisplay="CENTER" prefWidth="88.0" text="11:10 10/05">
-                                             <font>
-                                                <Font size="16.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                    </HBox>
-                                    <Button fx:id="refreshImage" mnemonicParsing="false" onAction="#refreshWeather" text="Refresh" />
+                                    </VBox>
                                  </children>
-                              </VBox>
-                              <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="400.0" style="-fx-background-radius: 10; -fx-background-color: #ffbf70;">
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </padding>
+                              </HBox>
+                              <VBox fx:id="normcol5" alignment="TOP_CENTER" prefHeight="500.0" prefWidth="500.0" style="-fx-background-radius: 10; -fx-background-color: white;">
                                  <children>
-                                    <Label fx:id="Day3" alignment="CENTER" prefHeight="13.0" prefWidth="188.0" text="Day">
+                                    <Label fx:id="Day3" alignment="CENTER" prefHeight="13.0" prefWidth="188.0" stylesheets="@LabelColor.css" text="Day">
                                        <font>
                                           <Font size="24.0" />
                                        </font>
                                     </Label>
+                                    <HBox fx:id="diffColor5" alignment="CENTER" prefHeight="91.0" prefWidth="316.0" style="-fx-background-color: #ffbf70;">
+                                       <children>
+                                          <ImageView fx:id="Icon21" fitHeight="72.0" fitWidth="74.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../../../Images/weatherIcons/01d.png" />
+                                             </image>
+                                          </ImageView>
+                                          <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                                             <children>
+                                                <Label fx:id="Temp21" alignment="CENTER" prefHeight="32.0" prefWidth="101.0" stylesheets="@LabelColor.css" text="5°C">
+                                                   <font>
+                                                      <Font size="36.0" />
+                                                   </font>
+                                                </Label>
+                                                <HBox alignment="CENTER" prefHeight="27.0" prefWidth="105.0">
+                                                   <children>
+                                                      <Label fx:id="Max21" alignment="CENTER" prefHeight="21.0" prefWidth="43.0" stylesheets="@LabelColor.css" text="5°C" />
+                                                      <Label prefWidth="1.0" stylesheets="@LabelColor.css" text="|" />
+                                                      <Label fx:id="Min21" alignment="CENTER" prefHeight="18.0" prefWidth="43.0" stylesheets="@LabelColor.css" text="5°C" />
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                          <VBox prefHeight="76.0" prefWidth="73.0">
+                                             <children>
+                                                <HBox alignment="CENTER" prefHeight="7.0" prefWidth="92.0">
+                                                   <children>
+                                                      <ImageView fitHeight="48.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@../../../Images/sunrise.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                      <Label fx:id="Sunrise21" stylesheets="@LabelColor.css" text="04:20">
+                                                         <font>
+                                                            <Font size="16.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </HBox>
+                                                <HBox alignment="CENTER" prefHeight="41.0" prefWidth="125.0">
+                                                   <children>
+                                                      <ImageView fitHeight="34.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@../../../Images/sunset.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                      <Label fx:id="Sunset21" stylesheets="@LabelColor.css" text="20:20">
+                                                         <font>
+                                                            <Font size="16.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <VBox prefHeight="400.0" prefWidth="400.0">
+                                             <children>
+                                                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                                   <children>
+                                                      <Label prefWidth="70.0" stylesheets="@LabelColor.css" text="Wind:">
+                                                         <font>
+                                                            <Font size="16.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label fx:id="Wind21" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefWidth="70.0" stylesheets="@LabelColor.css" text="10 km/h ">
+                                                         <font>
+                                                            <Font size="16.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </HBox>
+                                                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                                   <children>
+                                                      <Label prefWidth="70.0" stylesheets="@LabelColor.css" text="Clouds:">
+                                                         <font>
+                                                            <Font size="16.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label fx:id="Clouds21" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="25.0" prefWidth="70.0" stylesheets="@LabelColor.css" text="20% ">
+                                                         <font>
+                                                            <Font size="16.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                          <VBox prefHeight="400.0" prefWidth="400.0">
+                                             <children>
+                                                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                                   <children>
+                                                      <Label prefWidth="70.0" stylesheets="@LabelColor.css" text="Humidity:">
+                                                         <font>
+                                                            <Font size="16.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label fx:id="Hum21" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefWidth="70.0" stylesheets="@LabelColor.css" text="10 km/h">
+                                                         <font>
+                                                            <Font size="16.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </HBox>
+                                                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                                   <children>
+                                                      <Label prefWidth="70.0" stylesheets="@LabelColor.css" text="Pressure:">
+                                                         <font>
+                                                            <Font size="16.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label fx:id="Pres21" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefWidth="70.0" stylesheets="@LabelColor.css" text="1040 hPa">
+                                                         <font>
+                                                            <Font size="16.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
                                  </children>
                               </VBox>
-                              <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="400.0" style="-fx-background-radius: 10; -fx-background-color: #ffbf70;">
+                              <VBox fx:id="normcol8" alignment="TOP_CENTER" prefHeight="500.0" prefWidth="500.0" style="-fx-background-radius: 10; -fx-background-color: white;">
                                  <children>
-                                    <Label fx:id="Day6" alignment="CENTER" prefHeight="13.0" prefWidth="188.0" text="Day">
+                                    <Label fx:id="Day6" alignment="CENTER" prefHeight="13.0" prefWidth="188.0" stylesheets="@LabelColor.css" text="Day">
                                        <font>
                                           <Font size="24.0" />
                                        </font>
@@ -432,6 +574,9 @@
                </children>
             </AnchorPane>
          </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
       </VBox>
    </children>
 </AnchorPane>

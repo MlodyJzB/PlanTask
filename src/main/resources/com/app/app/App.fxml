@@ -19,11 +19,11 @@
    <center>
       <AnchorPane fx:id="backgroundColor" prefHeight="414.0" prefWidth="700.0" style="-fx-background-color: #e8e8e8; -fx-background-radius: 0 15 15 0;">
          <children>
-            <HBox prefWidth="700.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <HBox prefWidth="700.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="444.0" prefWidth="626.0">
                      <children>
-                        <VBox layoutX="-53.0" prefHeight="444.0" prefWidth="298.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <VBox layoutX="-53.0" prefHeight="444.0" prefWidth="298.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="400.0">
                                  <children>
@@ -36,7 +36,7 @@
                                                       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                                    </opaqueInsets>
                                                    <children>
-                                                      <Label fx:id="Label1" alignment="BASELINE_CENTER" layoutX="-7.0" layoutY="3.0" prefHeight="30.0" prefWidth="134.0" style="-fx-background-radius: 10;" text="PlanTask" AnchorPane.bottomAnchor="-0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                      <Label fx:id="Label1" alignment="BASELINE_CENTER" layoutX="-7.0" layoutY="3.0" prefHeight="30.0" prefWidth="134.0" style="-fx-background-radius: 10;" stylesheets="@LabelColor.css" text="PlanTask" AnchorPane.bottomAnchor="-0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                          <font>
                                                             <Font size="24.0" />
                                                          </font>
@@ -50,16 +50,16 @@
                                                       </Label>
                                                    </children>
                                                 </AnchorPane>
-                                                <AnchorPane fx:id="normColor2" prefHeight="300.0" prefWidth="200.0" style="-fx-background-color: white; -fx-background-radius: 15;">
+                                                <AnchorPane fx:id="normColor2" prefHeight="400.0" prefWidth="200.0" style="-fx-background-color: white; -fx-background-radius: 15;">
                                                    <opaqueInsets>
                                                       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                                    </opaqueInsets>
-                                                   <padding>
-                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                                   </padding>
                                                    <children>
                                                       <MonthView fx:id="monthView" layoutX="-153.0" layoutY="-93.0" selectionMode="SINGLE" showCurrentWeek="false" showFullDayEntries="false" showTimedEntries="false" showWeekNumbers="false" showWeekdays="false" showWeekends="false" suspendUpdates="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                    </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" />
+                                                   </padding>
                                                 </AnchorPane>
                                              </children>
                                           </VBox>
@@ -72,7 +72,7 @@
                                                    <children>
                                                       <HBox prefHeight="150.0" prefWidth="150.0">
                                                          <children>
-                                                            <Label fx:id="Label2" alignment="BASELINE_CENTER" prefHeight="35.0" prefWidth="178.0" text="Weather">
+                                                            <Label fx:id="Label2" alignment="BASELINE_CENTER" prefHeight="35.0" prefWidth="300.0" stylesheets="@LabelColor.css" text="Weather">
                                                                <font>
                                                                   <Font size="24.0" />
                                                                </font>
@@ -88,32 +88,32 @@
                                                             </ImageView>
                                                             <VBox prefHeight="78.0" prefWidth="75.0">
                                                                <children>
-                                                                  <Label fx:id="Temp" alignment="BASELINE_CENTER" prefHeight="35.0" prefWidth="85.0" text="5°C">
+                                                                  <Label fx:id="Temp" alignment="BASELINE_CENTER" prefHeight="35.0" prefWidth="85.0" stylesheets="@LabelColor.css" text="5°C">
                                                                      <font>
                                                                         <Font size="36.0" />
                                                                      </font>
                                                                   </Label>
                                                                   <HBox alignment="CENTER" prefHeight="22.0" prefWidth="85.0">
                                                                      <children>
-                                                                        <Label fx:id="MaxTemp" alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="44.0" text="10" />
-                                                                        <Label text="|" />
-                                                                        <Label fx:id="MinTemp" alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="43.0" text="-1" />
+                                                                        <Label fx:id="MaxTemp" alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="44.0" stylesheets="@LabelColor.css" text="10" />
+                                                                        <Label stylesheets="@LabelColor.css" text="|" />
+                                                                        <Label fx:id="MinTemp" alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="43.0" stylesheets="@LabelColor.css" text="-1" />
                                                                      </children>
                                                                   </HBox>
                                                                </children>
                                                             </VBox>
                                                          </children>
                                                       </HBox>
-                                                      <Label fx:id="WeatherDescription" alignment="BASELINE_CENTER" prefHeight="150.0" prefWidth="150.0" text="Mostly sunny" />
-                                                      <Button mnemonicParsing="false" onAction="#refreshWeather" text="Button" />
+                                                      <Label fx:id="WeatherDescription" alignment="BASELINE_CENTER" prefHeight="150.0" prefWidth="150.0" stylesheets="@LabelColor.css" text="Mostly sunny" />
+                                                      <Button fx:id="refreshButton" mnemonicParsing="false" onAction="#refreshWeather" prefWidth="200.0" style="-fx-background-color: #ffbf70;" text="Refresh" />
                                                       <HBox prefHeight="150.0" prefWidth="150.0">
                                                          <children>
-                                                            <Label fx:id="Wind" alignment="BASELINE_CENTER" prefHeight="36.0" prefWidth="300.0" text="Wind">
+                                                            <Label fx:id="Wind" alignment="BASELINE_CENTER" prefHeight="36.0" prefWidth="300.0" stylesheets="@LabelColor.css" text="Wind">
                                                                <font>
                                                                   <Font size="14.0" />
                                                                </font>
                                                             </Label>
-                                                            <Label fx:id="WindValue1" alignment="BASELINE_CENTER" prefHeight="36.0" prefWidth="300.0" text="72 %">
+                                                            <Label fx:id="WindValue1" alignment="BASELINE_CENTER" prefHeight="36.0" prefWidth="300.0" stylesheets="@LabelColor.css" text="72 %">
                                                                <font>
                                                                   <Font size="14.0" />
                                                                </font>
@@ -122,12 +122,12 @@
                                                       </HBox>
                                                       <HBox prefHeight="150.0" prefWidth="150.0">
                                                          <children>
-                                                            <Label fx:id="Clouds" alignment="BASELINE_CENTER" prefHeight="36.0" prefWidth="300.0" text="Clouds">
+                                                            <Label fx:id="Clouds" alignment="BASELINE_CENTER" prefHeight="36.0" prefWidth="300.0" stylesheets="@LabelColor.css" text="Clouds">
                                                                <font>
                                                                   <Font size="14.0" />
                                                                </font>
                                                             </Label>
-                                                            <Label fx:id="WindValue" alignment="CENTER" prefHeight="36.0" prefWidth="300.0" text="72 %">
+                                                            <Label fx:id="WindValue" alignment="CENTER" prefHeight="36.0" prefWidth="300.0" stylesheets="@LabelColor.css" text="72 %">
                                                                <font>
                                                                   <Font size="14.0" />
                                                                </font>
@@ -147,9 +147,6 @@
                                  <VBox.margin>
                                     <Insets />
                                  </VBox.margin>
-                                 <padding>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" />
-                                 </padding>
                               </AnchorPane>
                               <AnchorPane prefHeight="400.0" prefWidth="400.0">
                                  <children>
@@ -205,7 +202,7 @@
                                                 <Insets />
                                              </opaqueInsets>
                                           </ScrollPane>
-                                          <Label fx:id="Label3" alignment="BASELINE_CENTER" layoutX="-28.0" layoutY="11.0" prefHeight="27.0" prefWidth="275.0" text="Incoming" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                          <Label fx:id="Label3" alignment="BASELINE_CENTER" layoutX="-28.0" layoutY="11.0" prefHeight="27.0" prefWidth="275.0" stylesheets="@LabelColor.css" text="Incoming" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                              <font>
                                                 <Font size="24.0" />
                                              </font>
@@ -222,14 +219,8 @@
                                  <VBox.margin>
                                     <Insets />
                                  </VBox.margin>
-                                 <padding>
-                                    <Insets left="5.0" right="5.0" />
-                                 </padding>
                               </AnchorPane>
                            </children>
-                           <padding>
-                              <Insets bottom="5.0" left="5.0" top="5.0" />
-                           </padding>
                         </VBox>
                      </children>
                      <opaqueInsets>
@@ -272,13 +263,13 @@
                            </children>
                         </AnchorPane>
                      </children>
-                     <padding>
-                        <Insets bottom="5.0" right="5.0" top="5.0" />
-                     </padding>
                   </VBox>
                </children>
             </HBox>
          </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
       </AnchorPane>
    </center>
    <left>
@@ -291,7 +282,7 @@
                         <Image url="@../../../Images/menu5.png" />
                      </image>
                   </ImageView>
-                  <Button minWidth="53.0" mnemonicParsing="false" onAction="#homepanel" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" prefHeight="100.0" prefWidth="60.0" style="-fx-background-color: transparent;">
+                  <Button minWidth="60.0" mnemonicParsing="false" onAction="#homepanel" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" prefHeight="100.0" prefWidth="60.0" style="-fx-background-color: transparent;">
                      <graphic>
                         <ImageView fitHeight="29.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -300,7 +291,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button minWidth="53.0" mnemonicParsing="false" onAction="#planner" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" prefHeight="100.0" prefWidth="60.0" style="-fx-background-color: transparent;">
+                  <Button minWidth="60.0" mnemonicParsing="false" onAction="#planner" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" prefHeight="100.0" prefWidth="60.0" style="-fx-background-color: transparent;">
                      <graphic>
                         <ImageView fitHeight="48.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -309,7 +300,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button minWidth="53.0" mnemonicParsing="false" onAction="#calendar" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" prefHeight="100.0" prefWidth="60.0" style="-fx-background-color: transparent;">
+                  <Button minWidth="60.0" mnemonicParsing="false" onAction="#calendar" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" prefHeight="100.0" prefWidth="60.0" style="-fx-background-color: transparent;">
                      <graphic>
                         <ImageView fitHeight="48.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -318,7 +309,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button minWidth="53.0" mnemonicParsing="false" onAction="#statics" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" prefHeight="100.0" prefWidth="60.0" style="-fx-background-color: transparent;">
+                  <Button minWidth="60.0" mnemonicParsing="false" onAction="#statics" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" prefHeight="100.0" prefWidth="60.0" style="-fx-background-color: transparent;">
                      <graphic>
                         <ImageView fitHeight="48.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -327,7 +318,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button minWidth="53.0" mnemonicParsing="false" onAction="#settings" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" prefHeight="100.0" prefWidth="60.0" style="-fx-background-color: transparent;">
+                  <Button minWidth="60.0" mnemonicParsing="false" onAction="#settings" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" prefHeight="100.0" prefWidth="60.0" style="-fx-background-color: transparent;">
                      <graphic>
                         <ImageView fitHeight="48.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -347,7 +338,7 @@
                         <Font size="14.0" />
                      </font>
                   </Text>
-                  <Button minWidth="53.0" mnemonicParsing="false" onAction="#Exit" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" prefHeight="100.0" prefWidth="60.0" style="-fx-background-color: transparent;">
+                  <Button minWidth="60.0" mnemonicParsing="false" onAction="#Exit" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" prefHeight="100.0" prefWidth="60.0" style="-fx-background-color: transparent;">
                      <graphic>
                         <ImageView fitHeight="48.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>

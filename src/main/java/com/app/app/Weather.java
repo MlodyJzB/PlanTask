@@ -3,81 +3,59 @@ package com.app.app;
 import com.app.WeatherInfo.IncorrectZipCodeFormatException;
 import com.app.WeatherInfo.NonexistentZipCodeException;
 import com.app.WeatherInfo.WeatherInfo;
-import com.app.WeatherInfo.ZipCodeException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
-import net.fortuna.ical4j.model.Component;
 import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.*;
 
 public class Weather implements Initializable {
-
-    public Weather() throws NonexistentZipCodeException, JSONException, IOException {
-    }
-
-    public void Exit() {
-        System.exit(0);
-    }
-
-    private WeatherInfo wi = new WeatherInfo();
-
-    private final SimpleDateFormat dayFormater = new SimpleDateFormat("EEEEEEEEE", Locale.US);
-    private SimpleDateFormat dateFormater = new SimpleDateFormat("HH:mm dd/MM");
-    private LocalDateTime time = LocalDateTime.now();
-    private ArrayList<Map<String,Label>> dayInfoLabels;
-
     @FXML
     private Label City, Day1, Day2, Day3, Day4, Day5, Day6, LastUpdate;
-
     @FXML
     private Label ZipCodeLabel, CityLabel, LastUpdateLabel;
-
-    // Day1
     @FXML
     private Label Wind1, Clouds1, Hum1, Pres1;
     @FXML
     private Label Temp1, Min1, Max1, Sunset1, Sunrise1;
     @FXML
     private ImageView Icon1;
-
-    //2
     @FXML
-    private Label Wind2, Clouds2, Hum2, Pres2;
-    @FXML
-    private Label Temp2, Min2, Max2, Sunset2, Sunrise2;
+    private Label Wind2, Clouds2, Hum2, Pres2, Temp2, Min2, Max2, Sunset2, Sunrise2;
     @FXML
     private ImageView Icon2;
-
-
     @FXML
     private TextField ZipCodeField;
-
     @FXML
     private VBox LocationBox;
-
     @FXML
-    private Button refreshButton;
+    private ImageView minimalize_button1;
+
+    private WeatherInfo wi = new WeatherInfo();
+    private final SimpleDateFormat dayFormater = new SimpleDateFormat("EEEEEEEEE", Locale.US);
+    private SimpleDateFormat dateFormater = new SimpleDateFormat("HH:mm dd/MM");
+    private LocalDateTime time = LocalDateTime.now();
+    private ArrayList<Map<String,Label>> dayInfoLabels;
+    private String BackCol;
+    private String SideCol;
+    private String NormCol;
+    private String DiffCol;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -95,14 +73,45 @@ public class Weather implements Initializable {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
+        try {
+            String[] colorArray = new AppPanel().colorArray();
+            BackCol = colorArray[0];
+            SideCol = colorArray[1];
+            NormCol = colorArray[2];
+            DiffCol = colorArray[3];
+            DarkMode(new AppPanel().Mode());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (NonexistentZipCodeException e) {
+            e.printStackTrace();
+        }
     }
-
     @FXML
-    private ImageView minimalize_button;
-
+    private AnchorPane diffColor1;
+    @FXML
+    private HBox normcol1, normcol2, diffColor3, diffColor4, diffColor5;
+    @FXML
+    private VBox backcolor, normcol3, normcol4, normcol5, normcol6, normcol7, normcol8, diffColor2;
+    public void DarkMode(boolean mode){
+        VBox[] normalColors = new VBox[]{normcol3, normcol4, normcol5, normcol6, normcol7, normcol8};
+        for (VBox a : normalColors) {a.setStyle("-fx-background-color: " + NormCol + "; -fx-background-radius: 10;");}
+        HBox[] diffColors = new HBox[]{diffColor3, diffColor4, diffColor5};
+        for (HBox a : diffColors) {a.setStyle("-fx-background-color: " + DiffCol + ";");}
+        backcolor.setStyle("-fx-background-color: " + BackCol + "; -fx-background-radius: 0 15 15 0;");
+        diffColor2.setStyle("-fx-background-color: " + DiffCol + "; -fx-background-radius: 10;");
+        diffColor1.setStyle("-fx-background-color: " + DiffCol + "; -fx-background-radius: 10;");
+        normcol1.setStyle("-fx-background-color: " + NormCol + "; -fx-background-radius: 10;");
+        normcol2.setStyle("-fx-background-color: " + NormCol + "; -fx-background-radius: 10;");
+    }
+    public Weather() throws NonexistentZipCodeException, JSONException, IOException {}
+    public void Exit() {
+        System.exit(0);
+    }
     @FXML
     private void Minimize_clicked() {
-        Stage stage = (Stage) minimalize_button.getScene().getWindow();
+        Stage stage = (Stage) minimalize_button1.getScene().getWindow();
         //stage.setIconified(true);
         stage.setMaximized(!stage.isMaximized());
         //Restore down

@@ -1,6 +1,9 @@
 .detailed-week-view .container .weekend-day{
   -fx-background-color: #2b2b2b;
 }
+.detailed-week-view .container .today{
+  -fx-background-color: #2b2b2b;
+}
 .detailed-week-view .container .full-hour-line{
   -fx-stroke: #000;
 }
