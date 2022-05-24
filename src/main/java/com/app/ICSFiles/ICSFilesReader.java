@@ -14,7 +14,6 @@ import org.json.JSONObject;
 import java.io.*;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -89,8 +88,8 @@ public class ICSFilesReader {
         for (var event:list){
             LocalDateTime startd = dateFormat(String.valueOf(component.getProperty("DTSTART").getValue()));
             LocalDateTime endd = dateFormat(String.valueOf(component.getProperty("DTEND").getValue()));
-            boolean isSameEndTime =event.getEndDateTimeString().equals(String.valueOf(endd));
-            boolean isSameStartTime =event.getEndDateTimeString().equals(String.valueOf(startd));
+            boolean isSameEndTime =event.getEndDateTimeString().equals(endd.format(Database.databaseDateTimeFormatter));
+            boolean isSameStartTime =event.getStartDateTimeString().equals(startd.format(Database.databaseDateTimeFormatter));
             boolean isSameName =event.getTitle().equals(String.valueOf(component.getProperty("SUMMARY").getValue()));
             if(isSameEndTime && isSameName && isSameStartTime){return true;}
         }

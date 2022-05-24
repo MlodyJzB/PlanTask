@@ -18,7 +18,7 @@ public class Database {
     static final String connectionString = "jdbc:sqlserver://plan-task-server.database.windows.net:1433;" +
             "database=planTask;user=JakubNitkiewicz;password=planTask123;encrypt=true;" +
             "hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
-    public static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
+    public static final DateTimeFormatter databaseDateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
 
     private record CheckIfUserExistsCallable(String username) implements Callable<Boolean> {
         @Override
@@ -212,7 +212,7 @@ public class Database {
     public static List<Entry<String>> getUserEntries(String username, LocalDateTime startRangeDateTime,
                                                      LocalDateTime endRangeDateTime) {
         Callable<List<List<String>>> callable = new GetUserEventsAsStringCallable(
-                username, startRangeDateTime.format(dateTimeFormatter), endRangeDateTime.format(dateTimeFormatter));
+                username, startRangeDateTime.format(databaseDateTimeFormatter), endRangeDateTime.format(databaseDateTimeFormatter));
         ScheduledExecutorService  executor = new ScheduledThreadPoolExecutor(1);
         Future<List<List<String>>> future = executor.submit(callable);
         executor.shutdown();
@@ -226,8 +226,8 @@ public class Database {
         List<Entry<String>> userEntries = new ArrayList<>();
         for (List<String> eventAsString : userEventsAsString) {
             String title = eventAsString.get(0);
-            LocalDateTime startDateTime = LocalDateTime.parse(eventAsString.get(1), dateTimeFormatter);
-            LocalDateTime endDateTime = LocalDateTime.parse(eventAsString.get(2), dateTimeFormatter);
+            LocalDateTime startDateTime = LocalDateTime.parse(eventAsString.get(1), databaseDateTimeFormatter);
+            LocalDateTime endDateTime = LocalDateTime.parse(eventAsString.get(2), databaseDateTimeFormatter);
             boolean fullDay = Integer.parseInt(eventAsString.get(3)) == 1;
             //boolean recurring = Integer.parseInt(eventAsString.get(4)) == 1;
             String rrule = eventAsString.get(5).equals("") ? null : eventAsString.get(5);
@@ -302,8 +302,8 @@ public class Database {
                     PreparedStatement statement = con.prepareStatement("EXEC ChangeEventInterval @user = ?, @title = ?, @oldStartDateTime = ?, @oldEndDateTime = ?, @newStartDateTime = ?, @newEndDateTime = ?");
                     statement.setString(1, username);
                     statement.setString(2, event.getTitle());
-                    statement.setString(3, oldInterval.getStartDateTime().format(dateTimeFormatter));
-                    statement.setString(4, oldInterval.getEndDateTime().format(dateTimeFormatter));
+                    statement.setString(3, oldInterval.getStartDateTime().format(databaseDateTimeFormatter));
+                    statement.setString(4, oldInterval.getEndDateTime().format(databaseDateTimeFormatter));
                     statement.setString(5, event.getStartDateTimeString());
                     statement.setString(6, event.getEndDateTimeString());
                     statement.executeUpdate();
