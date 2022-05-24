@@ -16,6 +16,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -62,9 +63,20 @@ public class LoginController implements Initializable
             scene.setFill(Color.TRANSPARENT);
             appStage.show();
             */
+            //Zamykanie 3 okienek - z jakiegoś powodu otwierają sie 2 okenka loginControllerPanel i zamykam je odpowiednio stage1.close i stage11.close
+            //zamykam loginController
             Node node = (Node) event.getSource();
             Stage thisStage = (Stage) node.getScene().getWindow();
             thisStage.close();
+            //zamykam LoginPanel1
+            Window owner = Stage.getWindows().stream().filter(Window::isShowing).findFirst().orElse(null);
+            Stage stage1 = (Stage) owner.getScene().getWindow();
+            stage1.close();
+            //zamykam logunController2
+            Window owner1 = Stage.getWindows().stream().filter(Window::isShowing).findFirst().orElse(null);
+            Stage stage11 = (Stage) owner1.getScene().getWindow();
+            stage11.close();
+            //otwieram update'owany loginControllerPanel
             Platform.runLater( () -> {
                 try {
                     new LoginApplication().start( new Stage() );

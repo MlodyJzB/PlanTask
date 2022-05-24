@@ -3,6 +3,8 @@ package com.app.app;
 import com.app.WeatherInfo.IncorrectZipCodeFormatException;
 import com.app.WeatherInfo.NonexistentZipCodeException;
 import com.app.WeatherInfo.WeatherInfo;
+import com.app.loginapp.Database;
+import com.app.loginapp.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -26,7 +28,7 @@ import java.time.ZoneId;
 import java.util.*;
 
 public class Weather implements Initializable {
-
+    User user;
     public Weather() throws NonexistentZipCodeException, JSONException, IOException {}
     public void Exit() {System.exit(0);}
 
@@ -110,6 +112,7 @@ public class Weather implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        user = user.getInstance();
         try {
             this.setLocationLabels();
             this.setDayLabels();
@@ -130,11 +133,11 @@ public class Weather implements Initializable {
             throw new RuntimeException(e);
         }
         try {
-            String[] colorArray = new AppPanel().colorArray();
+            String[] colorArray = new AppPanel().colorArray(Database.getAppearance(user.getUsername()).get(0));
             BackCol = colorArray[0];
             NormCol = colorArray[2];
             DiffCol = colorArray[3];
-            DarkMode(new AppPanel().Mode());}
+            DarkMode(Database.getAppearance(user.getUsername()).get(0));}
         catch (JSONException | IOException | NonexistentZipCodeException e) {e.printStackTrace();}
     }
     private String BackCol;
