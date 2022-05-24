@@ -65,7 +65,7 @@ public class Planner implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         user = User.getInstance();
-        boolean InfoDayNight = Database.getAppearance(user.getUsername()).get(0);
+        boolean InfoDayNight = Database.getAppearance(user.getUsername());
         try {
             this.DayMode(InfoDayNight);
         } catch (IOException e) {

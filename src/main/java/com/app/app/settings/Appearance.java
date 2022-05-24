@@ -24,7 +24,7 @@ public class Appearance implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         user = User.getInstance();
-        dayMode.setSelected(Database.getAppearance(user.getUsername()).get(0));
+        dayMode.setSelected(Database.getAppearance(user.getUsername()));
     }
 
     public void setDayMode(ActionEvent event) throws SQLException {

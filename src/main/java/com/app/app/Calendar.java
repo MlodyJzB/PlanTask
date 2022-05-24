@@ -201,7 +201,7 @@ public class Calendar implements Initializable {
         resizeCalendar(650.0,1045.0,-110, 20,120,80,18);
 
         user = User.getInstance();
-        boolean InfoDayNight = Database.getAppearance(user.getUsername()).get(0);
+        boolean InfoDayNight = Database.getAppearance(user.getUsername());
         try {
             this.DayMode(InfoDayNight);
             darkmode = !InfoDayNight;

@@ -107,7 +107,7 @@ public class AppPanel implements Initializable {
 //            throw new RuntimeException(e);
 //        }
 //        weatherImage.setImage(image1);
-        InfoDayNight = Database.getAppearance(user.getUsername()).get(0);
+        InfoDayNight = Database.getAppearance(user.getUsername());
         try {
             ColourFromDataJson(InfoDayNight, true);
         } catch (IOException e) {
