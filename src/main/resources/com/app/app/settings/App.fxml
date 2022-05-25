@@ -79,14 +79,14 @@
                                                             </Label>
                                                          </children>
                                                       </HBox>
-                                                      <HBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="150.0">
+                                                      <HBox alignment="TOP_CENTER" prefHeight="150.0" prefWidth="150.0">
                                                          <children>
                                                             <ImageView fx:id="WeatherIcon" fitHeight="70.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true">
                                                                <image>
                                                                   <Image url="@../../../Images/weatherIcons/01d.png" />
                                                                </image>
                                                             </ImageView>
-                                                            <VBox alignment="TOP_CENTER" prefHeight="78.0" prefWidth="75.0">
+                                                            <VBox prefHeight="78.0" prefWidth="75.0">
                                                                <children>
                                                                   <Label fx:id="Temp" alignment="BASELINE_CENTER" prefHeight="35.0" prefWidth="85.0" stylesheets="@LabelColor.css" text="5°C">
                                                                      <font>
@@ -104,7 +104,7 @@
                                                             </VBox>
                                                          </children>
                                                       </HBox>
-                                                      <HBox alignment="CENTER" prefHeight="120.0" prefWidth="150.0">
+                                                      <HBox alignment="CENTER" prefHeight="7.0" prefWidth="92.0">
                                                          <children>
                                                             <ImageView fitHeight="48.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
                                                                <image>
@@ -128,42 +128,42 @@
                                                             </Label>
                                                          </children>
                                                       </HBox>
-                                                      <HBox prefHeight="120.0" prefWidth="150.0">
+                                                      <HBox prefHeight="150.0" prefWidth="150.0">
                                                          <children>
-                                                            <Label fx:id="Wind" alignment="BOTTOM_CENTER" prefHeight="36.0" prefWidth="300.0" stylesheets="@LabelColor.css" text="Wind:">
+                                                            <Label fx:id="Wind" alignment="BASELINE_CENTER" prefHeight="36.0" prefWidth="300.0" stylesheets="@LabelColor.css" text="Wind">
                                                                <font>
                                                                   <Font size="14.0" />
                                                                </font>
                                                             </Label>
-                                                            <Label fx:id="Wind" alignment="BOTTOM_CENTER" prefHeight="36.0" prefWidth="300.0" stylesheets="@LabelColor.css" text="72 %">
+                                                            <Label fx:id="Wind" alignment="BASELINE_CENTER" prefHeight="36.0" prefWidth="300.0" stylesheets="@LabelColor.css" text="72 %">
                                                                <font>
                                                                   <Font size="14.0" />
                                                                </font>
                                                             </Label>
                                                          </children>
                                                       </HBox>
-                                                      <HBox prefHeight="120.0" prefWidth="150.0">
+                                                      <HBox prefHeight="150.0" prefWidth="150.0">
                                                          <children>
-                                                            <Label fx:id="Clouds" alignment="BOTTOM_CENTER" prefHeight="36.0" prefWidth="300.0" stylesheets="@LabelColor.css" text="Clouds:">
+                                                            <Label fx:id="Clouds" alignment="BASELINE_CENTER" prefHeight="36.0" prefWidth="300.0" stylesheets="@LabelColor.css" text="Clouds">
                                                                <font>
                                                                   <Font size="14.0" />
                                                                </font>
                                                             </Label>
-                                                            <Label fx:id="Clouds" alignment="BOTTOM_CENTER" prefHeight="36.0" prefWidth="300.0" stylesheets="@LabelColor.css" text="72 %">
+                                                            <Label fx:id="Clouds" alignment="CENTER" prefHeight="36.0" prefWidth="300.0" stylesheets="@LabelColor.css" text="72 %">
                                                                <font>
                                                                   <Font size="14.0" />
                                                                </font>
                                                             </Label>
                                                          </children>
                                                       </HBox>
-                                                      <HBox prefHeight="120.0" prefWidth="150.0">
+                                                      <HBox prefHeight="150.0" prefWidth="150.0">
                                                          <children>
-                                                            <Label alignment="BOTTOM_CENTER" prefHeight="36.0" prefWidth="300.0" stylesheets="@LabelColor.css" text="Humidity:">
+                                                            <Label fx:id="Wind" alignment="BASELINE_CENTER" prefHeight="36.0" prefWidth="300.0" stylesheets="@LabelColor.css" text="Humidity">
                                                                <font>
                                                                   <Font size="14.0" />
                                                                </font>
                                                             </Label>
-                                                            <Label fx:id="Hum" alignment="BOTTOM_CENTER" prefHeight="36.0" prefWidth="300.0" stylesheets="@LabelColor.css" text="72 %">
+                                                            <Label fx:id="Hum" alignment="BASELINE_CENTER" prefHeight="36.0" prefWidth="300.0" stylesheets="@LabelColor.css" text="72 %">
                                                                <font>
                                                                   <Font size="14.0" />
                                                                </font>
@@ -345,7 +345,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button minWidth="60.0" mnemonicParsing="false" onAction="#weather" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" prefHeight="100.0" prefWidth="60.0" style="-fx-background-color: transparent;">
+                  <Button minWidth="60.0" mnemonicParsing="false" onAction="#statics" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" prefHeight="100.0" prefWidth="60.0" style="-fx-background-color: transparent;">
                      <graphic>
                         <ImageView fitHeight="48.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -364,12 +364,12 @@
                      </graphic>
                   </Button>
                   <AnchorPane prefHeight="200.0" prefWidth="60.0" />
-                  <Text fx:id="HourInfo" strokeType="OUTSIDE" strokeWidth="0.0" text="Date" textAlignment="CENTER" wrappingWidth="58.66663360595709">
+                  <Text fx:id="DateInfo" strokeType="OUTSIDE" strokeWidth="0.0" text="Date" textAlignment="CENTER" wrappingWidth="58.66663360595709">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Text>
-                  <Text fx:id="DateInfo" strokeType="OUTSIDE" strokeWidth="0.0" text="Date" textAlignment="CENTER" wrappingWidth="59.99997711181646">
+                  <Text fx:id="HourInfo" strokeType="OUTSIDE" strokeWidth="0.0" text="Date" textAlignment="CENTER" wrappingWidth="59.99997711181646">
                      <font>
                         <Font size="14.0" />
                      </font>

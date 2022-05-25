@@ -64,9 +64,9 @@ public class AppPanel implements Initializable {
     @FXML
     private VBox Incoming_events_Vbox;
     @FXML
-    private Label Temp, FeelsLike, CloudsValue, WindValue;
+    private Label Temp, MinTemp, MaxTemp, Clouds, Wind, Hum, Sunrise, Sunset;
     @FXML
-    private ImageView weatherImage;
+    private ImageView WeatherIcon;
     @FXML
     private AnchorPane backgroundColor, diffColor2, normColor4, normColor3, normColor2, normColor1;
     @FXML
@@ -79,13 +79,13 @@ public class AppPanel implements Initializable {
     public Label Label1, Label2, Label3;
     @FXML
     private DetailedDayView detailedDayView;
-    @FXML
-    private Button refreshButton;
 
     private String BackCol;
     private String SideCol;
     private String NormCol;
     private String DiffCol;
+
+    private SimpleDateFormat dateFormater = new SimpleDateFormat("HH:mm");
 
 
     public String[] colorArray(boolean mode) throws JSONException, IOException {
@@ -95,30 +95,20 @@ public class AppPanel implements Initializable {
 
     public AppPanel() throws NonexistentZipCodeException, JSONException, IOException {}
     private volatile boolean stop = false;
+    private boolean InfoDayNight = true;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         user = User.getInstance();
-        Image image1 = null;
-//        try {
-//            image1 = new Image(new FileInputStream("src/main/resources/Images/refresh.gif"));
-//        } catch (FileNotFoundException e) {
-//            throw new RuntimeException(e);
-//        }
-//        weatherImage.setImage(image1);
-
-        // Getting dayMode from database
-        user.setDayMode(Database.getAppearance(user.getUsername()));
-
+        InfoDayNight = Database.getAppearance(user.getUsername());
         try {
-            ColourFromDataJson(user.isDayMode(), true);
+            ColourFromDataJson(InfoDayNight, true);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
         }
         DayMode();
-
 
         Calendar calendar = detailedDayView.getCalendarSources().get(0).getCalendars().get(0);
         List<Entry<String>> entryList = Database.getUserEntries(user.getUsername(),
@@ -242,7 +232,8 @@ public class AppPanel implements Initializable {
                 if(seconds.get() == 0) {
                     Platform.runLater(() -> {
                         try {
-                            setWeather(wi);
+                            this.wi.updateOnline();
+                            setWeather();
                         } catch (NonexistentZipCodeException | JSONException | IOException |
                                  IncorrectZipCodeFormatException e) {
                             e.printStackTrace();
@@ -270,13 +261,6 @@ public class AppPanel implements Initializable {
         Button enteredButton = (Button) event.getSource();
         enteredButtonStyle = enteredButton.getStyle();
         enteredButton.setStyle("-fx-background-color: "+DiffCol);
-    }
-
-    @FXML
-    private void onMouseEnteredRefreshWeather(MouseEvent event) {
-        Button enteredButton = (Button) event.getSource();
-        enteredButtonStyle = enteredButton.getStyle();
-        enteredButton.setStyle("-fx-background-color: rgb(178,148,113)");
     }
 
     @FXML
@@ -325,7 +309,9 @@ public class AppPanel implements Initializable {
         com.app.app.Calendar controller = loader.getController();
         controller.setUserEventsList(detailedDayView, LocalDate.now().minusYears(1), LocalDate.now().plusYears(1));
     }
-    public void statics(ActionEvent event) { LoadSite("weather"); }
+    public void weather(ActionEvent event){
+        LoadSite("weather");
+    }
     public void settings(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(
                 getClass().getResource(
@@ -349,7 +335,9 @@ public class AppPanel implements Initializable {
         System.exit(0);
     }
 
-    public void homepanel(ActionEvent event) {
+    public void homepanel(ActionEvent event) throws NonexistentZipCodeException, JSONException, IOException, IncorrectZipCodeFormatException {
+        wi.updateOffline();
+        this.setWeather();
         ourWindow.setCenter(backgroundColor);
     }
 
@@ -398,25 +386,35 @@ public class AppPanel implements Initializable {
         return hbox;
     }
 
-    public void setWeather(WeatherInfo wi) throws NonexistentZipCodeException, JSONException, IOException, IncorrectZipCodeFormatException {
+    public void setWeather() throws NonexistentZipCodeException, JSONException, IOException, IncorrectZipCodeFormatException {
 
-        wi.updateOffline();
-        String temp = String.valueOf(Math.round(wi.getTemp(0)));
-        String feelsLike = String.valueOf(Math.round(wi.getFeelsLike()));
-        String windSpeed = String.valueOf(Math.round(wi.getWindSpeed(0)));
-        String cloudsValue = String.valueOf(Math.round(wi.getCloudsValue(0)));
-        String icon = wi.getIcon(0);
+        String temp = String.valueOf(this.wi.getTemp(0));
+        String minTemp = String.valueOf(this.wi.getMinTemp(0));
+        String maxTemp = String.valueOf(this.wi.getMaxTemp(0));
+        String wind = String.valueOf(this.wi.getWindSpeed(0));
+        String clouds = String.valueOf(this.wi.getCloudsValue(0));
+        //String hum = String.valueOf(wi.getHumidity());
+        String icon = this.wi.getIcon(0);
+        long sunrise = this.wi.getSunrise(0);
+        long sunset = this.wi.getSunset(0);
 
-        //Temp.setText(temp + "°C");
-        //FeelsLike.setText("Feels like: " + feelsLike + "°C");
-        //WindValue.setText(windSpeed + " km/h");
-        //CloudsValue.setText(cloudsValue + " %");
+        String sunriseH = dateFormater.format(sunrise*1000L);
+        String sunsetH = dateFormater.format(sunset*1000L);
+
+        Temp.setText(temp + "°C");
+        MinTemp.setText(minTemp + "°C");
+        MaxTemp.setText(maxTemp + "°C");
+        Wind.setText(wind + " km/h");
+        Clouds.setText(clouds + "%");
+        //Hum.setText(hum + "%");
+        Sunrise.setText(sunriseH);
+        Sunset.setText(sunsetH);
+
+        Image im = null;
+        im = new Image(new FileInputStream("src/main/resources/Images/WeatherIcons/" + icon + ".png"));
+        WeatherIcon.setImage(im);
     }
 
-    public void refreshWeather(ActionEvent event) throws NonexistentZipCodeException, JSONException, IOException, IncorrectZipCodeFormatException {
-        WeatherInfo wi = new WeatherInfo();
-        setWeather(wi);
-    }
     public int whichUserClicked() throws IOException, JSONException {
         String contents = new String((Files.readAllBytes(Paths.get("panels.json"))));
         JSONObject o = new JSONObject(contents);
@@ -461,7 +459,6 @@ public class AppPanel implements Initializable {
         SideBarcolor.setStyle("-fx-background-color: " + SideCol + "; -fx-background-radius: 15 0 0 15;");
         diffColor2.setStyle("-fx-background-color: " + DiffCol + "; -fx-background-radius: 10;");
         diffColor1.setStyle("-fx-background-color: " + DiffCol + "; -fx-background-radius: 10;");
-        refreshButton.setStyle("-fx-background-color: " + DiffCol + ";");
     }
 
     //Nieużywane metody
@@ -482,3 +479,4 @@ public class AppPanel implements Initializable {
         return calendarSource;
     }
 }
+

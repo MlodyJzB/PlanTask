@@ -146,20 +146,20 @@ public class WeatherInfo {
         return (int) Math.round(Double.valueOf(temp));
     }
 
-    public int getSunrise(int day) throws JSONException{
+    public long getSunrise(int day) throws JSONException{
         String temp = "";
         if (day == 0) temp = this.infoJson.getJSONObject("current").get("sunrise").toString();
         else temp = this.infoJson.getJSONArray("daily").getJSONObject(day).get("sunrise").toString();
 
-        return (int) Math.round(Double.valueOf(temp));
+        return (long) Math.round(Double.valueOf(temp));
     }
 
-    public int getSunset(int day) throws JSONException{
+    public long getSunset(int day) throws JSONException{
         String temp = "";
         if (day == 0) temp = this.infoJson.getJSONObject("current").get("sunset").toString();
         else temp = this.infoJson.getJSONArray("daily").getJSONObject(day).get("sunset").toString();
 
-        return (int) Math.round(Double.valueOf(temp));
+        return (long) Math.round(Double.valueOf(temp));
     }
 
     public String getCity() throws JSONException, NonexistentZipCodeException {
