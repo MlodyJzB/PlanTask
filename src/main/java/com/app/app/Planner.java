@@ -37,35 +37,10 @@ public class Planner implements Initializable {
         stage.setMaximized(stage.isMaximized());
     }
 
-//    private void onClick(ActionEvent event) {
-//        DetailedWeekView detailedWeekView = weekPage.getDetailedWeekView();
-//
-//        List<Calendar> calendarList = detailedWeekView.getCalendars();
-//        Calendar calendar = calendarList.get(0);
-//        int j=0;
-//            Map<LocalDate, List<Entry<?>>> entryMap = calendar.findEntries(
-//                    LocalDate.now().with(DayOfWeek.MONDAY),
-//                    LocalDate.now().with(DayOfWeek.SUNDAY),
-//                    ZonedDateTime.now().getZone()
-//            );
-//            List<List<Entry<?>>> entryLists = new ArrayList<>(entryMap.values());
-//            Collections.reverse(entryLists);
-//            for (List<Entry<?>> entryList : entryLists) {
-//                //Different entryList for every day
-//                System.out.print("\n\t" + j++);
-//                int k=0;
-//                for (Entry<?> entry : entryList) {
-//                    //May be multiple entries in one day
-//                    System.out.print("\t" + k++);
-//                    System.out.print("\t" + entry.toString());
-//                }
-//            }
-//    }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         user = User.getInstance();
-        boolean InfoDayNight = Database.getAppearance(user.getUsername());
+        boolean InfoDayNight = user.isDayMode();
         try {
             this.DayMode(InfoDayNight);
         } catch (IOException e) {

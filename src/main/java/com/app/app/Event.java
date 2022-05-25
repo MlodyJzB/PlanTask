@@ -1,11 +1,8 @@
 package com.app.app;
 
-import com.app.loginapp.Database;
 import com.calendarfx.model.Entry;
 import com.calendarfx.model.Interval;
-import javafx.concurrent.Task;
 
-import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 

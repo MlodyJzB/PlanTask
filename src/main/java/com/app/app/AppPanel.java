@@ -95,7 +95,6 @@ public class AppPanel implements Initializable {
 
     public AppPanel() throws NonexistentZipCodeException, JSONException, IOException {}
     private volatile boolean stop = false;
-    private boolean InfoDayNight = true;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -107,15 +106,19 @@ public class AppPanel implements Initializable {
 //            throw new RuntimeException(e);
 //        }
 //        weatherImage.setImage(image1);
-        InfoDayNight = Database.getAppearance(user.getUsername());
+
+        // Getting dayMode from database
+        user.setDayMode(Database.getAppearance(user.getUsername()));
+
         try {
-            ColourFromDataJson(InfoDayNight, true);
+            ColourFromDataJson(user.isDayMode(), true);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
         }
         DayMode();
+
 
         Calendar calendar = detailedDayView.getCalendarSources().get(0).getCalendars().get(0);
         List<Entry<String>> entryList = Database.getUserEntries(user.getUsername(),

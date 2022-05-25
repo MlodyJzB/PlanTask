@@ -114,7 +114,7 @@ public class Settings implements Initializable {
         general = makeBranch("General", root);
         general.setExpanded(true);
 
-        List<String> treeItemsFromGeneral = List.of("account", "appearance", "ics");
+        List<String> treeItemsFromGeneral = List.of("account", "appearance", "import/export calendar");
         for (String treeItemName : treeItemsFromGeneral)
             makeBranch(treeItemName, general);
 
@@ -129,7 +129,7 @@ public class Settings implements Initializable {
             makeBranch(treeItemName, appearance);
 
         List<String> treeItemsFromIcs = List.of("ics");
-        TreeItem<String> ics = treeItemsMap.get("ics");
+        TreeItem<String> ics = treeItemsMap.get("import/export calendar");
         for (String treeItemName : treeItemsFromIcs)
             makeBranch(treeItemName, ics);
 

@@ -137,11 +137,11 @@ public class Weather implements Initializable {
             e.printStackTrace();
         }
         try {
-            String[] colorArray = new AppPanel().colorArray(Database.getAppearance(user.getUsername()));
+            String[] colorArray = new AppPanel().colorArray(user.isDayMode());
             BackCol = colorArray[0];
             NormCol = colorArray[2];
             DiffCol = colorArray[3];
-            DarkMode(Database.getAppearance(user.getUsername()));}
+            DarkMode(user.isDayMode());}
         catch (JSONException | IOException | NonexistentZipCodeException e) {e.printStackTrace();}
     }
     private String BackCol;

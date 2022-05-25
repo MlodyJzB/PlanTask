@@ -24,18 +24,13 @@ public class Appearance implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         user = User.getInstance();
-        dayMode.setSelected(Database.getAppearance(user.getUsername()));
+        dayMode.setSelected(user.isDayMode());
     }
 
     public void setDayMode(ActionEvent event) throws SQLException {
-        if(dayMode.isSelected()){
-            Database.changeAppearance(user.getUsername(), true);
-        }
-        else{
-            Database.changeAppearance(user.getUsername(), false);
-            //List<Boolean> a = Database.getAppearance(user.getUsername());
-
-        }
+        //List<Boolean> a = Database.getAppearance(user.getUsername());
+        Database.changeAppearance(user.getUsername(), dayMode.isSelected());
+        user.setDayMode(dayMode.isSelected());
         Node node = (Node) event.getSource();
         Stage thisStage = (Stage) node.getScene().getWindow();
         thisStage.close();

@@ -2,9 +2,7 @@ package com.app.loginapp;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.StringProperty;
 
-import java.sql.*;
 import java.util.Arrays;
 import java.util.List;
 
@@ -13,6 +11,24 @@ public class User {
     static User user = new User();
 
     private String username, password;
+    private boolean dayMode;
+    private String zipCode;
+
+    public boolean isDayMode() {
+        return dayMode;
+    }
+
+    public void setDayMode(boolean dayMode) {
+        this.dayMode = dayMode;
+    }
+
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+    }
 
     public String getChangedUsername() {
         return changedUsername;
