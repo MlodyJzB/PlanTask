@@ -22,6 +22,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -131,6 +132,8 @@ public class Weather implements Initializable {
             throw new RuntimeException(e);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         try {
             String[] colorArray = new AppPanel().colorArray(Database.getAppearance(user.getUsername()));
@@ -196,7 +199,7 @@ public class Weather implements Initializable {
             this.setDayInfoLabels(6, Icon6);
 
             this.setLocationLabels();
-        } catch (IncorrectZipCodeFormatException | NonexistentZipCodeException e) {
+        } catch (IncorrectZipCodeFormatException | NonexistentZipCodeException | SQLException e) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Incorrect zip code. Try again!", ButtonType.OK);
             alert.showAndWait();
         }
@@ -259,13 +262,15 @@ public class Weather implements Initializable {
 
     }
 
-    public void setLocationLabels() throws NonexistentZipCodeException, JSONException {
+    public void setLocationLabels() throws NonexistentZipCodeException, JSONException, SQLException {
         ZipCodeField.setPromptText(wi.getZipCode());
+        Database.changeZip(user.getUsername(), wi.getZipCode());
         City.setText(wi.getCity());
         this.setLastUpdate();
     }
-    public void setLocationLabels(String zipCode) throws NonexistentZipCodeException, JSONException {
+    public void setLocationLabels(String zipCode) throws NonexistentZipCodeException, JSONException, SQLException {
         ZipCodeField.setPromptText(zipCode);
+        Database.changeZip(user.getUsername(), zipCode);
         City.setText(wi.getCity());
         this.setLastUpdate();
     }

@@ -118,11 +118,164 @@ public class Database {
         executor.submit(task);
         executor.shutdown();
     }
-
+    /*
+    public static void addAppearance(String username) {
+        Task<Void> task = new Task<>() {
+            @Override
+            public Void call() {
+                try {
+                    Connection con = DriverManager.getConnection(connectionString);
+                    PreparedStatement statement = con.prepareStatement("EXEC AddAppearance @UserName = ?, @Mode = ?");
+                    statement.setString(1, username);
+                    statement.setBoolean(2, true);
+                    statement.executeUpdate();
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        };
+        ScheduledExecutorService  executor = new ScheduledThreadPoolExecutor(1);
+        executor.submit(task);
+        executor.shutdown();
+    }
+    public static void addBaseData(String username) {
+        Task<Void> task = new Task<>() {
+            @Override
+            public Void call() {
+                try {
+                    Connection con = DriverManager.getConnection(connectionString);
+                    PreparedStatement statement = con.prepareStatement("EXEC AddData @UserName = ?, @Mode = ?, @ZipCode = ?");
+                    statement.setString(1, username);
+                    statement.setBoolean(2, true);
+                    statement.setString(3, "00-001");
+                    statement.executeUpdate();
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        };
+        ScheduledExecutorService  executor = new ScheduledThreadPoolExecutor(1);
+        executor.submit(task);
+        executor.shutdown();
+    }
+     */
+    public static void changeAppearance(String User, boolean newMode) throws SQLException {
+        Task<Void> task = new Task<>() {
+            @Override
+            public Void call() {
+                try {
+                    Connection con = DriverManager.getConnection(connectionString);
+                    PreparedStatement statement = con.prepareStatement("EXEC ChangeMode @UserName = ?, @NewMode = ?");
+                    statement.setString(1, User);
+                    statement.setBoolean(2, newMode);
+                    statement.executeUpdate();
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        };
+        ScheduledExecutorService  executor = new ScheduledThreadPoolExecutor(1);
+        executor.submit(task);
+        executor.shutdown();
+    }
+    private record getZip(String username) implements Callable<String> {
+        @Override
+        public String call() {
+            try {
+                Connection con = DriverManager.getConnection(connectionString);
+                PreparedStatement statement = con.prepareStatement("EXEC GetZip @UserName = ?");
+                statement.setString(1, username);
+                ResultSet resultSet = statement.executeQuery();
+                resultSet.next();
+                String dayMode = (resultSet.getString("ZipCode"));
+                resultSet.next();
+                statement.close();
+                con.close();
+                return dayMode;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+    }
+    public static String getZipCode(String username) {
+        Callable<String> bol = new getZip(username);
+        ScheduledExecutorService  executor = new ScheduledThreadPoolExecutor(1);
+        Future<String> future = executor.submit(bol);
+        executor.shutdown();
+        String dayMode = null;
+        try {
+            dayMode = future.get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+        return dayMode;
+    }
+    public static void changeZip(String User, String newZip) throws SQLException {
+        Task<Void> task = new Task<>() {
+            @Override
+            public Void call() {
+                try {
+                    Connection con = DriverManager.getConnection(connectionString);
+                    PreparedStatement statement = con.prepareStatement("EXEC ChangeZip @UserName = ?, @NewZip = ?");
+                    statement.setString(1, User);
+                    statement.setString(2, newZip);
+                    statement.executeUpdate();
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        };
+        ScheduledExecutorService  executor = new ScheduledThreadPoolExecutor(1);
+        executor.submit(task);
+        executor.shutdown();
+    }
+    private record getAppearance(String username) implements Callable<Boolean> {
+        @Override
+        public Boolean call() {
+            try {
+                Connection con = DriverManager.getConnection(connectionString);
+                PreparedStatement statement = con.prepareStatement("EXEC GetMode3 @UserName = ?");
+                statement.setString(1, username);
+                ResultSet resultSet = statement.executeQuery();
+                resultSet.next();
+                Boolean dayMode = (resultSet.getBoolean("Mode"));
+                resultSet.next();
+                statement.close();
+                con.close();
+                return dayMode;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+    }
+    public static Boolean getAppearance(String username) {
+        Callable<Boolean> bol = new getAppearance(username);
+        ScheduledExecutorService  executor = new ScheduledThreadPoolExecutor(1);
+        Future<Boolean> future = executor.submit(bol);
+        executor.shutdown();
+        Boolean dayMode = null;
+        try {
+            dayMode = future.get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+        return dayMode;
+    }
+//------------------------------------------------------------------------------EVENTY
     public static void addEvent(Entry<?> entry, String username) {
         Event event = Event.toEvent(entry);
         addEvent(event, username);
-    }
+}
 
     public static void addEvent(Event event, String username) {
         Task<Void> task = new Task<>() {
@@ -148,82 +301,6 @@ public class Database {
         executor.schedule(task, 5, TimeUnit.SECONDS);
         executor.shutdown();
     }
-    public static void addAppearance(String username) {
-        Task<Void> task = new Task<>() {
-            @Override
-            public Void call() {
-                try {
-                    Connection con = DriverManager.getConnection(connectionString);
-                    PreparedStatement statement = con.prepareStatement("EXEC AddAppearance @UserName = ?, @Mode = ?");
-                    statement.setString(1, username);
-                    statement.setBoolean(2, true);
-                    statement.executeUpdate();
-                    statement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-                return null;
-            }
-        };
-        ScheduledExecutorService  executor = new ScheduledThreadPoolExecutor(1);
-        executor.submit(task);
-        executor.shutdown();
-    }
-    public static void changeAppearance(String User, boolean newMode) throws SQLException {
-        Task<Void> task = new Task<>() {
-            @Override
-            public Void call() {
-                try {
-                    Connection con = DriverManager.getConnection(connectionString);
-                    PreparedStatement statement = con.prepareStatement("EXEC ChangeAppearance @UserName = ?, @NewMode = ?");
-                    statement.setString(1, User);
-                    statement.setBoolean(2, newMode);
-                    statement.executeUpdate();
-                    statement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-                return null;
-            }
-        };
-        ScheduledExecutorService  executor = new ScheduledThreadPoolExecutor(1);
-        executor.submit(task);
-        executor.shutdown();
-    }
-
-    private record getAppearance(String username) implements Callable<Boolean> {
-        @Override
-        public Boolean call() {
-            try {
-                Connection con = DriverManager.getConnection(connectionString);
-                PreparedStatement statement = con.prepareStatement("EXEC GetMode1 @UserName = ?");
-                statement.setString(1, username);
-                ResultSet resultSet = statement.executeQuery();
-                resultSet.next();
-                Boolean dayMode = (resultSet.getBoolean("Mode"));
-                statement.close();
-                con.close();
-                return dayMode;
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-    }
-    public static Boolean getAppearance(String username) {
-        Callable<Boolean> bol = new getAppearance(username);
-        ScheduledExecutorService  executor = new ScheduledThreadPoolExecutor(1);
-        Future<Boolean> future = executor.submit(bol);
-        executor.shutdown();
-        Boolean dayMode = null;
-        try {
-            dayMode = future.get();
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
-        return dayMode;
-    }
-
     public static void addEvents(List<Event> eventList, String username) {
         Runnable runnable = () -> {
             try {
