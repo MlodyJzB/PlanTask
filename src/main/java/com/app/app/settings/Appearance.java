@@ -1,14 +1,16 @@
 package com.app.app.settings;
 
-import com.app.WeatherInfo.NonexistentZipCodeException;
-import com.app.app.AppPanel;
+import com.app.app.App;
 import com.app.loginapp.Database;
 import com.app.loginapp.User;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
-import org.json.JSONException;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import java.io.IOException;
 import java.net.URL;
@@ -19,30 +21,33 @@ public class Appearance implements Initializable {
     @FXML
     private CheckBox dayMode;
     private User user;
-    private boolean mode;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         user = User.getInstance();
-        try {
-            mode = new AppPanel().Mode();
-            dayMode.setSelected(mode);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (NonexistentZipCodeException e) {
-            e.printStackTrace();
-        };
+        dayMode.setSelected(Database.getAppearance(user.getUsername()));
     }
 
     public void setDayMode(ActionEvent event) throws SQLException {
         if(dayMode.isSelected()){
             Database.changeAppearance(user.getUsername(), true);
-            System.out.println(Database.getAppearance(user.getUsername()));
         }
         else{
             Database.changeAppearance(user.getUsername(), false);
-            System.out.println(Database.getAppearance(user.getUsername()));
+            //List<Boolean> a = Database.getAppearance(user.getUsername());
+
         }
+        Node node = (Node) event.getSource();
+        Stage thisStage = (Stage) node.getScene().getWindow();
+        thisStage.close();
+        Window owner = Stage.getWindows().stream().filter(Window::isShowing).findFirst().orElse(null);
+        Stage stage1 = (Stage) owner.getScene().getWindow();
+        stage1.close();
+        Platform.runLater( () -> {
+            try {
+                new App().start( new Stage() );
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 }

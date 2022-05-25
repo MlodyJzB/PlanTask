@@ -1,11 +1,9 @@
 package com.app.app;
 
-import com.app.loginapp.LoginPanelController;
+import com.app.loginapp.Database;
+import com.app.loginapp.User;
 import com.calendarfx.model.Entry;
 import com.calendarfx.view.DetailedDayView;
-import com.calendarfx.view.page.MonthPage;
-import com.calendarfx.view.page.WeekPage;
-import com.calendarfx.view.page.YearPage;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,7 +14,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
@@ -27,12 +24,14 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.time.*;
-import java.time.chrono.ChronoLocalDateTime;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.ZonedDateTime;
 import java.util.*;
 
 public class Calendar implements Initializable {
-
+    User user;
     /* adding buttons and labels */
     @FXML
     private Button mon1;
@@ -201,15 +200,14 @@ public class Calendar implements Initializable {
         currentdate = LocalDate.now();
         resizeCalendar(650.0,1045.0,-110, 20,120,80,18);
 
+        user = User.getInstance();
+        boolean InfoDayNight = Database.getAppearance(user.getUsername());
         try {
-            boolean a = (boolean) new LoginPanelController().getInfo(new AppPanel().whichUserClicked()).get(4);
-            this.DayMode(a);
-            darkmode = !a;
-        } catch (JSONException e) {
-            e.printStackTrace();
+            this.DayMode(InfoDayNight);
+            darkmode = !InfoDayNight;
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (com.app.WeatherInfo.NonexistentZipCodeException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
         drawMonth();

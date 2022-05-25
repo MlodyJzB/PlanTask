@@ -1,12 +1,9 @@
 package com.app.app;
 
-import com.app.loginapp.LoginPanelController;
+import com.app.loginapp.Database;
 import com.app.loginapp.User;
-import com.calendarfx.model.Calendar;
-import com.calendarfx.view.*;
+import com.calendarfx.view.DetailedDayView;
 import com.calendarfx.view.page.WeekPage;
-import javafx.collections.ListChangeListener;
-import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
@@ -19,9 +16,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.*;
-import java.util.concurrent.*;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.Objects;
+import java.util.ResourceBundle;
 
 public class Planner implements Initializable {
     User user;
@@ -69,12 +65,14 @@ public class Planner implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         user = User.getInstance();
-        boolean a;
+        boolean InfoDayNight = Database.getAppearance(user.getUsername());
         try {
-            a = (boolean) new LoginPanelController().getInfo(new AppPanel().whichUserClicked()).get(4);
-            this.DayMode(a);
-        } catch (JSONException | IOException |com.app.WeatherInfo.NonexistentZipCodeException e) {e.printStackTrace();}
-
+            this.DayMode(InfoDayNight);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public void bindWeekPage(DetailedDayView detailedDayView) {

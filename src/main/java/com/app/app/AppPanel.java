@@ -4,7 +4,6 @@ import com.app.WeatherInfo.IncorrectZipCodeFormatException;
 import com.app.WeatherInfo.NonexistentZipCodeException;
 import com.app.WeatherInfo.WeatherInfo;
 import com.app.loginapp.Database;
-import com.app.loginapp.LoginPanelController;
 import com.app.loginapp.User;
 import com.calendarfx.model.Calendar;
 import com.calendarfx.model.CalendarSource;
@@ -34,7 +33,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -89,13 +87,9 @@ public class AppPanel implements Initializable {
     private String NormCol;
     private String DiffCol;
 
-    public boolean Mode() throws JSONException, IOException {
-        JSONArray a = new LoginPanelController().getInfo(whichUserClicked());
-        return (Boolean) a.get(4);
-    }
 
-    public String[] colorArray() throws JSONException, IOException {
-        ColourFromDataJson(Mode(), false);
+    public String[] colorArray(boolean mode) throws JSONException, IOException {
+        ColourFromDataJson(mode, false);
         return new String[]{BackCol, SideCol, NormCol, DiffCol};
     }
 
@@ -113,6 +107,15 @@ public class AppPanel implements Initializable {
 //            throw new RuntimeException(e);
 //        }
 //        weatherImage.setImage(image1);
+        InfoDayNight = Database.getAppearance(user.getUsername());
+        try {
+            ColourFromDataJson(InfoDayNight, true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        DayMode();
 
         Calendar calendar = detailedDayView.getCalendarSources().get(0).getCalendars().get(0);
         List<Entry<String>> entryList = Database.getUserEntries(user.getUsername(),
@@ -154,15 +157,6 @@ public class AppPanel implements Initializable {
                 }
             }
         });
-
-        try {
-            JSONArray a = new LoginPanelController().getInfo(whichUserClicked());
-            InfoDayNight = (Boolean) a.get(4);
-            ColourFromDataJson(InfoDayNight, true);
-            DayMode();
-        } catch (IOException | JSONException e) {
-            e.printStackTrace();
-        }
 
         JSONObject jsonCalendar = new JSONObject();
         JSONObject jsonCalendar1 = new JSONObject();
@@ -349,8 +343,7 @@ public class AppPanel implements Initializable {
     }
     public void Exit() {
         stop = true;
-        Stage stage = (Stage) ourWindow.getScene().getWindow();
-        stage.close();
+        System.exit(0);
     }
 
     public void homepanel(ActionEvent event) {

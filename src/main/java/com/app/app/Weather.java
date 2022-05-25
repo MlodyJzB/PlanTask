@@ -3,6 +3,8 @@ package com.app.app;
 import com.app.WeatherInfo.IncorrectZipCodeFormatException;
 import com.app.WeatherInfo.NonexistentZipCodeException;
 import com.app.WeatherInfo.WeatherInfo;
+import com.app.loginapp.Database;
+import com.app.loginapp.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -21,13 +23,14 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.*;
 
 public class Weather implements Initializable {
-
+    User user;
     public Weather() throws NonexistentZipCodeException, JSONException, IOException {}
     public void Exit() {System.exit(0);}
 
@@ -111,6 +114,7 @@ public class Weather implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        user = user.getInstance();
         try {
             this.setLocationLabels();
             this.setDayLabels();
@@ -129,13 +133,15 @@ public class Weather implements Initializable {
             throw new RuntimeException(e);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         try {
-            String[] colorArray = new AppPanel().colorArray();
+            String[] colorArray = new AppPanel().colorArray(Database.getAppearance(user.getUsername()));
             BackCol = colorArray[0];
             NormCol = colorArray[2];
             DiffCol = colorArray[3];
-            DarkMode(new AppPanel().Mode());}
+            DarkMode(Database.getAppearance(user.getUsername()));}
         catch (JSONException | IOException | NonexistentZipCodeException e) {e.printStackTrace();}
     }
     private String BackCol;
@@ -194,7 +200,7 @@ public class Weather implements Initializable {
             this.setDayInfoLabels(6, Icon6);
 
             this.setLocationLabels();
-        } catch (IncorrectZipCodeFormatException | NonexistentZipCodeException e) {
+        } catch (IncorrectZipCodeFormatException | NonexistentZipCodeException | SQLException e) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Incorrect zip code. Try again!", ButtonType.OK);
             alert.showAndWait();
         } catch(IOException e){
@@ -260,13 +266,15 @@ public class Weather implements Initializable {
 
     }
 
-    public void setLocationLabels() throws NonexistentZipCodeException, JSONException {
+    public void setLocationLabels() throws NonexistentZipCodeException, JSONException, SQLException {
         ZipCodeField.setPromptText(wi.getZipCode());
+        Database.changeZip(user.getUsername(), wi.getZipCode());
         City.setText(wi.getCity());
         this.setLastUpdate();
     }
-    public void setLocationLabels(String zipCode) throws NonexistentZipCodeException, JSONException {
+    public void setLocationLabels(String zipCode) throws NonexistentZipCodeException, JSONException, SQLException {
         ZipCodeField.setPromptText(zipCode);
+        Database.changeZip(user.getUsername(), zipCode);
         City.setText(wi.getCity());
         this.setLastUpdate();
     }

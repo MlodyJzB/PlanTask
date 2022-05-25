@@ -4,9 +4,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="318.0" prefWidth="346.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.app.settings.HyperLinkNavigator">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="346.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.app.settings.HyperLinkNavigator">
     <children>
-        <VBox fx:id="vBox" prefHeight="318.0" prefWidth="346.0" spacing="7.0">
+        <VBox fx:id="vBox" prefHeight="500.0" prefWidth="346.0" spacing="7.0" style="-fx-background-color: #424242;">
             <padding>
                 <Insets left="5.0" top="25.0" />
             </padding></VBox>
