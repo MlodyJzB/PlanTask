@@ -87,7 +87,7 @@ public class ToICSFileWritter {
             if (calendarEvent.isFullDay())
             {
                 eventProps.add(new DtStart(formatterDate.format(calendarEvent.getStartDateTime()) + "T" + "000001"));
-                eventProps.add(new DtEnd(formatterDate.format(calendarEvent.getEndDateTime()) + "T" + "240000"));
+                eventProps.add(new DtEnd(formatterDate.format(calendarEvent.getEndDateTime()) + "T" + "235900"));
             }
             else {
                 eventProps.add(new DtStart(formatterDate.format(calendarEvent.getStartDateTime()) + "T" + formatterTime.format(calendarEvent.getStartDateTime())));

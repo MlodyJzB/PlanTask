@@ -45,9 +45,7 @@ import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -81,7 +79,7 @@ public class AppPanel implements Initializable {
     public Label Label1, Label2;
     @FXML
     private DetailedDayView detailedDayView;
-
+    private List<Event> userEventList = new ArrayList<>();
     private String BackCol;
     private String SideCol;
     private String NormCol;
@@ -178,7 +176,9 @@ public class AppPanel implements Initializable {
 
 
         try {
-            Incoming_events_Vbox.getChildren().setAll(add_event(jsonCalendar), add_event(jsonCalendar1));
+            Incoming_events_Vbox.getChildren().setAll(add_event(jsonCalendar));
+            Incoming_events_Vbox.getChildren().add(add_event(jsonCalendar1));
+
         } catch (JSONException | FileNotFoundException | ParseException e) {
             e.printStackTrace();
         }
@@ -491,6 +491,41 @@ public class AppPanel implements Initializable {
 
         calendarSource.getCalendars().addAll(calendar);
         return calendarSource;
+    }
+
+    public void setUserEventsList(DetailedDayView detailedDayView, LocalDate startRangeDate, LocalDate endRangeDate) {
+        com.calendarfx.model.Calendar calendar = detailedDayView.getCalendarSources().get(0).getCalendars().get(0);
+        Map<LocalDate, List<Entry<?>>> entryMap = calendar.findEntries(
+                startRangeDate,
+                endRangeDate,
+                ZonedDateTime.now().getZone()
+        );
+
+        List<List<Entry<?>>> entryLists = new ArrayList<>(entryMap.values());
+        Collections.reverse(entryLists);
+        for (List<Entry<?>> entryList : entryLists) {
+            //Different entryList for every day
+            for (Entry<?> entry : entryList) {
+                //May be multiple entries in one day
+                userEventList.add(Event.toEvent(entry));
+
+            }
+        }
+    }
+    public void incommingEv() throws JSONException, FileNotFoundException, ParseException {
+        setUserEventsList(detailedDayView, LocalDate.now().minusDays(1), LocalDate.now().plusDays(1));
+        Incoming_events_Vbox.getChildren().setAll();
+        for(var ev:userEventList)
+        {
+            if(Duration.between(ev.getEndDateTime(), LocalDateTime.now()).toHours()<=2) {
+                JSONObject jsonCalendar = new JSONObject();
+                jsonCalendar.put("event_name", ev.getTitle());
+                jsonCalendar.put("start", String.valueOf(ev.getStartDateTime().format(DateTimeFormatter.ofPattern("HH:mm"))));
+                jsonCalendar.put("end", String.valueOf(ev.getEndDateTime().format(DateTimeFormatter.ofPattern("HH:mm"))));
+                Incoming_events_Vbox.getChildren().add(add_event(jsonCalendar));
+            }
+
+        }
     }
 }
 
