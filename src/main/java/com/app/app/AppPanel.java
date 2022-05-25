@@ -64,6 +64,8 @@ public class AppPanel implements Initializable {
     @FXML
     private VBox Incoming_events_Vbox;
     @FXML
+    private Button weatherTitleButton;
+    @FXML
     private Label Temp, MinTemp, MaxTemp, Clouds, Wind, Hum, Sunrise, Sunset;
     @FXML
     private ImageView WeatherIcon;
@@ -76,7 +78,7 @@ public class AppPanel implements Initializable {
     @FXML
     private MonthView monthView;
     @FXML
-    public Label Label1, Label2, Label3;
+    public Label Label1, Label2;
     @FXML
     private DetailedDayView detailedDayView;
 
@@ -267,6 +269,19 @@ public class AppPanel implements Initializable {
         enteredButton.setStyle(enteredButtonStyle);
     }
 
+    @FXML
+    private void onMouseEnteredWeather(MouseEvent event) {
+        Button enteredButton = (Button) event.getSource();
+        enteredButtonStyle = enteredButton.getStyle();
+        enteredButton.setStyle("-fx-background-color: "+SideCol+"; -fx-background-radius: 10;");
+    }
+
+    @FXML
+    private void onMouseExitedWeather(MouseEvent event) {
+        Button enteredButton = (Button) event.getSource();
+        enteredButton.setStyle(enteredButtonStyle);
+    }
+
 
     @FXML
     private void Minimize_clicked() {
@@ -421,7 +436,7 @@ public class AppPanel implements Initializable {
     public void ColourFromDataJson(boolean DayMode, boolean workingOnApp) throws IOException, JSONException {
         String contents = new String((Files.readAllBytes(Paths.get("colors.json"))));
         JSONObject o = new JSONObject(contents);
-        Label[] labelColors = new Label[]{Label1, Label2, Label3};
+        Label[] labelColors = new Label[]{Label1, Label2};
         if(DayMode) {
             NormCol = (String) o.get(("BrightColorNormal"));
             DiffCol = (String) o.get(("BrightColorDifferent"));
@@ -456,6 +471,7 @@ public class AppPanel implements Initializable {
         backgroundColor.setStyle("-fx-background-color: " + BackCol + "; -fx-background-radius: 0 15 15 0;");
         SideBarcolor.setStyle("-fx-background-color: " + SideCol + "; -fx-background-radius: 15 0 0 15;");
         diffColor2.setStyle("-fx-background-color: " + DiffCol + "; -fx-background-radius: 10;");
+        weatherTitleButton.setStyle("-fx-background-color: " + DiffCol + "; -fx-background-radius: 10;");
         diffColor1.setStyle("-fx-background-color: " + DiffCol + "; -fx-background-radius: 10;");
     }
 

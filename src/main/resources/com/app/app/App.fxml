@@ -70,15 +70,15 @@
                                              <children>
                                                 <VBox layoutX="-5.0" layoutY="37.0" prefWidth="150.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                    <children>
-                                                      <HBox prefHeight="150.0" prefWidth="150.0">
-                                                         <children>
-                                                            <Label fx:id="Label2" alignment="BASELINE_CENTER" prefHeight="35.0" prefWidth="300.0" stylesheets="@LabelColor.css" text="Weather">
+                                                      <Button fx:id="weatherTitleButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#weather" onMouseEntered="#onMouseEnteredWeather" onMouseExited="#onMouseExitedWeather" prefHeight="35.0" prefWidth="300.0" style="-fx-background-color: #ffbf70; -fx-background-radius: 10;">
+                                                         <graphic>
+                                                            <Label alignment="BASELINE_CENTER" prefHeight="35.0" prefWidth="96.0" stylesheets="@LabelColor.css" text="Weather">
                                                                <font>
                                                                   <Font size="24.0" />
                                                                </font>
                                                             </Label>
-                                                         </children>
-                                                      </HBox>
+                                                         </graphic>
+                                                      </Button>
                                                       <HBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="150.0">
                                                          <children>
                                                             <ImageView fx:id="WeatherIcon" fitHeight="70.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true">
@@ -238,7 +238,7 @@
                                                 <Insets />
                                              </opaqueInsets>
                                           </ScrollPane>
-                                          <Label fx:id="Label3" alignment="BASELINE_CENTER" layoutX="-28.0" layoutY="11.0" prefHeight="27.0" prefWidth="275.0" stylesheets="@LabelColor.css" text="Incoming" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                          <Label fx:id="Label2" alignment="BASELINE_CENTER" layoutX="-28.0" layoutY="11.0" prefHeight="27.0" prefWidth="275.0" stylesheets="@LabelColor.css" text="Incoming" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                              <font>
                                                 <Font size="24.0" />
                                              </font>
