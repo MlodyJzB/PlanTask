@@ -95,14 +95,12 @@ public class AppPanel implements Initializable {
 
     public AppPanel() throws NonexistentZipCodeException, JSONException, IOException {}
     private volatile boolean stop = false;
-    private boolean InfoDayNight = true;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         user = User.getInstance();
-        InfoDayNight = Database.getAppearance(user.getUsername());
         try {
-            ColourFromDataJson(InfoDayNight, true);
+            ColourFromDataJson(user.isDayMode(), true);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {
