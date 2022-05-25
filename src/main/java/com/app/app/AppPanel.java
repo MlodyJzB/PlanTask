@@ -6,7 +6,6 @@ import com.app.WeatherInfo.WeatherInfo;
 import com.app.loginapp.Database;
 import com.app.loginapp.User;
 import com.calendarfx.model.Calendar;
-import com.calendarfx.model.CalendarSource;
 import com.calendarfx.model.Entry;
 import com.calendarfx.view.DetailedDayView;
 import com.calendarfx.view.MonthView;
@@ -79,7 +78,7 @@ public class AppPanel implements Initializable {
     public Label Label1, Label2;
     @FXML
     private DetailedDayView detailedDayView;
-    private List<Event> userEventList = new ArrayList<>();
+    private Map<LocalDate, List<Entry<?>>> userEventsMap = new HashMap<>();
     private String BackCol;
     private String SideCol;
     private String NormCol;
@@ -475,47 +474,23 @@ public class AppPanel implements Initializable {
         diffColor1.setStyle("-fx-background-color: " + DiffCol + "; -fx-background-radius: 10;");
     }
 
-    //Nieużywane metody
-
-    private CalendarSource AddNewEntries(String addedEvent, LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime){
-        Calendar calendar = new Calendar("Test");
-        CalendarSource calendarSource = new CalendarSource("source");
-
-        Entry<String> entry = new Entry<>(addedEvent);
-        entry.setInterval(startDate);
-        entry.changeStartDate(startDate);
-        entry.changeEndDate(endDate);
-        entry.changeStartTime(startTime);
-        entry.changeEndTime(endTime);
-        calendar.addEntry(entry);
-
-        calendarSource.getCalendars().addAll(calendar);
-        return calendarSource;
-    }
-
-    public void setUserEventsList(DetailedDayView detailedDayView, LocalDate startRangeDate, LocalDate endRangeDate) {
+    public void setUserEventsMap(DetailedDayView detailedDayView, LocalDate startRangeDate, LocalDate endRangeDate) {
         com.calendarfx.model.Calendar calendar = detailedDayView.getCalendarSources().get(0).getCalendars().get(0);
-        Map<LocalDate, List<Entry<?>>> entryMap = calendar.findEntries(
+        userEventsMap = calendar.findEntries(
                 startRangeDate,
                 endRangeDate,
                 ZonedDateTime.now().getZone()
         );
-
-        List<List<Entry<?>>> entryLists = new ArrayList<>(entryMap.values());
-        Collections.reverse(entryLists);
-        for (List<Entry<?>> entryList : entryLists) {
-            //Different entryList for every day
-            for (Entry<?> entry : entryList) {
-                //May be multiple entries in one day
-                userEventList.add(Event.toEvent(entry));
-
-            }
-        }
     }
     public void incommingEv() throws JSONException, FileNotFoundException, ParseException {
-        setUserEventsList(detailedDayView, LocalDate.now().minusDays(1), LocalDate.now().plusDays(1));
+        setUserEventsMap(detailedDayView, LocalDate.now().minusDays(1), LocalDate.now().plusDays(1));
+        List<Entry<?>> userEntriesList = userEventsMap.get(LocalDate.now());
+        List<Event> userEventsList = new ArrayList<>();
+        for (Entry<?> entry: userEntriesList)
+            userEventsList.add(Event.toEvent(entry));
+
         Incoming_events_Vbox.getChildren().setAll();
-        for(var ev:userEventList)
+        for(var ev: userEventsList)
         {
             if(Duration.between(ev.getEndDateTime(), LocalDateTime.now()).toHours()<=2) {
                 JSONObject jsonCalendar = new JSONObject();
