@@ -19,6 +19,7 @@ import org.json.JSONException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -195,6 +196,9 @@ public class Weather implements Initializable {
             this.setLocationLabels();
         } catch (IncorrectZipCodeFormatException | NonexistentZipCodeException e) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Incorrect zip code. Try again!", ButtonType.OK);
+            alert.showAndWait();
+        } catch(IOException e){
+            Alert alert = new Alert(Alert.AlertType.WARNING, "No internet connection!", ButtonType.OK);
             alert.showAndWait();
         }
     }
