@@ -156,6 +156,14 @@ public class Calendar implements Initializable {
             }
         }
         drawNewCall();
+        Stage stage = (Stage) minimalize_button.getScene().getWindow();
+
+        if(stage.getWidth()>980 && stage.getHeight()>660 ) {
+            resizeCalendar(stage.getHeight(),stage.getWidth(),-210,20,180,90,21);
+        }
+        else {
+            resizeCalendar(650.0,1045.0,-110, 20,120,80,18);
+        }
     }
 
     @Override
@@ -198,7 +206,7 @@ public class Calendar implements Initializable {
         buttonList.add(mon6);
         buttonList.add(tue6);
         currentdate = LocalDate.now();
-        resizeCalendar(650.0,1045.0,-110, 20,120,80,18);
+        //resizeCalendar(650.0,1045.0,-110, 20,120,80,18);
 
         user = User.getInstance();
         boolean InfoDayNight = user.isDayMode();
@@ -532,7 +540,8 @@ public class Calendar implements Initializable {
 
         if(stage.isMaximized()) {
 
-            resizeCalendar(pane3.getHeight(),pane3.getWidth(),-210,20,180,90,21);
+            //resizeCalendar(pane3.getHeight(),pane3.getWidth(),-210,20,180,90,21);
+            resizeCalendar(stage.getHeight(),stage.getWidth(),-210,20,180,90,21);
         }
         else
         {
