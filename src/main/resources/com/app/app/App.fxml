@@ -271,6 +271,14 @@
                         <HBox fx:id="diffColor1" prefHeight="30.0" style="-fx-background-color: #ffbf70; -fx-background-radius: 10;">
                            <children>
                               <AnchorPane prefHeight="25.0" prefWidth="600.0" />
+                              <ImageView fx:id="minimalize_button1" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../Images/mini1.png" />
+                                 </image>
+                                 <HBox.margin>
+                                    <Insets right="5.0" top="5.0" />
+                                 </HBox.margin>
+                              </ImageView>
                               <ImageView fx:id="minimalize_button" fitHeight="24.0" fitWidth="24.0" onMouseReleased="#Minimize_clicked" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../../../Images/max_min.jpg" />

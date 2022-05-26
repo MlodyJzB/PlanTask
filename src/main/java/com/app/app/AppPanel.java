@@ -11,6 +11,7 @@ import com.calendarfx.view.DetailedDayView;
 import com.calendarfx.view.MonthView;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -44,7 +45,10 @@ import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.*;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -78,11 +82,10 @@ public class AppPanel implements Initializable {
     public Label Label1, Label2;
     @FXML
     private DetailedDayView detailedDayView;
+    @FXML
+    private ImageView minimalize_button, minimalize_button1;
     private Map<LocalDate, List<Entry<?>>> userEventsMap = new HashMap<>();
-    private String BackCol;
-    private String SideCol;
-    private String NormCol;
-    private String DiffCol;
+    private String BackCol, SideCol, NormCol, DiffCol;
 
     private SimpleDateFormat dateFormater = new SimpleDateFormat("HH:mm");
 
@@ -99,14 +102,19 @@ public class AppPanel implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         user = User.getInstance();
         try {
-            ColourFromDataJson(user.isDayMode(), true);
+            ColourFromDataJson(Database.getAppearance(user.getUsername()), true);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
         }
         DayMode();
-
+        minimalize_button1.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent me) {
+                Stage primaryStage = (Stage) minimalize_button1.getScene().getWindow();
+                primaryStage.setIconified(true);
+            }
+        });
         Calendar calendar = detailedDayView.getCalendarSources().get(0).getCalendars().get(0);
         List<Entry<String>> entryList = Database.getUserEntries(user.getUsername(),
                 LocalDateTime.now().minusYears(1), LocalDateTime.now().plusYears(1));
@@ -250,18 +258,14 @@ public class AppPanel implements Initializable {
         });
         tr1.start();
     }
-    @FXML
-    private ImageView minimalize_button;
 
     private String enteredButtonStyle;
-
     @FXML
     private void onMouseEntered(MouseEvent event) {
         Button enteredButton = (Button) event.getSource();
         enteredButtonStyle = enteredButton.getStyle();
-        enteredButton.setStyle("-fx-background-color: "+DiffCol);
+        enteredButton.setStyle("-fx-background-color: "+DiffCol + "; -fx-background-radius: 15;");
     }
-
     @FXML
     private void onMouseExited(MouseEvent event) {
         Button enteredButton = (Button) event.getSource();

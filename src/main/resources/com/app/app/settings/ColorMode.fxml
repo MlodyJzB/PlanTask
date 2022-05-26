@@ -16,7 +16,7 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <CheckBox fx:id="dayMode" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#setDayMode" prefHeight="40.0" prefWidth="400.0" style="-fx-background-color: #828281  #828281;" text="DayMode">
+            <CheckBox fx:id="dayMode" alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="40.0" prefWidth="400.0" style="-fx-background-color: #828281  #828281;" text="DayMode">
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>

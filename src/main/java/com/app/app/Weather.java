@@ -6,11 +6,13 @@ import com.app.WeatherInfo.WeatherInfo;
 import com.app.loginapp.Database;
 import com.app.loginapp.User;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -21,7 +23,6 @@ import org.json.JSONException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -43,10 +44,10 @@ public class Weather implements Initializable {
 
     @FXML
     private Label City, Day1, Day2, Day3, Day4, Day5, Day6, LastUpdate;
-
     @FXML
     private Label ZipCodeLabel, CityLabel, LastUpdateLabel;
-
+    @FXML
+    private ImageView minimalize_button;
     // Today
     @FXML
     private Label Wind11, Clouds11, Hum11, Pres11;
@@ -136,17 +137,21 @@ public class Weather implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        minimalize_button.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent me) {
+                Stage primaryStage = (Stage) minimalize_button.getScene().getWindow();
+                primaryStage.setIconified(true);
+            }
+        });
         try {
-            String[] colorArray = new AppPanel().colorArray(user.isDayMode());
+            String[] colorArray = new AppPanel().colorArray(Database.getAppearance(user.getUsername()));
             BackCol = colorArray[0];
             NormCol = colorArray[2];
             DiffCol = colorArray[3];
-            DarkMode(user.isDayMode());}
+            DarkMode(Database.getAppearance(user.getUsername()));}
         catch (JSONException | IOException | NonexistentZipCodeException e) {e.printStackTrace();}
     }
-    private String BackCol;
-    private String NormCol;
-    private String DiffCol;
+    private String BackCol, NormCol, DiffCol;
     @FXML
     private AnchorPane diffColor1;
     @FXML

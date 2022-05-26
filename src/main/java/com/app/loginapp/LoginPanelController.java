@@ -1,7 +1,6 @@
 package com.app.loginapp;
 
 import com.app.app.App;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -137,14 +136,12 @@ public class LoginPanelController implements Initializable {
         writter.close();
         Window owner = Stage.getWindows().stream().filter(Window::isShowing).findFirst().orElse(null);
         Stage stage1 = (Stage) owner.getScene().getWindow();
+        try {
+            new LoginApplication().start( new Stage() );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         stage1.close();
-        Platform.runLater( () -> {
-            try {
-                new LoginApplication().start( new Stage() );
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
     }
 
     @FXML
@@ -153,8 +150,10 @@ public class LoginPanelController implements Initializable {
         Button button = (Button) event.getSource();
         String fxId = button.getId();
         int userNum = Integer.parseInt(fxId.substring(fxId.length()-1));
-
-        PutJsonDefault(userNum);
+        String UserExist =(String) (getInfo(userNum).get(3));
+        if(UserExist!=""){
+            PutJsonDefault(userNum);
+        }
     }
 
     @FXML

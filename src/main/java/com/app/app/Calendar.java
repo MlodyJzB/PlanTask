@@ -5,12 +5,14 @@ import com.app.loginapp.User;
 import com.calendarfx.model.Entry;
 import com.calendarfx.view.DetailedDayView;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -113,8 +115,10 @@ public class Calendar implements Initializable {
     private Button previousb;
     @FXML
     private AnchorPane pane3;
-    private boolean darkmode=false;
 
+    @FXML
+    private ImageView minimalize_button1;
+    private boolean darkmode=false;
     private List<Button> buttonList = new ArrayList<>();
 
     @FXML
@@ -205,11 +209,17 @@ public class Calendar implements Initializable {
         buttonList.add(sun5);
         buttonList.add(mon6);
         buttonList.add(tue6);
+        minimalize_button1.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent me) {
+                Stage primaryStage = (Stage) minimalize_button1.getScene().getWindow();
+                primaryStage.setIconified(true);
+            }
+        });
         currentdate = LocalDate.now();
         //resizeCalendar(650.0,1045.0,-110, 20,120,80,18);
 
         user = User.getInstance();
-        boolean InfoDayNight = user.isDayMode();
+        boolean InfoDayNight = Database.getAppearance(user.getUsername());
         try {
             this.DayMode(InfoDayNight);
             darkmode = !InfoDayNight;
@@ -276,7 +286,6 @@ public class Calendar implements Initializable {
     }
 
     public void getDay(ActionEvent actionEvent) {
-
         Stage stage = (Stage) minimalize_button.getScene().getWindow();
         if (!((Button) actionEvent.getSource()).getText().equals("")) {
             LocalDate dayDate =getButtonDate((Button) actionEvent.getSource());
@@ -539,8 +548,6 @@ public class Calendar implements Initializable {
         stage.setMaximized(stage.isMaximized());
 
         if(stage.isMaximized()) {
-
-            //resizeCalendar(pane3.getHeight(),pane3.getWidth(),-210,20,180,90,21);
             resizeCalendar(stage.getHeight(),stage.getWidth(),-210,20,180,90,21);
         }
         else
@@ -573,5 +580,19 @@ public class Calendar implements Initializable {
         pane3.setStyle("-fx-background-color: " + BackCol + "; -fx-background-radius: 0 15 15 0;");
         diffColor1.setStyle("-fx-background-color: " + DiffCol + "; -fx-background-radius: 10;");
         normalColor.setStyle("-fx-background-color: " + NormCol + "; -fx-background-radius: 10;");
+    }
+    private String enteredButtonStyle;
+
+    @FXML
+    private void onMouseEntered(MouseEvent event) {
+        Button enteredButton = (Button) event.getSource();
+        enteredButtonStyle = enteredButton.getStyle();
+        enteredButton.setStyle("-fx-background-color:  rgba(0, 0, 0, 0.1)");
+    }
+
+    @FXML
+    private void onMouseExited(MouseEvent event) {
+        Button enteredButton = (Button) event.getSource();
+        enteredButton.setStyle(enteredButtonStyle);
     }
 }

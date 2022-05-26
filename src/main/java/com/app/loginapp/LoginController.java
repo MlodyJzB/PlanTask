@@ -1,6 +1,5 @@
 package com.app.loginapp;
 
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -71,16 +70,13 @@ public class LoginController implements Initializable
             //zamykam LoginPanel1
             Window owner = Stage.getWindows().stream().filter(Window::isShowing).findFirst().orElse(null);
             Stage stage1 = (Stage) owner.getScene().getWindow();
-            stage1.close();
-
             //otwieram update'owany loginControllerPanel
-            Platform.runLater( () -> {
-                try {
-                    new LoginApplication().start( new Stage() );
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
+            try {
+                new LoginApplication().start( new Stage() );
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            stage1.close();
         }
         else  {
             loginStatusText.setStyle("-fx-fill: #b71834");

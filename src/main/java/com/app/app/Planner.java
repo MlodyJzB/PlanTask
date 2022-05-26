@@ -4,9 +4,11 @@ import com.app.loginapp.Database;
 import com.app.loginapp.User;
 import com.calendarfx.view.DetailedDayView;
 import com.calendarfx.view.page.WeekPage;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import org.json.JSONException;
@@ -27,6 +29,8 @@ public class Planner implements Initializable {
     private AnchorPane diffcolor, pane3;
     @FXML
     private WeekPage weekPage;
+    @FXML
+    private ImageView minimalize_button1;
     private String NormCol, DiffCol, BackCol;
     @FXML
     private void Minimize_clicked() {
@@ -40,7 +44,7 @@ public class Planner implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         user = User.getInstance();
-        boolean InfoDayNight = user.isDayMode();
+        boolean InfoDayNight = Database.getAppearance(user.getUsername());
         try {
             this.DayMode(InfoDayNight);
         } catch (IOException e) {
@@ -48,6 +52,12 @@ public class Planner implements Initializable {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        minimalize_button1.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent me) {
+                Stage primaryStage = (Stage) minimalize_button1.getScene().getWindow();
+                primaryStage.setIconified(true);
+            }
+        });
     }
 
     public void bindWeekPage(DetailedDayView detailedDayView) {

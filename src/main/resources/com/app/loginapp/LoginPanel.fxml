@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -65,10 +66,22 @@
                   <Image url="@../../../Images/img.png" />
                </image>
             </ImageView>
-            <TextField fx:id="UserName1" alignment="TOP_CENTER" editable="false" layoutX="39.0" layoutY="292.0" prefHeight="25.0" prefWidth="108.0" style="-fx-background-color: #916734;" />
-            <TextField fx:id="UserName2" alignment="TOP_CENTER" editable="false" layoutX="177.0" layoutY="292.0" prefHeight="25.0" prefWidth="108.0" style="-fx-background-color: #916734;" />
-            <TextField fx:id="UserName3" alignment="TOP_CENTER" editable="false" layoutX="320.0" layoutY="292.0" prefHeight="25.0" prefWidth="108.0" style="-fx-background-color: #916734;" />
-            <TextField fx:id="UserName4" alignment="TOP_CENTER" editable="false" layoutX="453.0" layoutY="292.0" prefHeight="25.0" prefWidth="108.0" style="-fx-background-color: #916734 #916734;" />
+            <TextField fx:id="UserName1" alignment="TOP_CENTER" editable="false" layoutX="39.0" layoutY="292.0" prefHeight="25.0" prefWidth="108.0" style="-fx-background-color: #916734;">
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor></TextField>
+            <TextField fx:id="UserName2" alignment="TOP_CENTER" editable="false" layoutX="177.0" layoutY="292.0" prefHeight="25.0" prefWidth="108.0" style="-fx-background-color: #916734;">
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor></TextField>
+            <TextField fx:id="UserName3" alignment="TOP_CENTER" editable="false" layoutX="320.0" layoutY="292.0" prefHeight="25.0" prefWidth="108.0" style="-fx-background-color: #916734;">
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor></TextField>
+            <TextField fx:id="UserName4" alignment="TOP_CENTER" editable="false" layoutX="453.0" layoutY="292.0" prefHeight="25.0" prefWidth="108.0" style="-fx-background-color: #916734 #916734;">
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor></TextField>
             <AnchorPane layoutX="10.0" layoutY="2.0" prefHeight="25.0" prefWidth="30.0" style="-fx-background-color: #dba563; -fx-background-radius: 5;" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0">
                <children>
                   <ImageView fx:id="exit" fitHeight="31.0" fitWidth="32.0" layoutX="1.0" layoutY="1.0" onMouseReleased="#Exit" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
