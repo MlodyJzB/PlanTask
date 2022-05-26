@@ -530,12 +530,15 @@ public class AppPanel implements Initializable {
     }
     public void incomingEv() throws JSONException, FileNotFoundException, ParseException {
         setUserEventsMap(detailedDayView, LocalDate.now().minusDays(1), LocalDate.now().plusDays(1));
-        List<Entry<?>> userEntriesList = userEventsMap.get(LocalDate.now());
+        List<Entry<?>> userEntriesList = new ArrayList<>();
+         userEntriesList = userEventsMap.get(LocalDate.now());
         List<Event> userEventsList = new ArrayList<>();
-        for (Entry<?> entry: userEntriesList)
-            userEventsList.add(Event.toEvent(entry));
-
+        if(!(userEntriesList==null)) {
+            for (Entry<?> entry : userEntriesList)
+                userEventsList.add(Event.toEvent(entry));
+        }
         Incoming_events_Vbox.getChildren().setAll();
+
         for(var ev: userEventsList)
         {
             if((Duration.between(ev.getStartDateTime(), LocalDateTime.now()).toHours()<=2 &&
