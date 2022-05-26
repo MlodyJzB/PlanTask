@@ -9,6 +9,8 @@ import com.calendarfx.model.Calendar;
 import com.calendarfx.model.Entry;
 import com.calendarfx.view.DetailedDayView;
 import com.calendarfx.view.MonthView;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -156,7 +158,7 @@ public class AppPanel implements Initializable {
             }
         });
 
-        JSONObject jsonCalendar = new JSONObject();
+        /*JSONObject jsonCalendar = new JSONObject();
         JSONObject jsonCalendar1 = new JSONObject();
         List<JSONObject> listOfEvents = new ArrayList();
         try {
@@ -164,7 +166,7 @@ public class AppPanel implements Initializable {
             jsonCalendar.put("start", "10:30");
             jsonCalendar.put("end", "12:45");
             jsonCalendar.put("description", "description");
-            jsonCalendar1.put("event_name", "shopping");
+            jsonCalendar1.put("event_name", "WYK - Programowanie aplikacyjne");
             jsonCalendar1.put("start", "13:00");
             jsonCalendar1.put("end", "14:45");
             jsonCalendar1.put("description", "description");
@@ -172,7 +174,7 @@ public class AppPanel implements Initializable {
             e.printStackTrace();
         }
         listOfEvents.add(jsonCalendar);
-        listOfEvents.add(jsonCalendar1);
+        listOfEvents.add(jsonCalendar1);*/
 
 
         /*
@@ -183,9 +185,9 @@ public class AppPanel implements Initializable {
 
 
         try {
-            Incoming_events_Vbox.getChildren().setAll(add_event(jsonCalendar));
-            Incoming_events_Vbox.getChildren().add(add_event(jsonCalendar1));
-
+            //Incoming_events_Vbox.getChildren().setAll(add_event(jsonCalendar));
+            //Incoming_events_Vbox.getChildren().add(add_event(jsonCalendar1));
+            incomingEv();
         } catch (JSONException | FileNotFoundException | ParseException e) {
             e.printStackTrace();
         }
@@ -257,6 +259,22 @@ public class AppPanel implements Initializable {
             }
         });
         tr1.start();
+
+        Timeline timeline = new Timeline(
+                new KeyFrame(javafx.util.Duration.seconds(60),
+                        e -> {
+                            try {
+                                incomingEv();
+                            } catch (JSONException ex) {
+                                ex.printStackTrace();
+                            } catch (FileNotFoundException ex) {
+                                ex.printStackTrace();
+                            } catch (ParseException ex) {
+                                ex.printStackTrace();
+                            }
+                        }));
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
     }
 
     private String enteredButtonStyle;
@@ -358,12 +376,12 @@ public class AppPanel implements Initializable {
     }
 
     public HBox add_event(JSONObject j) throws JSONException, FileNotFoundException, ParseException {
-        String img = j.getString("event_name");
-        Image image1 = new Image(new FileInputStream("src/main/resources/Images/"+img+".png"));
-        ImageView image = new ImageView(image1);
+        //String img = j.getString("event_name");
+        //Image image1 = new Image(new FileInputStream("src/main/resources/Images/"+img+".png"));
+        //ImageView image = new ImageView(image1);
         AnchorPane pane1 = new AnchorPane();
-        Label to= new Label(j.getString("start"));
-        Label from= new Label(j.getString("end"));
+        Label to= new Label(j.getString("event_name"));
+        Label from= new Label(j.getString("start"));
         Label duration= new Label();
 
         DateFormat df = new SimpleDateFormat("HH:mm");
@@ -376,15 +394,15 @@ public class AppPanel implements Initializable {
         duration.setText(dura+":"+dura1);
 
         pane1.setPrefSize(60, 46);
-        AnchorPane.setTopAnchor(image, 0.0);
-        AnchorPane.setLeftAnchor(image, 0.0);
-        image.setFitHeight(46.0);
-        image.setFitWidth(46.0);
-        pane1.getChildren().add(image);
+        //AnchorPane.setTopAnchor(image, 0.0);
+        //AnchorPane.setLeftAnchor(image, 0.0);
+        //image.setFitHeight(46.0);
+        //image.setFitWidth(46.0);
+        //pane1.getChildren().add(image);
 
         to.setFont(new Font("Serif", 18));
         to.setLayoutY(46.0);
-        to.setPrefSize(200, 46);
+        to.setPrefSize(400, 46);
         to.setAlignment(Pos.CENTER);
 
         from.setFont(new Font("Serif", 18));
@@ -486,7 +504,7 @@ public class AppPanel implements Initializable {
                 ZonedDateTime.now().getZone()
         );
     }
-    public void incommingEv() throws JSONException, FileNotFoundException, ParseException {
+    public void incomingEv() throws JSONException, FileNotFoundException, ParseException {
         setUserEventsMap(detailedDayView, LocalDate.now().minusDays(1), LocalDate.now().plusDays(1));
         List<Entry<?>> userEntriesList = userEventsMap.get(LocalDate.now());
         List<Event> userEventsList = new ArrayList<>();
@@ -496,7 +514,10 @@ public class AppPanel implements Initializable {
         Incoming_events_Vbox.getChildren().setAll();
         for(var ev: userEventsList)
         {
-            if(Duration.between(ev.getEndDateTime(), LocalDateTime.now()).toHours()<=2) {
+            if((Duration.between(ev.getStartDateTime(), LocalDateTime.now()).toHours()<=2 &&
+                    LocalDateTime.now().isBefore(ev.getStartDateTime())) ||
+                    (Duration.between(ev.getStartDateTime(), LocalDateTime.now()).toMinutes()<=10) &&
+                            LocalDateTime.now().isAfter(ev.getStartDateTime()) ) {
                 JSONObject jsonCalendar = new JSONObject();
                 jsonCalendar.put("event_name", ev.getTitle());
                 jsonCalendar.put("start", String.valueOf(ev.getStartDateTime().format(DateTimeFormatter.ofPattern("HH:mm"))));

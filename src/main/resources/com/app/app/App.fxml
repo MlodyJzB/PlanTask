@@ -199,14 +199,9 @@
                                                          <children>
                                                             <HBox prefHeight="46.0" prefWidth="400.0" style="-fx-background-radius: 10; -fx-background-color: #ffbf70;">
                                                                <children>
-                                                                  <ImageView fitHeight="47.0" fitWidth="63.0" pickOnBounds="true" preserveRatio="true">
-                                                                     <image>
-                                                                        <Image url="@../../../Images/work.png" />
-                                                                     </image>
-                                                                  </ImageView>
                                                                   <AnchorPane prefHeight="66.0" prefWidth="300.0">
                                                                      <children>
-                                                                        <Text layoutX="7.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="From" wrappingWidth="63.999923706054744">
+                                                                        <Text layoutX="7.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="From" wrappingWidth="63.999923706054744" AnchorPane.leftAnchor="7.0">
                                                                            <font>
                                                                               <Font size="18.0" />
                                                                            </font>
