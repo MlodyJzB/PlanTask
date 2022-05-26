@@ -1,6 +1,5 @@
 package com.app.app;
 
-import com.app.loginapp.Database;
 import com.app.loginapp.User;
 import com.calendarfx.view.DetailedDayView;
 import com.calendarfx.view.page.WeekPage;
@@ -44,7 +43,7 @@ public class Planner implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         user = User.getInstance();
-        boolean InfoDayNight = Database.getAppearance(user.getUsername());
+        boolean InfoDayNight = user.isDayMode();
         try {
             this.DayMode(InfoDayNight);
         } catch (IOException e) {

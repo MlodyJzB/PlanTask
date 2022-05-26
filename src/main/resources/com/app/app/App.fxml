@@ -38,7 +38,7 @@
                                                    <children>
                                                       <Label fx:id="Label1" alignment="BASELINE_CENTER" layoutX="-7.0" layoutY="3.0" prefHeight="30.0" prefWidth="134.0" style="-fx-background-radius: 10;" stylesheets="@LabelColor.css" text="PlanTask" AnchorPane.bottomAnchor="-0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                          <font>
-                                                            <Font size="24.0" />
+                                                            <Font size="20.0" />
                                                          </font>
                                                          <graphic>
                                                             <ImageView fitHeight="30.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
@@ -74,7 +74,7 @@
                                                          <graphic>
                                                             <Label alignment="BASELINE_CENTER" prefHeight="35.0" prefWidth="96.0" stylesheets="@LabelColor.css" text="Weather">
                                                                <font>
-                                                                  <Font size="24.0" />
+                                                                  <Font size="20.0" />
                                                                </font>
                                                             </Label>
                                                          </graphic>
@@ -190,59 +190,192 @@
                                        <opaqueInsets>
                                           <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                        </opaqueInsets>
+                                       <padding>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </padding>
+                                    </AnchorPane>
+                                    <VBox prefHeight="200.0" prefWidth="400.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <children>
-                                          <ScrollPane fx:id="normColor51" fitToWidth="true" hbarPolicy="NEVER" layoutX="27.0" layoutY="49.0" prefHeight="136.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
+                                          <Label fx:id="Label2" alignment="BASELINE_CENTER" prefHeight="40.0" prefWidth="700.0" stylesheets="@LabelColor.css" text="Incoming">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Label>
+                                          <HBox prefHeight="170.0" style="-fx-background-color: rgb(0,0,0,0.1); -fx-background-radius: 5;">
+                                             <children>
+                                                <Label fx:id="Label21" alignment="BASELINE_CENTER" prefHeight="100.0" prefWidth="300.0" stylesheets="@LabelColor.css" text="Event Name">
+                                                   <padding>
+                                                      <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                                   </padding>
+                                                </Label>
+                                                <Label fx:id="Label211" alignment="BASELINE_CENTER" prefHeight="100.0" prefWidth="200.0" stylesheets="@LabelColor.css" text="Duration">
+                                                   <padding>
+                                                      <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                                   </padding>
+                                                </Label>
+                                                <Label fx:id="Label212" alignment="BASELINE_CENTER" prefHeight="100.0" prefWidth="200.0" stylesheets="@LabelColor.css" text="Start">
+                                                   <padding>
+                                                      <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                                   </padding>
+                                                </Label>
+                                                <Label fx:id="Label213" alignment="BASELINE_CENTER" prefHeight="100.0" prefWidth="200.0" stylesheets="@LabelColor.css" text="End">
+                                                   <padding>
+                                                      <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                                   </padding>
+                                                </Label>
+                                             </children>
+                                          </HBox>
+                                          <ScrollPane fx:id="normColor51" fitToWidth="true" hbarPolicy="NEVER" minWidth="143.0" prefHeight="400.0" prefWidth="400.0">
                                              <content>
-                                                <AnchorPane prefHeight="151.0" prefWidth="251.0">
+                                                <VBox fx:id="Incoming_events_Vbox" prefHeight="500.0" prefWidth="254.0" spacing="5.0">
                                                    <children>
-                                                      <VBox fx:id="Incoming_events_Vbox" prefHeight="279.0" prefWidth="254.0" spacing="5.0" AnchorPane.bottomAnchor="-200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                      <HBox prefHeight="46.0" prefWidth="400.0" style="-fx-background-radius: 10; -fx-background-color: #ffbf70;">
                                                          <children>
-                                                            <HBox prefHeight="46.0" prefWidth="400.0" style="-fx-background-radius: 10; -fx-background-color: #ffbf70;">
+                                                            <AnchorPane prefHeight="66.0" prefWidth="300.0">
                                                                <children>
-                                                                  <AnchorPane prefHeight="66.0" prefWidth="300.0">
-                                                                     <children>
-                                                                        <Text layoutX="7.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="From" wrappingWidth="63.999923706054744" AnchorPane.leftAnchor="7.0">
-                                                                           <font>
-                                                                              <Font size="18.0" />
-                                                                           </font>
-                                                                        </Text>
-                                                                        <Text layoutX="106.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="To" wrappingWidth="27.999904632568416" AnchorPane.rightAnchor="10.0">
-                                                                           <font>
-                                                                              <Font size="18.0" />
-                                                                           </font>
-                                                                        </Text>
-                                                                     </children>
-                                                                  </AnchorPane>
-                                                                  <AnchorPane prefHeight="47.0" prefWidth="200.0">
-                                                                     <children>
-                                                                        <Text layoutX="14.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3h" textAlignment="RIGHT" wrappingWidth="44.66657257080084" AnchorPane.rightAnchor="10.0">
-                                                                           <font>
-                                                                              <Font size="18.0" />
-                                                                           </font>
-                                                                        </Text>
-                                                                     </children>
-                                                                  </AnchorPane>
+                                                                  <Text layoutX="7.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="From" wrappingWidth="63.999923706054744" AnchorPane.leftAnchor="7.0">
+                                                                     <font>
+                                                                        <Font size="18.0" />
+                                                                     </font>
+                                                                  </Text>
+                                                                  <Text layoutX="106.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="To" wrappingWidth="27.999904632568416" AnchorPane.rightAnchor="10.0">
+                                                                     <font>
+                                                                        <Font size="18.0" />
+                                                                     </font>
+                                                                  </Text>
                                                                </children>
-                                                            </HBox>
+                                                            </AnchorPane>
+                                                            <AnchorPane prefHeight="47.0" prefWidth="200.0">
+                                                               <children>
+                                                                  <Text layoutX="14.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3h" textAlignment="RIGHT" wrappingWidth="44.66657257080084" AnchorPane.rightAnchor="10.0">
+                                                                     <font>
+                                                                        <Font size="18.0" />
+                                                                     </font>
+                                                                  </Text>
+                                                               </children>
+                                                            </AnchorPane>
                                                          </children>
-                                                      </VBox>
+                                                      </HBox>
+                                                      <HBox prefHeight="46.0" prefWidth="400.0" style="-fx-background-radius: 10; -fx-background-color: #ffbf70;">
+                                                         <children>
+                                                            <AnchorPane prefHeight="66.0" prefWidth="300.0">
+                                                               <children>
+                                                                  <Text layoutX="7.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="From" wrappingWidth="63.999923706054744" AnchorPane.leftAnchor="7.0">
+                                                                     <font>
+                                                                        <Font size="18.0" />
+                                                                     </font>
+                                                                  </Text>
+                                                                  <Text layoutX="106.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="To" wrappingWidth="27.999904632568416" AnchorPane.rightAnchor="10.0">
+                                                                     <font>
+                                                                        <Font size="18.0" />
+                                                                     </font>
+                                                                  </Text>
+                                                               </children>
+                                                            </AnchorPane>
+                                                            <AnchorPane prefHeight="47.0" prefWidth="200.0">
+                                                               <children>
+                                                                  <Text layoutX="14.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3h" textAlignment="RIGHT" wrappingWidth="44.66657257080084" AnchorPane.rightAnchor="10.0">
+                                                                     <font>
+                                                                        <Font size="18.0" />
+                                                                     </font>
+                                                                  </Text>
+                                                               </children>
+                                                            </AnchorPane>
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox prefHeight="46.0" prefWidth="400.0" style="-fx-background-radius: 10; -fx-background-color: #ffbf70;">
+                                                         <children>
+                                                            <AnchorPane prefHeight="66.0" prefWidth="300.0">
+                                                               <children>
+                                                                  <Text layoutX="7.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="From" wrappingWidth="63.999923706054744" AnchorPane.leftAnchor="7.0">
+                                                                     <font>
+                                                                        <Font size="18.0" />
+                                                                     </font>
+                                                                  </Text>
+                                                                  <Text layoutX="106.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="To" wrappingWidth="27.999904632568416" AnchorPane.rightAnchor="10.0">
+                                                                     <font>
+                                                                        <Font size="18.0" />
+                                                                     </font>
+                                                                  </Text>
+                                                               </children>
+                                                            </AnchorPane>
+                                                            <AnchorPane prefHeight="47.0" prefWidth="200.0">
+                                                               <children>
+                                                                  <Text layoutX="14.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3h" textAlignment="RIGHT" wrappingWidth="44.66657257080084" AnchorPane.rightAnchor="10.0">
+                                                                     <font>
+                                                                        <Font size="18.0" />
+                                                                     </font>
+                                                                  </Text>
+                                                               </children>
+                                                            </AnchorPane>
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox prefHeight="46.0" prefWidth="400.0" style="-fx-background-radius: 10; -fx-background-color: #ffbf70;">
+                                                         <children>
+                                                            <AnchorPane prefHeight="66.0" prefWidth="300.0">
+                                                               <children>
+                                                                  <Text layoutX="7.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="From" wrappingWidth="63.999923706054744" AnchorPane.leftAnchor="7.0">
+                                                                     <font>
+                                                                        <Font size="18.0" />
+                                                                     </font>
+                                                                  </Text>
+                                                                  <Text layoutX="106.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="To" wrappingWidth="27.999904632568416" AnchorPane.rightAnchor="10.0">
+                                                                     <font>
+                                                                        <Font size="18.0" />
+                                                                     </font>
+                                                                  </Text>
+                                                               </children>
+                                                            </AnchorPane>
+                                                            <AnchorPane prefHeight="47.0" prefWidth="200.0">
+                                                               <children>
+                                                                  <Text layoutX="14.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3h" textAlignment="RIGHT" wrappingWidth="44.66657257080084" AnchorPane.rightAnchor="10.0">
+                                                                     <font>
+                                                                        <Font size="18.0" />
+                                                                     </font>
+                                                                  </Text>
+                                                               </children>
+                                                            </AnchorPane>
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox prefHeight="46.0" prefWidth="400.0" style="-fx-background-radius: 10; -fx-background-color: #ffbf70;">
+                                                         <children>
+                                                            <AnchorPane prefHeight="66.0" prefWidth="300.0">
+                                                               <children>
+                                                                  <Text layoutX="7.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="From" wrappingWidth="63.999923706054744" AnchorPane.leftAnchor="7.0">
+                                                                     <font>
+                                                                        <Font size="18.0" />
+                                                                     </font>
+                                                                  </Text>
+                                                                  <Text layoutX="106.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="To" wrappingWidth="27.999904632568416" AnchorPane.rightAnchor="10.0">
+                                                                     <font>
+                                                                        <Font size="18.0" />
+                                                                     </font>
+                                                                  </Text>
+                                                               </children>
+                                                            </AnchorPane>
+                                                            <AnchorPane prefHeight="47.0" prefWidth="200.0">
+                                                               <children>
+                                                                  <Text layoutX="14.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3h" textAlignment="RIGHT" wrappingWidth="44.66657257080084" AnchorPane.rightAnchor="10.0">
+                                                                     <font>
+                                                                        <Font size="18.0" />
+                                                                     </font>
+                                                                  </Text>
+                                                               </children>
+                                                            </AnchorPane>
+                                                         </children>
+                                                      </HBox>
                                                    </children>
-                                                </AnchorPane>
+                                                </VBox>
                                              </content>
                                              <opaqueInsets>
                                                 <Insets />
                                              </opaqueInsets>
                                           </ScrollPane>
-                                          <Label fx:id="Label2" alignment="BASELINE_CENTER" layoutX="-28.0" layoutY="11.0" prefHeight="27.0" prefWidth="275.0" stylesheets="@LabelColor.css" text="Incoming" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                             <font>
-                                                <Font size="24.0" />
-                                             </font>
-                                          </Label>
                                        </children>
                                        <padding>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </padding>
-                                    </AnchorPane>
+                                    </VBox>
                                  </children>
                                  <opaqueInsets>
                                     <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
@@ -377,7 +510,7 @@
                         <Font size="14.0" />
                      </font>
                   </Text>
-                  <Button minWidth="60.0" mnemonicParsing="false" onAction="#Exit" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" prefHeight="100.0" prefWidth="60.0" style="-fx-background-color: transparent;">
+                  <Button minWidth="60.0" mnemonicParsing="false" onAction="#GoBackToLoginPanel" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" prefHeight="100.0" prefWidth="60.0" style="-fx-background-color: transparent;">
                      <graphic>
                         <ImageView fitHeight="48.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>

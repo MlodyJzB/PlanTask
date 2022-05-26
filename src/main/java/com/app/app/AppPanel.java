@@ -4,6 +4,7 @@ import com.app.WeatherInfo.IncorrectZipCodeFormatException;
 import com.app.WeatherInfo.NonexistentZipCodeException;
 import com.app.WeatherInfo.WeatherInfo;
 import com.app.loginapp.Database;
+import com.app.loginapp.LoginApplication;
 import com.app.loginapp.User;
 import com.calendarfx.model.Calendar;
 import com.calendarfx.model.Entry;
@@ -35,6 +36,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.Window;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -103,8 +105,10 @@ public class AppPanel implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         user = User.getInstance();
+        user.setDayMode(Database.getAppearance(user.getUsername()));
+
         try {
-            ColourFromDataJson(Database.getAppearance(user.getUsername()), true);
+            ColourFromDataJson(user.isDayMode(), true);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {
@@ -261,7 +265,7 @@ public class AppPanel implements Initializable {
         tr1.start();
 
         Timeline timeline = new Timeline(
-                new KeyFrame(javafx.util.Duration.seconds(60),
+                new KeyFrame(javafx.util.Duration.seconds(10),
                         e -> {
                             try {
                                 incomingEv();
@@ -346,6 +350,16 @@ public class AppPanel implements Initializable {
     public void weather(ActionEvent event){
         LoadSite("weather");
     }
+    public void GoBackToLoginPanel(ActionEvent event){
+        Window owner = Stage.getWindows().stream().filter(Window::isShowing).findFirst().orElse(null);
+        Stage stage1 = (Stage) owner.getScene().getWindow();
+        try {
+            new LoginApplication().start( new Stage() );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        stage1.close();
+    }
     public void settings(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(
                 getClass().getResource(
@@ -380,30 +394,36 @@ public class AppPanel implements Initializable {
         //Image image1 = new Image(new FileInputStream("src/main/resources/Images/"+img+".png"));
         //ImageView image = new ImageView(image1);
         AnchorPane pane1 = new AnchorPane();
-        Label to= new Label(j.getString("event_name"));
+        Label name= new Label(j.getString("event_name"));
         Label from= new Label(j.getString("start"));
+        Label to= new Label(j.getString("end"));
         Label duration= new Label();
 
         DateFormat df = new SimpleDateFormat("HH:mm");
         Date date1= df.parse(j.getString("start"));
         Date date2= df.parse(j.getString("end"));
-        long duratio = date2.getTime()-date1.getTime();
-
+        Date date3= df.parse("24:00");
+        long duratio=-3600000;
+        if(date2.getTime()==-3600000) {
+            duratio = 82800000 - date1.getTime();
+        }else{
+            duratio = date2.getTime() - date1.getTime();
+        }
         String dura = Long.toString(((duratio / (60 * 60 * 1000))%24));
         String dura1 =  Long.toString(((duratio / (1000*60)) % 60));
-        duration.setText(dura+":"+dura1);
+        duration.setText(dura+":"+dura1+" h");
 
-        pane1.setPrefSize(60, 46);
+        pane1.setPrefSize(100, 46);
         //AnchorPane.setTopAnchor(image, 0.0);
         //AnchorPane.setLeftAnchor(image, 0.0);
         //image.setFitHeight(46.0);
         //image.setFitWidth(46.0);
         //pane1.getChildren().add(image);
 
-        to.setFont(new Font("Serif", 18));
-        to.setLayoutY(46.0);
-        to.setPrefSize(400, 46);
-        to.setAlignment(Pos.CENTER);
+        name.setFont(new Font("Serif", 18));
+        name.setLayoutY(46.0);
+        name.setPrefSize(300, 46);
+        name.setAlignment(Pos.BASELINE_LEFT);
 
         from.setFont(new Font("Serif", 18));
         from.setAlignment(Pos.CENTER);
@@ -413,7 +433,11 @@ public class AppPanel implements Initializable {
         duration.setAlignment(Pos.CENTER);
         duration.setPrefSize(200, 46);
 
-        HBox hbox = new HBox(pane1, to, from, duration);
+        to.setFont(new Font("Serif", 18));
+        to.setAlignment(Pos.CENTER);
+        to.setPrefSize(200, 46);
+
+        HBox hbox = new HBox(pane1, name, duration, from, to);
         hbox.setStyle("-fx-background-color: "+DiffCol+"; -fx-background-radius: 10;");
         hbox.setPrefSize(200, 46);
         hbox.setSpacing(10);

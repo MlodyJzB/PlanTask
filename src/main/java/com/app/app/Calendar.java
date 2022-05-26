@@ -1,6 +1,5 @@
 package com.app.app;
 
-import com.app.loginapp.Database;
 import com.app.loginapp.User;
 import com.calendarfx.model.Entry;
 import com.calendarfx.view.DetailedDayView;
@@ -219,7 +218,7 @@ public class Calendar implements Initializable {
         //resizeCalendar(650.0,1045.0,-110, 20,120,80,18);
 
         user = User.getInstance();
-        boolean InfoDayNight = Database.getAppearance(user.getUsername());
+        boolean InfoDayNight = user.isDayMode();
         try {
             this.DayMode(InfoDayNight);
             darkmode = !InfoDayNight;

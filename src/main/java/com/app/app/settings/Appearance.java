@@ -27,7 +27,7 @@ public class Appearance implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         user = User.getInstance();
-        dayMode.setSelected(Database.getAppearance(user.getUsername()));
+        dayMode.setSelected(user.isDayMode());
         dayMode.setOnAction(event -> {
             Popup popup = new Popup();
             Label background = new Label();
@@ -66,7 +66,7 @@ public class Appearance implements Initializable {
                 });
             });
             noChanging.setOnAction(event1 -> {
-                dayMode.setSelected(Database.getAppearance(user.getUsername()));
+                dayMode.setSelected(user.isDayMode());
                 popup.hide();
             });
         });
@@ -74,7 +74,7 @@ public class Appearance implements Initializable {
 
     public void setDayMode() throws SQLException {
         Database.changeAppearance(user.getUsername(), dayMode.isSelected());
-        Database.changeAppearance(user.getUsername(), false);
+        user.setDayMode(dayMode.isSelected());
         //Window thisStage = Stage.getWindows().stream().filter(Window::isShowing).findFirst().orElse(null);
         Stage stage = (Stage) dayMode.getScene().getWindow();
         stage.close();
