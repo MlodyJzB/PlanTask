@@ -402,13 +402,16 @@ public class AppPanel implements Initializable {
         DateFormat df = new SimpleDateFormat("HH:mm");
         Date date1= df.parse(j.getString("start"));
         Date date2= df.parse(j.getString("end"));
-        Date date3= df.parse("24:00");
+        Date date3= df.parse("22:00");
+        Date date4= df.parse("00:30");
+        Date date5= df.parse("24:00");
+        long t1 = date1.getTime();
+        long t2 = date2.getTime();
         long duratio=-3600000;
-        if(date2.getTime()==-3600000) {
-            duratio = 82800000 - date1.getTime();
-        }else{
-            duratio = date2.getTime() - date1.getTime();
+        if(t2<t1){
+            t2=t2+82800000+3600000;
         }
+        duratio =  t2 - t1;
         String dura = Long.toString(((duratio / (60 * 60 * 1000))%24));
         String dura1 =  Long.toString(((duratio / (1000*60)) % 60));
         duration.setText(dura+":"+dura1+" h");
