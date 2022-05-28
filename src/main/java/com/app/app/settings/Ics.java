@@ -2,6 +2,7 @@ package com.app.app.settings;
 
 import com.app.ICSFiles.ICSFilesReader;
 import com.app.ICSFiles.ToICSFileWritter;
+import com.app.app.App;
 import com.app.app.Event;
 import com.calendarfx.model.Entry;
 import com.calendarfx.view.DetailedDayView;
@@ -16,6 +17,7 @@ import com.calendarfx.view.DetailedDayView;
 import com.calendarfx.view.page.MonthPage;
 import com.calendarfx.view.page.WeekPage;
 import com.calendarfx.view.page.YearPage;
+import javafx.stage.Window;
 import net.fortuna.ical4j.data.ParserException;
 
 import java.io.*;
@@ -69,6 +71,16 @@ public class Ics implements Initializable {
         File file = fileChooser.showOpenDialog(stage);
         ICSFilesReader icsFilesReader = new ICSFilesReader();
         icsFilesReader.icsToOurCall(file,eventList1);
+
+        stage.close();
+        Window owner = Stage.getWindows().stream().filter(Window::isShowing).findFirst().orElse(null);
+        Stage stage1 = (Stage) owner.getScene().getWindow();
+        try {
+            new App().start( new Stage() );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        stage1.close();
 
     }
 
