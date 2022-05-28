@@ -386,7 +386,8 @@ public class Calendar implements Initializable {
         if(variable4 == 28 && variable5 == 6 && variable1 > 10) variable4 -= 7;
         LocalDate easter = LocalDate.of(date.getYear(), 3, 22).plusDays(variable4 + variable5);
 
-        if (date.minusDays(1).equals(easter)) return "Easter";
+        if (date.minusDays(1).equals(easter)) return "Easter Monday";
+        if (date.equals(easter)) return "Easter";
         if (date.minusDays(60).equals(easter)) return "Boże Ciało";
         if(date.getDayOfWeek().getValue() == 7) return "1";
         if(date.getDayOfWeek().getValue() == 6) return "1";
