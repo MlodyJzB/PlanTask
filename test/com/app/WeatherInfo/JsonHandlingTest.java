@@ -24,5 +24,25 @@ public class JsonHandlingTest {
         assertEquals("52.21550000", lat);
         assertEquals("21.01650000", lon);
     }
+
+    @Test
+    public void testWriteToFile() throws JSONException, IOException {
+        File file = new File("");
+        String path = file.getAbsolutePath() + "\\test\\com\\app\\WeatherInfo\\example.json";
+
+        JSONObject obj = new JSONObject();
+        obj.put("test", "passed");
+
+        JsonHandling.writeToFile(obj, path);
+        JSONObject testObj = JsonHandling.getFromFile(path);
+        String testValue = testObj.get("test").toString();
+
+        assertEquals("passed", testValue);
+
+        JSONObject obj2 = new JSONObject();
+        obj2.put("test", "notPassed");
+        JsonHandling.writeToFile(obj2, path);
+    }
+
 }
 
