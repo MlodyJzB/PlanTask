@@ -454,7 +454,7 @@ public class AppPanel implements Initializable {
         String maxTemp = String.valueOf(this.wi.getMaxTemp(0));
         String wind = String.valueOf(this.wi.getWindSpeed(0));
         String clouds = String.valueOf(this.wi.getCloudsValue(0));
-        //String hum = String.valueOf(wi.getHumidity());
+        String hum = String.valueOf(this.wi.getHumidity(0));
         String icon = this.wi.getIcon(0);
         long sunrise = this.wi.getSunrise(0);
         long sunset = this.wi.getSunset(0);
@@ -467,7 +467,7 @@ public class AppPanel implements Initializable {
         MaxTemp.setText(maxTemp + "°C");
         Wind.setText(wind + " km/h");
         Clouds.setText(clouds + "%");
-        //Hum.setText(hum + "%");
+        Hum.setText(hum + "%");
         Sunrise.setText(sunriseH);
         Sunset.setText(sunsetH);
 

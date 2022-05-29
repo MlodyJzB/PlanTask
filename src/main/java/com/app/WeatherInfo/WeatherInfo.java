@@ -71,6 +71,18 @@ public class WeatherInfo {
         return (int) Math.round(Double.valueOf(temp));
     }
 
+    public double getUvi() throws JSONException{
+        String temp = this.infoJson.getJSONObject("current").get("uvi").toString();
+
+        return Math.round(Double.valueOf(temp));
+    }
+
+    public int getDewPoint() throws JSONException{
+        String temp = this.infoJson.getJSONObject("current").get("dew_point").toString();
+
+        return (int) Math.round(Double.valueOf(temp));
+    }
+
     public int getWindSpeed(int day) throws JSONException{
         String windSpeed = "";
         if (day == 0) windSpeed = this.infoJson.getJSONObject("current").get("wind_speed").toString();

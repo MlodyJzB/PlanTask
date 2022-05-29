@@ -48,13 +48,14 @@ public class Weather implements Initializable {
     private Label ZipCodeLabel, CityLabel, LastUpdateLabel;
     @FXML
     private ImageView minimalize_button;
+
     // Today
     @FXML
-    private Label Wind11, Clouds11, Hum11, Pres11;
+    private Label Wind, Clouds, Hum, Pres, FeelsLike, Uvi, Dew;
     @FXML
-    private Label Temp11, Min11, Max11, Sunset11, Sunrise11;
+    private Label Temp, Min, Max, Sunset, Sunrise;
     @FXML
-    private ImageView Icon11;
+    private ImageView Icon;
 
     // Day1
     @FXML
@@ -110,23 +111,13 @@ public class Weather implements Initializable {
     @FXML
     private VBox LocationBox;
 
-    @FXML
-    private Button refreshButton;
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         user = user.getInstance();
         try {
             this.setLocationLabels();
-            this.setDayLabels();
-            this.setLocationBox();
             this.setDayLabelMap();
-            this.setDayInfoLabels(1, Icon1);
-            this.setDayInfoLabels(2, Icon2);
-            this.setDayInfoLabels(3, Icon3);
-            this.setDayInfoLabels(4, Icon4);
-            this.setDayInfoLabels(5, Icon5);
-            this.setDayInfoLabels(6, Icon6);
+            this.setInfo();
 
         } catch (NonexistentZipCodeException e) {
             throw new RuntimeException(e);
@@ -189,22 +180,16 @@ public class Weather implements Initializable {
             if (newZipCode == "") {
                 this.wi.updateOnline();
                 this.setLastUpdate();
+                this.setLocationLabels();
             }
             else{
                 this.wi.updateOnline(zipCodeNoWhite);
                 this.setLocationLabels(zipCodeNoWhite);
                 ZipCodeField.clear();
+                Database.changeZip(user.getUsername(), zipCodeNoWhite);
             }
-            this.setDayLabels();
-            this.setLocationBox();
-            this.setDayInfoLabels(1, Icon1);
-            this.setDayInfoLabels(2, Icon2);
-            this.setDayInfoLabels(3, Icon3);
-            this.setDayInfoLabels(4, Icon4);
-            this.setDayInfoLabels(5, Icon5);
-            this.setDayInfoLabels(6, Icon6);
+            this.setInfo();
 
-            this.setLocationLabels();
         } catch (IncorrectZipCodeFormatException | NonexistentZipCodeException | SQLException e) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Incorrect zip code. Try again!", ButtonType.OK);
             alert.showAndWait();
@@ -214,7 +199,7 @@ public class Weather implements Initializable {
         }
     }
 
-    public void setDayLabels() throws NonexistentZipCodeException, JSONException {
+    public void setDayLabels() throws JSONException {
         long timeDay1 = this.wi.getSunrise(1);
         long timeDay2 = this.wi.getSunrise(2);
         long timeDay3 = this.wi.getSunrise(3);
@@ -241,7 +226,7 @@ public class Weather implements Initializable {
         Day6.setText(day);
     }
 
-    public void setLocationBox() throws NonexistentZipCodeException, JSONException {
+    public void setLocationBox() throws JSONException {
         String style;
         time = LocalDateTime.now();
         ZoneId zoneId = ZoneId.systemDefault(); // or: ZoneId.of("Europe/Oslo");
@@ -273,13 +258,11 @@ public class Weather implements Initializable {
 
     public void setLocationLabels() throws NonexistentZipCodeException, JSONException, SQLException {
         ZipCodeField.setPromptText(wi.getZipCode());
-        Database.changeZip(user.getUsername(), wi.getZipCode());
         City.setText(wi.getCity());
         this.setLastUpdate();
     }
     public void setLocationLabels(String zipCode) throws NonexistentZipCodeException, JSONException, SQLException {
         ZipCodeField.setPromptText(zipCode);
-        Database.changeZip(user.getUsername(), zipCode);
         City.setText(wi.getCity());
         this.setLastUpdate();
     }
@@ -291,26 +274,38 @@ public class Weather implements Initializable {
         LastUpdate.setText(lastUpdate);
     }
 
+    public void setTodayInfoLabels() throws JSONException, FileNotFoundException {
+        this.setDayInfoLabels(0, Icon);
+
+        String feelsLike = String.valueOf(this.wi.getFeelsLike());
+        String uvi = String.valueOf(this.wi.getUvi());
+        String dewPoint = String.valueOf(this.wi.getDewPoint());
+
+        FeelsLike.setText(feelsLike + "°C");
+        Uvi.setText(uvi);
+        Dew.setText(dewPoint + "°C");
+    }
+
     public void setDayInfoLabels(int day, ImageView image) throws JSONException, FileNotFoundException {
-        Map<String, Label> dayInfo = this.dayInfoLabels.get(day-1);
+        Map<String, Label> dayInfo = this.dayInfoLabels.get(day);
 
         String temp = String.valueOf(this.wi.getTemp(day));
-        dayInfo.get("temp").setText(temp + " °C");
+        dayInfo.get("temp").setText(temp + "°C");
 
         String minTemp = String.valueOf(this.wi.getMinTemp(day));
-        dayInfo.get("min").setText(minTemp + " °C");
+        dayInfo.get("min").setText(minTemp + "°C");
 
         String maxTemp = String.valueOf(this.wi.getMaxTemp(day));
-        dayInfo.get("max").setText(maxTemp + " °C");
+        dayInfo.get("max").setText(maxTemp + "°C");
 
         String wind = String.valueOf(this.wi.getWindSpeed(day));
         dayInfo.get("wind").setText(wind + " km/h");
 
         String clouds = String.valueOf(this.wi.getCloudsValue(day));
-        dayInfo.get("clouds").setText(clouds + "%");
+        dayInfo.get("clouds").setText(clouds + " %");
 
         String humidity = String.valueOf(this.wi.getHumidity(day));
-        dayInfo.get("hum").setText(humidity + "%");
+        dayInfo.get("hum").setText(humidity + " %");
 
         String pres = String.valueOf(this.wi.getPressureValue(day));
         dayInfo.get("pres").setText(pres + " hPa");
@@ -330,8 +325,21 @@ public class Weather implements Initializable {
         image.setImage(im);
     }
 
+    private void setInfo() throws NonexistentZipCodeException, JSONException, FileNotFoundException {
+        this.setDayLabels();
+        this.setLocationBox();
+        this.setTodayInfoLabels();
+        this.setDayInfoLabels(1, Icon1);
+        this.setDayInfoLabels(2, Icon2);
+        this.setDayInfoLabels(3, Icon3);
+        this.setDayInfoLabels(4, Icon4);
+        this.setDayInfoLabels(5, Icon5);
+        this.setDayInfoLabels(6, Icon6);
+    }
+
     public void setDayLabelMap(){
         ArrayList<Map<String,Label>> dayInfoLabels = new ArrayList<>();
+        Map<String, Label> day0= new HashMap<>();
         Map<String, Label> day1= new HashMap<>();
         Map<String, Label> day2= new HashMap<>();
         Map<String, Label> day3= new HashMap<>();
@@ -339,6 +347,17 @@ public class Weather implements Initializable {
         Map<String, Label> day5= new HashMap<>();
         Map<String, Label> day6= new HashMap<>();
 
+        // Add day1
+        day0.put("temp", Temp);
+        day0.put("min", Min);
+        day0.put("max", Max);
+        day0.put("wind", Wind);
+        day0.put("clouds", Clouds);
+        day0.put("hum", Hum);
+        day0.put("pres", Pres);
+        day0.put("sunset", Sunset);
+        day0.put("sunrise", Sunrise);
+        dayInfoLabels.add(day0);
 
         // Add day1
         day1.put("temp", Temp1);
