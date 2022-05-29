@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 
 public class JsonHandlingTest {
     @Test
-    public void testGetFromFile() throws IOException, JSONException, NonexistentZipCodeException {
+    public void testGetFromFile() throws IOException, JSONException {
         File file = new File("");
         String path = file.getAbsolutePath() + "\\test\\com\\app\\WeatherInfo\\exampleZipCode.json";
         JSONObject json = JsonHandling.getFromFile(path);
