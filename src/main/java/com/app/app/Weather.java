@@ -35,11 +35,10 @@ public class Weather implements Initializable {
     public Weather() throws NonexistentZipCodeException, JSONException, IOException {}
     public void Exit() {System.exit(0);}
 
-    private WeatherInfo wi = new WeatherInfo();
+    private final WeatherInfo wi = new WeatherInfo();
 
     private final SimpleDateFormat dayFormater = new SimpleDateFormat("EEEEEEEEE", Locale.US);
-    private SimpleDateFormat dateFormater = new SimpleDateFormat("HH:mm dd/MM");
-    private LocalDateTime time = LocalDateTime.now();
+    private final SimpleDateFormat dateFormater = new SimpleDateFormat("HH:mm dd/MM");
     private ArrayList<Map<String,Label>> dayInfoLabels;
 
     @FXML
@@ -119,13 +118,7 @@ public class Weather implements Initializable {
             this.setDayLabelMap();
             this.setInfo();
 
-        } catch (NonexistentZipCodeException e) {
-            throw new RuntimeException(e);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (SQLException e) {
+        } catch (NonexistentZipCodeException|JSONException|FileNotFoundException e) {
             e.printStackTrace();
         }
         minimalize_button.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -173,11 +166,11 @@ public class Weather implements Initializable {
         stage.setMaximized(stage.isMaximized());
     }
 
-    public void refreshWeather(ActionEvent event) throws JSONException, IOException {
+    public void refreshWeather(ActionEvent event) throws JSONException {
         String newZipCode = ZipCodeField.getText();
         String zipCodeNoWhite = newZipCode.replaceAll("\\s+","");
         try {
-            if (newZipCode == "") {
+            if (newZipCode.equals("")) {
                 this.wi.updateOnline();
                 this.setLastUpdate();
                 this.setLocationLabels();
@@ -228,7 +221,7 @@ public class Weather implements Initializable {
 
     public void setLocationBox() throws JSONException {
         String style;
-        time = LocalDateTime.now();
+        LocalDateTime time = LocalDateTime.now();
         ZoneId zoneId = ZoneId.systemDefault(); // or: ZoneId.of("Europe/Oslo");
         long timeNow = time.atZone(zoneId).toEpochSecond();
 
@@ -256,12 +249,12 @@ public class Weather implements Initializable {
 
     }
 
-    public void setLocationLabels() throws NonexistentZipCodeException, JSONException, SQLException {
+    public void setLocationLabels() throws NonexistentZipCodeException, JSONException{
         ZipCodeField.setPromptText(wi.getZipCode());
         City.setText(wi.getCity());
         this.setLastUpdate();
     }
-    public void setLocationLabels(String zipCode) throws NonexistentZipCodeException, JSONException, SQLException {
+    public void setLocationLabels(String zipCode) throws NonexistentZipCodeException, JSONException {
         ZipCodeField.setPromptText(zipCode);
         City.setText(wi.getCity());
         this.setLastUpdate();

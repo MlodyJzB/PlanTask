@@ -5,8 +5,6 @@ import org.junit.Test;
 
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -26,6 +24,9 @@ public class WeatherInfoTest {
         assertEquals(1652755110, wi.getSunrise(0));
         assertEquals(1652811981, wi.getSunset(0));
         assertEquals("Warszawa", wi.getCity());
+        assertEquals(0, wi.getUvi());
+        assertEquals(6, wi.getFeelsLike());
+        assertEquals(-2, wi.getDewPoint());
     }
 
     @Test
