@@ -27,8 +27,8 @@
                               <Font name="System Bold" size="20.0" />
                           </font>
                       </Text>
-                      <PasswordField fx:id="passwordField" alignment="CENTER" layoutX="11.0" layoutY="84.0" prefWidth="175.0" promptText="password" style="-fx-background-color: #916734;" />
                       <TextField fx:id="usernameTextField" alignment="CENTER" layoutX="11.0" layoutY="52.0" prefWidth="175.0" promptText="username" style="-fx-background-color: #916734;" />
+                      <PasswordField fx:id="passwordField" alignment="CENTER" layoutX="11.0" layoutY="84.0" prefWidth="175.0" promptText="password" style="-fx-background-color: #916734;" />
                       <PasswordField fx:id="repeatedPasswordField" alignment="CENTER" layoutX="12.0" layoutY="115.0" prefWidth="175.0" promptText="repeat password" style="-fx-background-color: #916734;" />
                       <Button fx:id="registerButton" layoutX="122.0" layoutY="246.0" mnemonicParsing="false" onAction="#onClickRegister" prefHeight="25.0" prefWidth="68.0" style="-fx-background-color: #916734;" text="Register">
                           <font>
