@@ -71,12 +71,12 @@
                                                             </HBox>
                                                             <HBox alignment="CENTER" prefHeight="200.0" prefWidth="500.0">
                                                                <children>
-                                                                  <Label text="Feels like: ">
+                                                                  <Label alignment="CENTER" stylesheets="@LabelColor.css" text="Feels like: ">
                                                                      <font>
                                                                         <Font size="18.0" />
                                                                      </font>
                                                                   </Label>
-                                                                  <Label fx:id="FeelsLike" text="100°C">
+                                                                  <Label fx:id="FeelsLike" alignment="CENTER" stylesheets="@LabelColor.css" text="100°C">
                                                                      <font>
                                                                         <Font size="18.0" />
                                                                      </font>
@@ -223,12 +223,12 @@
                                                             <AnchorPane minWidth="2.0" style="-fx-background-color: black;" />
                                                             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="200.0">
                                                                <children>
-                                                                  <Label text="UV Index:">
+                                                                  <Label alignment="CENTER" stylesheets="@LabelColor.css" text="UV Index:">
                                                                      <font>
                                                                         <Font size="16.0" />
                                                                      </font>
                                                                   </Label>
-                                                                  <Label fx:id="Uvi" text="1.4">
+                                                                  <Label fx:id="Uvi" alignment="CENTER" stylesheets="@LabelColor.css" text="1.4">
                                                                      <font>
                                                                         <Font size="16.0" />
                                                                      </font>
@@ -238,12 +238,12 @@
                                                             <AnchorPane minWidth="2.0" style="-fx-background-color: black;" />
                                                             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="200.0">
                                                                <children>
-                                                                  <Label text="Dew point:">
+                                                                  <Label alignment="CENTER" stylesheets="@LabelColor.css" text="Dew point:">
                                                                      <font>
                                                                         <Font size="16.0" />
                                                                      </font>
                                                                   </Label>
-                                                                  <Label fx:id="Dew" text="12°C">
+                                                                  <Label fx:id="Dew" alignment="CENTER" stylesheets="@LabelColor.css" text="12°C">
                                                                      <font>
                                                                         <Font size="16.0" />
                                                                      </font>

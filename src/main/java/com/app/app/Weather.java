@@ -37,8 +37,8 @@ public class Weather implements Initializable {
 
     private final WeatherInfo wi = new WeatherInfo();
 
-    private final SimpleDateFormat dayFormater = new SimpleDateFormat("EEEEEEEEE", Locale.US);
-    private final SimpleDateFormat dateFormater = new SimpleDateFormat("HH:mm dd/MM");
+    private final SimpleDateFormat dayFormatter = new SimpleDateFormat("EEEEEEEEE", Locale.US);
+    private final SimpleDateFormat dateFormatter = new SimpleDateFormat("HH:mm dd/MM");
     private ArrayList<Map<String,Label>> dayInfoLabels;
 
     @FXML
@@ -200,22 +200,22 @@ public class Weather implements Initializable {
         long timeDay5 = this.wi.getSunrise(5);
         long timeDay6 = this.wi.getSunrise(6);
 
-        String day = this.dayFormater.format((timeDay1)*1000);
+        String day = this.dayFormatter.format((timeDay1)*1000);
         Day1.setText(day);
 
-        day = this.dayFormater.format((timeDay2)*1000);
+        day = this.dayFormatter.format((timeDay2)*1000);
         Day2.setText(day);
 
-        day = this.dayFormater.format((timeDay3)*1000);
+        day = this.dayFormatter.format((timeDay3)*1000);
         Day3.setText(day);
 
-        day = this.dayFormater.format((timeDay4)*1000);
+        day = this.dayFormatter.format((timeDay4)*1000);
         Day4.setText(day);
 
-        day = this.dayFormater.format((timeDay5)*1000);
+        day = this.dayFormatter.format((timeDay5)*1000);
         Day5.setText(day);
 
-        day = this.dayFormater.format((timeDay6)*1000);
+        day = this.dayFormatter.format((timeDay6)*1000);
         Day6.setText(day);
     }
 
@@ -225,9 +225,9 @@ public class Weather implements Initializable {
         ZoneId zoneId = ZoneId.systemDefault(); // or: ZoneId.of("Europe/Oslo");
         long timeNow = time.atZone(zoneId).toEpochSecond();
 
-        String hour = dateFormater.format(timeNow*1000L).substring(0,2);
-        String sunsetHour = dateFormater.format(this.wi.getSunset(0)*1000L).substring(0,2);
-        String sunriseHour = dateFormater.format(this.wi.getSunrise(0)*1000L).substring(0,2);
+        String hour = dateFormatter.format(timeNow*1000L).substring(0,2);
+        String sunsetHour = dateFormatter.format(this.wi.getSunset(0)*1000L).substring(0,2);
+        String sunriseHour = dateFormatter.format(this.wi.getSunrise(0)*1000L).substring(0,2);
 
         if((Integer.valueOf(hour) >= Integer.valueOf(sunsetHour))||(Integer.valueOf(hour) < Integer.valueOf(sunriseHour))){
             style = "-fx-background-color: #0d104a; -fx-background-radius: 10;";
@@ -260,10 +260,10 @@ public class Weather implements Initializable {
         this.setLastUpdate();
     }
 
-    public void setLastUpdate() throws NonexistentZipCodeException, JSONException{
+    public void setLastUpdate() throws NonexistentZipCodeException{
         long lastUpdateTime = this.wi.getUpdateDate();
 
-        String lastUpdate = this.dateFormater.format((lastUpdateTime)*1000L);
+        String lastUpdate = this.dateFormatter.format((lastUpdateTime)*1000L);
         LastUpdate.setText(lastUpdate);
     }
 
@@ -304,16 +304,16 @@ public class Weather implements Initializable {
         dayInfo.get("pres").setText(pres + " hPa");
 
         String sunriseUnix = String.valueOf(this.wi.getSunrise(day));
-        String sunriseHour = this.dateFormater.format(Long.valueOf(sunriseUnix)*1000L).substring(0,5);
+        String sunriseHour = this.dateFormatter.format(Long.valueOf(sunriseUnix)*1000L).substring(0,5);
         dayInfo.get("sunrise").setText(sunriseHour);
 
         String sunsetUnix = String.valueOf(this.wi.getSunset(day));
-        String sunsetHour = this.dateFormater.format(Long.valueOf(sunsetUnix)*1000L).substring(0,5);
+        String sunsetHour = this.dateFormatter.format(Long.valueOf(sunsetUnix)*1000L).substring(0,5);
         dayInfo.get("sunset").setText(sunsetHour);
 
         String icon = String.valueOf(this.wi.getIcon(day));
 
-        Image im = null;
+        Image im;
         im = new Image(new FileInputStream("src/main/resources/Images/WeatherIcons/" + icon + ".png"));
         image.setImage(im);
     }
