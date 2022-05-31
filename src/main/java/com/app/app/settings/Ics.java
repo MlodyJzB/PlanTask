@@ -37,25 +37,26 @@ public class Ics implements Initializable {
     public List<Event> eventList1 = new ArrayList<>();
 
     public void setUserEventsList(DetailedDayView detailedDayView, LocalDate startRangeDate, LocalDate endRangeDate) {
-        com.calendarfx.model.Calendar calendar = detailedDayView.getCalendarSources().get(0).getCalendars().get(0);
-        Map<LocalDate, List<Entry<?>>> entryMap = calendar.findEntries(
-                startRangeDate,
-                endRangeDate,
-                ZonedDateTime.now().getZone()
-        );
+        if (detailedDayView != null) {
+            com.calendarfx.model.Calendar calendar = detailedDayView.getCalendarSources().get(0).getCalendars().get(0);
+            Map<LocalDate, List<Entry<?>>> entryMap = calendar.findEntries(
+                    startRangeDate,
+                    endRangeDate,
+                    ZonedDateTime.now().getZone()
+            );
 
-        List<List<Entry<?>>> entryLists = new ArrayList<>(entryMap.values());
-        Collections.reverse(entryLists);
-        for (List<Entry<?>> entryList : entryLists) {
-            //Different entryList for every day
-            for (Entry<?> entry : entryList) {
-                //May be multiple entries in one day
-                eventList1.add(Event.toEvent(entry));
-                System.out.println(entry.toString());
+            List<List<Entry<?>>> entryLists = new ArrayList<>(entryMap.values());
+            Collections.reverse(entryLists);
+            for (List<Entry<?>> entryList : entryLists) {
+                //Different entryList for every day
+                for (Entry<?> entry : entryList) {
+                    //May be multiple entries in one day
+                    eventList1.add(Event.toEvent(entry));
+                    System.out.println(entry.toString());
 
+                }
             }
         }
-
     }
 
 
