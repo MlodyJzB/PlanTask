@@ -81,6 +81,7 @@ public class Settings implements Initializable {
                         )
                 );
                 HyperLinkNavigator controller = loader.getController();
+                controller.detailedDayView = detailedDayView1;
                 controller.setHyperlinkList(getTreeItem(treeItemName));
                 controller.setvBox(treeItemName);
             } else {
