@@ -151,7 +151,7 @@ public class LoginPanelController implements Initializable {
         String fxId = button.getId();
         int userNum = Integer.parseInt(fxId.substring(fxId.length()-1));
         String UserExist =(String) (getInfo(userNum).get(3));
-        if(UserExist!=""){
+        if(!UserExist.equals("")){
             PutJsonDefault(userNum);
         }
     }

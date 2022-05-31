@@ -118,51 +118,7 @@ public class Database {
         executor.submit(task);
         executor.shutdown();
     }
-    /*
-    public static void addAppearance(String username) {
-        Task<Void> task = new Task<>() {
-            @Override
-            public Void call() {
-                try {
-                    Connection con = DriverManager.getConnection(connectionString);
-                    PreparedStatement statement = con.prepareStatement("EXEC AddAppearance @UserName = ?, @Mode = ?");
-                    statement.setString(1, username);
-                    statement.setBoolean(2, true);
-                    statement.executeUpdate();
-                    statement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-                return null;
-            }
-        };
-        ScheduledExecutorService  executor = new ScheduledThreadPoolExecutor(1);
-        executor.submit(task);
-        executor.shutdown();
-    }
-    public static void addBaseData(String username) {
-        Task<Void> task = new Task<>() {
-            @Override
-            public Void call() {
-                try {
-                    Connection con = DriverManager.getConnection(connectionString);
-                    PreparedStatement statement = con.prepareStatement("EXEC AddData @UserName = ?, @Mode = ?, @ZipCode = ?");
-                    statement.setString(1, username);
-                    statement.setBoolean(2, true);
-                    statement.setString(3, "00-001");
-                    statement.executeUpdate();
-                    statement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-                return null;
-            }
-        };
-        ScheduledExecutorService  executor = new ScheduledThreadPoolExecutor(1);
-        executor.submit(task);
-        executor.shutdown();
-    }
-     */
+
     public static void changeAppearance(String User, boolean newMode) throws SQLException {
         Task<Void> task = new Task<>() {
             @Override
