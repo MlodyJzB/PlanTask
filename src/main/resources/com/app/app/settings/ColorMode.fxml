@@ -16,25 +16,15 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label alignment="BOTTOM_LEFT" prefHeight="40.0" prefWidth="400.0" text="Manual Mode Change" textFill="WHITE" underline="true">
+            <Label alignment="BOTTOM_LEFT" prefHeight="40.0" prefWidth="400.0" text="Day/Night Mode Change" textFill="WHITE" underline="true">
                <font>
                   <Font size="13.0" />
                </font>
-            </Label>
-            <CheckBox fx:id="dayMode" alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="40.0" prefWidth="400.0" style="-fx-background-color: #828281;" text="DayMode  ">
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </CheckBox>
-            <Label alignment="BOTTOM_LEFT" prefHeight="40.0" prefWidth="400.0" text="Automatic Mode Change" textFill="WHITE" underline="true">
-               <font>
-                  <Font size="13.0" />
-               </font>
             </Label>
-            <CheckBox fx:id="AutoDayMode" alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="40.0" prefWidth="400.0" style="-fx-background-color: #828281;" text="Day/Night Mode  ">
+            <CheckBox fx:id="dayMode" alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="40.0" prefWidth="400.0" style="-fx-background-color: #828281;" text="DayMode  ">
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>

@@ -22,18 +22,18 @@ import java.util.ResourceBundle;
 
 public class Appearance implements Initializable {
     @FXML
-    private CheckBox dayMode, AutoDayMode;
+    private CheckBox dayMode;
     private User user;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         user = User.getInstance();
         dayMode.setSelected(user.isDayMode());
-        AutoDayMode.setSelected(user.isDayMode());
-        dayMode.setDisable(AutoDayMode.isSelected());
-        AutoDayMode.setOnAction(event -> {
-            dayMode.setDisable(AutoDayMode.isSelected());
-            user.setDAutoMode(AutoDayMode.isSelected());
-        });
+        //AutoDayMode.setSelected(user.isDayMode());
+        //dayMode.setDisable(AutoDayMode.isSelected());
+        //AutoDayMode.setOnAction(event -> {
+            //.setDisable(AutoDayMode.isSelected());
+            //user.setDAutoMode(AutoDayMode.isSelected());
+        //});
         dayMode.setOnAction(event -> {
             Popup popup = new Popup();
             Label background = new Label();

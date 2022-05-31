@@ -23,7 +23,6 @@ import java.util.ResourceBundle;
 
 public class Settings implements Initializable {
     User user;
-    public boolean daynight=false;
     private static final Map<String, TreeItem<String>> treeItemsMap = new HashMap<>();
     @FXML
     private TreeView<String> settingsTree;

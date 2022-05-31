@@ -111,7 +111,7 @@
                                                                   <Image url="@../../../Images/sunrise.png" />
                                                                </image>
                                                             </ImageView>
-                                                            <Label fx:id="Sunrise" stylesheets="@LabelColor.css" text="04:20">
+                                                            <Label fx:id="Sunrise" alignment="BASELINE_CENTER" prefWidth="40.0" stylesheets="@LabelColor.css" text="04:20">
                                                                <font>
                                                                   <Font size="16.0" />
                                                                </font>
@@ -121,49 +121,49 @@
                                                                   <Image url="@../../../Images/sunset.png" />
                                                                </image>
                                                             </ImageView>
-                                                            <Label fx:id="Sunset" stylesheets="@LabelColor.css" text="20:20">
+                                                            <Label fx:id="Sunset" alignment="BASELINE_CENTER" prefWidth="40.0" stylesheets="@LabelColor.css" text="20:20">
                                                                <font>
                                                                   <Font size="16.0" />
                                                                </font>
                                                             </Label>
                                                          </children>
                                                       </HBox>
-                                                      <HBox prefHeight="120.0" prefWidth="150.0">
+                                                      <HBox prefHeight="150.0" prefWidth="150.0" stylesheets="@LabelColor.css">
                                                          <children>
-                                                            <Label fx:id="Wind" alignment="BOTTOM_CENTER" prefHeight="36.0" prefWidth="300.0" stylesheets="@LabelColor.css" text="Wind:">
+                                                            <Label alignment="BASELINE_CENTER" prefHeight="40.0" prefWidth="300.0" stylesheets="@LabelColor.css" text="Wind:">
                                                                <font>
                                                                   <Font size="14.0" />
                                                                </font>
                                                             </Label>
-                                                            <Label fx:id="Wind" alignment="BOTTOM_CENTER" prefHeight="36.0" prefWidth="300.0" stylesheets="@LabelColor.css" text="72 %">
+                                                            <Label fx:id="Wind" alignment="BASELINE_CENTER" prefHeight="40.0" prefWidth="300.0" stylesheets="@LabelColor.css" text="72 %">
                                                                <font>
                                                                   <Font size="14.0" />
                                                                </font>
                                                             </Label>
                                                          </children>
                                                       </HBox>
-                                                      <HBox prefHeight="120.0" prefWidth="150.0">
+                                                      <HBox prefHeight="150.0" prefWidth="150.0" stylesheets="@LabelColor.css">
                                                          <children>
-                                                            <Label fx:id="Clouds" alignment="BOTTOM_CENTER" prefHeight="36.0" prefWidth="300.0" stylesheets="@LabelColor.css" text="Clouds:">
+                                                            <Label alignment="BASELINE_CENTER" prefHeight="40.0" prefWidth="300.0" stylesheets="@LabelColor.css" text="Clouds:">
                                                                <font>
                                                                   <Font size="14.0" />
                                                                </font>
                                                             </Label>
-                                                            <Label fx:id="Clouds" alignment="BOTTOM_CENTER" prefHeight="36.0" prefWidth="300.0" stylesheets="@LabelColor.css" text="72 %">
+                                                            <Label fx:id="Clouds" alignment="BASELINE_CENTER" prefHeight="40.0" prefWidth="300.0" stylesheets="@LabelColor.css" text="72 %">
                                                                <font>
                                                                   <Font size="14.0" />
                                                                </font>
                                                             </Label>
                                                          </children>
                                                       </HBox>
-                                                      <HBox prefHeight="120.0" prefWidth="150.0">
+                                                      <HBox prefHeight="150.0" prefWidth="150.0" stylesheets="@LabelColor.css">
                                                          <children>
-                                                            <Label alignment="BOTTOM_CENTER" prefHeight="36.0" prefWidth="300.0" stylesheets="@LabelColor.css" text="Humidity:">
+                                                            <Label alignment="BASELINE_CENTER" prefHeight="40.0" prefWidth="300.0" stylesheets="@LabelColor.css" text="Humidity:">
                                                                <font>
                                                                   <Font size="14.0" />
                                                                </font>
                                                             </Label>
-                                                            <Label fx:id="Hum" alignment="BOTTOM_CENTER" prefHeight="36.0" prefWidth="300.0" stylesheets="@LabelColor.css" text="72 %">
+                                                            <Label fx:id="Hum" alignment="BASELINE_CENTER" prefHeight="40.0" prefWidth="300.0" stylesheets="@LabelColor.css" text="72 %">
                                                                <font>
                                                                   <Font size="14.0" />
                                                                </font>
@@ -171,6 +171,9 @@
                                                          </children>
                                                       </HBox>
                                                    </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
                                                 </VBox>
                                              </children>
                                           </AnchorPane>
@@ -203,7 +206,7 @@
                                           </Label>
                                           <HBox prefHeight="170.0" style="-fx-background-color: rgb(0,0,0,0.1); -fx-background-radius: 5;">
                                              <children>
-                                                <Label fx:id="Label21" alignment="BASELINE_CENTER" prefHeight="100.0" prefWidth="300.0" stylesheets="@LabelColor.css" text="Event Name">
+                                                <Label fx:id="Label21" alignment="BASELINE_LEFT" prefHeight="100.0" prefWidth="300.0" stylesheets="@LabelColor.css" text="Event Name">
                                                    <padding>
                                                       <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                                                    </padding>
@@ -449,11 +452,7 @@
          <children>
             <VBox fx:id="SideBarcolor" prefHeight="417.0" prefWidth="60.0" style="-fx-background-color: #d66813; -fx-background-radius: 15 0 0 15;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <ImageView fx:id="menu" fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../Images/menu5.png" />
-                     </image>
-                  </ImageView>
+                  <AnchorPane prefHeight="100.0" prefWidth="60.0" />
                   <Button minWidth="60.0" mnemonicParsing="false" onAction="#homepanel" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" prefHeight="100.0" prefWidth="60.0" style="-fx-background-color: transparent;">
                      <graphic>
                         <ImageView fitHeight="29.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">

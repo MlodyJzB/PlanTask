@@ -34,9 +34,7 @@ public class Planner implements Initializable {
     @FXML
     private void Minimize_clicked() {
         Stage stage = (Stage) minimalize_button.getScene().getWindow();
-        //stage.setIconified(true);
         stage.setMaximized(!stage.isMaximized());
-        //Restore down
         stage.setMaximized(stage.isMaximized());
     }
 

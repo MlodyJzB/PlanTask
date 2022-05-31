@@ -66,13 +66,11 @@ public class AppPanel implements Initializable {
     @FXML
     private BorderPane ourWindow;
     @FXML
-    private AnchorPane pane3;
-    @FXML
-    private VBox Incoming_events_Vbox;
+    private VBox Incoming_events_Vbox, SideBarcolor;
     @FXML
     private Button weatherTitleButton;
     @FXML
-    private Label Temp, MinTemp, MaxTemp, Clouds, Wind, Hum, Sunrise, Sunset;
+    private Label Temp, MinTemp, MaxTemp, Clouds, Wind, Hum, Sunrise, Sunset, Label1, Label2;
     @FXML
     private ImageView WeatherIcon;
     @FXML
@@ -80,15 +78,13 @@ public class AppPanel implements Initializable {
     @FXML
     private HBox diffColor1;
     @FXML
-    private VBox SideBarcolor;
-    @FXML
     private MonthView monthView;
-    @FXML
-    public Label Label1, Label2;
     @FXML
     private DetailedDayView detailedDayView;
     @FXML
     private ImageView minimalize_button, minimalize_button1;
+
+
     private Map<LocalDate, List<Entry<?>>> userEventsMap = new HashMap<>();
     private String BackCol, SideCol, NormCol, DiffCol;
 
@@ -168,65 +164,17 @@ public class AppPanel implements Initializable {
             }
         });
 
-        /*JSONObject jsonCalendar = new JSONObject();
-        JSONObject jsonCalendar1 = new JSONObject();
-        List<JSONObject> listOfEvents = new ArrayList();
-        try {
-            jsonCalendar.put("event_name", "work");
-            jsonCalendar.put("start", "10:30");
-            jsonCalendar.put("end", "12:45");
-            jsonCalendar.put("description", "description");
-            jsonCalendar1.put("event_name", "WYK - Programowanie aplikacyjne");
-            jsonCalendar1.put("start", "13:00");
-            jsonCalendar1.put("end", "14:45");
-            jsonCalendar1.put("description", "description");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        listOfEvents.add(jsonCalendar);
-        listOfEvents.add(jsonCalendar1);*/
-
-
         /*
         Tu dodaje się info o zadaniach w jsonie i wrzuczmy do funkcji add_event (byle by
         typ wydarzenia był torzsamy z nazwą zdj co je opisuje w Images, czas w stringu 13:21
         (powyżej przykład))
         */
 
-
         try {
-            //Incoming_events_Vbox.getChildren().setAll(add_event(jsonCalendar));
-            //Incoming_events_Vbox.getChildren().add(add_event(jsonCalendar1));
             incomingEv();
         } catch (JSONException | FileNotFoundException | ParseException e) {
             e.printStackTrace();
         }
-
-        //exit.setOnMouseClicked(event -> System.exit(0));
-
-        /*TranslateTransition translateT = new TranslateTransition(Duration.seconds(0.5), pane2);
-        translateT.setByX(-169);
-        translateT.play();
-        TranslateTransition translateT3 = new TranslateTransition(Duration.seconds(0.5), pane1);
-        translateT3.setByX(-48);
-        translateT3.play();
-
-        menu.setOnMouseClicked(event->{
-            TranslateTransition translateT1 = new TranslateTransition(Duration.seconds(0.5), pane2);
-            TranslateTransition translateT2 = new TranslateTransition(Duration.seconds(0.5), pane1);
-            translateT1.setByX(+169);
-            translateT2.setByX(+48);
-            translateT1.play();
-            translateT2.play();
-        });
-        pane1.setOnMouseClicked(event->{
-            TranslateTransition translateT1 = new TranslateTransition(Duration.seconds(0.5), pane2);
-            TranslateTransition translateT2 = new TranslateTransition(Duration.seconds(0.5), pane1);
-            translateT1.setByX(-169);
-            translateT2.setByX(-48);
-            translateT1.play();
-            translateT2.play();
-        });*/
         String onlineZip = Database.getZipCode(user.getUsername());
         String localZip = wi.getZipCode();
 
@@ -312,8 +260,6 @@ public class AppPanel implements Initializable {
                                 notif.set(java.util.Calendar.SECOND, incomingStart.getSecond());
                                 Date time = notif.getTime();
                                 timer.schedule(new RemindTask(listToSchedule.get(incomingStart)), time);
-                                System.out.println(incomingStart);
-                                System.out.println(listToSchedule);
                             }
                             try {
                                 incomingEv();
@@ -445,9 +391,6 @@ public class AppPanel implements Initializable {
     }
 
     public HBox add_event(JSONObject j) throws JSONException, FileNotFoundException, ParseException {
-        //String img = j.getString("event_name");
-        //Image image1 = new Image(new FileInputStream("src/main/resources/Images/"+img+".png"));
-        //ImageView image = new ImageView(image1);
         AnchorPane pane1 = new AnchorPane();
         Label name= new Label(j.getString("event_name"));
         Label from= new Label(j.getString("start"));
@@ -457,9 +400,6 @@ public class AppPanel implements Initializable {
         DateFormat df = new SimpleDateFormat("HH:mm");
         Date date1= df.parse(j.getString("start"));
         Date date2= df.parse(j.getString("end"));
-        Date date3= df.parse("22:00");
-        Date date4= df.parse("00:30");
-        Date date5= df.parse("24:00");
         long t1 = date1.getTime();
         long t2 = date2.getTime();
         long duratio=-3600000;
@@ -472,11 +412,6 @@ public class AppPanel implements Initializable {
         duration.setText(dura+":"+dura1+" h");
 
         pane1.setPrefSize(100, 46);
-        //AnchorPane.setTopAnchor(image, 0.0);
-        //AnchorPane.setLeftAnchor(image, 0.0);
-        //image.setFitHeight(46.0);
-        //image.setFitWidth(46.0);
-        //pane1.getChildren().add(image);
 
         name.setFont(new Font("Serif", 18));
         name.setLayoutY(46.0);
@@ -531,11 +466,6 @@ public class AppPanel implements Initializable {
         WeatherIcon.setImage(im);
     }
 
-    public int whichUserClicked() throws IOException, JSONException {
-        String contents = new String((Files.readAllBytes(Paths.get("panels.json"))));
-        JSONObject o = new JSONObject(contents);
-        return (int) o.get(("which"));
-    }
     public void ColourFromDataJson(boolean DayMode, boolean workingOnApp) throws IOException, JSONException {
         String contents = new String((Files.readAllBytes(Paths.get("colors.json"))));
         JSONObject o = new JSONObject(contents);
