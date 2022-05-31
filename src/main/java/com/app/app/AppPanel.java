@@ -221,6 +221,9 @@ public class AppPanel implements Initializable {
             translateT1.play();
             translateT2.play();
         });*/
+        String onlineZip = Database.getZipCode(user.getUsername());
+        String localZip = wi.getZipCode();
+
         Thread tr = new Thread(()-> {
             while(!stop){
                 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yy/MM/dd");
@@ -239,21 +242,34 @@ public class AppPanel implements Initializable {
             }
         });
         tr.start();
+
+        try {
+            if (onlineZip.equals(localZip)) {
+                wi.updateOnline();
+            }
+            else{
+                wi.updateOnline(onlineZip);
+            }
+            this.setWeather();
+        } catch (JSONException|IOException|NonexistentZipCodeException|IncorrectZipCodeFormatException e) {
+            e.printStackTrace();
+        }
+        int updateTime = 1800;
         AtomicInteger seconds = new AtomicInteger();
-        Thread tr1 = new Thread(()-> {
+        Thread weatherUpdate = new Thread(()-> {
             while(!stop){
-                if(seconds.get() == 0) {
+                if(seconds.get() == updateTime) {
+                    seconds.set(0);
                     Platform.runLater(() -> {
                         try {
                             this.wi.updateOnline();
-                            setWeather();
+                            this.setWeather();
                         } catch (NonexistentZipCodeException | JSONException | IOException |
                                  IncorrectZipCodeFormatException e) {
                             e.printStackTrace();
                         }
                     });
                     seconds.getAndIncrement();
-                    if (seconds.get() == 1800) seconds.set(0);
                 }
                 try {
                     Thread.sleep(1000);
@@ -262,7 +278,7 @@ public class AppPanel implements Initializable {
                 }
             }
         });
-        tr1.start();
+        weatherUpdate.start();
 
         Timeline timeline = new Timeline(
                 new KeyFrame(javafx.util.Duration.seconds(10),

@@ -30,8 +30,8 @@ public class WeatherInfo {
             this.lat = lat;
             this.lon = lon;
         }
-        private double lat;
-        private double lon;
+        private final double lat;
+        private final double lon;
 
         public double getLat(){
             return this.lat;
@@ -58,7 +58,7 @@ public class WeatherInfo {
     }
 
     public int getTemp(int day) throws JSONException{
-        String temp = "";
+        String temp;
         if (day == 0) temp = this.infoJson.getJSONObject("current").get("temp").toString();
         else temp = this.infoJson.getJSONArray("daily").getJSONObject(day).getJSONObject("temp").get("day").toString();
 
@@ -84,7 +84,7 @@ public class WeatherInfo {
     }
 
     public int getWindSpeed(int day) throws JSONException{
-        String windSpeed = "";
+        String windSpeed;
         if (day == 0) windSpeed = this.infoJson.getJSONObject("current").get("wind_speed").toString();
         else windSpeed = this.infoJson.getJSONArray("daily").getJSONObject(day).get("wind_speed").toString();
 
@@ -93,16 +93,7 @@ public class WeatherInfo {
     }
 
     public int getCloudsValue(int day) throws JSONException{
-        String cloudsValue = "";
-        if (day == 0) cloudsValue = this.infoJson.getJSONObject("current").get("clouds").toString();
-        else cloudsValue = this.infoJson.getJSONArray("daily").getJSONObject(day).get("clouds").toString();
-
-
-        return (int) Math.round(Double.valueOf(cloudsValue));
-    }
-
-    public int getHumidityValue(int day) throws JSONException{
-        String cloudsValue = "";
+        String cloudsValue;
         if (day == 0) cloudsValue = this.infoJson.getJSONObject("current").get("clouds").toString();
         else cloudsValue = this.infoJson.getJSONArray("daily").getJSONObject(day).get("clouds").toString();
 
@@ -111,7 +102,7 @@ public class WeatherInfo {
     }
 
     public int getPressureValue(int day) throws JSONException{
-        String cloudsValue = "";
+        String cloudsValue;
         if (day == 0) cloudsValue = this.infoJson.getJSONObject("current").get("pressure").toString();
         else cloudsValue = this.infoJson.getJSONArray("daily").getJSONObject(day).get("pressure").toString();
 
@@ -120,7 +111,7 @@ public class WeatherInfo {
     }
 
     public int getHumidity(int day) throws JSONException{
-        String cloudsValue = "";
+        String cloudsValue;
         if (day == 0) cloudsValue = this.infoJson.getJSONObject("current").get("humidity").toString();
         else cloudsValue = this.infoJson.getJSONArray("daily").getJSONObject(day).get("humidity").toString();
 
@@ -129,14 +120,14 @@ public class WeatherInfo {
     }
 
     public String getIcon(int day) throws JSONException{
-        String icon = "";
+        String icon ;
         if (day == 0) icon = this.infoJson.getJSONObject("current").getJSONArray("weather").getJSONObject(0).get("icon").toString();
         else icon = this.infoJson.getJSONArray("daily").getJSONObject(day).getJSONArray("weather").getJSONObject(0).get("icon").toString();
 
         return icon;
     }
 
-    public int getUpdateDate() throws JSONException{
+    public int getUpdateDate(){
         return this.updateDate;
     }
 
@@ -159,19 +150,19 @@ public class WeatherInfo {
     }
 
     public long getSunrise(int day) throws JSONException{
-        String temp = "";
+        String temp;
         if (day == 0) temp = this.infoJson.getJSONObject("current").get("sunrise").toString();
         else temp = this.infoJson.getJSONArray("daily").getJSONObject(day).get("sunrise").toString();
 
-        return (long) Math.round(Double.valueOf(temp));
+        return Math.round(Double.valueOf(temp));
     }
 
     public long getSunset(int day) throws JSONException{
-        String temp = "";
+        String temp;
         if (day == 0) temp = this.infoJson.getJSONObject("current").get("sunset").toString();
         else temp = this.infoJson.getJSONArray("daily").getJSONObject(day).get("sunset").toString();
 
-        return (long) Math.round(Double.valueOf(temp));
+        return Math.round(Double.valueOf(temp));
     }
 
     public String getCity() throws JSONException, NonexistentZipCodeException {
@@ -220,23 +211,22 @@ public class WeatherInfo {
     }
 
 
-    private void updateInfoJsonOnline() throws JSONException, IOException, NonexistentZipCodeException {
-        JsonHandling handle = new JsonHandling();
-        JSONObject infoJson = handle.getFromUrl("https://api.openweathermap.org/data/2.5/onecall?lat=" + this.coordinates.getLat() + "&lon=" + this.coordinates.getLon() +"&appid=3604feeeebf154336d2e624506e5b388&units=metric&exclude=hourly,minutely,alerts");
+    private void updateInfoJsonOnline() throws JSONException, IOException{
+        JSONObject infoJson = JsonHandling.getFromUrl("https://api.openweathermap.org/data/2.5/onecall?lat=" + this.coordinates.getLat() + "&lon=" + this.coordinates.getLon() +"&appid=3604feeeebf154336d2e624506e5b388&units=metric&exclude=hourly,minutely,alerts");
         File file = new File("");
         String path = file.getAbsolutePath() + "\\src\\main\\java\\com\\app\\WeatherInfo\\Info.json";
-        handle.writeToFile(infoJson, path);
+        JsonHandling.writeToFile(infoJson, path);
         this.infoJson = infoJson;
     }
 
-    private void updateInfoJsonOffline() throws JSONException, IOException, NonexistentZipCodeException {
+    private void updateInfoJsonOffline() throws JSONException, IOException{
         File file = new File("");
         String infoPath = file.getAbsolutePath() + "\\src\\main\\java\\com\\app\\WeatherInfo\\info.json";
         JSONObject infoJson = JsonHandling.getFromFile(infoPath);
         this.infoJson = infoJson;
     }
 
-    private void updateInfoJsonOffline(String otherInfoPath) throws JSONException, IOException, NonexistentZipCodeException {
+    private void updateInfoJsonOffline(String otherInfoPath) throws JSONException, IOException{
         File file = new File("");
         String infoPath = file.getAbsolutePath() + otherInfoPath;
         JSONObject infoJson = JsonHandling.getFromFile(infoPath);
@@ -244,31 +234,30 @@ public class WeatherInfo {
     }
 
     private void updateZipJsonOnline(String zipCode) throws java.io.IOException, JSONException, NonexistentZipCodeException {
-        JsonHandling handle = new JsonHandling();
-        JSONObject zipInfo = handle.getFromUrl("https://app.zipcodebase.com/api/v1/search?apikey=f6178de0-b1e6-11ec-ad2d-a971b4172138&codes=" + zipCode);
+        JSONObject zipInfo = JsonHandling.getFromUrl("https://app.zipcodebase.com/api/v1/search?apikey=f6178de0-b1e6-11ec-ad2d-a971b4172138&codes=" + zipCode);
         File file = new File("");
         String path = file.getAbsolutePath() + "\\src\\main\\java\\com\\app\\WeatherInfo\\zipCode.json";
         updateZipCodeOnline(zipInfo);
-        handle.writeToFile(zipInfo, path);
+        JsonHandling.writeToFile(zipInfo, path);
         this.updateCoordsOnline(zipInfo);
         this.zipJson = zipInfo;
     }
 
-    private void updateZipJsonOffline() throws JSONException, IOException, NonexistentZipCodeException {
+    private void updateZipJsonOffline() throws JSONException, IOException{
         File file = new File("");
         String zipPath = file.getAbsolutePath() + "\\src\\main\\java\\com\\app\\WeatherInfo\\zipCode.json";
         JSONObject zipJson = JsonHandling.getFromFile(zipPath);
         this.zipJson = zipJson;
     }
 
-    private void updateZipJsonOffline(String otherZipPath) throws JSONException, IOException, NonexistentZipCodeException {
+    private void updateZipJsonOffline(String otherZipPath) throws JSONException, IOException{
         File file = new File("");
         String zipPath = file.getAbsolutePath() + otherZipPath;
         JSONObject zipJson = JsonHandling.getFromFile(zipPath);
         this.zipJson = zipJson;
     }
 
-    private void updateZipCodeOffline() throws NonexistentZipCodeException, JSONException, IOException {
+    private void updateZipCodeOffline() throws NonexistentZipCodeException{
         JSONObject results;
         try{
             results = this.zipJson.getJSONObject("results");
@@ -279,7 +268,7 @@ public class WeatherInfo {
         this.zipCode = results.keys().next().toString();
     }
 
-    private void updateZipCodeOnline(JSONObject zipJson) throws NonexistentZipCodeException, JSONException, IOException {
+    private void updateZipCodeOnline(JSONObject zipJson) throws NonexistentZipCodeException{
         JSONObject results;
         try{
             results = zipJson.getJSONObject("results");
@@ -296,7 +285,7 @@ public class WeatherInfo {
     }
 
     public void updateOnline(String zipCode) throws JSONException, IOException, NonexistentZipCodeException, IncorrectZipCodeFormatException {
-        if (!this.IsCodeFormatCorrect(zipCode)) throw new IncorrectZipCodeFormatException("Incorect zipCode format; expected XX-XXX, but was: " + zipCode);
+        if (!this.IsCodeFormatCorrect(zipCode)) throw new IncorrectZipCodeFormatException("Incorrect zipCode format; expected XX-XXX, but was: " + zipCode);
         this.updateZipJsonOnline(zipCode);
         this.updateInfoJsonOnline();
         this.updateUpdateDate();

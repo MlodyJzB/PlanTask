@@ -36,7 +36,7 @@ public class JsonHandling {
         return json;
     }
 
-    public static JSONObject getFromFile(String path) throws FileNotFoundException, IOException, JSONException{
+    public static JSONObject getFromFile(String path) throws IOException, JSONException{
         File f = new File(path);
         if (!f.exists()) throw new FileNotFoundException();
         InputStream is = new FileInputStream(path);
