@@ -37,6 +37,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
+import org.controlsfx.control.Notifications;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -106,14 +107,19 @@ public class AppPanel implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         user = User.getInstance();
         user.setDayMode(Database.getAppearance(user.getUsername()));
-
+        Timer t = new Timer();
+        TimerTask tt = new TimerTask() {
+            @Override
+            public void run() {
+                System.out.println("Task is on");
+            };
+        };
+        try {
+            t.schedule(tt, this.wi.getSunset(0));
+        } catch (JSONException e) {e.printStackTrace();};
         try {
             ColourFromDataJson(user.isDayMode(), true);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException e) {e.printStackTrace();} catch (JSONException e) {e.printStackTrace();}
         DayMode();
         minimalize_button1.setOnMouseClicked(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent me) {
@@ -278,11 +284,37 @@ public class AppPanel implements Initializable {
                 }
             }
         });
-        weatherUpdate.start();
 
+        class RemindTask extends TimerTask {
+            RemindTask(String text) {this.text=text;}
+            String text;
+            public void run() {
+                Platform.runLater(()->showNotification(text).showInformation());
+            }
+            public Notifications showNotification(String text){
+                Notifications notificationBuilder = Notifications.create()
+                        .title("Event is starting")
+                        .text(text)
+                        .darkStyle()
+                        .position(Pos.BOTTOM_RIGHT);
+                return notificationBuilder;
+            }
+        }
+        weatherUpdate.start();
         Timeline timeline = new Timeline(
                 new KeyFrame(javafx.util.Duration.seconds(10),
                         e -> {
+                            Timer timer = new Timer();
+                            for (var incomingStart:listToSchedule.keySet()) {
+                                java.util.Calendar notif = java.util.Calendar.getInstance();
+                                notif.set(java.util.Calendar.HOUR_OF_DAY, incomingStart.getHour());
+                                notif.set(java.util.Calendar.MINUTE, incomingStart.getMinute());
+                                notif.set(java.util.Calendar.SECOND, incomingStart.getSecond());
+                                Date time = notif.getTime();
+                                timer.schedule(new RemindTask(listToSchedule.get(incomingStart)), time);
+                                System.out.println(incomingStart);
+                                System.out.println(listToSchedule);
+                            }
                             try {
                                 incomingEv();
                             } catch (JSONException ex) {
@@ -292,6 +324,8 @@ public class AppPanel implements Initializable {
                             } catch (ParseException ex) {
                                 ex.printStackTrace();
                             }
+                            timer.purge();
+                            timer.cancel();
                         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
@@ -547,6 +581,7 @@ public class AppPanel implements Initializable {
                 ZonedDateTime.now().getZone()
         );
     }
+    private HashMap<LocalDateTime, String> listToSchedule = new HashMap<>();
     public void incomingEv() throws JSONException, FileNotFoundException, ParseException {
         setUserEventsMap(detailedDayView, LocalDate.now().minusDays(1), LocalDate.now().plusDays(1));
         List<Entry<?>> userEntriesList = new ArrayList<>();
@@ -557,13 +592,16 @@ public class AppPanel implements Initializable {
                 userEventsList.add(Event.toEvent(entry));
         }
         Incoming_events_Vbox.getChildren().setAll();
-
+        listToSchedule.clear();
         for(var ev: userEventsList)
         {
             if((Duration.between(ev.getStartDateTime(), LocalDateTime.now()).toHours()<=2 &&
                     LocalDateTime.now().isBefore(ev.getStartDateTime())) ||
                     (Duration.between(ev.getStartDateTime(), LocalDateTime.now()).toMinutes()<=10) &&
                             LocalDateTime.now().isAfter(ev.getStartDateTime()) ) {
+                if(LocalDateTime.now().isBefore(ev.getStartDateTime())) {
+                    listToSchedule.put(ev.getStartDateTime(), ev.getTitle());
+                }
                 JSONObject jsonCalendar = new JSONObject();
                 jsonCalendar.put("event_name", ev.getTitle());
                 jsonCalendar.put("start", String.valueOf(ev.getStartDateTime().format(DateTimeFormatter.ofPattern("HH:mm"))));

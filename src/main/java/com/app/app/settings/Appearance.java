@@ -22,22 +22,32 @@ import java.util.ResourceBundle;
 
 public class Appearance implements Initializable {
     @FXML
-    private CheckBox dayMode;
+    private CheckBox dayMode, AutoDayMode;
     private User user;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         user = User.getInstance();
         dayMode.setSelected(user.isDayMode());
+        AutoDayMode.setSelected(user.isDayMode());
+        dayMode.setDisable(AutoDayMode.isSelected());
+        AutoDayMode.setOnAction(event -> {
+            dayMode.setDisable(AutoDayMode.isSelected());
+            user.setDAutoMode(AutoDayMode.isSelected());
+        });
         dayMode.setOnAction(event -> {
             Popup popup = new Popup();
             Label background = new Label();
+            Label background1 = new Label();
             Button sure = new Button("Apply");
             Button noChanging = new Button("Cancel");
             background.setMinSize(400, 200);
-            background.setStyle(" -fx-background-color: #e8e8e8; -fx-background-radius: 10;");
+            background.setStyle(" -fx-background-color:  #828281; -fx-background-radius: 10;");
+            background1.setMinSize(390, 190);
+            background1.setStyle(" -fx-background-color: #e8e8e8; -fx-background-radius: 10;");
             Label back = new Label("To change appearance reopening is necessary");
             back.setMinSize(400, 100);
-            //back.setStyle(" -fx-background-color: rgba(0, 0, 0, 0.1); -fx-background-radius: 10;");
+            sure.setStyle(" -fx-background-color: rgba(0, 0, 0, 0.1)");
+            noChanging.setStyle(" -fx-background-color: rgba(0, 0, 0, 0.1)");
             sure.setMinSize(50, 20);
             noChanging.setMinSize(50, 20);
             sure.setLayoutX(75);
@@ -45,8 +55,11 @@ public class Appearance implements Initializable {
             noChanging.setLayoutX(275);
             noChanging.setLayoutY(150);
             back.setAlignment(Pos.CENTER);
-            back.setFont(new Font(16));
+            back.setFont(new Font(18));
+            background1.setLayoutX(5);
+            background1.setLayoutY(5);
             popup.getContent().add(background);
+            popup.getContent().add(background1);
             popup.getContent().add(back);
             popup.getContent().add(sure);
             popup.getContent().add(noChanging);

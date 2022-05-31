@@ -13,10 +13,16 @@ public class User {
     private String username, password;
     private boolean dayMode;
     private String zipCode;
+    private boolean AutoMode;
 
-    public boolean isDayMode() {
-        return dayMode;
+    public boolean isAutoMode() {
+        return AutoMode;
     }
+    public void setDAutoMode(boolean AutoDayMode) {
+        this.AutoMode = AutoDayMode;
+    }
+
+    public boolean isDayMode() { return dayMode;}
 
     public void setDayMode(boolean dayMode) {
         this.dayMode = dayMode;
