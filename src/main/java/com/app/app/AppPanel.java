@@ -386,6 +386,11 @@ public class AppPanel implements Initializable {
     public void homepanel(ActionEvent event) throws NonexistentZipCodeException, JSONException, IOException, IncorrectZipCodeFormatException {
         wi.updateOffline();
         this.setWeather();
+        try {
+            incomingEv();
+        } catch (JSONException | FileNotFoundException | ParseException e) {
+            e.printStackTrace();
+        }
         ourWindow.setCenter(backgroundColor);
     }
 
@@ -533,7 +538,7 @@ public class AppPanel implements Initializable {
     }
     public void incomingEv() throws JSONException, FileNotFoundException, ParseException {
         setUserEventsMap(detailedDayView, LocalDate.now().minusDays(1), LocalDate.now().plusDays(1));
-        List<Entry<?>> userEntriesList = new ArrayList<>();
+        List<Entry<?>> userEntriesList;
          userEntriesList = userEventsMap.get(LocalDate.now());
         List<Event> userEventsList = new ArrayList<>();
         if(!(userEntriesList==null)) {
