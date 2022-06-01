@@ -115,7 +115,7 @@ public class AppPanel implements Initializable {
         } catch (JSONException e) {e.printStackTrace();};
         try {
             ColourFromDataJson(user.isDayMode(), true);
-        } catch (IOException e) {e.printStackTrace();} catch (JSONException e) {e.printStackTrace();}
+        } catch (IOException | JSONException e) {e.printStackTrace();}
         DayMode();
         minimalize_button1.setOnMouseClicked(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent me) {
@@ -263,11 +263,7 @@ public class AppPanel implements Initializable {
                             }
                             try {
                                 incomingEv();
-                            } catch (JSONException ex) {
-                                ex.printStackTrace();
-                            } catch (FileNotFoundException ex) {
-                                ex.printStackTrace();
-                            } catch (ParseException ex) {
+                            } catch (JSONException | FileNotFoundException | ParseException ex) {
                                 ex.printStackTrace();
                             }
                             timer.purge();
@@ -369,7 +365,7 @@ public class AppPanel implements Initializable {
         Scene scene = new Scene(loader.load());
         scene.setFill(Color.TRANSPARENT);
         com.app.app.settings.Settings controller = loader.getController();
-        controller.detailedDayView1=detailedDayView;
+        controller.detailedDayView =detailedDayView;
         stage.setScene(scene);
         //Settings controller = loader.getController();
         stage.show();

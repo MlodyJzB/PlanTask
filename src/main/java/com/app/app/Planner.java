@@ -44,9 +44,7 @@ public class Planner implements Initializable {
         boolean InfoDayNight = user.isDayMode();
         try {
             this.DayMode(InfoDayNight);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
         minimalize_button1.setOnMouseClicked(new EventHandler<MouseEvent>() {

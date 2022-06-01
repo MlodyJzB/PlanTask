@@ -85,9 +85,7 @@ public class LoginPanelController implements Initializable {
         user = User.getInstance();
         try {
             this.update();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (JSONException | IOException e) {
             e.printStackTrace();
         }
     }

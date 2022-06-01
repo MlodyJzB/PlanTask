@@ -33,7 +33,7 @@ public class Settings implements Initializable {
         Stage stage = (Stage) stackPane.getScene().getWindow();
         stage.close();
     }
-    public DetailedDayView detailedDayView1;
+    public DetailedDayView detailedDayView;
 
     @FXML
     private ImageView minimalize_button;
@@ -81,7 +81,7 @@ public class Settings implements Initializable {
                         )
                 );
                 HyperLinkNavigator controller = loader.getController();
-                controller.detailedDayView = detailedDayView1;
+                controller.detailedDayView = detailedDayView;
                 controller.setHyperlinkList(getTreeItem(treeItemName));
                 controller.setvBox(treeItemName);
             } else {
@@ -93,7 +93,7 @@ public class Settings implements Initializable {
                 if (treeItemName.equals("ics")) {
 
                 com.app.app.settings.Ics controller =loader.getController();
-                controller.setUserEventsList(detailedDayView1, LocalDate.now().minusYears(1), LocalDate.now().plusYears(1));
+                controller.setUserEventsList(detailedDayView, LocalDate.now().minusYears(1), LocalDate.now().plusYears(1));
                 }
             }
         } catch (IOException e) {

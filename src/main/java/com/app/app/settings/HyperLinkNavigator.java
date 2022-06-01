@@ -14,14 +14,12 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class HyperLinkNavigator implements Initializable {
-    private List<Hyperlink> hyperlinkList = new ArrayList<>();
+    private final List<Hyperlink> hyperlinkList = new ArrayList<>();
     public DetailedDayView detailedDayView;
 
     @FXML
@@ -42,7 +40,7 @@ public class HyperLinkNavigator implements Initializable {
         );
 
         Settings controller = loader.getController();
-        controller.detailedDayView1=detailedDayView;
+        controller.detailedDayView=detailedDayView;
         controller.selectTreeItem(hyperlink.getText());
         stage.show();
     }
