@@ -355,6 +355,7 @@ public class Calendar implements Initializable {
                 event.setLayoutY(event.getLayoutY()+128+i*55);
                 event.setLayoutX(event.getLayoutX()+65);
                 event.setMinWidth(480);
+                event.setMaxWidth(480);
                 event.setAlignment(Pos.CENTER);
                 popup.getContent().add(event);
             }
