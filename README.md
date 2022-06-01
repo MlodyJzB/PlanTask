@@ -56,3 +56,31 @@ Nasz zespół korzysta ze zintegrowanego środowiska programistycznego InteliJ I
 Diagram z Mavena:
 
  ![](mavenDiagram.png)
+
+
+# Etap 3
+ 
+## Projekt Aplikacji
+
+### Główne klasy:
+**•	Database**\
+Służy do komunikowania się z bazą danych poprzez metody pozwalające na dodawanie, zmienianie, usuwanie i sprawdzanie wierszy z odpowiednich tabel w bazie danych.\
+**•	User**\
+Model użytkownika będący singletonem. Przechowuje dane użytkownika i umożliwia ich modyfikację.\
+**•	WeatherInfo**\
+Umożliwia uzyskanie informacji pogodowych na podstawie kodu pocztowego.\
+**•	ISCFilesReader**\
+Pozwala na czytanie plików ics i zapisywanie wyniku jako listę json obiektów, umożliwia dodawanie wydarzeń z pliku ics do aplikacji.\
+**•	ToICSFileWritte**\
+Pozwala na pisanie do plików ics mając listę json obiektów, umożliwia zapisywanie wydarzeń z kalendarza do pliku ics.\
+**•	Weather**\
+Kontroler obsługujący wyświetlanie pogody.\
+**•	Event**\
+Implementuje wydarzenia. Pośredniczy ona pomiędzy wydarzeniami w aplikacji a wydarzeniami w bazie danych.\
+**•	Calendar**\
+Kontroler obsługujący wyświetlanie kalendarza.\
+**•	AppPanel**\
+Główny kontroler - obsługuje wydarzenia w głównej zakładce aplikacji.\
+**•	Settings**\
+Kontroler obsługujący zakładkę ustawień\
+
