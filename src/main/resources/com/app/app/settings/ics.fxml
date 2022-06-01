@@ -10,14 +10,14 @@
    <children>
       <VBox alignment="TOP_CENTER" prefHeight="408.0" prefWidth="314.0" spacing="10.0">
          <children>
-            <Label contentDisplay="CENTER" prefHeight="35.0" prefWidth="500.0" text="Import ics calendar" textFill="WHITE" underline="true">
+            <Label contentDisplay="CENTER" prefHeight="35.0" prefWidth="500.0" text="Import ics calendar" textFill="WHITE">
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
             </Label>
             <Button fx:id="ImportButton" mnemonicParsing="false" onAction="#importIcs" prefHeight="34.0" prefWidth="63.0" text="Import" />
             <Label layoutY="20.0" />
-            <Label prefHeight="35.0" prefWidth="500.0" text="Save calendar to ics" textFill="WHITE" underline="true">
+            <Label prefHeight="35.0" prefWidth="500.0" text="Save calendar to ics" textFill="WHITE">
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>

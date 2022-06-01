@@ -29,7 +29,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="planTask" options="--add-exports com.jfoenix/com.jfoenix=com.app" />
+      <module name="planTask" options="" />
     </option>
   </component>
 </project>

@@ -259,7 +259,7 @@ public class AppPanel implements Initializable {
                                 notif.set(java.util.Calendar.MINUTE, incomingStart.getMinute());
                                 notif.set(java.util.Calendar.SECOND, incomingStart.getSecond());
                                 Date time = notif.getTime();
-                                timer.schedule(new RemindTask(listToSchedule.get(incomingStart)), time);
+                                timer.schedule(new RemindTask(listToSchedule.get(incomingStart)), time, 10);
                             }
                             try {
                                 incomingEv();

@@ -9,17 +9,17 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane style="-fx-background-color: #dba563; -fx-background-radius: 15;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.loginapp.LoginController">
+<AnchorPane style="-fx-background-color: #ffbf70; -fx-background-radius: 15;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.loginapp.LoginController">
    <children>
-      <AnchorPane prefHeight="303.0" prefWidth="380.0" style="-fx-background-color: #0f2021; -fx-background-radius: 15;" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+      <AnchorPane prefHeight="303.0" prefWidth="380.0" style="-fx-background-color: #1c1c1c; -fx-background-radius: 15;" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
-            <Text fill="#dba563" layoutX="36.0" layoutY="247.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Don't have an account?" />
+            <Text fill="#ffbf70" layoutX="36.0" layoutY="247.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Don't have an account?" />
             <Button fx:id="registerButton" contentDisplay="CENTER" layoutX="76.0" layoutY="258.0" mnemonicParsing="false" onAction="#switchToRegisterScene" prefHeight="25.0" prefWidth="83.0" style="-fx-background-color: #916734;" text="Register">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <AnchorPane layoutX="174.0" layoutY="11.0" prefHeight="283.0" prefWidth="194.0" style="-fx-background-color: #dba563; -fx-background-radius: 15;" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+            <AnchorPane layoutX="174.0" layoutY="11.0" prefHeight="283.0" prefWidth="194.0" style="-fx-background-color: #ffbf70; -fx-background-radius: 15;" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                <children>
                   <TextField fx:id="usernameTextField" alignment="CENTER" layoutX="14.0" layoutY="101.0" prefHeight="25.0" prefWidth="173.0" promptText="username" style="-fx-background-color: #916734;" />
                   <PasswordField fx:id="passwordField" alignment="CENTER" layoutX="14.0" layoutY="141.0" prefHeight="25.0" prefWidth="173.0" promptText="password" style="-fx-background-color: #916734;" />
@@ -40,12 +40,12 @@
                   </Button>
                </children>
             </AnchorPane>
-            <Text fill="#dba563" layoutX="48.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PlanTask" wrappingWidth="109.0" AnchorPane.leftAnchor="48.0">
+            <Text fill="#ffbf70" layoutX="48.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PlanTask" wrappingWidth="109.0" AnchorPane.leftAnchor="48.0">
                <font>
                   <Font name="System Bold" size="23.0" />
                </font>
             </Text>
-            <AnchorPane layoutX="2.0" layoutY="3.0" prefHeight="31.0" prefWidth="13.0" style="-fx-background-color: #dba563; -fx-background-radius: 5;" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0">
+            <AnchorPane layoutX="2.0" layoutY="3.0" prefHeight="31.0" prefWidth="13.0" style="-fx-background-color: #ffbf70; -fx-background-radius: 5;" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0">
                <children>
                   <ImageView fx:id="exitonlogin" fitHeight="31.0" fitWidth="32.0" layoutX="-1.0" onMousePressed="#Exit1" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="-0.0" AnchorPane.topAnchor="0.0">
                      <image>
