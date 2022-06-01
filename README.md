@@ -82,5 +82,20 @@ Kontroler obsługujący wyświetlanie kalendarza.\
 **•	AppPanel**\
 Główny kontroler - obsługuje wydarzenia w głównej zakładce aplikacji.\
 **•	Settings**\
-Kontroler obsługujący zakładkę ustawień\
+Kontroler obsługujący zakładkę ustawień
+
+
+### Wykorzystywane narzędzia (środowiska programistyczne), biblioteki, zależności 
+Środowiskiem programistycznym wykożystywanym przez naszą grupę było, stwożone przez firmę JetBrains, Intelij IDEA. Projekt całkowicie stwożony został w języku programowania Java. W celu automatyzacji budowania oprogramowania użyty został Maven. Biblioteką użytą do twożenia graficznego interfejsu użytkownika jest JavaFx. Natomiast wykożystaną przez nas bazą danych jest Microsoft Azure SQL Database.
+####Najważniejszymi bibliotekami przez nas wykożystywanymi są: 
+- Json służąca do obsługi formatu tekstowego JSON, 
+- JUnit użytą do stworzenia testów jednostkowych,
+- JavaFx  wykorzystaną do tworzenia graficznego interfejsu,
+- CalendarFx użytą w celu dodawania i prezentowania wydarzeń,
+- mssql-jdbc potrzebną do komunikacji z bazą danych,
+- scenic-view która w naszym przypadku służy do dostania się do plików css wykorzystywanego przez nas calendarfx,
+- iCal4j którą posługujemy się w celu odczytu oraz zapisu plików z rozszerzeniem ics.\
+\
+  **Diagram połączeń z Mavena:**
+  ![](module-info.png)
 
