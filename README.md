@@ -94,7 +94,8 @@ Kontroler obsługujący zakładkę ustawień
 - CalendarFx użytą w celu dodawania i prezentowania wydarzeń,
 - mssql-jdbc potrzebną do komunikacji z bazą danych,
 - scenic-view która w naszym przypadku służy do dostania się do plików css wykorzystywanego przez nas calendarfx,
-- iCal4j którą posługujemy się w celu odczytu oraz zapisu plików z rozszerzeniem ics.\
+- iCal4j którą posługujemy się w celu odczytu oraz zapisu plików z rozszerzeniem ics.
+- java.net oraz java.io, do obsługi API pogodowego oraz zapisu informacji w formacie .json\
 \
   **Diagram połączeń z Mavena:**
   ![](module-info.png)
@@ -104,6 +105,6 @@ Kontroler obsługujący zakładkę ustawień
 ### Wymagania środowiskowe
 Maszyna wirtualna java, internet.
 ### Instrukcja budowania kodu i uruchomienia aplikacji
-Uruchomienie intellij -> uruchomienie LoginApplication 
+Należy sklonować repozytorium z projektem do IntelliJ. Następnie wykonać build projektu. Aplikacja uruchamiana jest poprzez uruchomienie metody main w klasie LoginApplication. Hierarchia: pap22l-z03\src\main\java\com\app\loginapp\LoginApplication.java.
 
 
